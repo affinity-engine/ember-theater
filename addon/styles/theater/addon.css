@@ -1,0 +1,27 @@
+.theater-stage {
+  overflow: hidden;
+}
+
+.theater-stage, .theater-stage__background, .theater-stage__character {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.theater-stage, .theater-stage__background {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.theater-stage__background {
+  background-size: cover;
+  background-position: center;
+}
+
+.theater-stage__portrait {
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+}

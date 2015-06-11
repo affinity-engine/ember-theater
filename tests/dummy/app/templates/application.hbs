@@ -1,0 +1,9 @@
+{{#if imagesLoaded}}
+  {{#theater-stage characters=characters background=background}}{{/theater-stage}}
+  <div class='button-panel'>
+    <button id='toggle_background' {{action 'cycleDay'}}>Cycle Day</button>
+    <button id='add_character1' {{action 'addConnie'}}>Connie</button>
+    <button id='add_character2' {{action 'addSteven'}}>Steven</button>
+    <button id='add_character3' {{action 'addGarnet'}}>Garnet</button>
+  </div>
+{{/if}}

@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-theater/components/theater-stage';

@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-theater/test-helpers/preload-images';
