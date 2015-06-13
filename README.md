@@ -1,4 +1,4 @@
-# Ember-cli-theater
+# ember-theater
 
 This README outlines the details of collaborating on this Ember addon.
 

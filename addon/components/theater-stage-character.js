@@ -7,7 +7,7 @@ const { Component, on, observer, computed } = Ember;
 
 export default Component.extend(WindowResizeMixin, {
   layout: layout,
-  classNames: ['theater-stage__character'],
+  classNames: ['ember-theater-stage__character'],
 
   // Associates the character and component so that script writers can perform Velocity manipulations
   // off the character.
@@ -33,7 +33,7 @@ export default Component.extend(WindowResizeMixin, {
     const imgHeight = height * stageHeight / 100;
 
     let largestWidth = 0;
-    this.$('.theater-stage__portrait').each(function() {
+    this.$('.ember-theater-stage__portrait').each(function() {
       const $img = Ember.$(this);
       const ratio = imgHeight / $img.prop('naturalHeight');
       const width = $img.prop('naturalWidth') * ratio;
@@ -133,7 +133,7 @@ export default Component.extend(WindowResizeMixin, {
   },
 
   activateImage() {
-    return Ember.$.Velocity.animate(this.$('.theater-stage__portrait').first(), {
+    return Ember.$.Velocity.animate(this.$('.ember-theater-stage__portrait').first(), {
       opacity: 100
     }, 0);
   },
@@ -157,7 +157,7 @@ export default Component.extend(WindowResizeMixin, {
 
     changePortrait(imagePath, options) {
       const portraits = this.get('portraits');
-      this.$('.theater-stage__portrait').each(function() {
+      this.$('.ember-theater-stage__portrait').each(function() {
         Ember.$.Velocity.animate(Ember.$(this), { opacity: 0 }, options).then(() => {
           portraits.shiftObject();
         });
@@ -165,7 +165,7 @@ export default Component.extend(WindowResizeMixin, {
 
       portraits.addObject(imagePath);
       Ember.run.later(this, function() {
-        this.$('.theater-stage__portrait').last().velocity('fadeIn', options);
+        this.$('.ember-theater-stage__portrait').last().velocity('fadeIn', options);
       });
     }
 

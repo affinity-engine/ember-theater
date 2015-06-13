@@ -5,7 +5,7 @@ const { Component } = Ember;
 
 export default Component.extend({
   layout: layout,
-  classNames: ['theater-stage'],
+  classNames: ['ember-theater-stage'],
   
   characters: Ember.A([])
 });

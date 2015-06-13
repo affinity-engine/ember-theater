@@ -1,1 +1,1 @@
-export { default } from 'ember-cli-theater/components/theater-stage-character';
+export { default } from 'ember-theater/components/theater-stage-character';

@@ -6,7 +6,7 @@ var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
 
 module.exports = {
-  name: 'ember-cli-theater',
+  name: 'ember-theater',
 
   treeForVendor: function(tree){
     var velocityPath = path.dirname(require.resolve('velocity-animate'));

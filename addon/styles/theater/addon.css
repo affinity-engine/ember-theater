@@ -1,27 +1,34 @@
-.theater-stage {
+.ember-theater-stage {
   overflow: hidden;
 }
 
-.theater-stage, .theater-stage__background, .theater-stage__character {
+.ember-theater,
+.ember-theater-stage,
+.ember-theater-stage__background,
+.ember-theater-stage__character,
+.ember-theater-stage__portrait {
   position: absolute;
-  bottom: 0;
-  left: 0;
 }
 
-.theater-stage, .theater-stage__background {
+.ember-theater,
+.ember-theater-stage,
+.ember-theater-stage__background {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
 
-.theater-stage__background {
+.ember-theater-stage__background {
   background-size: cover;
   background-position: center;
 }
+.ember-theater-stage__character {
+  bottom: 0;
+  left: 0;
+}
 
-.theater-stage__portrait {
+.ember-theater-stage__portrait {
   height: 100%;
-  position: absolute;
   opacity: 0;
 }
