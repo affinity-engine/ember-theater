@@ -3,7 +3,7 @@ import DS from 'ember-data';
 const { Model, attr, hasMany } = DS;
 
 export default Model.extend({
-  portraits: hasMany('theater-character-portrait'),
+  portraits: hasMany('ember-theater-character-portrait'),
 
   height: attr('number'),
   name: attr('string'),

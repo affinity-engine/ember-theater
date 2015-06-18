@@ -23,7 +23,8 @@
     "currentPath",
     "currentRouteName",
     "preloadImages",
-    "Image"
+    "Image",
+    "Promise"
   ],
   "node": false,
   "browser": false,

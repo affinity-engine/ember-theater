@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('theater-character', 'Unit | Model | theater character', {
+moduleForModel('ember-theater-character-portrait', 'Unit | Model | ember theater character portrait', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:ember-theater-character']
 });
 
 test('it exists', function(assert) {

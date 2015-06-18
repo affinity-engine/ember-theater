@@ -4,7 +4,7 @@
 
 .ember-theater,
 .ember-theater-stage,
-.ember-theater-stage__background,
+.ember-theater-stage__backdrop,
 .ember-theater-stage__character,
 .ember-theater-stage__portrait {
   position: absolute;
@@ -12,14 +12,14 @@
 
 .ember-theater,
 .ember-theater-stage,
-.ember-theater-stage__background {
+.ember-theater-stage__backdrop {
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
 
-.ember-theater-stage__background {
+.ember-theater-stage__backdrop {
   background-size: cover;
   background-position: center;
 }

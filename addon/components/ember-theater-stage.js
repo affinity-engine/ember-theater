@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/theater-stage';
+import layout from '../templates/components/ember-theater-stage';
 
 const { Component } = Ember;
 

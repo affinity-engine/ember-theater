@@ -5,30 +5,8 @@ const { Controller, observer, on } = Ember;
 
 export default Controller.extend({
   isDay: true,
-  srcs: ENV.imageSrcs,
 
   characters: Ember.A(),
-
-  checkForLoadCompletion() {
-    this.incrementProperty('loadedImages');
-    if (this.get('loadedImages') >= this.get('srcs').length) {
-      this.set('imagesLoaded', true);
-    }
-  },
-
-  preloadImages: on('init', function() {
-    if (ENV.environment === 'test') { this.set('imagesLoaded', true); }
-    else {
-      this.get('srcs').forEach((src) => {
-        const _this = this;
-        const image = new Image();
-        image.src = `images/${src}`;
-        image.onload = function() {
-          _this.checkForLoadCompletion();
-        };
-      });
-    }
-  }),
 
   background: Ember.Object.create({
     imagePath: 'images/background-beach--day.jpg'

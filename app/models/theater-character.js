@@ -1,1 +1,0 @@
-export { default } from 'ember-theater/models/theater-character';
