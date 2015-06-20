@@ -6,8 +6,6 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    imageSrcs: ['character-garnet.png', 'character-connie.png', 'character-steven--standing.png',
-    'character-steven--jumping.png'],
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

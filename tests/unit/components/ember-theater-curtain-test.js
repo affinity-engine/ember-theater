@@ -6,27 +6,19 @@ const { RSVP } = Ember;
 moduleForComponent('ember-theater-curtain', 'Unit | Component | ember theater curtain', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar'],
-  unit: true
+  unit: true,
+  needs: ['model:ember-theater-backdrop', 'model:ember-theater-character-portrait']
 });
 
 test('`_loadResources` loads all media models on `didInsertElement`', function(assert) {
   const done = assert.async();
+  this.container.register('config:environment', { modulePrefix: 'dummy' });
   const component = this.subject();
-  component.set('store', {
-    find(type) {
-      return new RSVP.Promise((resolve) => {
-        const models = [1, 2, 3].map((id) => {
-          return { id: id, type: type };
-        });
-        resolve(Ember.A(models));
-      });
-    }
-  });
   this.render();
 
   Ember.run.later(() => {
-    assert.equal(component.get('backdrops.length'), 3, 'loads backdrops');
-    assert.equal(component.get('portraits.length'), 3, 'loads portraits');
+    assert.equal(component.get('emberTheaterBackdrops.length'), 1, 'loads backdrops');
+    assert.equal(component.get('emberTheaterCharacterPortraits.length'), 1, 'loads portraits');
     done();
   }, 50);
 });
@@ -34,10 +26,10 @@ test('`_loadResources` loads all media models on `didInsertElement`', function(a
 test('`_loadImages` preloads all image files', function(assert) {
   const done = assert.async();
   const component = this.subject({
-    backdrops: Ember.A([{
+    emberTheaterBackdrops: Ember.A([{
       src: 'images/backdrops/beach.jpg'
     }]),
-    portraits: Ember.A([{
+    emberTheaterCharacterPortraits: Ember.A([{
       src: 'images/portraits/steven.png'
     }])
   });
@@ -45,8 +37,8 @@ test('`_loadImages` preloads all image files', function(assert) {
   component._loadImages();
 
   Ember.run.later(() => {
-    assert.ok(component.get('backdrops.firstObject.fileLoaded'), 'preloads backdrops');
-    assert.ok(component.get('portraits.firstObject.fileLoaded'), 'preloads portraits');
+    assert.ok(component.get('emberTheaterBackdrops.firstObject.fileLoaded'), 'preloads backdrops');
+    assert.ok(component.get('emberTheaterCharacterPortraits.firstObject.fileLoaded'), 'preloads portraits');
     done();
   }, 50);
 });
