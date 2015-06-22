@@ -10,15 +10,28 @@ moduleForComponent('ember-theater-curtain', 'Unit | Component | ember theater cu
   needs: ['model:ember-theater-backdrop', 'model:ember-theater-character-portrait']
 });
 
+test('`_moduleNames` returns an array of model names found under ember-theater-fixtures', function(assert) {
+  const component = this.subject({
+    _modulePrefix: 'dummy'
+  });
+  assert.deepEqual(
+    component.get('_modelNames'),
+      ['ember-theater-backdrops',
+      'ember-theater-character-portraits'],
+    'returns all model names'
+  );
+});
+
 test('`_loadResources` loads all media models on `didInsertElement`', function(assert) {
   const done = assert.async();
-  this.container.register('config:environment', { modulePrefix: 'dummy' });
-  const component = this.subject();
+  const component = this.subject({
+    _modulePrefix: 'dummy'
+  });
   this.render();
 
   Ember.run.later(() => {
-    assert.equal(component.get('emberTheaterBackdrops.length'), 1, 'loads backdrops');
-    assert.equal(component.get('emberTheaterCharacterPortraits.length'), 1, 'loads portraits');
+    assert.ok(component.get('emberTheaterBackdrops.length') > 0, 'loads backdrops');
+    assert.ok(component.get('emberTheaterCharacterPortraits.length') > 0, 'loads portraits');
     done();
   }, 50);
 });
@@ -54,11 +67,16 @@ test('`_checkForImageLoadCompletion` switches `imagesLoaded` when true', functio
   assert.ok(component.get('imagesLoaded'), 'if `loadedImages` >= `images`, `imagesLoaded` is true');
 });
 
-test('`_checkForMediaLoadCompletion` switches `mediaLoaded` when true', function(assert) {
-  const component = this.subject();
-
-  assert.ok(!component.get('mediaLoaded'), 'if !`imagesLoaded` is false');
+test('`_checkForMediaLoadCompletion` triggers `complete` when all resources are loaded', function(assert) {
+  assert.expect(1);
+  const component = this.subject({
+    targetObject: {
+      targetAction() {
+        assert.ok(true, 'triggers complete');
+      }
+    },
+    complete: 'targetAction'
+  });
 
   component.set('imagesLoaded', true);
-  assert.ok(component.get('mediaLoaded'), 'if `imagesLoaded` is true');
 });

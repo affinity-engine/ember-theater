@@ -1,25 +1,24 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-theater';
+import ModulePrefixMixin from '../mixins/ember-theater-module-prefix';
 
-const { Component, observer } = Ember;
+const { Component } = Ember;
 
-export default Component.extend({
+export default Component.extend(ModulePrefixMixin, {
   layout: layout,
   classNames: ['ember-theater'],
 
-  transitionToIntialScene: observer('mediaLoaded', function() {
-    if (this.get('mediaLoaded')) {
-      const sceneId = this.get('initialScene');
-      this.send('transitionToScene', sceneId);
-    }
-  }),
-
   actions: {
     transitionToScene(sceneId) {
-      const modulePrefix = this.container.lookupFactory('config:environment').modulePrefix;
-      const scene = window.require(`${modulePrefix}/scenes/${sceneId}`).default;
+      const modulePrefix = this.get('_modulePrefix');
+      const scene = require(`${modulePrefix}/scenes/${sceneId}`)['default'];
       scene.set('container', this.get('container'));
       this.set('scene', scene);
+    },
+
+    transitionToInitialScene() {
+      const sceneId = this.get('initialScene');
+      this.send('transitionToScene', sceneId);
     }
   }
 });

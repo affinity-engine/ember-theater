@@ -57,13 +57,16 @@ test('`next` triggers the current line and then increments the lineIndex', funct
       mockAction: { actual: expected[2], pause: 10 }
     }, {
       mockAction: { actual: 'does not run if `pause` === true', pause: true }
-    }])
-  });
-  scene.reopen({
-    actions: {
-      mockAction(line) {
-        assert.equal(line.actual, expected[lineIndex], line.actual);
-        lineIndex += 1;
+    }]),
+    director: {
+      send(actionName, options) {
+        this.actions[actionName](options);
+      },
+      actions: {
+        mockAction(line) {
+          assert.equal(line.actual, expected[lineIndex], line.actual);
+          lineIndex += 1;
+        }
       }
     }
   });

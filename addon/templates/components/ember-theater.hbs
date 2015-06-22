@@ -1,5 +1,5 @@
-{{#if mediaLoaded}}
+{{#if scene}}
   {{ember-theater-director scene=scene}}
 {{else}}
-  {{ember-theater-curtain mediaLoaded=mediaLoaded}}
+  {{ember-theater-curtain complete='transitionToInitialScene'}}
 {{/if}}

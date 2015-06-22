@@ -1,9 +1,8 @@
 import Ember from 'ember';
 
-const { ControllerMixin, computed, inject, run } = Ember;
+const { ControllerMixin, computed, run } = Ember;
 
 export default Ember.Object.extend(ControllerMixin, {
-  store: inject.service('store'),
   _lineIndex: 0,
 
   _line: computed('_lineIndex', {
@@ -31,14 +30,8 @@ export default Ember.Object.extend(ControllerMixin, {
   }),
 
   _actions: {
-    backdrop(line) {
-      this.get('store').find('ember-theater-backdrop', line.id).then((backdrop) => {
-        this.set('director.backdrop', backdrop);
-      }); 
-    },
-
     next() {
-      this.send(this.get('_lineKey'), this.get('_lineValue'));
+      this.get('director').send(this.get('_lineKey'), this.get('_lineValue'));
 
       if (this.get('_nextLineExists')) {
         this.incrementProperty('_lineIndex');

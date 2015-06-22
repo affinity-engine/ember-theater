@@ -24,7 +24,8 @@
     "currentRouteName",
     "preloadImages",
     "Image",
-    "Promise"
+    "Promise",
+    "require"
   ],
   "node": false,
   "browser": false,

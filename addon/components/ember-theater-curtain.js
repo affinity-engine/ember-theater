@@ -1,27 +1,41 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-theater-curtain';
-import { pluralize } from 'ember-inflector';
+import { singularize } from 'ember-inflector';
+import ModulePrefixMixin from '../mixins/ember-theater-module-prefix';
 
 const { Component, computed, get, inject, observer, on, set } = Ember;
 const { filterBy, union } = computed;
 
-export default Component.extend({
+export default Component.extend(ModulePrefixMixin, {
   layout: layout,
   classNames: ['ember-theater__curtain'],
   store: inject.service('store'),
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterPortraits'),
   loadedImages: filterBy('images', 'fileLoaded', true),
-  modelNames: ['ember-theater-backdrop', 'ember-theater-character-portrait'],
+
+  _modelNames: computed({
+    get() {
+      const paths = Object.keys(require.entries);
+      const modulePrefix = this.get('_modulePrefix');
+      const regex = new RegExp(`${modulePrefix}\/ember-theater-fixtures\/(.*)`);
+      
+      return paths.filter((path) => {
+        return regex.test(path);
+      }).map((path) => {
+        return regex.exec(path)[1];
+      });  
+    }
+  }),
 
   _loadResources: on('didInsertElement', function() {
     const store = this.get('store');
-    const modulePrefix = this.container.lookupFactory('config:environment').modulePrefix;
+    const modulePrefix = this.get('_modulePrefix');
 
-    this.get('modelNames').forEach((modelName) => {
-      const pluralName = pluralize(modelName);
-      const fixtures = window.require(`${modulePrefix}/fixtures/${pluralName}`).default;
-      const data = store.pushMany(modelName, fixtures);
-      this.set(Ember.String.camelize(pluralName), Ember.A(data));
+    this.get('_modelNames').forEach((modelName) => {
+      const singularName = singularize(modelName);
+      const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
+      const data = store.pushMany(singularName, fixtures);
+      this.set(Ember.String.camelize(modelName), Ember.A(data));
     });
 
     this._loadImages();
@@ -46,7 +60,7 @@ export default Component.extend({
 
   _checkForMediaLoadCompletion: observer('imagesLoaded', function() {
     if (this.get('imagesLoaded')) {
-      this.set('mediaLoaded', true);
+      this.sendAction('complete');
     }
   })
 
