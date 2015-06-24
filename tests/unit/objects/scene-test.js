@@ -1,7 +1,7 @@
 import { moduleFor, test } from 'ember-qunit';
 import Ember from 'ember';
 
-const { run } = Ember;
+const { RSVP, run } = Ember;
 
 let scene;
 
@@ -43,29 +43,33 @@ moduleFor('object:scene', 'Unit | Object | scene | actions', {
 });
 
 test('`next` triggers the current line and then increments the lineIndex', function(assert) {
-  assert.expect(3);
+  assert.expect(8);
   let lineIndex = 0;
   const done = assert.async();
-  const expected = ['runs initial line', 'runs async lines', 'runs line after millisecond pause'];
 
   scene = this.subject({
     script: Ember.A([{
-      mockAction: { actual: expected[0] }
+      mockAction: { before: 0, after: 2  }
     }, {
-      mockAction: { actual: expected[1] }
+      mockAction: { before: 1, after: 2, sync: true }
     }, {
-      mockAction: { actual: expected[2], pause: 10 }
+      mockAction: { before: 2, after: 4  }
     }, {
-      mockAction: { actual: 'does not run if `pause` === true', pause: true }
+      mockAction: { before: 3, after: 4  }
     }]),
     director: {
-      send(actionName, options) {
-        this.actions[actionName](options);
+      send(actionName, options, resolve) {
+        this.actions[actionName](options, resolve);
       },
       actions: {
-        mockAction(line) {
-          assert.equal(line.actual, expected[lineIndex], line.actual);
+        mockAction(line, resolve) {
+          if (!line.sync) { resolve(); }
+          assert.equal(line.before, lineIndex);
           lineIndex += 1;
+          run.later(() => {
+            assert.equal(line.after, lineIndex);
+            if (line.sync) { resolve(); }
+          }, 5);
         }
       }
     }
@@ -75,5 +79,5 @@ test('`next` triggers the current line and then increments the lineIndex', funct
 
   run.later(() => {
     done();
-  }, 100);
+  }, 30);
 });

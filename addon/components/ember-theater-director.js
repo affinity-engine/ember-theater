@@ -16,7 +16,8 @@ export default Component.extend({
   }),
 
   actions: {
-    backdrop(line) {
+    backdrop(line, resolve) {
+      if (!line.sync) { resolve(); }
       this.get('store').find('ember-theater-backdrop', line.id).then((backdrop) => {
         const backdrops = this.get('backdrops');
         const backdropIsPresent = backdrops.some((b) => {
@@ -30,9 +31,11 @@ export default Component.extend({
         Ember.run.later(() => {
           const element = backdrop.get('component.element');
           const effect = line.effect ? line.effect : 'transition.fadeIn';
-          $.Velocity.animate(element, effect, line.options);
+          $.Velocity.animate(element, effect, line.options).then(() => {
+            if (line.sync) { resolve(); }
+          });
         });
-      }); 
+      });
     }
   }
 });

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { ControllerMixin, computed, run } = Ember;
+const { ControllerMixin, RSVP, computed } = Ember;
 
 export default Ember.Object.extend(ControllerMixin, {
   _lineIndex: 0,
@@ -31,17 +31,16 @@ export default Ember.Object.extend(ControllerMixin, {
 
   _actions: {
     next() {
-      this.get('director').send(this.get('_lineKey'), this.get('_lineValue'));
+      const promise = new RSVP.Promise((resolve) => {
+        this.get('director').send(this.get('_lineKey'), this.get('_lineValue'), resolve);
+      });
 
-      if (this.get('_nextLineExists')) {
-        this.incrementProperty('_lineIndex');
-        const pause = this.get('_lineValue.pause');
-        if (pause !== true) {
-          run.later(() => {
-            this.send('next');
-          }, pause);
-        }
-      }
+      promise.then(() => {
+        if (this.get('_nextLineExists')) {
+          this.incrementProperty('_lineIndex');
+          this.send('next');
+        } 
+      });
     }
   }
 });
