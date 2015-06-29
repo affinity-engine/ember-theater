@@ -1,18 +1,19 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-theater-stage-actor';
-import TheaterStage from './theater-stage';
+import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
 
-const { Component, on, observer, computed } = Ember;
+const { Component, computed, on, run } = Ember;
 
 export default Component.extend(WindowResizeMixin, {
   layout: layout,
   classNames: ['ember-theater-stage__character'],
+  portraits: Ember.A([]),
 
   // Associates the character and component so that script writers can perform Velocity manipulations
   // off the character.
   associateCharacterWithComponent: on('init', function() {
-    this.set('character.actor', this);
+    this.set('character.component', this);
   }),
 
   handleWindowResize: on('windowResize', function() {
@@ -56,46 +57,14 @@ export default Component.extend(WindowResizeMixin, {
     return characterWidth / stageWidth * 100;
   }),
 
-  defaultDestination: computed('index', 'charactersLength', function() {
-    const index = this.get('index');
-    const charactersLength = this.get('charactersLength');
-    switch (index) {
-      case 0: 
-        if (charactersLength === 1) {
-          return { x: 50, y: 0 };
-        } else {
-          return { x: 60, y: 10 };
-        }
-        break;
-      case 1: return { x: 40, y: 10 };
-      case 2: return { x: 80, y: 0 };
-      case 3: return { x: 20, y: 0 };
-      case 4: return { x: 100, y: 0 };
-      case 5: return { x: 0, y: 0 };
-      default: return { x: -20, y: 0 };
-    }
-  }),
-
-  goToDefaultPosition: observer('defaultDestination', function(options) {
-    const destination = this.get('defaultDestination');
-    this.walkTo(destination, options);
-    this.set('currentX', destination.x);
-    this.set('currentY', destination.y);
-  }),
-
-  walkTo(destination, options) {
-    const percent = this.get('characterWidthPercentage');
-    return Ember.$.Velocity.animate(this.$(), {
-      translateX: `${destination.x - (percent / 2)}vw`,
-      translateY: `${destination.y * -1}vh`
-    }, {
-      duration: this.translationDuration(destination, options)
-    });
-  },
-
   addInitialPortrait: on('didInsertElement', function() {
-    const imagePath = this.get('character.imagePath');
-    this.set('portraits', Ember.A([imagePath]));
+    const src = this.get('character.defaultPortrait.src');
+    const height = this.get('character.height');
+    this.$().height(`${height}vh`);
+    this.get('portraits').pushObject(src);
+    run.later(() => {
+      this.adjustImageSizes();
+    });
   }),
 
   translationDuration(destination, options) {
@@ -103,33 +72,6 @@ export default Component.extend(WindowResizeMixin, {
     const xDistance = Math.abs(destination.x - this.get('currentX'));
     const yDistance = Math.abs(destination.y - this.get('currentY'));
     return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) * speed;
-  },
-
-  defaultEnterStageX(enterStage) {
-    const percent = this.get('characterWidthPercentage');
-    switch (enterStage) {
-      case 'left': return -percent;
-      case 'right': return 100 + percent;
-      case 'bottom': return 50 - (percent / 2);
-      case 'top': return 50 - (percent / 2);
-    }
-  },
-
-  defaultEnterStageY(enterStage) {
-    switch (enterStage) {
-      case 'left': return 0;
-      case 'right': return 0;
-      case 'bottom': return -100;
-      case 'top': return 100;
-    }
-  },
-
-  defaultEntry(enterStage) {
-    return { x: this.defaultEnterStageX(enterStage), y: this.defaultEnterStageY(enterStage) };
-  },
-
-  goToInitialPosition(destination) {
-    return this.walkTo(destination, { speed: 0 });
   },
 
   activateImage() {

@@ -7,7 +7,8 @@ moduleForComponent('ember-theater-curtain', 'Unit | Component | ember theater cu
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar'],
   unit: true,
-  needs: ['model:ember-theater-backdrop', 'model:ember-theater-character-portrait']
+  needs: ['model:ember-theater-backdrop', 'model:ember-theater-character-portrait',
+    'model:ember-theater-character']
 });
 
 test('`_moduleNames` returns an array of model names found under ember-theater-fixtures', function(assert) {
@@ -17,7 +18,8 @@ test('`_moduleNames` returns an array of model names found under ember-theater-f
   assert.deepEqual(
     component.get('_modelNames'),
       ['ember-theater-backdrops',
-      'ember-theater-character-portraits'],
+      'ember-theater-character-portraits',
+      'ember-theater-characters'],
     'returns all model names'
   );
 });

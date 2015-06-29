@@ -1,9 +1,10 @@
 import DS from 'ember-data';
 
-const { Model, attr, hasMany } = DS;
+const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
-  portraits: hasMany('ember-theater-character-portrait'),
+  defaultPortrait: belongsTo('ember-theater-character-portrait', { inverse: null }),
+  portraits: hasMany('ember-theater-character-portrait', { inverse: 'character' }),
 
   height: attr('number'),
   name: attr('string'),

@@ -1,9 +1,11 @@
 .ember-theater-stage {
   overflow: hidden;
   background-color: #333;
+  perspective: 30vh;
 }
 
 .ember-theater,
+.ember-theater__director,
 .ember-theater-stage,
 .ember-theater-stage__backdrop,
 .ember-theater-stage__character,
@@ -12,6 +14,7 @@
 }
 
 .ember-theater,
+.ember-theater__director,
 .ember-theater-stage,
 .ember-theater-stage__backdrop {
   top: 0;
@@ -20,7 +23,7 @@
   left: 0;
 }
 
-.ember-theater-stage__portrait, .ember-theater-stage__backdrop {
+.ember-theater-stage__character, .ember-theater-stage__backdrop {
   opacity: 0;
 }
 

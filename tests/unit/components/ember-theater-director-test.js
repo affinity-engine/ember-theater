@@ -41,7 +41,7 @@ test('`backdrop` changes the scene backdrop', function(assert) {
       } 
     }
   });
-  
+
   component.set('store.data', fixtures.map((fixture) => { return Ember.Object.create(fixture); }));
 
   run(() => {
@@ -74,5 +74,30 @@ test('`backdrop` changes the scene backdrop', function(assert) {
       }, 50);
     }, 50);
     run.later(() => { done(); }, 200);
+  });
+});
+
+test('`pause` postpones the execution of the next line of the script', function(assert) {
+  assert.expect(4);
+  let durationDelayed, keyPressDelayed = false;
+  const done = assert.async();
+  const component = this.subject();
+  run(() => {
+    component.append();
+    component.send('pause', { duration: 10 }, () => {
+      durationDelayed = true;
+      assert.ok(durationDelayed, 'has waited for the `duration` to complete');
+
+      component.send('pause', { keyPress: true }, () => {
+        keyPressDelayed = true;
+        assert.ok(keyPressDelayed, 'has waited for the keyPress');
+      });
+      assert.ok(!keyPressDelayed, 'will wait for the keyPress');
+      Ember.$('body').trigger({ type: 'keypress', which: 32, keyCode: 32 });
+
+    });
+    assert.ok(!durationDelayed, 'will wait for the `duration` to complete');
+
+    run.later(() => { done(); }, 30);
   });
 });
