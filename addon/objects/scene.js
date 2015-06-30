@@ -32,7 +32,9 @@ export default Ember.Object.extend(ControllerMixin, {
   _actions: {
     next() {
       const promise = new RSVP.Promise((resolve) => {
-        this.get('director').send(this.get('_lineKey'), this.get('_lineValue'), resolve);
+        const line = this.get('_lineValue');
+        line.resolve = resolve;
+        this.get('director').send(this.get('_lineKey'), line);
       });
 
       promise.then(() => {

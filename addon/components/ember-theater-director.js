@@ -30,42 +30,45 @@ export default Component.extend({
   }),
 
   actions: {
-    backdrop(line, resolve) {
-      if (!line.sync) { resolve(); }
+    backdrop(line) {
+      if (!line.sync) { line.resolve(); }
       const backdrop = this.get('store').peekRecord('ember-theater-backdrop', line.id);
       const backdrops = this.get('backdrops');
       if (line.destroy) { return backdrops.removeObject(backdrop); }
-      const backdropIsPresent = backdrops.some((b) => {
-        return b.id === backdrop.id;
-      });
-
-      if (!backdropIsPresent) {
-        backdrops.pushObject(backdrop);
-      }
+      backdrops.pushObject(backdrop);
 
       run.next(() => {
         const element = backdrop.get('component.element');
         const effect = line.effect ? line.effect : 'transition.fadeIn';
         $.Velocity.animate(element, effect, line.options).then(() => {
-          if (line.sync) { resolve(); }
+          if (line.sync) { line.resolve(); }
         });
       });
     },
 
-    character(line, resolve) {
+    character(line) {
+      if (!line.sync) { line.resolve(); }
       const character = this.get('store').peekRecord('ember-theater-character', line.id);
-      line.resolve = resolve;
-      character.set('line', line);
-      this.get('characters').pushObject(character);
+      const characters = this.get('characters');
+      if (line.destroy) { return characters.removeObject(character); }
+      characters.pushObject(character);
+
+      run.next(() => {
+        const element = character.get('component.element');
+        const effect = line.effect ? line.effect : 'transition.fadeIn';
+        $.Velocity.animate(element, effect, line.options).then(() => {
+          if (line.sync) { line.resolve(); }
+        });
+      });
     },
 
-    pause(line, resolve) {
+    pause(line) {
       if (line.keyPress) {
-        this.set('pauseKeyPress', resolve);
+        this.set('pauseKeyPress', line.resolve);
       }
       if (line.duration) {
       run.later(() => {
-        resolve();
+        line.resolve();
         this.set('pauseKeyPress', null);
       }, line.duration);
       }

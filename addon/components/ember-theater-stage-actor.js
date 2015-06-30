@@ -10,15 +10,9 @@ export default Component.extend(WindowResizeMixin, {
   classNames: ['ember-theater-stage__character'],
   portraits: Ember.A([]),
 
-  performLine: on('didInsertElement', observer('character.line', function() {
-    if (!this.element) { return; }
-
-    const line = this.get('character.line');
-    if (!line.sync) { line.resolve(); }
-    Ember.$.Velocity.animate(this.element, line.effect, line.options).then(() => {
-      if (line.sync) { line.resolve(); }
-    });
-  })),
+  associateCharacterWithComponent: on('init', function() {
+    this.set('character.component', this);
+  }),
 
   handleWindowResize: on('windowResize', function() {
     this.adjustStageSize();
