@@ -3,5 +3,5 @@ export default [{
   name: 'Steven',
   height: 60,
   defaultPortrait: 'steven',
-  portraits: ['steven']
+  portraits: ['steven', 'steven--jumping']
 }];

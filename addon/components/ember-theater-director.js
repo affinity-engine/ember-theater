@@ -53,33 +53,10 @@ export default Component.extend({
     },
 
     character(line, resolve) {
-      if (!line.sync) { resolve(); }
       const character = this.get('store').peekRecord('ember-theater-character', line.id);
-      const characters = this.get('characters');
-      
-      const characterIsPresent = characters.some((x) => {
-        return x.id === character.id;
-      });
-
-      if (!characterIsPresent) {
-        characters.pushObject(character);
-      }
-
-      run.later(() => {
-        const element = character.get('component.element');
-        const effect = line.effect;
-        const centered = `${50 - (character.get('component.characterWidthPercentage') / 2)}vw`;
-        if (effect.position === 'center') {
-          effect.translateX = centered;
-        } else if (typeof effect.position === 'object') {
-          effect.translateX = effect.position.map((position) => {
-            return position === 'center' ? centered : position;
-          });
-        }
-        $.Velocity.animate(element, effect, line.options).then(() => {
-          if (line.sync) { resolve(); }
-        });
-      }, 500);
+      line.resolve = resolve;
+      character.set('line', line);
+      this.get('characters').pushObject(character);
     },
 
     pause(line, resolve) {

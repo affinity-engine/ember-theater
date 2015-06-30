@@ -4,9 +4,9 @@ export default Scene.create({
   script: [{
     backdrop: { id: 'beach', options: { duration: 0 } }
   }, {
-    character: { id: 'steven', effect: { position: ['center', 'center'], opacity: 1 }, options: { duration: 200 }, sync: true }
+    character: { id: 'steven', effect: { translateX: '50vw', opacity: 1 }, options: { duration: 500 }, sync: true }
   }, {
-    character: { id: 'steven', effect: { translateZ: '-100vh', rotateY: '-180deg' }, options: { duration: 4000 } }
+    character: { id: 'steven', effect: { rotateY: '180deg', translateZ: '100vh' }, options: { duration: 500 }, sync: true }
   }, {
     backdrop: { id: 'beach--night', options: { duration: 5000 }, sync: true }
   }, {

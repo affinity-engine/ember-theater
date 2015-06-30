@@ -3,23 +3,26 @@ import layout from '../templates/components/ember-theater-stage-actor';
 import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
 
-const { Component, computed, on, run } = Ember;
+const { Component, observer, on, run } = Ember;
 
 export default Component.extend(WindowResizeMixin, {
   layout: layout,
   classNames: ['ember-theater-stage__character'],
   portraits: Ember.A([]),
 
-  // Associates the character and component so that script writers can perform Velocity manipulations
-  // off the character.
-  associateCharacterWithComponent: on('init', function() {
-    this.set('character.component', this);
-  }),
+  performLine: on('didInsertElement', observer('character.line', function() {
+    if (!this.element) { return; }
+
+    const line = this.get('character.line');
+    if (!line.sync) { line.resolve(); }
+    Ember.$.Velocity.animate(this.element, line.effect, line.options).then(() => {
+      if (line.sync) { line.resolve(); }
+    });
+  })),
 
   handleWindowResize: on('windowResize', function() {
     this.adjustStageSize();
     this.adjustImageSizes();
-    this.repositionAfterResize();
   }),
 
   adjustStageSize: on('didInsertElement', function() {
@@ -31,31 +34,22 @@ export default Component.extend(WindowResizeMixin, {
   adjustImageSizes() {
     const height = this.get('character.height');
     const stageHeight = this.get('stageHeight');
-    const imgHeight = height * stageHeight / 100;
+    const largestWidth = this.determineWidth(height * stageHeight / 100);
+    this.$().width(largestWidth).css('left', largestWidth - (largestWidth * 1.5));
+  },
 
+  // Uses JQuery `each`, which changes `this` to the current element. Therefore, no fat arrow.
+  determineWidth(height) {
     let largestWidth = 0;
     this.$('.ember-theater-stage__portrait').each(function() {
       const $img = Ember.$(this);
-      const ratio = imgHeight / $img.prop('naturalHeight');
+      const ratio = height / $img.prop('naturalHeight');
       const width = $img.prop('naturalWidth') * ratio;
       if (width > largestWidth) { largestWidth = width; }
       $img.width(width);
     });
-
-    this.set('width', largestWidth);
-    this.$().width(largestWidth);
+    return largestWidth;
   },
-
-  repositionAfterResize() {
-    const destination = { x: this.get('currentX'), y: this.get('currentY') };
-    this.walkTo(destination);
-  },
-
-  characterWidthPercentage: computed('width', 'stageWidth', function() {
-    const characterWidth = this.get('width');
-    const stageWidth = this.get('stageWidth');
-    return characterWidth / stageWidth * 100;
-  }),
 
   addInitialPortrait: on('didInsertElement', function() {
     const src = this.get('character.defaultPortrait.src');
@@ -67,13 +61,6 @@ export default Component.extend(WindowResizeMixin, {
     });
   }),
 
-  translationDuration(destination, options) {
-    const speed = options && options.speed !== undefined ? options.speed : this.get('character.speed');
-    const xDistance = Math.abs(destination.x - this.get('currentX'));
-    const yDistance = Math.abs(destination.y - this.get('currentY'));
-    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2)) * speed;
-  },
-
   activateImage() {
     return Ember.$.Velocity.animate(this.$('.ember-theater-stage__portrait').first(), {
       opacity: 100
@@ -81,21 +68,6 @@ export default Component.extend(WindowResizeMixin, {
   },
 
   actions: {
-
-    enter(enterStage, options) {
-      const height = this.get('character.height');
-      this.$().height(`${height}vh`);
-      this.adjustImageSizes();
-
-      enterStage = typeof enterStage === 'string' ? this.defaultEntry(enterStage) : enterStage;
-      this.set('currentX', enterStage.x);
-      this.set('currentY', enterStage.y);
-
-      this.goToInitialPosition(enterStage).then(Ember.run.bind(this, this.activateImage))
-        .then(() => {
-          this.goToDefaultPosition(options);
-        });
-    },
 
     changePortrait(imagePath, options) {
       const portraits = this.get('portraits');
