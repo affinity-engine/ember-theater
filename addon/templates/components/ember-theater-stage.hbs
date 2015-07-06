@@ -1,6 +1,6 @@
-{{#each backdrops key='id' as |backdrop|}}
+{{#each backdrops as |backdrop|}}
   {{ember-theater-stage-backdrop backdrop=backdrop}}
 {{/each}}
-{{#each characters key='id' as |character index|}}
-  {{ember-theater-stage-actor character=character index=index charactersLength=characters.length}}
+{{#each characters as |character|}}
+  {{ember-theater-stage-actor character=character}}
 {{/each}}

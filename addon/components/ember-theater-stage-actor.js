@@ -2,17 +2,16 @@ import Ember from 'ember';
 import layout from '../templates/components/ember-theater-stage-actor';
 import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
+import PerformableLineMixin from '../mixins/performable-line';
 
-const { Component, observer, on, run } = Ember;
+const { Component, computed, observer, on, run } = Ember;
+const { alias } = computed;
 
-export default Component.extend(WindowResizeMixin, {
+export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
   layout: layout,
   classNames: ['ember-theater-stage__character'],
   portraits: Ember.A([]),
-
-  associateCharacterWithComponent: on('init', function() {
-    this.set('character.component', this);
-  }),
+  line: alias('character.line'),
 
   handleWindowResize: on('windowResize', function() {
     this.adjustStageSize();
