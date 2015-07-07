@@ -11,12 +11,12 @@ moduleForComponent('ember-theater-curtain', 'Unit | Component | ember theater cu
     'model:ember-theater-character']
 });
 
-test('`_moduleNames` returns an array of model names found under ember-theater-fixtures', function(assert) {
+test('`moduleNames` returns an array of model names found under ember-theater-fixtures', function(assert) {
   const component = this.subject({
     _modulePrefix: 'dummy'
   });
   assert.deepEqual(
-    component.get('_modelNames'),
+    component.get('modelNames'),
       ['ember-theater-backdrops',
       'ember-theater-character-portraits',
       'ember-theater-characters'],
@@ -24,7 +24,7 @@ test('`_moduleNames` returns an array of model names found under ember-theater-f
   );
 });
 
-test('`_loadResources` loads all media models on `didInsertElement`', function(assert) {
+test('`loadResources` loads all media models on `didInsertElement`', function(assert) {
   const done = assert.async();
   const component = this.subject({
     _modulePrefix: 'dummy'
@@ -38,7 +38,7 @@ test('`_loadResources` loads all media models on `didInsertElement`', function(a
   }, 50);
 });
 
-test('`_loadImages` preloads all image files', function(assert) {
+test('`loadImages` preloads all image files', function(assert) {
   const done = assert.async();
   const component = this.subject({
     emberTheaterBackdrops: Ember.A([{
@@ -49,7 +49,7 @@ test('`_loadImages` preloads all image files', function(assert) {
     }])
   });
 
-  component._loadImages();
+  component.loadImages();
 
   Ember.run.later(() => {
     assert.ok(component.get('emberTheaterBackdrops.firstObject.fileLoaded'), 'preloads backdrops');
@@ -58,7 +58,7 @@ test('`_loadImages` preloads all image files', function(assert) {
   }, 50);
 });
 
-test('`_checkForImageLoadCompletion` switches `imagesLoaded` when true', function(assert) {
+test('`imagesLoaded` returns true when all images are loaded', function(assert) {
   const component = this.subject();
   component.get('images').pushObjects([{}, {}, {}]);
   component.get('loadedImages').pushObjects([{}, {}]);
@@ -69,16 +69,16 @@ test('`_checkForImageLoadCompletion` switches `imagesLoaded` when true', functio
   assert.ok(component.get('imagesLoaded'), 'if `loadedImages` >= `images`, `imagesLoaded` is true');
 });
 
-test('`_checkForMediaLoadCompletion` triggers `complete` when all resources are loaded', function(assert) {
+test('`checkForMediaLoadCompletion` triggers `complete` when all resources are loaded', function(assert) {
   assert.expect(1);
   const component = this.subject({
-    targetObject: {
-      targetAction() {
+    attrs: {
+      complete() {
         assert.ok(true, 'triggers complete');
       }
-    },
-    complete: 'targetAction'
+    }
   });
 
   component.set('imagesLoaded', true);
+  component.checkForMediaLoadCompletion();
 });

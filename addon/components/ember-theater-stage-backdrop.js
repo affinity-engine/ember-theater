@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import PerformableLineMixin from '../mixins/performable-line';
 
-const { Component, computed, on, observer } = Ember;
+const { Component, computed, on } = Ember;
 const { alias } = computed;
 
 export default Component.extend(PerformableLineMixin, {
@@ -9,12 +9,11 @@ export default Component.extend(PerformableLineMixin, {
   tagName: 'img',
   attributeBindings: ['alt'],
   alt: alias('backdrop.caption'),
-  line: alias('backdrop.line'),
 
-  setImagePath: on('didInsertElement', observer('backdrop.src', function() {
+  setImagePath: on('didRender', function() {
     const element = this.$();
     if (element) {
       element.css('background-image',`url(${this.get('backdrop.src')})`);
     }
-  }))
+  })
 });

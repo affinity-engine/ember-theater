@@ -1,6 +1,6 @@
 {{#each backdrops as |backdrop|}}
-  {{ember-theater-stage-backdrop backdrop=backdrop}}
+  {{ember-theater-stage-backdrop backdrop=backdrop line=backdrop.line}}
 {{/each}}
 {{#each characters as |character|}}
-  {{ember-theater-stage-actor character=character}}
+  {{ember-theater-stage-actor character=character line=character.line}}
 {{/each}}

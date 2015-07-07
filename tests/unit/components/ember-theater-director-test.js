@@ -13,7 +13,7 @@ moduleForComponent('ember-theater-director', 'Unit | Component | ember theater d
     'model:ember-theater-backdrop']
 });
 
-test('`_loadScene` triggers the `next` action', function(assert) {
+test('`loadScene` triggers the `next` action', function(assert) {
   assert.expect(2);
 
   const component = this.subject({
@@ -26,12 +26,12 @@ test('`_loadScene` triggers the `next` action', function(assert) {
     })
   });
 
-  component._loadScene();
+  component.loadScene();
   assert.equal(component.get('lineReader.scene'), 'foo', 'sets the lineReader.scene to this.scene');
 });
 
 test('`backdrop` changes the scene backdrop', function(assert) {
-  assert.expect(11);
+  assert.expect(10);
   $.Velocity.mock = true;
   const done = assert.async();
 
@@ -70,11 +70,11 @@ test('`backdrop` changes the scene backdrop', function(assert) {
           run.later(() => {
             assert.equal($(backdropClass).length, 1, 'destroys element when `destroy`');
             assert.ok(/beach--night.jpg/.test($(backdropClass).first().css('background-image')), 'correct element is destroyed');
-          }, 80);
-        }, 80);
-      }, 80);
-    }, 80);
-    run.later(() => { done(); }, 500);
+          }, 50);
+        }, 50);
+      }, 50);
+    }, 50);
+    run.later(() => { done(); }, 300);
   });
 });
 

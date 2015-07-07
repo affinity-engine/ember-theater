@@ -4,14 +4,12 @@ import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
 import PerformableLineMixin from '../mixins/performable-line';
 
-const { Component, computed, on, run } = Ember;
-const { alias } = computed;
+const { Component, on, run } = Ember;
 
 export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
   layout: layout,
   classNames: ['ember-theater-stage__character'],
   portraits: Ember.A([]),
-  line: alias('character.line'),
 
   handleWindowResize: on('windowResize', function() {
     this.adjustStageSize();

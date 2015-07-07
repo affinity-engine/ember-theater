@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
-const { Mixin, on, observer, run } = Ember;
+const { Mixin, on, run } = Ember;
 
 export default Mixin.create({
   previousLine: null,
 
-  performLine: on('didInsertElement', observer('line', function() {
+  performLine: on('didRender', function() {
     const line = this.get('line');
     if (!this.element || this.get('previousLine') === line) { return; }
 
@@ -18,5 +18,5 @@ export default Mixin.create({
         if (line.sync) { line.resolve(); }
       });
     });
-  })),
+  })
 });

@@ -12,7 +12,7 @@ export default Component.extend({
   backdrops: Ember.A([]),
   characters: Ember.A([]),
 
-  _loadScene: observer('scene.script', function() {
+  loadScene: observer('scene', function() {
     this.get('lineReader').set('scene', this.get('scene'));
     this.send('next');
   }),
@@ -43,10 +43,7 @@ export default Component.extend({
       const characters = this.get('characters');
       const character = this.get('store').peekRecord('ember-theater-character', line.id);
       character.set('line', line);
-      if (line.destroy) {
-        characters.rejectBy('id', line.id);
-        return line.resolve();
-      }
+      if (line.destroy) { characters.removeObject(character); return line.resolve(); }
       if (!characters.isAny('id', line.id)) { characters.pushObject(character); }
     },
 

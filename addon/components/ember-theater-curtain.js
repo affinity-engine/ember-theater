@@ -3,7 +3,7 @@ import layout from '../templates/components/ember-theater-curtain';
 import { singularize } from 'ember-inflector';
 import ModulePrefixMixin from '../mixins/ember-theater-module-prefix';
 
-const { Component, computed, get, inject, observer, on, set } = Ember;
+const { Component, computed, get, inject, on, run, set } = Ember;
 const { filterBy, union } = computed;
 
 export default Component.extend(ModulePrefixMixin, {
@@ -13,7 +13,13 @@ export default Component.extend(ModulePrefixMixin, {
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterPortraits'),
   loadedImages: filterBy('images', 'fileLoaded', true),
 
-  _modelNames: computed({
+  imagesLoaded: computed('loadedImages.length', 'images.length', {
+    get() {
+      return this.get('loadedImages.length') >= this.get('images.length');
+    }
+  }),
+
+  modelNames: computed({
     get() {
       const paths = Object.keys(require.entries);
       const modulePrefix = this.get('_modulePrefix');
@@ -27,40 +33,34 @@ export default Component.extend(ModulePrefixMixin, {
     }
   }),
 
-  _loadResources: on('didInsertElement', function() {
+  loadResources: on('didInsertElement', function() {
     const store = this.get('store');
     const modulePrefix = this.get('_modulePrefix');
 
-    this.get('_modelNames').forEach((modelName) => {
+    this.get('modelNames').forEach((modelName) => {
       const singularName = singularize(modelName);
       const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
       const data = store.pushMany(singularName, fixtures);
       this.set(Ember.String.camelize(modelName), Ember.A(data));
     });
 
-    this._loadImages();
+    this.loadImages();
   }),
 
-  _loadImages: observer('images', function() {
+  loadImages() {
     this.get('images').forEach((item) => {
       const image = new Image();
       image.src = get(item, 'src');
-      image.onload = function() {
+      image.onload = run.bind(this, () => {
         set(item, 'fileLoaded', true);
-      };
+        this.rerender();
+      });
     });
-    this._checkForImageLoadCompletion();
-  }),
+  },
 
-  _checkForImageLoadCompletion: observer('loadedImages.length', 'images.length', function() {
-    if (this.get('loadedImages.length') >= this.get('images.length')) {
-      this.set('imagesLoaded', true);
-    }
-  }),
-
-  _checkForMediaLoadCompletion: observer('imagesLoaded', function() {
+  checkForMediaLoadCompletion: on('didRender', function() {
     if (this.get('imagesLoaded')) {
-      this.sendAction('complete');
+      this.attrs.complete();
     }
   })
 
