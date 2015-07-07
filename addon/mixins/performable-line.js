@@ -12,8 +12,9 @@ export default Mixin.create({
     this.set('previousLine', line);
     if (!line.sync) { line.resolve(); }
     run.next(() => {
+      if (!this.element) { return; }
       const effect = line.effect ? line.effect : 'transition.fadeIn';
-      $.Velocity.animate(this.element, effect, line.options).then(() => {
+      Ember.$.Velocity.animate(this.element, effect, line.options).then(() => {
         if (line.sync) { line.resolve(); }
       });
     });

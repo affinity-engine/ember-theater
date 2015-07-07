@@ -13,22 +13,25 @@ moduleForComponent('ember-theater-director', 'Unit | Component | ember theater d
     'model:ember-theater-backdrop']
 });
 
-test('`_loadScene` triggers the `next` action on its scene', function(assert) {
+test('`_loadScene` triggers the `next` action', function(assert) {
   assert.expect(2);
 
-  const Scene = Ember.Object.extend({
-    send(action) {
-      assert.equal(action, 'next', 'sends the `next` when scene changes');
-    }
+  const component = this.subject({
+    scene: 'foo',
+    lineReader: Ember.Object.create({
+      nextLine() {
+        assert.ok(true, 'runs `next`');
+        return { action: false };
+      }
+    })
   });
 
-  const component = this.subject();
-  component.set('scene', Scene.create());
-  assert.deepEqual(component.get('scene.director'), component, 'sets the scene director to `this`');
+  component._loadScene();
+  assert.equal(component.get('lineReader.scene'), 'foo', 'sets the lineReader.scene to this.scene');
 });
 
 test('`backdrop` changes the scene backdrop', function(assert) {
-  assert.expect(10);
+  assert.expect(11);
   $.Velocity.mock = true;
   const done = assert.async();
 
@@ -46,34 +49,32 @@ test('`backdrop` changes the scene backdrop', function(assert) {
 
   run(() => {
     component.append();
-    component.send('backdrop', { id: 'beach' }, function() {
-      assert.equal($(backdropClass).length, 0, 'promise resolved before backdrop when !sync');
-    });
+    component.send('backdrop', { id: 'beach', resolve() {
+      assert.equal($(backdropClass).first().css('opacity'), 0, 'promise resolved before backdrop when !sync');
+    }});
     run.later(() => {
-      assert.equal($(backdropClass).length, 1, 'adds the backdrop');
       assert.equal($(backdropClass).first().attr('alt'), 'beach at daytime', 'assigns alt');
       assert.ok(/beach.jpg/.test($(backdropClass).first().css('background-image')), 'assign correct background-image');
       assert.equal($(backdropClass).first().css('opacity'), 1, 'fades the element in by default');
 
-      component.send('backdrop', { id: 'beach--night', effect: { opacity: 0.5  }, sync: true }, function() {
-        assert.equal($(backdropClass).length, 2, 'promise is resolved after backdrop is rendered when sync');
-        assert.equal($(backdropClass).last().css('opacity'), 0.5, 'uses Velocity to transition element as specified by options object');
-      });
+      component.send('backdrop', { id: 'beach--night', effect: { opacity: 0.5  }, sync: true, resolve() {
+        assert.equal($(backdropClass).last().css('opacity'), 0.5, 'promise is resolved after backdrop is rendered when sync');
+      }});
 
       run.later(() => {
-        component.send('backdrop', { id: 'beach', effect: { right: '100px' } }, function() { });
+        component.send('backdrop', { id: 'beach', effect: { right: '100px' }, resolve() { assert.ok(true); } });
         run.later(() => {
           assert.equal($(backdropClass).first().css('right'), '100px', 'can hook into previously rendered backdrop');
 
-          component.send('backdrop', { id: 'beach', destroy: true }, function() { });
+          component.send('backdrop', { id: 'beach', destroy: true, resolve() { assert.ok(true); } });
           run.later(() => {
             assert.equal($(backdropClass).length, 1, 'destroys element when `destroy`');
             assert.ok(/beach--night.jpg/.test($(backdropClass).first().css('background-image')), 'correct element is destroyed');
-          }, 30);
-        }, 30);
-      }, 50);
-    }, 50);
-    run.later(() => { done(); }, 200);
+          }, 80);
+        }, 80);
+      }, 80);
+    }, 80);
+    run.later(() => { done(); }, 500);
   });
 });
 
@@ -84,18 +85,18 @@ test('`pause` postpones the execution of the next line of the script', function(
   const component = this.subject();
   run(() => {
     component.append();
-    component.send('pause', { duration: 10 }, () => {
+    component.send('pause', { duration: 10, resolve() {
       durationDelayed = true;
       assert.ok(durationDelayed, 'has waited for the `duration` to complete');
 
-      component.send('pause', { keyPress: true }, () => {
+      component.send('pause', { keyPress: true, resolve() {
         keyPressDelayed = true;
         assert.ok(keyPressDelayed, 'has waited for the keyPress');
-      });
+      }});
       assert.ok(!keyPressDelayed, 'will wait for the keyPress');
       Ember.$('body').trigger({ type: 'keypress', which: 32, keyCode: 32 });
 
-    });
+    }});
     assert.ok(!durationDelayed, 'will wait for the `duration` to complete');
 
     run.later(() => { done(); }, 30);

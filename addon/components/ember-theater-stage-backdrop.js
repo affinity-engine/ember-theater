@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import PerformableLineMixin from '../mixins/performable-line';
 
-const { Component, computed, on, observer, run } = Ember;
+const { Component, computed, on, observer } = Ember;
 const { alias } = computed;
 
 export default Component.extend(PerformableLineMixin, {

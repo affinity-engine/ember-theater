@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import layout from '../templates/components/ember-theater-director';
 
-const { Component, inject, observer, on, run } = Ember;
+const { Component, RSVP, inject, observer, on, run } = Ember;
+const { Promise } = RSVP;
 
 export default Component.extend({
   store: inject.service(),
@@ -34,7 +35,7 @@ export default Component.extend({
       const backdrops = this.get('backdrops');
       const backdrop = this.get('store').peekRecord('ember-theater-backdrop', line.id);
       backdrop.set('line', line);
-      if (line.destroy) { return backdrops.rejectBy('id', line.id); }
+      if (line.destroy) { backdrops.removeObject(backdrop); return line.resolve(); }
       if (!backdrops.isAny('id', line.id)) { backdrops.pushObject(backdrop); }
     },
 
@@ -42,7 +43,10 @@ export default Component.extend({
       const characters = this.get('characters');
       const character = this.get('store').peekRecord('ember-theater-character', line.id);
       character.set('line', line);
-      if (line.destroy) { return characters.rejectBy('id', line.id); }
+      if (line.destroy) {
+        characters.rejectBy('id', line.id);
+        return line.resolve();
+      }
       if (!characters.isAny('id', line.id)) { characters.pushObject(character); }
     },
 

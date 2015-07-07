@@ -4,7 +4,7 @@ import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
 import PerformableLineMixin from '../mixins/performable-line';
 
-const { Component, computed, observer, on, run } = Ember;
+const { Component, computed, on, run } = Ember;
 const { alias } = computed;
 
 export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
