@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-theater-stage-actor';
+import layout from '../templates/components/ember-theater-stage-character';
 import TheaterStage from './ember-theater-stage';
 import WindowResizeMixin from '../mixins/window-resize';
 import PerformableLineMixin from '../mixins/performable-line';
