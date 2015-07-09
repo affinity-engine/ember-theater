@@ -38,6 +38,7 @@
 .ember-theater-stage__character {
   bottom: 0;
   left: 0;
+  z-index: 10;
 }
 
 .ember-theater-stage__portrait {

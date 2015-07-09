@@ -9,8 +9,7 @@ export default Component.extend({
   lineReader: inject.service(),
   layout: layout,
   classNames: ['ember-theater__director'],
-  backdrops: Ember.A([]),
-  characters: Ember.A([]),
+  sceneObjects: Ember.A([]),
 
   loadScene: observer('scene', function() {
     this.get('lineReader').set('scene', this.get('scene'));
@@ -30,21 +29,23 @@ export default Component.extend({
     });
   }),
 
+  addSceneObject(line, sceneObject) {
+    const sceneObjects = this.get('sceneObjects');
+    sceneObject.set('line', line);
+
+    if (line.destroy) { sceneObjects.removeObject(sceneObject); return line.resolve(); }
+    if (!sceneObjects.isAny('id', line.id)) { sceneObjects.pushObject(sceneObject); }
+  },
+
   actions: {
     backdrop(line) {
-      const backdrops = this.get('backdrops');
-      const backdrop = this.get('store').peekRecord('ember-theater-backdrop', line.id);
-      backdrop.set('line', line);
-      if (line.destroy) { backdrops.removeObject(backdrop); return line.resolve(); }
-      if (!backdrops.isAny('id', line.id)) { backdrops.pushObject(backdrop); }
-    },
+      const sceneObject = this.get('store').peekRecord('ember-theater-backdrop', line.id);
+      this.addSceneObject(line, sceneObject);
+   },
 
     character(line) {
-      const characters = this.get('characters');
-      const character = this.get('store').peekRecord('ember-theater-character', line.id);
-      character.set('line', line);
-      if (line.destroy) { characters.removeObject(character); return line.resolve(); }
-      if (!characters.isAny('id', line.id)) { characters.pushObject(character); }
+      const sceneObject = this.get('store').peekRecord('ember-theater-character', line.id);
+      this.addSceneObject(line, sceneObject);
     },
 
     next() {

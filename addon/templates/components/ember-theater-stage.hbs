@@ -1,6 +1,3 @@
-{{#each backdrops as |backdrop|}}
-  {{ember-theater-stage-backdrop backdrop=backdrop line=backdrop.line}}
-{{/each}}
-{{#each characters as |character|}}
-  {{ember-theater-stage-character character=character line=character.line}}
+{{#each sceneObjects as |sceneObject|}}
+  {{component sceneObject.componentType line=sceneObject.line sceneObject=sceneObject}}
 {{/each}}

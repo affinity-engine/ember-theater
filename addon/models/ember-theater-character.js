@@ -3,6 +3,8 @@ import DS from 'ember-data';
 const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
+  componentType: 'ember-theater-stage-character',
+
   defaultPortrait: belongsTo('ember-theater-character-portrait', { inverse: null }),
   portraits: hasMany('ember-theater-character-portrait', { inverse: 'character' }),
 

@@ -45,7 +45,9 @@ test('`backdrop` changes the scene backdrop', function(assert) {
     }
   });
 
-  component.set('store.data', fixtures.map((fixture) => { return Ember.Object.create(fixture); }));
+  component.set('store.data', fixtures.map((fixture) => {
+    return Ember.Object.extend({ componentType: 'ember-theater-stage-backdrop' }).create(fixture);
+  }));
 
   run(() => {
     component.append();

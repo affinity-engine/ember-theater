@@ -9,6 +9,7 @@ export default Component.extend(PerformableLineMixin, {
   tagName: 'img',
   attributeBindings: ['alt'],
   alt: alias('backdrop.caption'),
+  backdrop: alias('sceneObject'),
 
   setImagePath: on('didRender', function() {
     const element = this.$();
