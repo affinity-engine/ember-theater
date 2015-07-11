@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-theater-stage-character';
-import TheaterStage from './ember-theater-stage';
-import WindowResizeMixin from '../mixins/window-resize';
-import PerformableLineMixin from '../mixins/performable-line';
+import layout from './template';
+import TheaterStage from '../ember-theater-stage/component';
+import WindowResizeMixin from '../../mixins/window-resize';
+import PerformableLineMixin from '../../mixins/performable-line';
 
 const { Component, computed, on, run } = Ember;
 const { alias } = computed;

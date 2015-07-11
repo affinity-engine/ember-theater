@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-theater-director';
+import layout from './template';
 
 const { Component, RSVP, inject, observer, on, run } = Ember;
 const { Promise } = RSVP;

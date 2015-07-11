@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-theater';
-import ModulePrefixMixin from '../mixins/ember-theater-module-prefix';
+import layout from './template';
+import ModulePrefixMixin from '../../mixins/ember-theater-module-prefix';
 
 const { Component } = Ember;
 

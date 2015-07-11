@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import layout from '../templates/components/ember-theater-curtain';
+import layout from './template';
 import { singularize } from 'ember-inflector';
-import ModulePrefixMixin from '../mixins/ember-theater-module-prefix';
+import ModulePrefixMixin from '../../mixins/ember-theater-module-prefix';
 
 const { Component, computed, get, inject, on, run, set } = Ember;
 const { filterBy, union } = computed;

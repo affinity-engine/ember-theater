@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import PerformableLineMixin from '../mixins/performable-line';
+import PerformableLineMixin from '../../mixins/performable-line';
 
 const { Component, computed, on } = Ember;
 const { alias } = computed;
