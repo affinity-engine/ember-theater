@@ -11,7 +11,7 @@ export default Component.extend(ModulePrefixMixin, {
   actions: {
     transitionToScene(sceneId) {
       const modulePrefix = this.get('_modulePrefix');
-      const scene = require(`${modulePrefix}/scenes/${sceneId}`)['default'];
+      const scene = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
       scene.set('container', this.get('container'));
       this.set('scene', scene);
     },

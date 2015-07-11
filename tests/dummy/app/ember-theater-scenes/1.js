@@ -1,4 +1,4 @@
-import Scene from 'dummy/objects/scene';
+import Scene from 'ember-theater/models/ember-theater-scene';
 
 export default Scene.create({
   script: [{

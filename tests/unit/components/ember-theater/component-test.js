@@ -7,7 +7,7 @@ moduleForComponent('ember-theater', 'Unit | Component | ember theater', {
 });
 
 test('`transitionToScene` sets the current scene', function(assert) {
-  const scene = require('dummy/scenes/2')['default'];
+  const scene = require('dummy/ember-theater-scenes/2')['default'];
 
   const component = this.subject({
     _modulePrefix: 'dummy'
@@ -18,7 +18,7 @@ test('`transitionToScene` sets the current scene', function(assert) {
 });
 
 test('`transitionToInitialScene` transitions to the `initialScene`', function(assert) {
-  const scene = require('dummy/scenes/2')['default'];
+  const scene = require('dummy/ember-theater-scenes/2')['default'];
 
   const component = this.subject({
     initialScene: '2',
