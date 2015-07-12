@@ -4,23 +4,9 @@ import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction'
 const { run } = Ember;
 
 export default EmberTheaterDirection.create({
-  // `keyPress` is not recognized on this component, so we need to set it up manually on the body.
-  resolveKeyPress(event) {
-    if (event.which === 32 && this.get('pauseKeyPress')) {
-      Ember.$('body').off('.pause');
-      this.get('pauseKeyPress')();
-    }
-  },
-
-  setupKeyPressWatcher() {
-    Ember.$('body').on('keypress.pause', (event) => {
-      this.resolveKeyPress(event);
-    });
-  },
-
   perform(line) {
     if (line.keyPress) {
-      this.setupKeyPressWatcher();
+      this._setupKeyPressWatcher();
       this.set('pauseKeyPress', line.resolve);
     }
     if (line.duration) {
@@ -28,5 +14,18 @@ export default EmberTheaterDirection.create({
         line.resolve();
       }, line.duration);
     }
+  },
+
+  _resolveKeyPress(event) {
+    if (event.which === 32 && this.get('pauseKeyPress')) {
+      Ember.$('body').off('.pause');
+      this.get('pauseKeyPress')();
+    }
+  },
+
+  _setupKeyPressWatcher() {
+    Ember.$('body').on('keypress.pause', (event) => {
+      this._resolveKeyPress(event);
+    });
   }
 });
