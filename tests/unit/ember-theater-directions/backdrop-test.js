@@ -18,11 +18,13 @@ test('`perform` executes the current line', function(assert) {
         const sceneObject = sceneObjects.find((sceneObject) => {
           return sceneObject.id === id;
         });
+
         if (!sceneObject) {
           return Ember.Object.create({
             id: id
           });
         }
+
         return sceneObject;
       } 
     }
@@ -49,7 +51,12 @@ test('`perform` executes the current line', function(assert) {
   };
 
   backdrop.perform(line, sceneObjects);
-  assert.deepEqual(sceneObjects.map((object) => { return object.id; }), ['first', 'second'], 'can add multiple objects');
+
+  let actual = sceneObjects.map((object) => {
+    return object.id;
+  });
+
+  assert.deepEqual(actual, ['first', 'second'], 'can add multiple objects');
 
   line = {
     id: 'second',
@@ -60,5 +67,10 @@ test('`perform` executes the current line', function(assert) {
   };
 
   backdrop.perform(line, sceneObjects);
-  assert.deepEqual(sceneObjects.map((object) => { return object.id; }), ['first'], 'removes the object when destroy');
+
+  actual = sceneObjects.map((object) => {
+    return object.id;
+  });
+
+  assert.deepEqual(actual, ['first'], 'removes the object when destroy');
 });

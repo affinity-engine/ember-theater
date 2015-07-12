@@ -9,8 +9,11 @@ moduleForComponent('ember-theater-director', 'Unit | Component | ember theater d
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar'],
   unit: true,
-  needs: ['component:ember-theater-stage', 'component:ember-theater-stage-backdrop', 
-    'model:ember-theater-backdrop']
+  needs: [
+    'component:ember-theater-stage-backdrop', 
+    'component:ember-theater-stage', 
+    'model:ember-theater-backdrop'
+  ]
 });
 
 test('`loadScene` triggers the `next` action', function(assert) {

@@ -11,6 +11,7 @@ moduleFor('service:line-reader', 'Unit | Service | line reader', {
   beforeEach() {
     lineReader = this.subject({
       _lineIndex: 0,
+
       scene: Ember.Object.create({
         script: Ember.A([{
           backdrop: { id: 'beach' }
@@ -20,10 +21,20 @@ moduleFor('service:line-reader', 'Unit | Service | line reader', {
   }
 });
 
+test('`nextLine` returns the next action/line or false', function(assert) {
+  lineReader.set('_lineIndex', -1);
+
+  const expected = { action: 'backdrop', line: { id: 'beach' } };
+  assert.deepEqual(lineReader.nextLine(), expected, 'returns the action/line');
+  assert.equal(lineReader.get('_lineIndex'), 0, 'increments the `_lineIndex`');
+  assert.deepEqual(lineReader.nextLine(), { action: false }, 'false when there are no more actions');
+});
+
 test('`_line` returns the current line', function(assert) {
   const line = {
     backdrop: { id: 'beach' }
   };
+
   assert.deepEqual(lineReader.get('_line'), line, 'returns current line');
 });
 
@@ -37,16 +48,8 @@ test('`_lineValue` returns the current line value', function(assert) {
 
 test('`_nextLineExists` evaluates the presence of a following line', function(assert) {
   assert.ok(!lineReader.get('_nextLineExists'), 'returns false if there is no following line');
+
   lineReader.get('scene.script').pushObject({ backdrop: { id: 'foo' } });
+
   assert.ok(lineReader.get('_nextLineExists'), 'returns true if there is a following line');
 });
-
-test('`nextLine` returns the next action/line or false', function(assert) {
-  lineReader.set('_lineIndex', -1);
-  assert.deepEqual(lineReader.nextLine(), { action: 'backdrop', line: { id: 'beach' } },
-    'returns the action/line');
-  assert.equal(lineReader.get('_lineIndex'), 0, 'increments the `_lineIndex`');
-  assert.deepEqual(lineReader.nextLine(), { action: false },
-    'returns { action: false } when there are no more actions');
-});
-

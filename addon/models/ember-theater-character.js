@@ -1,6 +1,11 @@
 import DS from 'ember-data';
 
-const { Model, attr, belongsTo, hasMany } = DS;
+const { 
+  attr, 
+  belongsTo, 
+  hasMany, 
+  Model 
+} = DS;
 
 export default Model.extend({
   componentType: 'ember-theater-stage-character',
@@ -15,5 +20,4 @@ export default Model.extend({
   textSpeed: attr('number'),
   textSound: attr('string'),
   walkSpeed: attr('number')
-  
 });

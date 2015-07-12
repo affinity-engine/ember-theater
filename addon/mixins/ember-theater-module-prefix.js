@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-const { Mixin, computed } = Ember;
+const { 
+  computed, 
+  Mixin 
+} = Ember;
 
 export default Mixin.create({
   _modulePrefix: computed({

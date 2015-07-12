@@ -10,8 +10,8 @@ module('ember-theater-direction:pause', 'Unit | Ember Theater Direction | pause'
 
 test('`perform` executes the current line', function(assert) {
   assert.expect(4);
-  let durationDelayed, keyPressDelayed = false;
 
+  let durationDelayed, keyPressDelayed = false;
   const done = assert.async();
   const pause = Pause;
 

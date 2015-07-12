@@ -1,13 +1,16 @@
 import DS from 'ember-data';
 
-const { Model, attr, belongsTo } = DS;
+const { 
+  attr, 
+  belongsTo, 
+  Model 
+} = DS;
 
 export default Model.extend({
   character: belongsTo('ember-theater-character', { inverse: 'portraits' }),
 
   caption: attr('string'),
   height: attr('number'),
-  src: attr('string'),
-  opacity: attr('number')
-  
+  opacity: attr('number'),
+  src: attr('string')
 });

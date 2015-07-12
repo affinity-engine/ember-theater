@@ -1,9 +1,18 @@
 import Ember from 'ember';
 
-const { Service, computed } = Ember;
+const { 
+  computed, 
+  Service 
+} = Ember;
 
 export default Service.extend({
   _lineIndex: -1,
+
+  nextLine() {
+    if (!this.get('_nextLineExists')) { return { action: false }; }
+    this.incrementProperty('_lineIndex');
+    return { action: this.get('_lineKey'), line: this.get('_lineValue') };
+  },
 
   _line: computed('_lineIndex', {
     get() {
@@ -27,11 +36,5 @@ export default Service.extend({
     get() {
       return this.get('_lineIndex') < this.get('scene.script.length') - 1;
     }
-  }),
-
-  nextLine() {
-    if (!this.get('_nextLineExists')) { return { action: false }; }
-    this.incrementProperty('_lineIndex');
-    return { action: this.get('_lineKey'), line: this.get('_lineValue') };
-  }
+  })
 });

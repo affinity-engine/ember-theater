@@ -9,6 +9,7 @@ export default EmberTheaterDirection.create({
       this._setupKeyPressWatcher();
       this.set('pauseKeyPress', line.resolve);
     }
+
     if (line.duration) {
       run.later(() => {
         line.resolve();

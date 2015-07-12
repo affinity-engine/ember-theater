@@ -1,22 +1,67 @@
 import Ember from 'ember';
 import layout from './template';
 import { singularize } from 'ember-inflector';
-import ModulePrefixMixin from '../../mixins/ember-theater-module-prefix';
+import ModulePrefixMixin from 'ember-theater/mixins/ember-theater-module-prefix';
 
-const { Component, computed, get, inject, on, run, set } = Ember;
-const { filterBy, union } = computed;
+const {
+  Component,
+  computed,
+  get,
+  inject,
+  on,
+  run,
+  set
+} = Ember;
+
+const {
+  filterBy,
+  union
+} = computed;
 
 export default Component.extend(ModulePrefixMixin, {
-  layout: layout,
   classNames: ['ember-theater__curtain'],
-  store: inject.service('store'),
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterPortraits'),
+  layout: layout,
   loadedImages: filterBy('images', 'fileLoaded', true),
+  store: inject.service('store'),
+
+  checkForMediaLoadCompletion: on('didRender', function() {
+    if (this.get('imagesLoaded')) {
+      this.attrs.complete();
+    }
+  }),
 
   imagesLoaded: computed('loadedImages.length', 'images.length', {
     get() {
       return this.get('loadedImages.length') >= this.get('images.length');
     }
+  }),
+
+  loadImages() {
+    this.get('images').forEach((item) => {
+      const image = new Image();
+      image.src = get(item, 'src');
+
+      image.onload = run.bind(this, () => {
+        set(item, 'fileLoaded', true);
+        this.rerender();
+      });
+    });
+  },
+
+  loadResources: on('didInsertElement', function() {
+    const store = this.get('store');
+    const modulePrefix = this.get('_modulePrefix');
+
+    this.get('modelNames').forEach((modelName) => {
+      const singularName = singularize(modelName);
+      const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
+      const data = store.pushMany(singularName, fixtures);
+
+      this.set(Ember.String.camelize(modelName), Ember.A(data));
+    });
+
+    this.loadImages();
   }),
 
   modelNames: computed({
@@ -31,37 +76,5 @@ export default Component.extend(ModulePrefixMixin, {
         return regex.exec(path)[1];
       });  
     }
-  }),
-
-  loadResources: on('didInsertElement', function() {
-    const store = this.get('store');
-    const modulePrefix = this.get('_modulePrefix');
-
-    this.get('modelNames').forEach((modelName) => {
-      const singularName = singularize(modelName);
-      const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
-      const data = store.pushMany(singularName, fixtures);
-      this.set(Ember.String.camelize(modelName), Ember.A(data));
-    });
-
-    this.loadImages();
-  }),
-
-  loadImages() {
-    this.get('images').forEach((item) => {
-      const image = new Image();
-      image.src = get(item, 'src');
-      image.onload = run.bind(this, () => {
-        set(item, 'fileLoaded', true);
-        this.rerender();
-      });
-    });
-  },
-
-  checkForMediaLoadCompletion: on('didRender', function() {
-    if (this.get('imagesLoaded')) {
-      this.attrs.complete();
-    }
   })
-
 });

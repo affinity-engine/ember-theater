@@ -49,7 +49,12 @@ test('`perform` executes the current line', function(assert) {
   };
 
   character.perform(line, sceneObjects);
-  assert.deepEqual(sceneObjects.map((object) => { return object.id; }), ['first', 'second'], 'can add multiple objects');
+
+  let actual = sceneObjects.map((object) => {
+    return object.id;
+  });
+
+  assert.deepEqual(actual, ['first', 'second'], 'can add multiple objects');
 
   line = {
     id: 'second',
@@ -60,5 +65,10 @@ test('`perform` executes the current line', function(assert) {
   };
 
   character.perform(line, sceneObjects);
-  assert.deepEqual(sceneObjects.map((object) => { return object.id; }), ['first'], 'removes the object when destroy');
+
+  actual = sceneObjects.map((object) => {
+    return object.id;
+  });
+
+  assert.deepEqual(actual, ['first'], 'removes the object when destroy');
 });

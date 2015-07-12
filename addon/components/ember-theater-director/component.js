@@ -1,14 +1,20 @@
 import Ember from 'ember';
 import layout from './template';
-import ModulePrefixMixin from '../../mixins/ember-theater-module-prefix';
+import ModulePrefixMixin from 'ember-theater/mixins/ember-theater-module-prefix';
 
-const { Component, RSVP, inject, observer } = Ember;
+const {
+  Component,
+  inject,
+  observer,
+  RSVP
+} = Ember;
+
 const { Promise } = RSVP;
 
 export default Component.extend(ModulePrefixMixin, {
-  lineReader: inject.service(),
-  layout: layout,
   classNames: ['ember-theater__director'],
+  layout: layout,
+  lineReader: inject.service(),
   sceneObjects: Ember.A([]),
 
   loadScene: observer('scene', function() {
@@ -17,14 +23,6 @@ export default Component.extend(ModulePrefixMixin, {
   }),
 
   actions: {
-    perform(action, line) {
-      const modulePrefix = this.get('_modulePrefix');
-      const dashAction = Ember.String.dasherize(action);
-      const direction = require(`${modulePrefix}/ember-theater-directions/${dashAction}`)['default'];
-      direction.set('container', this.get('container'));
-      direction.perform(line, this.get('sceneObjects'));
-    },
-    
     next() {
       const { action, line } = this.get('lineReader').nextLine();
       if (!action) { return; }
@@ -37,6 +35,15 @@ export default Component.extend(ModulePrefixMixin, {
       promise.then(() => {
         this.send('next');
       });
+    },
+
+    perform(action, line) {
+      const modulePrefix = this.get('_modulePrefix');
+      const path = `${modulePrefix}/ember-theater-directions/${Ember.String.dasherize(action)}`;
+      const direction = require(path)['default'];
+
+      direction.set('container', this.get('container'));
+      direction.perform(line, this.get('sceneObjects'));
     }
   }
 });
