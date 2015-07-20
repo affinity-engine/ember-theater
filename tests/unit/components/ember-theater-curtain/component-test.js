@@ -10,7 +10,7 @@ moduleForComponent('ember-theater-curtain', 'Unit | Component | ember theater cu
   needs: [
     'model:ember-theater-backdrop', 
     'model:ember-theater-character',
-    'model:ember-theater-character-portrait'
+    'model:ember-theater-character-expression'
   ]
 });
 
@@ -48,8 +48,8 @@ test('`loadImages` preloads all image files', function(assert) {
       src: 'images/backdrops/beach.jpg'
     }]),
 
-    emberTheaterCharacterPortraits: Ember.A([{
-      src: 'images/portraits/steven.png'
+    emberTheaterCharacterExpressions: Ember.A([{
+      src: 'images/expressions/steven.png'
     }])
   });
 
@@ -57,7 +57,7 @@ test('`loadImages` preloads all image files', function(assert) {
 
   Ember.run.later(() => {
     assert.ok(component.get('emberTheaterBackdrops.firstObject.fileLoaded'), 'backdrops');
-    assert.ok(component.get('emberTheaterCharacterPortraits.firstObject.fileLoaded'), 'portraits');
+    assert.ok(component.get('emberTheaterCharacterExpressions.firstObject.fileLoaded'), 'expressions');
     done();
   }, 50);
 });
@@ -72,7 +72,7 @@ test('`loadResources` loads all media models on `didInsertElement`', function(as
 
   Ember.run.later(() => {
     assert.ok(component.get('emberTheaterBackdrops.length') > 0, 'loads backdrops');
-    assert.ok(component.get('emberTheaterCharacterPortraits.length') > 0, 'loads portraits');
+    assert.ok(component.get('emberTheaterCharacterExpressions.length') > 0, 'loads expressions');
     done();
   }, 50);
 });
@@ -83,7 +83,7 @@ test('`moduleNames` returns an array of model names', function(assert) {
   });
   const expected = [
     'ember-theater-backdrops',
-    'ember-theater-character-portraits',
+    'ember-theater-character-expressions',
     'ember-theater-characters'
   ];
 

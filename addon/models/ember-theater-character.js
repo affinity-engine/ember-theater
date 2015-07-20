@@ -10,8 +10,8 @@ const {
 export default Model.extend({
   componentType: 'ember-theater-stage-character',
 
-  defaultPortrait: belongsTo('ember-theater-character-portrait', { inverse: null }),
-  portraits: hasMany('ember-theater-character-portrait', { inverse: 'character' }),
+  defaultExpression: belongsTo('ember-theater-character-expression', { inverse: null }),
+  expressions: hasMany('ember-theater-character-expression', { inverse: 'character' }),
 
   height: attr('number'),
   name: attr('string'),

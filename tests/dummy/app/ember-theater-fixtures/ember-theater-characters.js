@@ -2,6 +2,6 @@ export default [{
   id: 'steven',
   name: 'Steven',
   height: 60,
-  defaultPortrait: 'steven',
-  portraits: ['steven', 'steven--jumping']
+  defaultExpression: 'steven',
+  expressions: ['steven', 'steven--jumping']
 }];

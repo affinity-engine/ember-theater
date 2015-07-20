@@ -7,7 +7,7 @@ const {
 } = DS;
 
 export default Model.extend({
-  character: belongsTo('ember-theater-character', { inverse: 'portraits' }),
+  character: belongsTo('ember-theater-character', { inverse: 'expressions' }),
 
   caption: attr('string'),
   height: attr('number'),

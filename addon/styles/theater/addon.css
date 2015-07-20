@@ -9,7 +9,7 @@
 .ember-theater-stage,
 .ember-theater-stage__backdrop,
 .ember-theater-stage__character,
-.ember-theater-stage__portrait {
+.ember-theater-stage__expression {
   position: absolute;
 }
 
@@ -23,7 +23,7 @@
   left: 0;
 }
 
-.ember-theater-stage__character, .ember-theater-stage__backdrop {
+.ember-theater-stage__character, .ember-theater-stage__expression, .ember-theater-stage__backdrop {
   opacity: 0;
 }
 
@@ -41,6 +41,6 @@
   z-index: 10;
 }
 
-.ember-theater-stage__portrait {
+.ember-theater-stage__expression {
   height: 100%;
 }

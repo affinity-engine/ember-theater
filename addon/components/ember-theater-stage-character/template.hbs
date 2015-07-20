@@ -1,3 +1,5 @@
-{{#each portraits as |portrait|}}
-  {{ember-theater-stage-character-portrait src=portrait character=this}}
+{{#each expressionContainers as |expressionContainer|}}
+  {{ember-theater-stage-character-expression
+    expression=expressionContainer.expression
+    line=expressionContainer.line}}
 {{/each}}

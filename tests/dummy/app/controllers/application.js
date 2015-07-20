@@ -30,7 +30,7 @@ export default Controller.extend({
         return character.get('name') === 'Steven';
       });
       if (steven) {
-        steven.get('actor').send('changePortrait', imagePath);
+        steven.get('actor').send('changeExpression', imagePath);
       } else {
         const character = Ember.Object.create({
           name: 'Steven',

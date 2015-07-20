@@ -21,5 +21,7 @@ export default Component.extend(PerformableLineMixin, {
     if (element) {
       element.css('background-image',`url(${this.get('backdrop.src')})`);
     }
+
+    this.executeLine();
   })
 });

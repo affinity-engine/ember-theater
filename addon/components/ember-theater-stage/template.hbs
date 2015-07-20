@@ -1,3 +1,5 @@
-{{#each sceneObjects as |sceneObject|}}
-  {{component sceneObject.componentType line=sceneObject.line sceneObject=sceneObject}}
+{{#each sceneObjectContainers as |sceneObjectContainer|}}
+  {{component sceneObjectContainer.sceneObject.componentType
+    line=sceneObjectContainer.line
+    sceneObject=sceneObjectContainer.sceneObject}}
 {{/each}}

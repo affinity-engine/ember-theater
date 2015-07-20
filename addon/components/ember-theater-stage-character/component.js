@@ -7,6 +7,8 @@ import PerformableLineMixin from '../../mixins/performable-line';
 const { 
   Component, 
   computed, 
+  inject,
+  observer,
   on, 
   run 
 } = Ember;
@@ -16,22 +18,36 @@ export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
   character: alias('sceneObject'),
   classNames: ['ember-theater-stage__character'],
   layout: layout,
-  portraits: Ember.A([]),
+  expressionContainers: Ember.A([]),
+  store: inject.service(),
 
   activateImage() {
-    const portrait = this.$('.ember-theater-stage__portrait').first();
+    const expression = this.$('.ember-theater-stage__expression').first();
 
-    return Ember.$.Velocity.animate(portrait, {
+    return Ember.$.Velocity.animate(expression, {
       opacity: 100
     }, 0);
   },
 
-  addInitialPortrait: on('didInsertElement', function() {
-    const src = this.get('character.defaultPortrait.src');
+  addInitialExpression: on('didInsertElement', function() {
+    let expression;
+    const line = this.get('line.expression');
+    const transitionIn = this.get('line.expression.transitionIn') ? line.transitionIn : { effect: { opacity: 1 } };
+
+    if (this.get('line.expression.id')) {
+      expression = this.get('store').peekRecord('ember-theater-character-expression', line.id); 
+    } else {
+      expression = this.get('character.defaultExpression');
+    }
+
+    const expressionContainer = Ember.Object.create({
+      expression: expression,
+      line: transitionIn
+    });
     const height = this.get('character.height');
 
     this.$().height(`${height}vh`);
-    this.get('portraits').pushObject(src);
+    this.get('expressionContainers').pushObject(expressionContainer);
 
     run.later(() => {
       this.adjustImageSizes();
@@ -57,7 +73,7 @@ export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
   determineWidth(height) {
     let largestWidth = 0;
 
-    this.$('.ember-theater-stage__portrait').each(function() {
+    this.$('.ember-theater-stage__expression').each(function() {
       const $img = Ember.$(this);
       const width = $img.prop('naturalWidth') * height / $img.prop('naturalHeight');
 
@@ -76,21 +92,35 @@ export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
     this.adjustImageSizes();
   }),
 
-  actions: {
-    changePortrait(imagePath, options) {
-      const portraits = this.get('portraits');
+  performLine: on('didUpdate', function() {
+    this.executeLine();
+  }),
 
-      this.$('.ember-theater-stage__portrait').each(function() {
-        Ember.$.Velocity.animate(Ember.$(this), { opacity: 0 }, options).then(() => {
-          portraits.shiftObject();
-        });
-      });
+  changeExpression: observer('line.expression', function() {
+    const line = this.get('line.expression');
+    if (!line || !this.element || this.get('previousExpressionLine') === line) { return; }
+    
+    this.set('previousExpressionLine', line);
 
-      portraits.addObject(imagePath);
+    const expression = this.get('store').peekRecord('ember-theater-character-expression', line.id); 
+    const oldExpression = this.get('expressionContainers.firstObject');
+    const transitionIn = line.transitionIn.effect ? line.transitionIn : { effect: 'fadeIn', options: line.transitionIn.options };
+    const transitionOut = line.transitionOut.effect ? line.transitionOut : { effect: 'fadeOut', options: line.transitionOut.options };
 
-      Ember.run.later(this, function() {
-        this.$('.ember-theater-stage__portrait').last().velocity('fadeIn', options);
-      });
-    }
-  }
+    transitionOut.resolve = () => {
+      this.get('expressionContainers').removeObject(oldExpression);
+    };
+
+    const expressionContainer = Ember.Object.create({
+      line: transitionIn, 
+      expression: expression
+    });
+
+    oldExpression.set('line', transitionOut);
+    this.get('expressionContainers').pushObject(expressionContainer);
+ 
+    run.later(() => {
+      this.adjustImageSizes();
+    });
+  })
 });

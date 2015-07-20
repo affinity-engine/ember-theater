@@ -1,6 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('ember-theater-character-portrait', 'Unit | Model | ember theater character portrait', {
+moduleForModel('ember-theater-character-expression', 'Unit | Model | ember theater character expression', {
   // Specify the other units that are required for this test.
   needs: ['model:ember-theater-character']
 });

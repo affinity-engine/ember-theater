@@ -20,7 +20,7 @@ const {
 
 export default Component.extend(ModulePrefixMixin, {
   classNames: ['ember-theater__curtain'],
-  images: union('emberTheaterBackdrops', 'emberTheaterCharacterPortraits'),
+  images: union('emberTheaterBackdrops', 'emberTheaterCharacterExpressions'),
   layout: layout,
   loadedImages: filterBy('images', 'fileLoaded', true),
   store: inject.service('store'),

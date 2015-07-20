@@ -15,7 +15,7 @@ export default Component.extend(ModulePrefixMixin, {
   classNames: ['ember-theater__director'],
   layout: layout,
   lineReader: inject.service(),
-  sceneObjects: Ember.A([]),
+  sceneObjectContainers: Ember.A([]),
 
   loadScene: observer('scene', function() {
     this.get('lineReader').set('scene', this.get('scene'));
@@ -43,7 +43,7 @@ export default Component.extend(ModulePrefixMixin, {
       const direction = require(path)['default'];
 
       direction.set('container', this.get('container'));
-      direction.perform(line, this.get('sceneObjects'));
+      direction.perform(line, this.get('sceneObjectContainers'));
     }
   }
 });

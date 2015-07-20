@@ -2,14 +2,13 @@ import Ember from 'ember';
 
 const { 
   Mixin, 
-  on, 
   run 
 } = Ember;
 
 export default Mixin.create({
   previousLine: null,
 
-  performLine: on('didRender', function() {
+  executeLine() {
     const line = this.get('line');
 
     if (!this.element || this.get('previousLine') === line) { return; }
@@ -19,7 +18,8 @@ export default Mixin.create({
     if (!line.sync) { line.resolve(); }
 
     run.next(() => {
-      if (!this.element) { return; }
+      // do nothing if the element isn't present or the line is purely a expression change
+      if (!this.element || (!line.effect && line.expression)) { return; }
 
       const effect = line.effect ? line.effect : 'transition.fadeIn';
 
@@ -27,5 +27,5 @@ export default Mixin.create({
         if (line.sync) { line.resolve(); }
       });
     });
-  })
+  }
 });
