@@ -23,10 +23,11 @@ export default Component.extend(ModulePrefixMixin, {
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterExpressions'),
   layout: layout,
   loadedImages: filterBy('images', 'fileLoaded', true),
+  loadedSounds: filterBy('emberTheaterSounds', 'audio'),
   store: inject.service('store'),
 
   checkForMediaLoadCompletion: on('didRender', function() {
-    if (this.get('imagesLoaded')) {
+    if (this.get('imagesLoaded') && this.get('soundsLoaded')) {
       this.attrs.complete();
     }
   }),
@@ -49,6 +50,21 @@ export default Component.extend(ModulePrefixMixin, {
     });
   },
 
+  loadSounds() {
+    this.get('emberTheaterSounds').forEach((item) => {
+      const audio = new window.buzz.sound(get(item, 'path'), {
+        formats: get(item, 'formats'),
+        preload: true,
+        webAudioApi: true
+      });
+
+      audio.bindOnce('canplaythrough', () => {
+        set(item, 'audio', audio);
+        this.rerender();
+      });
+    });
+  },
+
   loadResources: on('didInsertElement', function() {
     const store = this.get('store');
     const modulePrefix = this.get('_modulePrefix');
@@ -62,6 +78,7 @@ export default Component.extend(ModulePrefixMixin, {
     });
 
     this.loadImages();
+    this.loadSounds();
   }),
 
   modelNames: computed({
@@ -75,6 +92,12 @@ export default Component.extend(ModulePrefixMixin, {
       }).map((path) => {
         return regex.exec(path)[1];
       });  
+    }
+  }),
+
+  soundsLoaded: computed('loadedSounds.length', 'emberTheaterSounds.length', {
+    get() {
+      return this.get('loadedSounds.length') >= this.get('emberTheaterSounds.length');
     }
   })
 });

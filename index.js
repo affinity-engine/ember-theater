@@ -9,17 +9,24 @@ module.exports = {
   name: 'ember-theater',
 
   treeForVendor: function(tree){
-    var velocityPath = path.dirname(require.resolve('velocity-animate'));
-    var velocityTree = pickFiles(this.treeGenerator(velocityPath), {
-      srcDir: '/',
-        destDir: 'velocity-animate'
-    });
-    return mergeTrees([tree, velocityTree]);
+    var _this = this;
+
+    var treeify = function treeify(name) {
+      var treePath = path.dirname(require.resolve(name));
+      return pickFiles(_this.treeGenerator(treePath), {
+        srcDir: '/',
+        destDir: name
+      });
+    }
+
+    return mergeTrees([tree, treeify('velocity-animate'), treeify('node-buzz')]);
   },
 
   included: function(app) {
     this._super.included(app);
     app.import('vendor/velocity-animate/velocity.js');
     app.import('vendor/velocity-animate/velocity.ui.js');
+    app.import('vendor/node-buzz/buzz.js');
+    app.import(app.bowerDirectory + '/babel-polyfill/browser-polyfill.js');
   }
 };
