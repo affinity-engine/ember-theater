@@ -27,6 +27,5 @@ module.exports = {
     app.import('vendor/velocity-animate/velocity.js');
     app.import('vendor/velocity-animate/velocity.ui.js');
     app.import('vendor/node-buzz/buzz.js');
-    app.import(app.bowerDirectory + '/babel-polyfill/browser-polyfill.js');
   }
 };

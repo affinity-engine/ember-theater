@@ -14,7 +14,7 @@ export default Mixin.create({
         sceneObjectContainers.removeObject(container);
       });
 
-      return line.resolve(); 
+      return line.sync = false; 
     }
 
     if (!sceneObjectContainers.isAny('sceneObject.id', line.id)) { 
