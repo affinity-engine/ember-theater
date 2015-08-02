@@ -10,11 +10,6 @@ const {
 const { Promise } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
-  performScript(sceneObjectContainers) {
-    this.set('sceneObjectContainers', sceneObjectContainers);
-    this.script();
-  },
-
   _defineDirections: on('init', function() {
     const modulePrefix = this.get('_modulePrefix');
     const directionNames = this.get('_directionNames');

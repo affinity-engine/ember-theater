@@ -1,20 +1,21 @@
 import Ember from 'ember';
 import layout from './template';
-import ModulePrefixMixin from 'ember-theater/mixins/ember-theater-module-prefix';
 
 const {
   Component,
-  observer
+  on
 } = Ember;
 
-export default Component.extend(ModulePrefixMixin, {
+export default Component.extend({
   classNames: ['ember-theater__director'],
   layout: layout,
   sceneObjectContainers: Ember.A([]),
 
-  loadScene: observer('scene', function() {
+  loadScene: on('didRender', function() {
     const sceneObjectContainers = this.get('sceneObjectContainers');
+    const scene = this.get('scene');
 
-    this.get('scene').performScript(sceneObjectContainers);
+    scene.set('sceneObjectContainers', sceneObjectContainers);
+    scene.script();
   })
 });
