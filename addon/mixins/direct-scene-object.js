@@ -8,7 +8,7 @@ const {
 export default Mixin.create({
   store: inject.service(),
 
-  directSceneObject(line, sceneObject, sceneObjectContainers) {
+  directSceneObject(line, sceneObjectContainers, componentType) {
     if (line.destroy) { 
       this._alterSceneObject(sceneObjectContainers, line.id, (container) => {
         sceneObjectContainers.removeObject(container);
@@ -17,10 +17,10 @@ export default Mixin.create({
       return line.sync = false; 
     }
 
-    if (!sceneObjectContainers.isAny('sceneObject.id', line.id)) { 
+    if (!sceneObjectContainers.isAny('line.id', line.id)) { 
       const sceneObjectContainer = Ember.Object.create({
-        line: line,
-        sceneObject: sceneObject
+        componentType: componentType,
+        line: line
       });
 
       sceneObjectContainers.pushObject(sceneObjectContainer); 
@@ -33,7 +33,7 @@ export default Mixin.create({
 
   _alterSceneObject(sceneObjectContainers, id, callback) {
     const container = sceneObjectContainers.find((container) => {
-      return container.get('sceneObject.id') === id;
+      return container.get('line.id') === id;
     });
 
     callback(container);

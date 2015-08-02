@@ -15,11 +15,17 @@ const {
 const { alias } = computed;
 
 export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
-  character: alias('sceneObject'),
   classNames: ['ember-theater-stage__character'],
   layout: layout,
   expressionContainers: Ember.A([]),
   store: inject.service(),
+
+  setCharacter: on('didInitAttrs', function() {
+    const line = this.get('line');
+    const character = this.get('store').peekRecord('ember-theater-character', line.id);
+
+    this.set('character', character);
+  }),
 
   activateImage() {
     const expression = this.$('.ember-theater-stage__expression').first();
