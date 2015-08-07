@@ -2,7 +2,8 @@ import Scene from 'ember-theater/models/ember-theater-scene';
 
 export default Scene.extend({
   script: async function() {
-    this.sound({ id: 'song__bolero' });
+    this.speak({ character: 'steven', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec purus diam. Duis condimentum sapien quis nisl dictum, et volutpat arcu mollis. Fusce nec nisl non eros lobortis fringilla. Aliquam ullamcorper eros efficitur rhoncus luctus. Phasellus odio velit, finibus a pharetra vel, accumsan id urna. Sed vitae egestas nisi. Nulla eu urna sed nulla pulvinar volutpat at quis nunc. Morbi vel purus est. Curabitur rutrum mauris a cursus tempus. Suspendisse leo eros, scelerisque porttitor leo a, vehicula facilisis quam. Mauris blandit tempor dolor a interdum. Curabitur rutrum arcu ac mi pharetra pellentesque. Nullam sodales gravida quam tempus lobortis. Mauris consequat mauris aliquam justo posuere convallis. Aliquam mauris est, lacinia condimentum tempus sit amet, cursus id lorem.' });
+    // this.sound({ id: 'song__bolero' });
     await this.backdrop({ id: 'beach', options: { duration: 1000 } });
     this.backdrop({ id: 'beach', effect: { opacity: 0.5 }, options: { duration: 500 } });
     await this.character({ id: 'steven', effect: { translateX: '50vw', opacity: 1 }, options: { duration: 500 } });

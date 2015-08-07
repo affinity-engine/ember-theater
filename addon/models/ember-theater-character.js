@@ -15,9 +15,5 @@ export default Model.extend({
 
   height: attr('number'),
   name: attr('string'),
-  textColor: attr('string'),
-  textFont: attr('string'),
-  textSpeed: attr('number'),
-  textSound: attr('string'),
-  walkSpeed: attr('number')
+  textStyle: attr('string')
 });
