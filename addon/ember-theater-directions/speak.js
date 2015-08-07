@@ -2,24 +2,24 @@ import Ember from 'ember';
 import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
 
 export default EmberTheaterDirection.create({
-  perform(line, sceneObjectContainers) {
-    sceneObjectContainers.forEach((container) => {
+  perform(line, directables) {
+    directables.forEach((container) => {
       if (container.componentType === 'ember-theater-stage-speech') {
-        sceneObjectContainers.removeObject(container);
+        directables.removeObject(container);
       }
     });
 
-    const sceneObjectContainer = Ember.Object.create({
+    const directable = Ember.Object.create({
       componentType: 'ember-theater-stage-speech',
       line: line
     });
 
     const resolve = line.resolve;
     line.resolve = function() {
-      sceneObjectContainers.removeObject(sceneObjectContainer);
+      directables.removeObject(directable);
       resolve();
     }
 
-    sceneObjectContainers.pushObject(sceneObjectContainer);
+    directables.pushObject(directable);
   }
 });

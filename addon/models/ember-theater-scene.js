@@ -21,7 +21,7 @@ export default Ember.Object.extend(ModulePrefixMixin, {
       this[name] = (line) => {
         return new Promise((resolve) =>  {
           line.resolve = resolve;
-          direction.perform(line, this.get('sceneObjectContainers'));
+          direction.perform(line, this.get('directables'));
         });
       };
     });

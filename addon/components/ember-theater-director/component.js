@@ -9,13 +9,13 @@ const {
 export default Component.extend({
   classNames: ['ember-theater__director'],
   layout: layout,
-  sceneObjectContainers: Ember.A([]),
+  directables: Ember.A([]),
 
   loadScene: on('didRender', function() {
-    const sceneObjectContainers = this.get('sceneObjectContainers');
+    const directables = this.get('directables');
     const scene = this.get('scene');
 
-    scene.set('sceneObjectContainers', sceneObjectContainers);
+    scene.set('directables', directables);
     scene.script();
   })
 });

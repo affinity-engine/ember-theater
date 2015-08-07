@@ -1,8 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import TheaterStage from '../ember-theater-stage/component';
-import WindowResizeMixin from '../../mixins/window-resize';
-import PerformableLineMixin from '../../mixins/performable-line';
+import VelocityLineMixin from '../../mixins/velocity-line';
 
 const { 
   Component, 
@@ -14,7 +13,7 @@ const {
 } = Ember;
 const { alias } = computed;
 
-export default Component.extend(WindowResizeMixin, PerformableLineMixin, {
+export default Component.extend(VelocityLineMixin, {
   classNames: ['ember-theater-stage__character'],
   layout: layout,
   expressionContainers: Ember.A([]),
