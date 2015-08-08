@@ -116,6 +116,10 @@ export default Component.extend(VelocityLineMixin, {
       this.get('expressionContainers').removeObject(oldExpression);
     };
 
+    if (!this.get('line.effect')) {
+      transitionIn.resolve = this.get('line.resolve');
+    }
+
     const expressionContainer = Ember.Object.create({
       line: transitionIn, 
       expression: expression

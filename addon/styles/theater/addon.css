@@ -51,14 +51,15 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 30vh;
   font-size: 9vh;
+  height: 30vh;
   padding: 4vh;
   margin: 0;
   opacity: .9;
 }
 
-.ember-theater-stage__speech, .ember-theater-stage-speech__caption {
+.ember-theater-stage__speech, .ember-theater-stage-speech__caption,
+.ember-theater-stage__choice, .ember-theater-stage-choice__option {
   border: 3px solid #00585F;
   background: #009393;
   color: #FFFCC4;
@@ -81,4 +82,33 @@
 
 .ember-theater-stage-speech__body {
   position: relative;
+}
+
+.ember-theater-stage__choice {
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: 21vw;
+  right: 21vw;
+  list-style-type: none;
+  padding: .1vw;
+  background-color: #00585F;
+}
+
+.ember-theater-stage-choice__option {
+  cursor: pointer;
+  line-height: 7vh;
+  text-align: center;
+  margin-bottom: .1vw;
+  font-size: 5vh;
+  border-radius: .5vw;
+  transition: background 500ms ease;
+}
+
+.ember-theater-stage-choice__option:last-child {
+  margin-bottom: 0;
+}
+
+.ember-theater-stage-choice__option:hover {
+  background-color: #FF3800;
 }

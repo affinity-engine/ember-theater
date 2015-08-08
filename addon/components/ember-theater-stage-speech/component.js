@@ -44,8 +44,8 @@ export default Ember.Component.extend(ResizeAware, {
       let lineStyle = this.get('line.style');
       let characterStyle = this.get('character.textStyle');
 
-      lineStyle = typeof lineStyle === 'object' ? lineStyle : { };
-      characterStyle = typeof characterStyle === 'object' ? characterStyle : { };
+      lineStyle = typeof lineStyle === 'object' && linestyle !== null ? lineStyle : { };
+      characterStyle = typeof characterStyle === 'object' && characterStyle !== null ? characterStyle : { };
       const mergedStyles = merge(characterStyle, lineStyle);
 
       const style = Object.keys(mergedStyles).reduce((accumulator, key) => {
