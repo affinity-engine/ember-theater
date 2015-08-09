@@ -7,6 +7,7 @@ const {
 } = Ember;
 
 export default Component.extend({
+  classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__choice'],
   layout: layout,
   tagName: 'ul',

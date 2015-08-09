@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 export default Ember.Component.extend(ResizeAware, {
-  attributeBindings: ['style'],
+  classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__speech'],
   layout: layout,
   store: inject.service(),
@@ -42,23 +42,6 @@ export default Ember.Component.extend(ResizeAware, {
       this._resolveKeyPress(event);
     });
   }),
-
-  style: computed('line.style', 'character.speechStyle', {
-    get() {
-      let lineStyle = this.get('line.style');
-      let characterStyle = this.get('character.textStyle');
-
-      lineStyle = typeof lineStyle === 'object' && linestyle !== null ? lineStyle : { };
-      characterStyle = typeof characterStyle === 'object' && characterStyle !== null ? characterStyle : { };
-      const mergedStyles = merge(characterStyle, lineStyle);
-
-      const style = Object.keys(mergedStyles).reduce((accumulator, key) => {
-        return `${accumulator}${key}: ${mergedStyles[key]};`;
-      }, '');
-
-      return new Ember.Handlebars.SafeString(style);
-    }
-  }).readOnly(),
 
   _resolveKeyPress(event) {
     if (event.which === 32) {

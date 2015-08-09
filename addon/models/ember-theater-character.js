@@ -14,6 +14,5 @@ export default Model.extend({
   expressions: hasMany('ember-theater-character-expression', { inverse: 'character' }),
 
   height: attr('number'),
-  name: attr('string'),
-  textStyle: attr('string')
+  name: attr('string')
 });
