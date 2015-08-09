@@ -12,6 +12,6 @@ export default Scene.extend({
       case 'B': await this.character({ id: 'steven', effect: 'callout.bounce', options: { duration: 1000 } }); break;
       case 'C': this.sound({ id: 'song__bolero' }); break;
     }
-    this.dialogue({ character: 'steve', text: 'How was that?!' });
+    this.dialogue({ character: 'steven', text: 'How was that?!' });
   }
 });
