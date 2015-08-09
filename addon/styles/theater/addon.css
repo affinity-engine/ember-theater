@@ -45,7 +45,7 @@
   height: 100%;
 }
 
-.ember-theater-stage__speech {
+.ember-theater-stage__dialogue {
   position: absolute;
   z-index: 100;
   bottom: 0;
@@ -58,14 +58,14 @@
   opacity: .9;
 }
 
-.ember-theater-stage__speech, .ember-theater-stage-speech__caption,
+.ember-theater-stage__dialogue, .ember-theater-stage-dialogue__caption,
 .ember-theater-stage__choice, .ember-theater-stage-choice__option {
   border: 3px solid #00585F;
   background: #009393;
   color: #FFFCC4;
 }
 
-.ember-theater-stage-speech__caption {
+.ember-theater-stage-dialogue__caption {
   position: absolute;
   top: -6vh;
   left: 2vh;
@@ -73,14 +73,14 @@
   font-size: 6vh;
 }
 
-.ember-theater-stage-speech__body-container {
+.ember-theater-stage-dialogue__body-container {
   overflow: hidden;
   width: 100%;
   height: 100%;
   line-height: 10vh;
 }
 
-.ember-theater-stage-speech__body {
+.ember-theater-stage-dialogue__body {
   position: relative;
 }
 

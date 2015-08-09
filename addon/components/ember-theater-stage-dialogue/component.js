@@ -11,7 +11,7 @@ const {
 
 export default Ember.Component.extend(ResizeAware, {
   classNameBindings: ['line.class'],
-  classNames: ['ember-theater-stage__speech'],
+  classNames: ['ember-theater-stage__dialogue'],
   layout: layout,
   store: inject.service(),
 
@@ -23,7 +23,7 @@ export default Ember.Component.extend(ResizeAware, {
 
   didResize() {
     this.set('keyPressCount', 0);
-    Ember.$('.ember-theater-stage-speech__body').css('top', 0);
+    Ember.$('.ember-theater-stage-dialogue__body').css('top', 0);
   },
 
   destroyKeyPressWatcher: on('willDestroyElement', function() {
@@ -47,8 +47,8 @@ export default Ember.Component.extend(ResizeAware, {
     if (event.which === 32) {
       this.incrementProperty('keyPressCount');
 
-      const scrollDistance = $('.ember-theater-stage-speech__body-container').height() * this.get('keyPressCount') * -1;
-      const inner = Ember.$('.ember-theater-stage-speech__body')[0];
+      const scrollDistance = $('.ember-theater-stage-dialogue__body-container').height() * this.get('keyPressCount') * -1;
+      const inner = Ember.$('.ember-theater-stage-dialogue__body')[0];
 
       Ember.$.Velocity.animate(inner, { top: scrollDistance }, { duration: 250 }).then(() => {
         if (parseFloat(Ember.$(inner).css('top')) * -1 >= inner.offsetHeight) {
