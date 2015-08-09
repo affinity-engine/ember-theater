@@ -1,7 +1,7 @@
 import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
-import CoreDirectionMixin from 'ember-theater/mixins/core-direction';
+import MultitonDirectionMixin from 'ember-theater/mixins/multiton-direction';
 
-export default EmberTheaterDirection.createWithMixins(CoreDirectionMixin, {
+export default EmberTheaterDirection.createWithMixins(MultitonDirectionMixin, {
   perform(line, directables) {
     this.direct(line, directables, 'ember-theater-stage-character');
   }

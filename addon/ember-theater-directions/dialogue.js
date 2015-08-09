@@ -1,25 +1,8 @@
-import Ember from 'ember';
 import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
+import SingletonDirectionMixin from 'ember-theater/mixins/singleton-direction';
 
-export default EmberTheaterDirection.create({
+export default EmberTheaterDirection.createWithMixins(SingletonDirectionMixin, {
   perform(line, directables) {
-    directables.forEach((directable) => {
-      if (directable.componentType === 'ember-theater-stage-dialogue') {
-        directables.removeObject(directable);
-      }
-    });
-
-    const directable = Ember.Object.create({
-      componentType: 'ember-theater-stage-dialogue',
-      line: line
-    });
-
-    const resolve = line.resolve;
-    line.resolve = function() {
-      directables.removeObject(directable);
-      resolve();
-    }
-
-    directables.pushObject(directable);
+    this.direct(line, directables, 'ember-theater-stage-dialogue');
   }
 });
