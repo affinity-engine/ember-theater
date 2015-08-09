@@ -26,6 +26,10 @@ export default Ember.Component.extend(ResizeAware, {
     Ember.$('.ember-theater-stage-speech__body').css('top', 0);
   },
 
+  destroyKeyPressWatcher: on('willDestroyElement', function() {
+    Ember.$('body').off('keypress.speak');
+  }),
+
   displayName: computed('character.name', 'line.displayName', {
     get() {
       const displayName = this.get('line.displayName');
