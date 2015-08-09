@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import ResizeAware from 'ember-resize/mixins/resize-aware';
+import WindowResizeMixin from '../../mixins/window-resize';
 
 const {
   computed,
@@ -9,7 +9,7 @@ const {
   on
 } = Ember;
 
-export default Ember.Component.extend(ResizeAware, {
+export default Ember.Component.extend(WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
   layout: layout,
@@ -20,11 +20,6 @@ export default Ember.Component.extend(ResizeAware, {
       return this.get('store').peekRecord('ember-theater-character', this.get('line.character'));
     }
   }).readOnly(),
-
-  didResize() {
-    this.set('keyPressCount', 0);
-    Ember.$('.ember-theater-stage-dialogue__body').css('top', 0);
-  },
 
   destroyKeyPressWatcher: on('willDestroyElement', function() {
     Ember.$('body').off('keypress.speak');
@@ -41,6 +36,11 @@ export default Ember.Component.extend(ResizeAware, {
     Ember.$('body').on('keypress.speak', (event) => {
       this._resolveKeyPress(event);
     });
+  }),
+
+  windowResize: on('windowResize', function() {
+    this.set('keyPressCount', 0);
+    Ember.$('.ember-theater-stage-dialogue__body').css('top', 0);
   }),
 
   _resolveKeyPress(event) {

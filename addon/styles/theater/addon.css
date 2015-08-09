@@ -90,12 +90,12 @@
   top: 0;
   left: 21vw;
   right: 21vw;
-  list-style-type: none;
   padding: .1vw;
   background-color: #00585F;
 }
 
 .ember-theater-stage-choice__option {
+  display: block;
   cursor: pointer;
   line-height: 7vh;
   text-align: center;
@@ -109,6 +109,6 @@
   margin-bottom: 0;
 }
 
-.ember-theater-stage-choice__option:hover {
+.ember-theater-stage-choice__option:hover, .ember-theater-stage-choice__option:focus {
   background-color: #FF3800;
 }
