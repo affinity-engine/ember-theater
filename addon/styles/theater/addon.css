@@ -52,15 +52,16 @@
   left: 0;
   right: 0;
   font-size: 9vh;
-  height: 30vh;
+  height: 39vh;
   padding: 4vh;
   margin: 0;
   opacity: .9;
+  box-sizing: border-box;
 }
 
 .ember-theater-stage__dialogue, .ember-theater-stage-dialogue__caption,
 .ember-theater-stage__choice, .ember-theater-stage-choice__option {
-  border: 3px solid #00585F;
+  border: .5vh solid #00585F;
   background: #009393;
   color: #FFFCC4;
 }
@@ -91,7 +92,11 @@
   left: 21vw;
   right: 21vw;
   padding: .1vw;
+  max-height: 61vh;
   background-color: #00585F;
+  overflow-y: auto;
+  box-sizing: border-box;
+  opacity: .9;
 }
 
 .ember-theater-stage-choice__option {
