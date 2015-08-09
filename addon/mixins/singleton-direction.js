@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   direct(line, directables, componentType) {
     directables.forEach((directable) => {
-      if (directable.componentType === componentType) {
+      if (directable.componentType === 'ember-theater-stage-dialogue' || directable.componentType === 'ember-theater-stage-choice') {
         directables.removeObject(directable);
       }
     });

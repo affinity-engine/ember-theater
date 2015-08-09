@@ -51,7 +51,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  font-size: 9vh;
   height: 39vh;
   padding: 4vh;
   margin: 0;
@@ -83,20 +82,21 @@
 
 .ember-theater-stage-dialogue__body {
   position: relative;
+  font-size: 6vh;
 }
 
 .ember-theater-stage__choice {
   z-index: 1000;
   position: absolute;
-  top: 0;
+  top: 20vh;
   left: 21vw;
   right: 21vw;
   padding: .1vw;
-  max-height: 61vh;
+  max-height: 100vh;
   background-color: #00585F;
-  overflow-y: auto;
   box-sizing: border-box;
   opacity: .9;
+  transform: translateY(-20%);
 }
 
 .ember-theater-stage-choice__option {

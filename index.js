@@ -19,7 +19,11 @@ module.exports = {
       });
     }
 
-    return mergeTrees([tree, treeify('velocity-animate'), treeify('node-buzz')]);
+    return mergeTrees([
+      tree, treeify('velocity-animate'),
+      treeify('node-buzz'),
+      treeify('perfect-scrollbar')
+    ]);
   },
 
   included: function(app) {
@@ -27,5 +31,7 @@ module.exports = {
     app.import('vendor/velocity-animate/velocity.js');
     app.import('vendor/velocity-animate/velocity.ui.js');
     app.import('vendor/node-buzz/buzz.js');
+    app.import('vendor/perfect-scrollbar/dist/js/min/perfect-scrollbar.min.js');
+    app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
   }
 };

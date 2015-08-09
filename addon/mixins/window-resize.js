@@ -11,11 +11,11 @@ export default Mixin.create(Evented, {
   _oldWindowWidth: null,
 
   _destroyResizeHandler: on('willDestroyElement', function() {
-    Ember.$(window).off('resize', '**');
+    Ember.$(window).off(`resize.${this.elementId}`);
   }),
 
-  _initResizeHandler: on('init', function() {
-    Ember.$(window).on('resize', () => {
+  _initResizeHandler: on('didInsertElement', function() {
+    Ember.$(window).on(`resize.${this.elementId}`, () => {
       Ember.run.debounce(this, this._triggerResizeListeners, 10);
     });
   }),
