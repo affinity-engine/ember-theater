@@ -1,11 +1,23 @@
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
-  direct(line, directables, componentType) {
-    directables.forEach((directable) => {
-      if (directable.componentType === 'ember-theater-stage-dialogue' || directable.componentType === 'ember-theater-stage-choice') {
-        directables.removeObject(directable);
-      }
+const {
+  inject,
+  Mixin
+} = Ember;
+
+export default Mixin.create({
+  pseudoChannelManager: inject.service(),
+
+  direct(line, directables) {
+    const componentType = this.get('componentType');
+
+    this.get('pseudoChannels').forEach((pseudoChannel) => {
+      const pseudoChannelValues = this.get(`pseudoChannelManager.${pseudoChannel}`);
+      directables.forEach((directable) => {
+        if (pseudoChannelValues.includes(directable.componentType)) {
+          directables.removeObject(directable);
+        }
+      });
     });
 
     const directable = Ember.Object.create({

@@ -8,7 +8,7 @@ const {
 export default Mixin.create({
   store: inject.service(),
 
-  direct(line, directables, componentType) {
+  direct(line, directables) {
     if (line.destroy) { 
       this._alterDirectable(directables, line.id, (container) => {
         directables.removeObject(container);
@@ -19,7 +19,7 @@ export default Mixin.create({
 
     if (!directables.isAny('line.id', line.id)) { 
       const directable = Ember.Object.create({
-        componentType: componentType,
+        componentType: this.get('componentType'),
         line: line
       });
 
