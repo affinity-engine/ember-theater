@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import TheaterStage from '../ember-theater-stage/component';
+import Director from '../ember-theater-director/component';
 import VelocityLineMixin from '../../mixins/velocity-line';
 import WindowResizeMixin from '../../mixins/window-resize';
 
@@ -69,7 +69,7 @@ export default Component.extend(VelocityLineMixin, WindowResizeMixin, {
   },
 
   adjustStageSize: on('didInsertElement', function() {
-    const stage = this.nearestOfType(TheaterStage).$();
+    const stage = this.nearestOfType(Director).$();
 
     this.set('stageWidth', stage.width());
     this.set('stageHeight', stage.height());

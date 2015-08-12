@@ -1,1 +1,3 @@
-{{ember-theater-stage directables=directables}}
+{{#each scene.directables as |directable|}}
+  {{component directable.componentType line=directable.line}}
+{{/each}}

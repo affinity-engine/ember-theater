@@ -22,7 +22,7 @@ export default Mixin.create({
       const effect = line.effect ? line.effect : 'transition.fadeIn';
 
       Ember.$.Velocity.animate(this.element, effect, line.options).then(() => {
-        line.resolve();
+        this.get('line.resolve')();
       });
     });
   }

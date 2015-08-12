@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import PerfectScrollbarMixin from '../../mixins/perfect-scrollbar';
 import WindowResizeMixin from '../../mixins/window-resize';
 
 const {
@@ -8,7 +9,7 @@ const {
   on
 } = Ember;
 
-export default Component.extend(WindowResizeMixin, {
+export default Component.extend(PerfectScrollbarMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__choice'],
   layout: layout,
@@ -20,20 +21,6 @@ export default Component.extend(WindowResizeMixin, {
     return keys.map((key) => {
       return { path: key, text: choices[key] };
     });
-  }),
-
-  destroyPerfectScrollbar: on('willDestroyElement', function() {
-    PerfectScrollbar.destroy(this.element);
-  }),
-  
-  initializePerfectScrollbar: on('didInsertElement', function() {
-    PerfectScrollbar.initialize(this.element, {
-      suppressScrollX: true
-    });
-  }),
-
-  windowResize: on('windowResize', function() {
-    PerfectScrollbar.update(this.element);
   }),
 
   actions: {

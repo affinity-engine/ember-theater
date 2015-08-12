@@ -3,19 +3,14 @@ import layout from './template';
 
 const {
   Component,
-  on
+  observer
 } = Ember;
 
 export default Component.extend({
-  classNames: ['ember-theater__director'],
+  classNames: ['ember-theater-stage'],
   layout: layout,
-  directables: Ember.A([]),
 
-  loadScene: on('didRender', function() {
-    const directables = this.get('directables');
-    const scene = this.get('scene');
-
-    scene.set('directables', directables);
-    scene.script();
+  loadScene: observer('scene.id', function() {
+    this.get('scene').script();
   })
 });

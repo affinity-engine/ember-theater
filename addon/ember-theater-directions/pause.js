@@ -3,7 +3,7 @@ import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction'
 
 const { run } = Ember;
 
-export default EmberTheaterDirection.create({
+export default EmberTheaterDirection.extend({
   perform(line) {
     if (line.keyPress) {
       this._setupKeyPressWatcher();

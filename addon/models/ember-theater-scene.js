@@ -3,6 +3,9 @@ import ModulePrefixMixin from 'ember-theater/mixins/ember-theater-module-prefix'
 
 const {
   computed,
+  inject,
+  isEmpty,
+  isPresent,
   on,
   RSVP
 } = Ember;
@@ -10,18 +13,55 @@ const {
 const { Promise } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
+  directables: Ember.A(),
+
+  clearChannels(channels) {
+    if (isEmpty(channels)) { return; }
+
+    const directables = this.get('directables');
+
+    channels.forEach((channel) => {
+      directables.forEach((directable) => {
+        const directableChannels = directable.get('channels');
+        
+        if (directableChannels && directableChannels.includes(channel)) {
+          directables.removeObject(directable);
+          directable.destroy();
+        }
+      });
+    });
+  },
+
+  pushDirectable(directable) {
+    this.get('directables').pushObject(directable);
+  },
+
   _defineDirections: on('init', function() {
     const modulePrefix = this.get('_modulePrefix');
     const directionNames = this.get('_directionNames');
-    
+
     directionNames.forEach((name) => {
-      const direction = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
-      direction.set('container', this.get('container'));
+      let direction = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
 
       this[name] = (line) => {
-        return new Promise((resolve) =>  {
+        const directables = this.get('directables');
+        const isOnStage = isPresent(line.id) && directables.isAny('line.id', line.id);
+        const createOrUpdate = isOnStage ? 'setProperties' : 'create';
+        
+        if (isOnStage) {
+          direction = directables.find((directable) => {
+            return directable.get('line.id') === line.id;
+          });
+        }
+
+        return new Promise((resolve) => {
           line.resolve = resolve;
-          direction.perform(line, this.get('directables'));
+
+          direction[createOrUpdate]({
+            container: this.get('container'),
+            scene: this,
+            line: line
+          });
         });
       };
     });

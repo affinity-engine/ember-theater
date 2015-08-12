@@ -3,7 +3,7 @@ import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction'
 
 const { inject } = Ember;
 
-export default EmberTheaterDirection.create({
+export default EmberTheaterDirection.extend({
   store: inject.service(),
 
   perform(line) {
