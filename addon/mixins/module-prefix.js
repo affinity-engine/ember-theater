@@ -6,7 +6,7 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  _modulePrefix: computed({
+  modulePrefix: computed({
     get() {
       return this.container.lookupFactory('config:environment').modulePrefix;
     }

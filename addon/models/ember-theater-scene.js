@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ModulePrefixMixin from 'ember-theater/mixins/ember-theater-module-prefix';
+import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 
 const {
   computed,
@@ -37,7 +37,7 @@ export default Ember.Object.extend(ModulePrefixMixin, {
   },
 
   _defineDirections: on('init', function() {
-    const modulePrefix = this.get('_modulePrefix');
+    const modulePrefix = this.get('modulePrefix');
     const directionNames = this.get('_directionNames');
 
     directionNames.forEach((name) => {
@@ -70,7 +70,7 @@ export default Ember.Object.extend(ModulePrefixMixin, {
   _directionNames: computed({
     get() {
       const paths = Object.keys(require.entries);
-      const modulePrefix = this.get('_modulePrefix');
+      const modulePrefix = this.get('modulePrefix');
       const regex = new RegExp(`${modulePrefix}\/ember-theater-directions\/(.*)`);
 
       return paths.filter((path) => {

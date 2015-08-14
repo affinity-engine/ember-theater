@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import ModulePrefixMixin from '../../mixins/ember-theater-module-prefix';
+import ModulePrefixMixin from '../../mixins/module-prefix';
 
 const { Component } = Ember;
 
@@ -16,7 +16,7 @@ export default Component.extend(ModulePrefixMixin, {
     },
 
     transitionToScene(sceneId) {
-      const modulePrefix = this.get('_modulePrefix');
+      const modulePrefix = this.get('modulePrefix');
       const scene = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
 
       this.set('scene', scene.create({
