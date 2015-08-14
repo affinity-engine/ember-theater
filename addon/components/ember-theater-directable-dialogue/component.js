@@ -12,6 +12,7 @@ const {
 export default Ember.Component.extend(WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
+  keyboard: inject.service(),
   layout: layout,
   store: inject.service(),
 
@@ -22,7 +23,7 @@ export default Ember.Component.extend(WindowResizeMixin, {
   }).readOnly(),
 
   destroyKeyPressWatcher: on('willDestroyElement', function() {
-    Ember.$('body').off('keypress.speak');
+    this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
   }),
 
   displayName: computed('character.name', 'line.displayName', {
@@ -33,9 +34,7 @@ export default Ember.Component.extend(WindowResizeMixin, {
   }).readOnly(),
 
   setupKeyPressWatcher: on('didInsertElement', function() {
-    Ember.$('body').on('keypress.speak', (event) => {
-      this._resolveKeyPress(event);
-    });
+    this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
   }),
 
   windowResize: on('windowResize', function() {
@@ -44,7 +43,6 @@ export default Ember.Component.extend(WindowResizeMixin, {
   }),
 
   _resolveKeyPress(event) {
-    if (event.which === 32) {
       this.incrementProperty('keyPressCount');
 
       const scrollDistance = $('.ember-theater-stage-dialogue__body-container').height() * this.get('keyPressCount') * -1;
@@ -58,6 +56,5 @@ export default Ember.Component.extend(WindowResizeMixin, {
           });
         }
       });
-    }
   }
 });
