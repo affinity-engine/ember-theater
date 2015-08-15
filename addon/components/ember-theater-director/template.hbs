@@ -1,3 +1,5 @@
 {{#each scene.directables as |directable|}}
-  {{component directable.componentType line=directable.line}}
+  {{component directable.componentType
+    line=directable.line
+    destroyDirectable=(action 'destroyDirectable' directable)}}
 {{/each}}

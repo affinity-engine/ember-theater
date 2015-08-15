@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DirectableComponentMixin from '../../mixins/directable-component';
 
 const {
   Component,
@@ -7,7 +8,7 @@ const {
   on
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(DirectableComponentMixin, {
   store: inject.service(),
 
   audio: computed('line', {

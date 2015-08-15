@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import DirectableComponentMixin from '../../mixins/directable-component';
 import WindowResizeMixin from '../../mixins/window-resize';
 
 const {
@@ -9,7 +10,7 @@ const {
   on
 } = Ember;
 
-export default Ember.Component.extend(WindowResizeMixin, {
+export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
   keyboard: inject.service(),
@@ -53,6 +54,7 @@ export default Ember.Component.extend(WindowResizeMixin, {
           Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
             Ember.$('body').off('.speak');
             this.get('line.resolve')();
+            this.attrs.destroyDirectable();
           });
         }
       });

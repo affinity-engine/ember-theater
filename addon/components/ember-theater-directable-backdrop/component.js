@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DirectableComponentMixin from '../../mixins/directable-component';
 import VelocityLineMixin from '../../mixins/velocity-line';
 
 const { 
@@ -9,7 +10,7 @@ const {
 } = Ember;
 const { alias } = computed;
 
-export default Component.extend(VelocityLineMixin, {
+export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   alt: alias('backdrop.caption'),
   attributeBindings: ['alt'],
   classNames: ['ember-theater-stage__backdrop'],

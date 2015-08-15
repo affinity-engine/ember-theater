@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DirectableComponentMixin from '../../mixins/directable-component';
 
 const {
   Component,
@@ -7,7 +8,7 @@ const {
   run
 } = Ember;
 
-export default Component.extend({
+export default Component.extend(DirectableComponentMixin, {
   keyboard: inject.service(),
 
   setup: on('didInsertElement', function() {

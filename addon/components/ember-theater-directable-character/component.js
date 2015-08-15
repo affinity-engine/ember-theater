@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import Director from '../ember-theater-director/component';
+import DirectableComponentMixin from '../../mixins/directable-component';
 import VelocityLineMixin from '../../mixins/velocity-line';
 import WindowResizeMixin from '../../mixins/window-resize';
 
@@ -14,7 +15,7 @@ const {
 } = Ember;
 const { alias } = computed;
 
-export default Component.extend(VelocityLineMixin, WindowResizeMixin, {
+export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   classNames: ['ember-theater-stage__character'],
   layout: layout,
   expressionContainers: Ember.A([]),
