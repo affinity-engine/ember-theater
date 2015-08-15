@@ -13,6 +13,7 @@ const {
 export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
+  intl: inject.service(),
   keyboard: inject.service(),
   layout: layout,
   store: inject.service(),
@@ -27,10 +28,34 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
   }),
 
-  displayName: computed('character.name', 'line.displayName', {
+  displayName: computed('character.name', 'line.displayName', 'line.intl', {
     get() {
       const displayName = this.get('line.displayName');
-      return displayName ? displayName : this.get('character.name');
+      if (displayName) { return displayName; }
+
+      if (this.get('line.intl')) {
+        const intl = this.get('intl');
+        const key = `characters.${this.get('line.character')}`;
+        const translation = intl.get('adapter').findTranslationByKey(intl.get('locale'), key); 
+        
+        if (translation) { return translation; }
+      }
+
+      return this.get('character.name');
+    }
+  }).readOnly(),
+
+  displayText: computed('line.intl.id', 'line.text', {
+    get() {
+      const intlId = this.get('line.intl.id');
+
+      if (intlId) {
+        const intl = this.get('intl');
+        const translation = intl.findTranslationByKey(intlId);
+        return intl.formatMessage(translation, this.get('line.intl.variables'));
+      } else {
+        return this.get('line.text');
+      }
     }
   }).readOnly(),
 
