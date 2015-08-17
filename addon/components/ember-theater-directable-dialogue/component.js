@@ -13,8 +13,8 @@ const {
 export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
-  intl: inject.service(),
   keyboard: inject.service(),
+  intlWrapper: inject.service(),
   layout: layout,
   store: inject.service(),
 
@@ -34,9 +34,8 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
       if (displayName) { return displayName; }
 
       if (this.get('line.intl')) {
-        const intl = this.get('intl');
         const key = `characters.${this.get('line.character')}`;
-        const translation = intl.get('adapter').findTranslationByKey(intl.get('locale'), key); 
+        const translation = this.get('intlWrapper').formatMessage(key); 
         
         if (translation) { return translation; }
       }
@@ -50,9 +49,7 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
       const intlId = this.get('line.intl.id');
 
       if (intlId) {
-        const intl = this.get('intl');
-        const translation = intl.findTranslationByKey(intlId);
-        return intl.formatMessage(translation, this.get('line.intl.variables'));
+        return this.get('intlWrapper').formatMessage(intlId, this.get('line.intl.options'));
       } else {
         return this.get('line.text');
       }
