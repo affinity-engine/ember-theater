@@ -9,6 +9,7 @@ export default Model.extend({
   componentType: 'ember-theater-stage-backdrop',
 
   caption: attr('string'),
+  intl: attr('boolean'),
   position: attr('string'),
   src: attr('string')
 });

@@ -1,8 +1,8 @@
 export default [{
   id: 'steven',
-  caption: 'Steven Universe standing',
   src: 'images/expressions/steven.png',
-  character: 'steven'
+  character: 'steven',
+  intl: true
 }, {
   id: 'steven--jumping',
   caption: 'Steven Universe jumping',

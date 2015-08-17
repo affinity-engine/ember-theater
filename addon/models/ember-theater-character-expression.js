@@ -11,6 +11,7 @@ export default Model.extend({
 
   caption: attr('string'),
   height: attr('number'),
+  intl: attr('boolean'),
   opacity: attr('number'),
   src: attr('string')
 });

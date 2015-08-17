@@ -3,17 +3,29 @@ import Ember from 'ember';
 const { 
   Component, 
   computed,
+  inject,
   on 
 } = Ember;
 
 const { alias } = computed;
 
 export default Component.extend({
-  attributeBindings: ['src'],
+  attributeBindings: ['caption:alt', 'src'],
   classNames: ['ember-theater-stage__expression'],
   previousLine: null,
+  intlWrapper: inject.service(),
   src: alias('expression.src'),
   tagName: 'img',
+
+  caption: computed('expression.caption', 'expression.intl', {
+    get() {
+      if (this.get('expression.intl')) {
+        return this.get('intlWrapper').formatMessage(`expressions.${this.get('expression.id')}`);
+      } else {
+        return this.get('expression.caption');
+      }
+    }
+  }),
 
   performLine: on('didRender', function() {
     const line = this.get('line');

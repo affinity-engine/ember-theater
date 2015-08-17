@@ -11,11 +11,21 @@ const {
 const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
-  alt: alias('backdrop.caption'),
-  attributeBindings: ['alt'],
+  attributeBindings: ['caption:alt'],
   classNames: ['ember-theater-stage__backdrop'],
+  intlWrapper: inject.service(),
   store: inject.service(),
   tagName: 'img',
+
+  caption: computed('backdrop.caption', 'backdrop.intl', {
+    get() {
+      if (this.get('backdrop.intl')) {
+        return this.get('intlWrapper').formatMessage(`backdrops.${this.get('backdrop.id')}`);
+      } else {
+        return this.get('backdrop.caption');
+      }
+    }
+  }),
 
   setBackdrop: on('didInitAttrs', function() {
     const line = this.get('line');
