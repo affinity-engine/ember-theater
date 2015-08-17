@@ -102,12 +102,21 @@
 .ember-theater-stage-choice__option {
   display: block;
   cursor: pointer;
-  line-height: 7vh;
-  text-align: center;
-  margin-bottom: .1vw;
-  font-size: 5vh;
   border-radius: .5vw;
   transition: background 500ms ease;
+  margin-bottom: .1vw;
+  width: 100%;
+}
+
+.ember-theater-stage-choice__option, .ember-theater-stage-choice__header {
+  line-height: 7vh;
+  text-align: center;
+  font-size: 5vh;
+}
+
+.ember-theater-stage-choice__header {
+  font-size: 6vh;
+  margin-bottom: 1vw;
 }
 
 .ember-theater-stage-choice__option:last-child {
@@ -116,4 +125,5 @@
 
 .ember-theater-stage-choice__option:hover, .ember-theater-stage-choice__option:focus {
   background-color: #FF3800;
+  outline: 0;
 }
