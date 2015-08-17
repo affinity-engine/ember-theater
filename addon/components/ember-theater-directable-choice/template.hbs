@@ -1,5 +1,5 @@
-{{#if line.header}}
-  <div class='ember-theater-stage-choice__header'>{{line.header}}</div>
+{{#if header}}
+  <div class='ember-theater-stage-choice__header'>{{header}}</div>
 {{/if}}
 {{#each choices as |choice|}}
   <button {{action 'choose' choice.path}} class='ember-theater-stage-choice__option'>{{choice.text}}</button>

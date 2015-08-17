@@ -2,6 +2,8 @@ import Scene from 'ember-theater/models/ember-theater-scene';
 
 export default Scene.extend({
   script: async function() {
+    const transChoice = await this.choice({ intl: { header: '1.choice1.header', choices: { A: { id: '1.choice1.A', options: { opt1: 'OOO' } }, B: '1.choice1.B' } } });
+    alert(transChoice);
     await this.dialogue({ character: 'steven', intl: { id: '1.firstTest', options: { val1: 'my friend' } } });
     this.dialogue({ character: 'steven', text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec purus diam. Duis condimentum sapien quis nisl dictum, et volutpat arcu mollis. Fusce nec nisl non eros lobortis fringilla. Aliquam ullamcorper eros efficitur rhoncus luctus. Phasellus odio velit, finibus a pharetra vel, accumsan id urna. Sed vitae egestas nisi. Nulla eu urna sed nulla pulvinar volutpat at quis nunc. Morbi vel purus est. Curabitur rutrum mauris a cursus tempus. Suspendisse leo eros, scelerisque porttitor leo a, vehicula facilisis quam. Mauris blandit tempor dolor a interdum. Curabitur rutrum arcu ac mi pharetra pellentesque. Nullam sodales gravida quam tempus lobortis. Mauris consequat mauris aliquam justo posuere convallis. Aliquam mauris est, lacinia condimentum tempus sit amet, cursus id lorem.' });
     await this.backdrop({ id: 'beach', options: { duration: 1000 } });
