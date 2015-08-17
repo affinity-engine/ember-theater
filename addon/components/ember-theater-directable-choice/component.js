@@ -27,9 +27,7 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
         let text;
 
         if (intlChoices) {
-          const intl = this.get('intlWrapper');
-          const intlKey = intl.getKey(choices[key]);
-          text = intl.formatMessage(intlKey, choices[key].options);
+          text = this.get('intlWrapper').formatMessage(choices[key]);
         } else {
           text = choices[key];
         }
@@ -44,10 +42,7 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
       const intlHeader = this.get('line.intl.header');
 
       if (intlHeader) {
-        const intl = this.get('intlWrapper');
-        const intlKey = intl.getKey(intlHeader);
-
-        return intl.formatMessage(intlKey, intlHeader.options);
+        return this.get('intlWrapper').formatMessage(intlHeader);
       }
 
       return this.get('line.header');

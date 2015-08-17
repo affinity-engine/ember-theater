@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const {
+  get,
   inject,
   Service
 } = Ember;
@@ -8,15 +9,15 @@ const {
 export default Service.extend({
   intl: inject.service(),
 
-  formatMessage(key, options) {
+  formatMessage(key) {
     const intl = this.get('intl');
     const locale = intl.get('locale');
-    const translation = intl.get('adapter').findTranslationByKey(locale, key); 
+    const translation = intl.get('adapter').findTranslationByKey(locale, this.getId(key)); 
 
-    return intl.formatMessage(translation, options);
+    return intl.formatMessage(translation, get(key, 'options'));
   },
 
-  getKey(item) {
-    return item.id ? item.id : item;
+  getId(key) {
+    return get(key, 'id') ? get(key, 'id') : key;
   }
 });

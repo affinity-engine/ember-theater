@@ -24,13 +24,25 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     }
   }).readOnly(),
 
+  displayName: computed('line.displayName', 'line.intl.displayName', {
+    get() {
+      const intl = this.get('line.intl.displayName');
+
+      if (intl) {
+        return this.get('intlWrapper').formatMessage(intl);
+      } else {
+        return this.get('line.displayName');
+      }
+    }
+  }),
+
   destroyKeyPressWatcher: on('willDestroyElement', function() {
     this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
   }),
 
   name: computed('character.name', 'line.displayName', 'line.intl', {
     get() {
-      const displayName = this.get('line.displayName');
+      const displayName = this.get('displayName');
       if (displayName) { return displayName; }
 
       if (this.get('line.intl')) {
@@ -48,15 +60,12 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
   }),
 
-  text: computed('line.intl.id', 'line.text', {
+  text: computed('line.intl', 'line.text', {
     get() {
-      const intlId = this.get('line.intl');
+      const intlId = this.get('line.intl.text') ? this.get('line.intl.text') : this.get('line.intl');
 
       if (intlId) {
-        const intl = this.get('intlWrapper');
-        const key = intl.getKey(intlId);
-
-        return intl.formatMessage(key, this.get('line.intl.options'));
+        return this.get('intlWrapper').formatMessage(intlId);
       } else {
         return this.get('line.text');
       }
