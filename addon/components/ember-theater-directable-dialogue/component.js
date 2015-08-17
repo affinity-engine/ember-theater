@@ -28,7 +28,7 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
   }),
 
-  displayName: computed('character.name', 'line.displayName', 'line.intl', {
+  name: computed('character.name', 'line.displayName', 'line.intl', {
     get() {
       const displayName = this.get('line.displayName');
       if (displayName) { return displayName; }
@@ -44,21 +44,24 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     }
   }).readOnly(),
 
-  displayText: computed('line.intl.id', 'line.text', {
+  setupKeyPressWatcher: on('didInsertElement', function() {
+    this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
+  }),
+
+  text: computed('line.intl.id', 'line.text', {
     get() {
-      const intlId = this.get('line.intl.id');
+      const intlId = this.get('line.intl');
 
       if (intlId) {
-        return this.get('intlWrapper').formatMessage(intlId, this.get('line.intl.options'));
+        const intl = this.get('intlWrapper');
+        const key = intl.getKey(intlId);
+
+        return intl.formatMessage(key, this.get('line.intl.options'));
       } else {
         return this.get('line.text');
       }
     }
   }).readOnly(),
-
-  setupKeyPressWatcher: on('didInsertElement', function() {
-    this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
-  }),
 
   windowResize: on('windowResize', function() {
     this.set('keyPressCount', 0);

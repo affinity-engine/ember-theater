@@ -14,5 +14,9 @@ export default Service.extend({
     const translation = intl.get('adapter').findTranslationByKey(locale, key); 
 
     return intl.formatMessage(translation, options);
+  },
+
+  getKey(item) {
+    return item.id ? item.id : item;
   }
 });
