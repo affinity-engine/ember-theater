@@ -14,7 +14,7 @@ export default Service.extend({
     const locale = intl.get('locale');
     const translation = intl.get('adapter').findTranslationByKey(locale, this.getId(key)); 
 
-    return intl.formatMessage(translation, get(key, 'options'));
+    return intl.formatHtmlMessage(translation, get(key, 'options'));
   },
 
   getId(key) {
