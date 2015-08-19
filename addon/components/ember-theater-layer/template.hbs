@@ -1,0 +1,5 @@
+{{#each directables as |directable|}}
+  {{component directable.componentType
+    line=directable.line
+    destroyDirectable=(action 'destroyDirectable' directable)}}
+{{/each}}

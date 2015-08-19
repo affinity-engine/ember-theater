@@ -3,6 +3,7 @@ import layout from './template';
 
 const {
   Component,
+  computed,
   observer
 } = Ember;
 
@@ -12,12 +13,5 @@ export default Component.extend({
 
   loadScene: observer('scene.id', function() {
     this.get('scene').script();
-  }),
-
-  actions: {
-    destroyDirectable(directable) {
-      this.get('scene.directables').removeObject(directable);
-      directable.destroy();
-    }
-  }
+  })
 });

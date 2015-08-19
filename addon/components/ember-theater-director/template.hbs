@@ -1,5 +1,5 @@
-{{#each scene.directables as |directable|}}
-  {{component directable.componentType
-    line=directable.line
-    destroyDirectable=(action 'destroyDirectable' directable)}}
+{{#each scene.layers as |layer|}}
+  {{ember-theater-layer
+  directables=layer.directables
+  name=layer.name}}
 {{/each}}

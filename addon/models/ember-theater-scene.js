@@ -13,28 +13,7 @@ const {
 const { Promise } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
-  directables: Ember.A(),
-
-  clearChannels(channels) {
-    if (isEmpty(channels)) { return; }
-
-    const directables = this.get('directables');
-
-    channels.forEach((channel) => {
-      directables.forEach((directable) => {
-        const directableChannels = directable.get('channels');
-        
-        if (directableChannels && directableChannels.includes(channel)) {
-          directables.removeObject(directable);
-          directable.destroy();
-        }
-      });
-    });
-  },
-
-  pushDirectable(directable) {
-    this.get('directables').pushObject(directable);
-  },
+  layers: Ember.A(),
 
   _defineDirections: on('init', function() {
     const modulePrefix = this.get('modulePrefix');
@@ -44,7 +23,10 @@ export default Ember.Object.extend(ModulePrefixMixin, {
       let direction = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
 
       this[name] = (line) => {
-        const directables = this.get('directables');
+        const layers = this.get('layers');
+        const directables = layers.reduce((directables, layer) => {
+          return directables.pushObjects(layer.get('directables'));
+        }, Ember.A());
         const isOnStage = isPresent(line.id) && directables.isAny('line.id', line.id);
         const createOrUpdate = isOnStage ? 'setProperties' : 'create';
         
@@ -57,11 +39,27 @@ export default Ember.Object.extend(ModulePrefixMixin, {
         return new Promise((resolve) => {
           line.resolve = resolve;
 
-          direction[createOrUpdate]({
+          const directable = direction[createOrUpdate]({
             container: this.get('container'),
             scene: this,
             line: line
           });
+
+          if (!isOnStage) {
+            const layer = layers.find((layer) => {
+              return layer.get('name') === directable.get('layer');
+            });
+
+            if (layer) {
+              layer.get('directables').pushObject(directable);
+            } else {
+              layers.pushObject(Ember.Object.create({
+                name: directable.get('layer'),
+                directables: Ember.A([directable])
+              }));
+            }
+          }
+
         });
       };
     });
