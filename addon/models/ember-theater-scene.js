@@ -51,6 +51,10 @@ export default Ember.Object.extend(ModulePrefixMixin, {
             });
 
             if (layer) {
+              if (directable.get('singletonLayer')) {
+                layer.get('directables').clear();
+              }
+
               layer.get('directables').pushObject(directable);
             } else {
               layers.pushObject(Ember.Object.create({
