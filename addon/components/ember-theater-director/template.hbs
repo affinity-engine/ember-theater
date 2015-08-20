@@ -1,5 +1,4 @@
-{{#each scene.layers as |layer|}}
-  {{ember-theater-layer
-  directables=layer.directables
-  name=layer.name}}
-{{/each}}
+{{ember-theater-layer
+directables=scene.theaterLayer.directables
+layers=scene.theaterLayer.layers
+name=scene.theaterLayer.name}}

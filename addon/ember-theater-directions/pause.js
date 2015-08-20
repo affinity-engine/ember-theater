@@ -1,5 +1,6 @@
 import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
 
 export default EmberTheaterDirection.extend({
-  componentType: 'ember-theater-directable-pause'
+  componentType: 'ember-theater-directable-pause',
+  layer: 'clock.pause'
 });
