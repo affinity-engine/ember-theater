@@ -1,8 +1,18 @@
 import Ember from 'ember';
 import layout from './template';
 
-export default Ember.Component.extend({
+const {
+  Component,
+  computed
+} = Ember;
+
+export default Component.extend({
+  classNameBindings: ['layerName'],
   layout: layout,
+
+  layerName: computed('name', function() {
+    return `ember-theater-layer__${this.get('name')}`;
+  }),
 
   actions: {
     destroyDirectable(directable) {
