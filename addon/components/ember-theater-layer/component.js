@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import layerName from 'ember-theater/utils/layer-name';
 
 const {
   Component,
@@ -11,7 +12,7 @@ export default Component.extend({
   layout: layout,
 
   layerName: computed('name', function() {
-    return `ember-theater-layer__${this.get('name')}`;
+    return layerName(this.get('name'));
   }),
 
   actions: {

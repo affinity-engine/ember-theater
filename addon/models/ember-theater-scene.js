@@ -46,6 +46,12 @@ export default Ember.Object.extend(ModulePrefixMixin, {
             line: line
           });
 
+          if (directable.perform) {
+            directable.perform();
+            directable.destroy();
+            return;
+          }
+
           if (!isOnStage) {
             theaterLayer.addDirectable(directable)
           }
