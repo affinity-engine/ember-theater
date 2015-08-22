@@ -10,15 +10,15 @@ export default EmberTheaterDirection.extend({
   perform() {
     const line = this.get('line');
     const filterId = get(line, 'id');
-    const filterUrl = `/filters/${filterId}.svg#${filterId}`;
+    const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
     const queryString = get(line, 'layer').split(/\.|\//).reduce((queryString, name) => {
       return `${queryString} .${layerName(name)}`;
     }, '');
     const $layer = Ember.$(queryString);
 
     $layer.css({
-      filter: `url(${filterUrl})`,
-      '-webkit-filter': `url(${filterUrl})`
+      filter: effect,
+      '-webkit-filter': effect
     });
 
     get(line, 'resolve')();
