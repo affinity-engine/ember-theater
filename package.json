@@ -44,6 +44,7 @@
     "ember-cli-babel": "^5.0.0",
     "ember-cli-htmlbars": "0.7.9",
     "ember-keyboard-service": "0.3.0",
+    "jquerykeyframes": "0.0.7",
     "node-buzz": "^1.1.4",
     "perfect-scrollbar": "^0.6.4",
     "velocity-animate": "^1.2.2"

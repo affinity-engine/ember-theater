@@ -8,6 +8,7 @@ const {
 } = Ember;
 
 export default Component.extend({
+  classNames: ['ember-theater-layer'],
   classNameBindings: ['layerName'],
   layout: layout,
 
