@@ -20,18 +20,19 @@ module.exports = {
     }
 
     return mergeTrees([
-      tree, treeify('velocity-animate'),
+      tree,
       treeify('node-buzz'),
-      treeify('perfect-scrollbar')
+      treeify('perfect-scrollbar'),
+      treeify('velocity-animate')
     ]);
   },
 
   included: function(app) {
     this._super.included(app);
-    app.import('vendor/velocity-animate/velocity.js');
-    app.import('vendor/velocity-animate/velocity.ui.js');
     app.import('vendor/node-buzz/buzz.js');
     app.import('vendor/perfect-scrollbar/dist/js/min/perfect-scrollbar.min.js');
     app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
+    app.import('vendor/velocity-animate/velocity.js');
+    app.import('vendor/velocity-animate/velocity.ui.js');
   }
 };
