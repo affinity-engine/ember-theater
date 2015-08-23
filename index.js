@@ -21,7 +21,6 @@ module.exports = {
 
     return mergeTrees([
       tree,
-      treeify('jquerykeyframes'),
       treeify('node-buzz'),
       treeify('perfect-scrollbar'),
       treeify('velocity-animate')
@@ -30,7 +29,6 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
-    app.import('vendor/jquerykeyframes/jquery.keyframes.min.js');
     app.import('vendor/node-buzz/buzz.js');
     app.import('vendor/perfect-scrollbar/dist/js/min/perfect-scrollbar.min.js');
     app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
