@@ -5,6 +5,9 @@ import ModulePrefixMixin from '../../mixins/module-prefix';
 const { Component } = Ember;
 
 export default Component.extend(ModulePrefixMixin, {
+  'aria-live': 'polite',
+  ariaRole: 'region',
+  attributeBindings: ['aria-live'],
   classNames: ['ember-theater'],
   layout: layout,
 
