@@ -14,15 +14,25 @@ export default Component.extend(WindowResizeMixin, {
   classNames: ['letter-by-letter-container'],
   layout: layout,
   visibleWords: Ember.A(),
-  visibleWordIndex: 0,
+  visibleWordIndex: -1,
 
-  windowResize: on('windowResize', function() {
-    if (this.textHasOverflown()) {
-      this.removeWord();
+  addWord() {
+    this.incrementProperty('visibleWordIndex');
+    const nextWord = this.get('words').objectAt(this.get('visibleWordIndex'));
+
+    if (nextWord) {
+      this.get('visibleWords').pushObject(nextWord);
     } else {
-      this.addWord();
+      return this.attrs.completePage();
     }
-  }),
+
+    run.next(() => {
+      if (this.textHasOverflown()) {
+        this.removeWord();
+        this.attrs.completePage();
+      }
+    });
+  },
 
   body: computed({
     get() {
@@ -36,62 +46,20 @@ export default Component.extend(WindowResizeMixin, {
     }
   }).readOnly(),
 
-  textHasOverflown() {
-    const {
-      body,
-      bodyContainer
-    } = this.getProperties('body', 'bodyContainer');
-
-    return body.height() > bodyContainer.height();
-  },
-
-  removeWord() {
-    const {
-      words,
-      visibleWords
-    } = this.getProperties('words', 'visibleWords');
-
-    const lastWord = visibleWords.pop();
-    this.notifyPropertyChange('visibleWords');
-
-    run.next(() => {
-      if (this.textHasOverflown()) {
-        this.removeWord();
-      }
-    })
-  },
-
-  addWord() {
-    const nextWord = this.get('words').objectAt(this.get('visibleWordIndex'));
-
-    if (nextWord) {
-      this.get('visibleWords').pushObject(nextWord);
-    } else {
-      return this.attrs.pageComplete();
-    }
-
-    run.next(() => {
-      if (this.textHasOverflown()) {
-        this.removeWord();
-        this.attrs.pageComplete();
-      }
-    });
-  },
-
   createBuffer: on('didReceiveAttrs', function() {
     const { text, visibleWordIndex } = this.getProperties('text', 'visibleWordIndex');
-    if (!text || visibleWordIndex > 0) { return; }
+    if (!text || visibleWordIndex > -1) { return; }
 
     this.set('words', Ember.A(text.split(' ')));
     this.addWord();
   }),
 
   checkPageTurn: on('didReceiveAttrs', function() {
-    if (this.get('turnPage')) {
+    if (this.get('triggerPageTurn')) {
       if (this.get('words.length') <= this.get('visibleWordIndex')) {
-        this.attrs.textComplete();
+        this.attrs.completeText();
       } else {
-        this.attrs.pageTurned();
+        this.attrs.turnPage();
 
         Ember.$.Velocity.animate(this.$('.letter-by-letter'), { opacity: 0 }, { duration: 100 }).then(() => {
           this.get('visibleWords').clear();
@@ -102,9 +70,50 @@ export default Component.extend(WindowResizeMixin, {
     }
   }),
 
+  handleWindowResize() {
+    if (!this.get('pageCompleted')) { return; }
+
+    run.next(() => {
+      if (this.textHasOverflown()) {
+        this.removeWord();
+      } else {
+        this.addWord();
+      }
+    })
+  },
+
+  removeWord() {
+    const {
+      words,
+      visibleWords
+    } = this.getProperties('words', 'visibleWords');
+
+    const lastWord = visibleWords.pop();
+    this.decrementProperty('visibleWordIndex');
+    this.notifyPropertyChange('visibleWords');
+
+    run.next(() => {
+      if (this.textHasOverflown()) {
+        this.removeWord();
+      }
+    })
+  },
+
+  textHasOverflown() {
+    const {
+      body,
+      bodyContainer
+    } = this.getProperties('body', 'bodyContainer');
+
+    return body.height() > bodyContainer.height();
+  },
+
+  windowResize: on('windowResize', function() {
+    run.debounce(this, this.handleWindowResize, 100);
+  }),
+
   actions: {
     incrementCurrentWord() {
-      this.incrementProperty('visibleWordIndex');
       this.addWord();
     }
   }

@@ -88,11 +88,11 @@ export default Ember.Component.extend(DirectableComponentMixin, {
   }).readOnly(),
 
   _resolveKeyPress(event) {
-    if (this.get('pageComplete')) {
+    if (this.get('pageCompleted')) {
       this.setProperties({
-        pageComplete: false,
+        pageCompleted: false,
         rapidText: false,
-        turnPage: true
+        triggerPageTurn: true
       });
     } else {
       this.set('rapidText', true);
@@ -100,20 +100,20 @@ export default Ember.Component.extend(DirectableComponentMixin, {
   },
 
   actions: {
-    pageComplete() {
-      this.set('pageComplete', true);
+    completePage() {
+      this.set('pageCompleted', true);
     },
 
-    pageTurned() {
-      this.set('turnPage', false);
-    },
-
-    textComplete() {
+    completeText() {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         Ember.$('body').off('.speak');
         this.get('line.resolve')();
         this.attrs.destroyDirectable();
       });
+    },
+
+    turnPage() {
+      this.set('triggerPageTurn', false);
     }
   }
 });

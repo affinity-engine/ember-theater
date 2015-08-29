@@ -2,9 +2,10 @@
   <div class='ember-theater-stage-dialogue__caption'>{{name}}</div>
 {{/if}}
 {{letter-by-letter
-  pageComplete=(action 'pageComplete')
-  pageTurned=(action 'pageTurned')
+  completePage=(action 'completePage')
+  completeText=(action 'completeText')
+  pageCompleted=pageCompleted
   speed=textSpeed
-  textComplete=(action 'textComplete')
-  turnPage=turnPage
+  triggerPageTurn=triggerPageTurn
+  turnPage=(action 'turnPage')
   text=text}}
