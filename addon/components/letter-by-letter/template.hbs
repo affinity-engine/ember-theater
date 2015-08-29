@@ -1,0 +1,10 @@
+<div class='letter-by-letter'>
+  {{#each visibleWords key='@index' as |word index|}}
+    {{letter-by-letter-word 
+      currentWord=currentWord
+      incrementCurrentWord=(action 'incrementCurrentWord')
+      index=index
+      speed=speed
+      word=word}}
+  {{/each}}
+</div>

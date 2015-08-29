@@ -1,18 +1,19 @@
 import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from '../../mixins/directable-component';
-import WindowResizeMixin from '../../mixins/window-resize';
 
 const {
   computed,
   inject,
   merge,
-  on
+  on,
+  run
 } = Ember;
 
-export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixin, {
+export default Ember.Component.extend(DirectableComponentMixin, {
   classNameBindings: ['line.class'],
   classNames: ['ember-theater-stage__dialogue'],
+  currentText: Ember.A(),
   keyboard: inject.service(),
   intlWrapper: inject.service(),
   layout: layout,
@@ -48,7 +49,7 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
       if (this.get('line.intl')) {
         const key = `characters.${this.get('line.character')}`;
         const translation = this.get('intlWrapper').formatMessage(key); 
-        
+
         if (translation) { return translation; }
       }
 
@@ -72,25 +73,47 @@ export default Ember.Component.extend(DirectableComponentMixin, WindowResizeMixi
     }
   }).readOnly(),
 
-  windowResize: on('windowResize', function() {
-    this.set('keyPressCount', 0);
-    Ember.$('.ember-theater-stage-dialogue__body').css('top', 0);
-  }),
+  textSpeed: computed('rapidText', 'line.speed', 'character.textSpeed', {
+    get() {
+      if (this.get('rapidText')) { return 0; }
+
+      const lineSpeed = this.get('line.speed');
+      if (lineSpeed) { return lineSpeed; }
+
+      const characterSpeed = this.get('character.textSpeed');
+      if (characterSpeed) { return characterSpeed; }
+
+      return 20;
+    }
+  }).readOnly(),
 
   _resolveKeyPress(event) {
-      this.incrementProperty('keyPressCount');
-
-      const scrollDistance = $('.ember-theater-stage-dialogue__body-container').height() * this.get('keyPressCount') * -1;
-      const inner = Ember.$('.ember-theater-stage-dialogue__body')[0];
-
-      Ember.$.Velocity.animate(inner, { top: scrollDistance }, { duration: 250 }).then(() => {
-        if (parseFloat(Ember.$(inner).css('top')) * -1 >= inner.offsetHeight) {
-          Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-            Ember.$('body').off('.speak');
-            this.get('line.resolve')();
-            this.attrs.destroyDirectable();
-          });
-        }
+    if (this.get('pageComplete')) {
+      this.setProperties({
+        pageComplete: false,
+        rapidText: false,
+        turnPage: true
       });
+    } else {
+      this.set('rapidText', true);
+    }
+  },
+
+  actions: {
+    pageComplete() {
+      this.set('pageComplete', true);
+    },
+
+    pageTurned() {
+      this.set('turnPage', false);
+    },
+
+    textComplete() {
+      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
+        Ember.$('body').off('.speak');
+        this.get('line.resolve')();
+        this.attrs.destroyDirectable();
+      });
+    }
   }
 });

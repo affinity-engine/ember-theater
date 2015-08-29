@@ -1,8 +1,10 @@
 {{#if name}}
   <div class='ember-theater-stage-dialogue__caption'>{{name}}</div>
 {{/if}}
-<div class='ember-theater-stage-dialogue__body-container'>
-  <div class='ember-theater-stage-dialogue__body'>
-    {{text}}
-  </div>
-</div>
+{{letter-by-letter
+  pageComplete=(action 'pageComplete')
+  pageTurned=(action 'pageTurned')
+  speed=textSpeed
+  textComplete=(action 'textComplete')
+  turnPage=turnPage
+  text=text}}
