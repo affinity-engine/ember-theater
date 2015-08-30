@@ -1,5 +1,5 @@
 .et-panel {
-  border: .5vh solid #00585F;
-  background: #009393;
-  color: #FFFCC4;
+  border: $et-panel-border-width solid $et-panel-border-color;
+  background: $et-panel-background;
+  color: $et-panel-color;
 }

@@ -1,0 +1,10 @@
+$et-dialogue-height: 38vh !default;
+$et-dialogue-padding: 4vh !default;
+$et-dialogue-padding-bottom: $et-dialogue-padding * 0.75 !default;
+$et-dialogue-opacity: $et-semi-transparency !default;
+$et-dialogue-font-size: $et-default-font-size !default;
+
+$et-dialogue-caption-padding: $et-dialogue-padding / 4 $et-dialogue-padding / 2 !default;
+$et-dialogue-caption-font-size: $et-large-font-size !default;
+$et-dialogue-caption-top: -$et-dialogue-caption-font-size !default;
+$et-dialogue-caption-left: $et-dialogue-padding / 2 !default;

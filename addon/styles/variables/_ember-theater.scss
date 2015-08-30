@@ -1,3 +1,22 @@
-$et-blank-background-color: #333 !default;
+$et-default-color: #333 !default;
+$et-primary-color: #009393 !default;
+$et-secondary-color: #00585F !default;
+$et-highlight-color: #FF3800 !default;
+$et-neutral-color: #FFFCC4 !default;
 
-@import "ember-theater/ember-theater";
+$et-default-border-radius: 0.5vw !default;
+$et-default-border-width: 0.5vh !default;
+
+$et-default-font-size: 5vh !default;
+$et-large-font-size: $et-default-font-size * 1.32 !default;
+
+$et-default-line-height: 7vh !default;
+
+$et-semi-transparency: 0.9;
+$et-default-transition-speed: 500ms;
+
+@import "components/choice";
+@import "components/dialogue";
+@import "components/ember-theater";
+
+@import "mixins/panel";

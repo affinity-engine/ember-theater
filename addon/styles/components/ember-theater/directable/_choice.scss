@@ -3,27 +3,33 @@
     @extend .et-panel;
     z-index: 1000;
     position: absolute;
-    top: 20vh;
-    left: 21vw;
-    right: 21vw;
-    padding: .1vw;
-    max-height: 100vh;
-    background-color: #00585F;
     box-sizing: border-box;
-    opacity: .9;
-    transform: translateY(-20%);
+    transform: translateY(-$et-choice-top);
+    top: $et-choice-top;
+    right: $et-choice-right;
+    left: $et-choice-left;
+    max-height: 100vh;
+    padding: $et-choice-padding;
+    background-color: $et-choice-background-color;
+    opacity: $et-choice-opacity;
+
+    .et-choice-header {
+      font-size: $et-choice-header-font-size;
+      margin-bottom: $et-choice-header-margin-bottom;
+    }
 
     .et-choice-option {
       @extend .et-panel;
       display: block;
       cursor: pointer;
-      border-radius: .5vw;
-      transition: background 500ms ease;
-      margin-bottom: .1vw;
+      border-radius: $et-choice-option-border-radius;
+      transition: background $et-choice-option-transition-speed ease;
+      margin-bottom: $et-choice-option-margin-bottom;
       width: 100%;
+      font-size: $et-choice-option-font-size;
 
       &:hover, &:focus {
-        background-color: #FF3800;
+        background-color: $et-choice-option-hover-background-color;
         outline: 0;
       }
 
@@ -33,14 +39,8 @@
     }
 
     .et-choice-option, .et-choice-header {
-      line-height: 7vh;
-      text-align: center;
-      font-size: 5vh;
-    }
-
-    .et-choice-header {
-      font-size: 6vh;
-      margin-bottom: 1vw;
+      line-height: $et-choice-child-line-height;
+      text-align: $et-choice-child-text-align;
     }
   }
 }

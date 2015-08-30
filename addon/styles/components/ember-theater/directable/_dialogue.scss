@@ -6,20 +6,22 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 39vh;
-    padding: 4vh;
-    padding-bottom: 3vh;
+    height: $et-dialogue-height;
+    padding: $et-dialogue-padding;
+    padding-bottom: $et-dialogue-padding-bottom;
     margin: 0;
-    opacity: .9;
+    opacity: $et-dialogue-opacity;
     box-sizing: border-box;
+    font-size: $et-dialogue-font-size;
 
     .et-dialogue-caption {
       @extend .et-panel;
       position: absolute;
-      top: -6vh;
-      left: 2vh;
-      padding: 1vh 2vh;
-      font-size: 6vh;
+      box-sizing: border-box;
+      top: $et-dialogue-caption-top;
+      left: $et-dialogue-caption-left;
+      padding: $et-dialogue-caption-padding;
+      font-size: $et-dialogue-caption-font-size;
     }
   }
 }
