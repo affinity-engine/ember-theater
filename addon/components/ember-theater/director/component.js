@@ -8,7 +8,7 @@ const {
 } = Ember;
 
 export default Component.extend({
-  classNames: ['ember-theater-stage'],
+  classNames: ['et-director'],
   layout: layout,
 
   loadScene: observer('scene.id', function() {

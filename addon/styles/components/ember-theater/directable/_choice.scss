@@ -1,0 +1,46 @@
+.ember-theater {
+  .et-choice {
+    @extend .et-panel;
+    z-index: 1000;
+    position: absolute;
+    top: 20vh;
+    left: 21vw;
+    right: 21vw;
+    padding: .1vw;
+    max-height: 100vh;
+    background-color: #00585F;
+    box-sizing: border-box;
+    opacity: .9;
+    transform: translateY(-20%);
+
+    .et-choice-option {
+      @extend .et-panel;
+      display: block;
+      cursor: pointer;
+      border-radius: .5vw;
+      transition: background 500ms ease;
+      margin-bottom: .1vw;
+      width: 100%;
+
+      &:hover, &:focus {
+        background-color: #FF3800;
+        outline: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .et-choice-option, .et-choice-header {
+      line-height: 7vh;
+      text-align: center;
+      font-size: 5vh;
+    }
+
+    .et-choice-header {
+      font-size: 6vh;
+      margin-bottom: 1vw;
+    }
+  }
+}

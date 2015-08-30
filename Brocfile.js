@@ -15,6 +15,9 @@ var app = new EmberAddon({
   babel: {
     includePolyfill: true,
     stage: 1
+  },
+  sassOptions: {
+    extensions: 'scss'
   }
 });
 

@@ -16,7 +16,7 @@ const {
 const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
-  classNames: ['ember-theater-stage__character'],
+  classNames: ['et-character'],
   layout: layout,
   expressionContainers: Ember.A([]),
   store: inject.service(),
@@ -29,7 +29,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   }),
 
   activateImage() {
-    const expression = this.$('.ember-theater-stage__expression').first();
+    const expression = this.$('.et-character-expression').first();
 
     return Ember.$.Velocity.animate(expression, {
       opacity: 100
@@ -80,7 +80,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   determineWidth(height) {
     let largestWidth = 0;
 
-    this.$('.ember-theater-stage__expression').each(function() {
+    this.$('.et-character-expression').each(function() {
       const $img = Ember.$(this);
       const width = $img.prop('naturalWidth') * height / $img.prop('naturalHeight');
 

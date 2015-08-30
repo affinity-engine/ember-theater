@@ -1,0 +1,25 @@
+.ember-theater {
+  .et-dialogue {
+    @extend .et-panel;
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 39vh;
+    padding: 4vh;
+    padding-bottom: 3vh;
+    margin: 0;
+    opacity: .9;
+    box-sizing: border-box;
+
+    .et-dialogue-caption {
+      @extend .et-panel;
+      position: absolute;
+      top: -6vh;
+      left: 2vh;
+      padding: 1vh 2vh;
+      font-size: 6vh;
+    }
+  }
+}

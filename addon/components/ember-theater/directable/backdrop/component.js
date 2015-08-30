@@ -12,7 +12,7 @@ const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt'],
-  classNames: ['ember-theater-stage__backdrop'],
+  classNames: ['et-backdrop'],
   intlWrapper: inject.service(),
   store: inject.service(),
   tagName: 'img',

@@ -43,6 +43,7 @@
     "broccoli-static-compiler": "^0.2.1",
     "ember-cli-babel": "^5.0.0",
     "ember-cli-htmlbars": "0.7.9",
+    "ember-cli-sass": "git+https://github.com/dukex/ember-cli-sass.git#bugfix/addon-styles",
     "ember-keyboard-service": "0.3.0",
     "node-buzz": "^1.1.4",
     "perfect-scrollbar": "^0.6.4",

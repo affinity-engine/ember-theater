@@ -1,0 +1,14 @@
+.ember-theater {
+  .et-backdrop {
+    @extend .et-full-screen;
+    @extend .et-hidden;
+
+    height: 100%;
+    width: 100%;
+
+    background-position: center;
+    background-size: cover;
+
+    color: transparent;
+  }
+}

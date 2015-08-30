@@ -13,7 +13,7 @@ const {
 
 export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
-  classNames: ['ember-theater-stage__choice'],
+  classNames: ['et-choice'],
   intlWrapper: inject.service(),
   layout: layout,
 

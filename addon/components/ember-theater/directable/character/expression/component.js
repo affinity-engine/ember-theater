@@ -11,7 +11,7 @@ const { alias } = computed;
 
 export default Component.extend({
   attributeBindings: ['caption:alt', 'src'],
-  classNames: ['ember-theater-stage__expression'],
+  classNames: ['et-character-expression'],
   previousLine: null,
   intlWrapper: inject.service(),
   src: alias('expression.src'),

@@ -12,7 +12,7 @@ const {
 
 export default Ember.Component.extend(DirectableComponentMixin, {
   classNameBindings: ['line.class'],
-  classNames: ['ember-theater-stage__dialogue'],
+  classNames: ['et-dialogue'],
   currentText: Ember.A(),
   keyboard: inject.service(),
   intlWrapper: inject.service(),

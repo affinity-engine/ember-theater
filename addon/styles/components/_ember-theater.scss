@@ -1,0 +1,10 @@
+@import "ember-theater/curtain";
+@import "ember-theater/directables";
+@import "ember-theater/director";
+@import "ember-theater/layer";
+
+.ember-theater {
+  @extend .et-full-screen;
+  overflow: hidden;
+  background-color: $ember-theater-background-color;
+}
