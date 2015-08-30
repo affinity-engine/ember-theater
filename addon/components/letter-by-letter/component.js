@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import WindowResizeMixin from '../../mixins/window-resize';
+import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 
 const {
   Component,

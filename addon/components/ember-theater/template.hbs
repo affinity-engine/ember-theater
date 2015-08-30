@@ -1,5 +1,5 @@
 {{#if scene}}
-  {{ember-theater-director scene=scene}}
+  {{ember-theater/director scene=scene}}
 {{else}}
-  {{ember-theater-curtain complete=(action 'transitionToInitialScene')}}
+  {{ember-theater/curtain complete=(action 'transitionToInitialScene')}}
 {{/if}}

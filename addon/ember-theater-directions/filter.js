@@ -8,8 +8,6 @@ const {
 } = Ember;
 
 export default EmberTheaterDirection.extend({
-  componentType: 'ember-theater-directable-filter',
-
   perform() {
     const line = this.get('line');
     const filterId = get(line, 'id');

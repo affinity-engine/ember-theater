@@ -1,9 +1,0 @@
-{{#each word key='@index' as |character index|}}
-  {{letter-by-letter-character
-    currentCharacter=currentCharacter
-    incrementCurrentCharacter=(action 'incrementCurrentCharacter')
-    index=index
-    character=character
-    speed=speed}}
-{{/each}}
-<span class='letter-by-letter__character'>&nbsp;</span>
