@@ -50,6 +50,7 @@ export default Component.extend(WindowResizeMixin, {
     const { text, visibleWordIndex } = this.getProperties('text', 'visibleWordIndex');
     if (!text || visibleWordIndex > -1) { return; }
 
+    this.get('visibleWords').clear();
     this.set('words', Ember.A(text.split(' ')));
     this.addWord();
   }),

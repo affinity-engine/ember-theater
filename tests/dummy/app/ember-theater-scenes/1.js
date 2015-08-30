@@ -3,7 +3,7 @@ import Scene from 'ember-theater/models/ember-theater-scene';
 export default Scene.extend({
   script: async function() {
     await this.choice({ intl: { header: '1.choice1.header', choices: { A: { id: '1.choice1.A', options: { opt1: 'OOO' } }, B: '1.choice1.B' } } });
-    this.filter({ effect: 'blur(20px)', options: { duration: 500 }, layer: 'theater' });
+    this.filter({ effect: 'blur(2px)', options: { duration: 500 }, layer: 'theater' });
     await this.dialogue({ character: 'steven', intl: '1.noId' });
     this.filter({ effect: 'blur(0px)', options: { duration: 500 }, layer: 'theater' });
     await this.dialogue({ character: 'steven', intl: { displayName: '1.noId', text: { id: '1.firstTest', options: { val1: 'my friend' } } } });
