@@ -17,13 +17,12 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   store: inject.service(),
   tagName: 'img',
 
-  caption: computed('backdrop.caption', 'backdrop.intl', {
+  caption: computed('backdrop.caption', {
     get() {
-      if (this.get('backdrop.intl')) {
-        return this.get('intlWrapper').formatMessage(`backdrops.${this.get('backdrop.id')}`);
-      } else {
-        return this.get('backdrop.caption');
-      }
+      return this.get('intlWrapper').tryIntl(
+        this.get('backdrop.caption'),
+        `backdrops.${this.get('backdrop.id')}`
+      );
     }
   }),
 

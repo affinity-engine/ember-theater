@@ -17,13 +17,12 @@ export default Component.extend({
   src: alias('expression.src'),
   tagName: 'img',
 
-  caption: computed('expression.caption', 'expression.intl', {
+  caption: computed('expression.caption', {
     get() {
-      if (this.get('expression.intl')) {
-        return this.get('intlWrapper').formatMessage(`expressions.${this.get('expression.id')}`);
-      } else {
-        return this.get('expression.caption');
-      }
+      return this.get('intlWrapper').tryIntl(
+        this.get('expression.caption'),
+        `expressions.${this.get('expression.id')}`
+      );
     }
   }),
 

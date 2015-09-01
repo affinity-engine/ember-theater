@@ -14,10 +14,16 @@ const {
 const { Promise } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
+  transitionToScene(sceneId) {
+    this.get('_transitionToScene')(sceneId);
+  },
+
   _defineDirections: on('init', function() {
     const modulePrefix = this.get('modulePrefix');
     const directionNames = this.get('_directionNames');
     const theaterLayer = EmberTheaterLayer.create({
+      directables: Ember.A(),
+      layers: Ember.A(),
       name: 'theater'
     });
 
@@ -49,13 +55,9 @@ export default Ember.Object.extend(ModulePrefixMixin, {
           if (directable.perform) {
             directable.perform();
             directable.destroy();
-            return;
-          }
-
-          if (!isOnStage) {
+          } else if (!isOnStage) {
             theaterLayer.addDirectable(directable)
           }
-
         });
       };
     });

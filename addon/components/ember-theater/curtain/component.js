@@ -72,7 +72,7 @@ export default Component.extend(ModulePrefixMixin, {
     this.get('modelNames').forEach((modelName) => {
       const singularName = singularize(modelName);
       const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
-      const data = store.pushMany(singularName, fixtures);
+      const data = store.push(fixtures);
 
       this.set(Ember.String.camelize(modelName), Ember.A(data));
     });

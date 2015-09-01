@@ -9,7 +9,6 @@ const {
   Component, 
   computed, 
   inject,
-  observer,
   on, 
   run 
 } = Ember;
@@ -103,7 +102,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
     this.executeLine();
   }),
 
-  changeExpression: observer('line.expression', function() {
+  changeExpression: on('didRender', function() {
     const line = this.get('line.expression');
     if (!line || !this.element || this.get('previousExpressionLine') === line) { return; }
     

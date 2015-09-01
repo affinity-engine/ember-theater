@@ -1,7 +1,15 @@
-export default [{
-  id: 'steven',
-  name: 'Steven',
-  height: 60,
-  defaultExpression: 'steven',
-  expressions: ['steven', 'steven--jumping']
-}];
+export default {
+  data: [{
+    type: 'ember-theater-character',
+    id: 'steven',
+    attributes: {
+      name: 'Steven',
+      height: 60
+    },
+    relationships: {
+      defaultExpression: {
+        data: { type: 'ember-theater-character-expression', id: 'steven' }
+      }
+    }
+  }]
+};

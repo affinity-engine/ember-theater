@@ -22,9 +22,14 @@ export default Component.extend(ModulePrefixMixin, {
       const modulePrefix = this.get('modulePrefix');
       const scene = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
 
-      this.set('scene', scene.create({
-        container: this.get('container')
-      }));
+      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(() => {
+        this.set('scene', scene.create({
+          container: this.get('container'),
+          id: sceneId
+        }));
+
+        Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
+      });
     }
   }
 });

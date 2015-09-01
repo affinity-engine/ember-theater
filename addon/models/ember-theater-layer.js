@@ -6,27 +6,33 @@ export default Ember.Object.extend({
   directables: Ember.A(),
   layers: Ember.A(),
 
+  addChildLayer(layerName, directable) {
+    const layers = this.get('layers');
+    let layer = layers.find((layer) => {
+      return layer.get('name') === layerName;
+    });
+
+    if (!layer) {
+      // `directables` and `layers` need to be reset or they'll leak into other layers
+      layer = this.constructor.create({
+        directables: Ember.A(),
+        layers: Ember.A(),
+        name: layerName
+      });
+      layers.pushObject(layer);
+    }
+
+    layer.clearSingleton(directable);
+    layer.addDirectable(directable);
+  },
+
   addDirectable(directable) {
     const layers = this.get('layers');
     const layerNames = directable.get('layer').split(/\.|\//);
-    const layerName = layerNames[layerNames.indexOf(this.get('name')) + 1];
+    const nextLayer = layerNames[layerNames.indexOf(this.get('name')) + 1];
 
-    if (layerName) {
-      let layer = layers.find((layer) => {
-        return layer.get('name') === layerName;
-      });
-
-      if (!layer) {
-        layer = this.constructor.create({
-          directables: Ember.A(),
-          layers: Ember.A(),
-          name: layerName
-        });
-        layers.pushObject(layer);
-      }
-
-      layer.clearSingleton(directable);
-      layer.addDirectable(directable);
+    if (nextLayer) {
+      this.addChildLayer(nextLayer, directable);
     } else {
       this.clearSingleton(directable);
       this.get('directables').pushObject(directable);
