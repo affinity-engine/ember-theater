@@ -29,6 +29,7 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
+    app.import(path.join(app.bowerDirectory, 'lokijs/src/lokijs.js'));
     app.import('vendor/node-buzz/buzz.js');
     app.import('vendor/perfect-scrollbar/dist/js/min/perfect-scrollbar.min.js');
     app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');

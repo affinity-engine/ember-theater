@@ -1,7 +1,8 @@
 import Scene from 'ember-theater/models/ember-theater-scene';
 
 export default Scene.extend({
-  script: async function() {
-    this.backdrop({ id: 'beach--night', options: { duration: 5000 } });
+  script: async function(director) {
+    console.log(director.getStat('test'));
+    director.backdrop({ id: 'beach--night', options: { duration: 5000 } });
   }
 });
