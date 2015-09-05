@@ -8,9 +8,6 @@ module.exports = {
   afterInstall: function() {
     var _this = this;
     var packages = [{
-      name: 'babel-polyfill',
-      target: '~0.0.1'
-    }, {
       name: 'lokijs',
       target: '~1.3.9'
     }]; 
