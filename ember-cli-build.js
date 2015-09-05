@@ -3,7 +3,7 @@
 var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
-  var app = new EmberApp(defaults, {
+  var addon = new EmberAddon({
     babel: {
       includePolyfill: true,
       stage: 1
@@ -13,5 +13,5 @@ module.exports = function(defaults) {
     }
   });
 
-  return app.toTree();
+  return addon.toTree();
 }
