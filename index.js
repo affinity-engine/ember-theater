@@ -8,7 +8,7 @@ var pickFiles = require('broccoli-static-compiler');
 module.exports = {
   name: 'ember-theater',
 
-  treeForVendor: function(tree){
+  treeForVendor: function(){
     var _this = this;
 
     var treeify = function treeify(name) {
@@ -20,7 +20,6 @@ module.exports = {
     }
 
     return mergeTrees([
-      tree,
       treeify('node-buzz'),
       treeify('perfect-scrollbar'),
       treeify('velocity-animate')
