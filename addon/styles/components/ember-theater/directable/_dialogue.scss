@@ -12,7 +12,14 @@
     margin: 0;
     opacity: $et-dialogue-opacity;
     box-sizing: border-box;
-    font-size: $et-dialogue-font-size;
+
+    .letter-by-letter {
+      line-height: $et-dialogue-line-height;
+    }
+
+    .letter-by-letter__character {
+      font-size: $et-dialogue-font-size;
+    }
 
     .et-dialogue-caption {
       @extend .et-panel;
