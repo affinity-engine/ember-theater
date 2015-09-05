@@ -21,7 +21,7 @@ export default Component.extend(ModulePrefixMixin, {
       const savePoints = this.get('session.autosave.savePoints');
 
       if (savePoints.length > 0) {
-        sceneId = savePoints[savePoints.length - 1].sceneId;
+        sceneId = savePoints[0].sceneId;
       } else {
         sceneId = this.get('initialScene');
       }

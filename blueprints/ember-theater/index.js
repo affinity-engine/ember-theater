@@ -19,6 +19,8 @@ module.exports = {
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-keyboard-service', target: '0.3.0' });
     }).then(function() {
+      return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '0.1.1' });
+    }).then(function() {
       return _this.insertIntoFile('ember-cli-build.js',
         '    babel: { includePolyfill: true, stage: 2 },',
         { after: 'var app = new EmberApp(defaults, {' + EOL });

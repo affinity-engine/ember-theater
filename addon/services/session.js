@@ -44,7 +44,7 @@ export default Service.extend({
 
       if (saveCollection) {
         autosave = saveCollection.findOne({ name: 'autosave' });
-        currentState = autosave.savePoints[autosave.savePoints.length - 1].data;
+        currentState = autosave.savePoints[0].data;
       } else {
         saveCollection = db.addCollection('saves', { indices: ['name'] });
         autosave = saveCollection.insert({ name: 'autosave', savePoints: [] });
@@ -60,6 +60,15 @@ export default Service.extend({
     });
   }),
 
+  loadGame(game) {
+    const currentState = game.savePoints[0].data;
+
+    this.setProperties({
+      autosave: game,
+      currentState
+    });
+  },
+
   persistAutosave() {
     this.persistSave(this.get('autosave'));
   },
@@ -71,7 +80,7 @@ export default Service.extend({
       saveCollection
     } = this.getProperties('currentState', 'db', 'saveCollection');
 
-    save.savePoints.push({ sceneId: sceneId, data: currentState });
+    save.savePoints.unshift({ sceneId: sceneId, data: currentState });
     saveCollection.update(save);
     db.saveDatabase();
   },

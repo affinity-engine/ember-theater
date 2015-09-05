@@ -1,3 +1,5 @@
 {{#each saves as |save|}}
-  {{save.name}}
+  {{ember-theater/menu-bar/save-menu/button
+    toScene=(action 'toScene')
+    save=save}}
 {{/each}}

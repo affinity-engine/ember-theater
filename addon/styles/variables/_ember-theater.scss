@@ -17,6 +17,7 @@ $et-default-transition-speed: 500ms;
 
 @import "components/choice";
 @import "components/dialogue";
-@import "components/ember-theater";
+@import "components/menu-bar";
 
+@import "mixins/button";
 @import "mixins/panel";

@@ -20,19 +20,11 @@ export default Component.extend(ModulePrefixMixin, {
   session: inject.service(),
 
   loadScene: on('didRender', function() {
-    if (!this.get('sceneChanged')) { return; }
-
     const scene = this.get('scene');
 
     this.set('sceneId', scene.get('id'));
     scene.script(this);
   }),
-
-  sceneChanged: computed('scene.id', 'sceneId', {
-    get() {
-      return this.get('scene.id') !== this.get('sceneId');
-    }
-  }).readOnly(),
 
   transitionToScene(sceneId, options) {
     Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
@@ -57,12 +49,13 @@ export default Component.extend(ModulePrefixMixin, {
   _defineDirections: on('init', function() {
     const modulePrefix = this.get('modulePrefix');
     const directionNames = this.get('_directionNames');
-    const theaterLayer = this._resetTheaterLayer();
+    this._resetTheaterLayer();
 
     directionNames.forEach((name) => {
       let direction = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
 
       this[name] = (line) => {
+        const theaterLayer = this.get('theaterLayer'); 
         const directables = theaterLayer.gatherDirectables();
         const isOnStage = isPresent(line.id) && directables.isAny('line.id', line.id);
         const createOrUpdate = isOnStage ? 'setProperties' : 'create';

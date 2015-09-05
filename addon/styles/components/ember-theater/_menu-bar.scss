@@ -1,3 +1,52 @@
+.et-menu-bar-container, .et-menu-bar {
+  z-index: 1000;
+  position: absolute;
+  top: $et-menu-bar-top;
+  left: $et-menu-bar-left;
+  right: $et-menu-bar-right;
+  transition: transform $et-menu-bar-transition-speed ease;
+}
+
+.et-menu-bar-container {
+  height: $et-menu-bar-height / 5;
+
+  &:hover, .et-menu-bar {
+    .et-menu-bar {
+      transform: translateY(0);
+    }
+  }
+}
+
 .et-menu-bar {
-  opacity: 0;
+  @extend .et-panel;
+  display: flex;
+  flex-direction: column;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  opacity: $et-menu-bar-opacity;
+  padding: $et-menu-bar-padding;
+  font-size: $et-menu-bar-font-size;
+  transform: translateY(-$et-menu-bar-height);
+
+  .et-menu-bar-control-icon {
+    @extend .et-button;
+    align-self: flex-end;
+  }
+
+  .et-menu-bar-dropdown {
+    @extend .et-panel;
+    position: absolute;
+    border-top: 0;
+    border-right: 0;
+    margin-top: $et-menu-bar-dropdown-top-margin;
+    right: $et-menu-bar-dropdown-right;
+    padding: $et-menu-bar-dropdown-padding;
+  }
+
+  .et-menu-bar-save-menu-button {
+    @extend .et-button;
+    width: 100%;
+    padding: $et-menu-bar-save-menu-button-padding;
+  }
 }

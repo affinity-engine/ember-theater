@@ -1,1 +1,10 @@
-{{ember-theater/menu-bar/save-menu}}
+<div class='et-menu-bar'>
+  {{ember-theater/menu-bar/control
+    iconName='save'
+    open=(action 'openSaveMenu')
+    toggle=(action 'toggleSaveMenu')}}
+  {{#if saveMenuOpen}}
+    {{ember-theater/menu-bar/save-menu
+      toScene=(action 'toScene')}}
+  {{/if}}
+</div>

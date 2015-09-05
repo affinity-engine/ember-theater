@@ -19,19 +19,10 @@
     }
 
     .et-choice-option {
-      @extend .et-panel;
+      @extend .et-button;
       display: block;
-      cursor: pointer;
-      border-radius: $et-choice-option-border-radius;
-      transition: background $et-choice-option-transition-speed ease;
       margin-bottom: $et-choice-option-margin-bottom;
       width: 100%;
-      font-size: $et-choice-option-font-size;
-
-      &:hover, &:focus {
-        background-color: $et-choice-option-hover-background-color;
-        outline: 0;
-      }
 
       &:last-child {
         margin-bottom: 0;

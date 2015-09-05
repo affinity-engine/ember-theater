@@ -14,6 +14,7 @@
     box-sizing: border-box;
 
     .letter-by-letter {
+      text-align: $et-dialogue-text-align;
       line-height: $et-dialogue-line-height;
     }
 
