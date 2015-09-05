@@ -15,6 +15,8 @@ module.exports = {
     return this.addBowerPackagesToProject(packages).then(function() {
       return _this.addAddonToProject({ name: 'ember-intl', target: '2.0.0-beta.22' });
     }).then(function() {
+      return _this.addAddonToProject({ name: 'ember-inflector', target: '1.6.2' });
+    }).then(function() {
       return _this.addAddonToProject({ name: 'ember-keyboard-service', target: '0.3.0' });
     }).then(function() {
       return _this.insertIntoFile('ember-cli-build.js',

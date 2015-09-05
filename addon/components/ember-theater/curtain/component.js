@@ -39,7 +39,10 @@ export default Component.extend(ModulePrefixMixin, {
   }),
 
   loadImages() {
-    this.get('images').forEach((item) => {
+    const images = this.get('images');
+    if (!images) { return this.set('images', Ember.A()); }
+
+    images.forEach((item) => {
       const image = new Image();
       image.src = get(item, 'src');
 
@@ -51,7 +54,10 @@ export default Component.extend(ModulePrefixMixin, {
   },
 
   loadSounds() {
-    this.get('emberTheaterSounds').forEach((item) => {
+    const sounds = this.get('emberTheaterSounds');
+    if (!sounds) { return this.set('emberTheaterSounds', Ember.A()); }
+
+    sounds.forEach((item) => {
       const audio = new window.buzz.sound(get(item, 'path'), {
         formats: get(item, 'formats'),
         preload: true,
