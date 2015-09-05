@@ -1,4 +1,9 @@
+$et-dialogue-width: 100vw !default;
+
 $et-dialogue-height: 38vh !default;
+$et-dialogue-bottom: 0 !default;
+$et-dialogue-right: (100 - $et-dialogue-width) / 2 !default;
+$et-dialogue-left: (100 - $et-dialogue-width) / 2 !default;
 $et-dialogue-padding: 4vh !default;
 $et-dialogue-padding-bottom: $et-dialogue-padding * 0.75 !default;
 $et-dialogue-opacity: $et-semi-transparency !default;

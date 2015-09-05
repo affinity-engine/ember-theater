@@ -84,7 +84,7 @@ export default Component.extend(WindowResizeMixin, {
   },
 
   removeWord() {
-    this.getProperties('visibleWords').pop();
+    this.get('visibleWords').pop();
     this.decrementProperty('visibleWordIndex');
     this.notifyPropertyChange('visibleWords');
 

@@ -1,9 +1,9 @@
-$et-choice-width: 48vw !default;
+$et-choice-width: 62vw !default;
 $et-choice-rhythm: 0.1vw !default;
 
 $et-choice-top: 20% !default;
-$et-choice-right: $et-choice-width / 2 !default;
-$et-choice-left: $et-choice-width / 2 !default;
+$et-choice-right: (100 - $et-choice-width) / 2 !default;
+$et-choice-left: (100 - $et-choice-width) / 2 !default;
 $et-choice-padding: $et-choice-rhythm !default;
 $et-choice-background-color: $et-secondary-color !default;
 $et-choice-opacity: $et-semi-transparency !default;

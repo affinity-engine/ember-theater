@@ -3,9 +3,9 @@
     @extend .et-panel;
     position: absolute;
     z-index: 100;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    bottom: $et-dialogue-bottom;
+    left: $et-dialogue-left;
+    right: $et-dialogue-right;
     height: $et-dialogue-height;
     padding: $et-dialogue-padding;
     padding-bottom: $et-dialogue-padding-bottom;
