@@ -7,8 +7,7 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 const {
   Component,
   computed,
-  inject,
-  on
+  inject
 } = Ember;
 
 export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {

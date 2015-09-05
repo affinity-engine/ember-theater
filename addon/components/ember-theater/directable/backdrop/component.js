@@ -8,7 +8,6 @@ const {
   inject,
   on 
 } = Ember;
-const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt'],

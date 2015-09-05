@@ -7,12 +7,10 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 
 const { 
   Component, 
-  computed, 
   inject,
   on, 
   run 
 } = Ember;
-const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   classNames: ['et-character'],

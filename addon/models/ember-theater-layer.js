@@ -27,7 +27,6 @@ export default Ember.Object.extend({
   },
 
   addDirectable(directable) {
-    const layers = this.get('layers');
     const layerNames = directable.get('layer').split(/\.|\//);
     const nextLayer = layerNames[layerNames.indexOf(this.get('name')) + 1];
 

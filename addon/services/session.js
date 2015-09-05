@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 const {
   computed,
-  copy,
   on,
   Service
 } = Ember;
@@ -23,7 +22,7 @@ export default Service.extend({
 
   createSave(name) {
     const save = this.get('saves').insert({ name: name, savePoints: [] });
-    persistSave(save);
+    this.persistSave(save);
   },
 
   deleteGame(save) {
@@ -38,7 +37,7 @@ export default Service.extend({
 
   getSavesFromLocalStorage: on('init', function() {
     const db = new loki('game');
-    db.loadDatabase({}, (results) => {
+    db.loadDatabase({}, () => {
       let autosave, currentState, saveCollection;
 
       saveCollection = db.getCollection('saves');

@@ -7,7 +7,6 @@ const {
   Component,
   computed,
   inject,
-  isEmpty,
   isPresent,
   on,
   RSVP
@@ -87,7 +86,7 @@ export default Component.extend(ModulePrefixMixin, {
             directable.perform();
             directable.destroy();
           } else if (!isOnStage) {
-            theaterLayer.addDirectable(directable)
+            theaterLayer.addDirectable(directable);
           }
         });
       };

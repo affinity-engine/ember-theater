@@ -80,16 +80,11 @@ export default Component.extend(WindowResizeMixin, {
       } else {
         this.addWord();
       }
-    })
+    });
   },
 
   removeWord() {
-    const {
-      words,
-      visibleWords
-    } = this.getProperties('words', 'visibleWords');
-
-    const lastWord = visibleWords.pop();
+    this.getProperties('visibleWords').pop();
     this.decrementProperty('visibleWordIndex');
     this.notifyPropertyChange('visibleWords');
 
@@ -97,7 +92,7 @@ export default Component.extend(WindowResizeMixin, {
       if (this.textHasOverflown()) {
         this.removeWord();
       }
-    })
+    });
   },
 
   textHasOverflown() {

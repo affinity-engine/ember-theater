@@ -3,8 +3,7 @@ import layout from './template';
 
 const {
   Component,
-  computed,
-  on
+  computed
 } = Ember;
 
 const { alias } = computed;

@@ -5,9 +5,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/directable-component'
 const {
   computed,
   inject,
-  merge,
-  on,
-  run
+  on
 } = Ember;
 
 export default Ember.Component.extend(DirectableComponentMixin, {
@@ -78,7 +76,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     }
   }).readOnly(),
 
-  _resolveKeyPress(event) {
+  _resolveKeyPress() {
     if (this.get('pageCompleted')) {
       this.setProperties({
         pageCompleted: false,
