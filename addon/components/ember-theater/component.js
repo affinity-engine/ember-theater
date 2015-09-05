@@ -33,7 +33,7 @@ export default Component.extend(ModulePrefixMixin, {
       const modulePrefix = this.get('modulePrefix');
       const scene = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
 
-      this.set('scene', scene.setProperties({
+      this.set('scene', scene.create({
         container: this.get('container'),
         id: sceneId,
         options: options
