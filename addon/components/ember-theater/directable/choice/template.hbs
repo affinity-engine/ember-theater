@@ -2,5 +2,7 @@
   <div class='et-choice-header'>{{header}}</div>
 {{/if}}
 {{#each choices as |choice|}}
-  <button {{action 'choose' choice.path}} class='et-choice-option'>{{choice.text}}</button>
+  {{ember-theater/directable/choice/option
+    choice=choice
+    choose=(action 'choose' choice)}}
 {{/each}}

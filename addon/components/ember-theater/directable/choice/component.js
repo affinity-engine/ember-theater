@@ -23,9 +23,18 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
       const keys = Object.keys(choices);
 
       return keys.map((key) => {
-        const text = this.get('intlWrapper').tryIntl(choices[key], choices[key]);
+        const value = Ember.typeOf(choices[key]) === 'string' ? choices[key] : choices[key].text;
+        const text = this.get('intlWrapper').tryIntl(value, value);
 
-        return { path: key, text: text };
+        return {
+          class: choices[key].class,
+          icon: choices[key].icon,
+          input: '',
+          inputable: choices[key].inputable,
+          object: choices[key].object,
+          key: key,
+          text: text
+        };
       });
     }
   }).readOnly(),
@@ -40,9 +49,9 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
   }).readOnly(),
 
   actions: {
-    choose(path) {
+    choose(choice) {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        this.get('line.resolve')(path);
+        this.get('line.resolve')(choice);
         this.attrs.destroyDirectable();
       });
     }

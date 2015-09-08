@@ -12,7 +12,7 @@ export default Scene.extend({
     director.backdrop({ id: 'beach--night', options: { duration: 5000 } });
     await director.character({ id: 'steven', effect: { translateX: '50vw', opacity: 1 }, options: { duration: 500 } });
     const choiceOne = await director.choice({ header: 'What should I do?', choices: { A: 'Whirl!', B: 'Jump!', C: 'Play Bolero!', D: 'Something', E: 'Filler', F: 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', G: 'Here is another short statement.', H: 'Okay, that last one was still kind of long.', I: 'Really actually totally short.', J: 'Okay, really really short.', K: 'Truly short.', L: 'Short and sweet.', M: 'Shorter.', N: 'S' }});
-    switch (choiceOne) {
+    switch (choiceOne.key) {
       case 'A': await director.character({ id: 'steven', expression: { id: 'steven--jumping', transitionOut: { effect: 'transition.whirlOut', options: { duration: 1000 } }, transitionIn: { effect: 'transition.whirlIn', options: { duration: 1000 } } }}); break;
       case 'B': await director.character({ id: 'steven', effect: 'callout.bounce', options: { duration: 1000 } }); break;
       case 'C': director.sound({ id: 'song__bolero' }); break;

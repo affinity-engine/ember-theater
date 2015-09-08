@@ -29,9 +29,26 @@
       }
     }
 
-    .et-choice-option, .et-choice-header {
+    .et-choice-option, .et-choice-header, .et-choice-input {
       line-height: $et-choice-child-line-height;
       text-align: $et-choice-child-text-align;
+    }
+
+    .et-choice-input {
+      @extend .et-input;
+      width: 100%;
+    }
+
+    .et-choice-close {
+      position: absolute;
+      top: $et-choice-padding;
+      right: $et-choice-padding;
+      padding: 0 $et-choice-padding;
+      width: inherit;
+
+      .et-choice-option-text {
+        @extend .sr-only;
+      }
     }
   }
 }

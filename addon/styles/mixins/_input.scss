@@ -1,0 +1,13 @@
+.et-input {
+  border: $et-input-border-width solid $et-input-border-color;
+  background: $et-input-background-color;
+  color: $et-input-color;
+  border-radius: $et-input-border-radius;
+  font-size: $et-input-font-size;
+  transition: border $et-input-transition-speed ease;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $et-input-focus-border-color;
+  }
+} 

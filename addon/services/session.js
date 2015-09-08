@@ -21,7 +21,7 @@ export default Service.extend({
   },
 
   createSave(name) {
-    const save = this.get('saves').insert({ name: name, savePoints: [] });
+    const save = this.get('db').getCollection('saves').insert({ name: name, savePoints: [] });
     this.persistSave(save);
   },
 

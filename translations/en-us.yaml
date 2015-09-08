@@ -11,3 +11,8 @@ expressions:
     header: 'Translated Header'
     A: 'AAA -- {opt1}'
     B: 'B, value B, BBB'
+emberTheaterSave:
+  autosave: 'autosave'
+  done: 'Done'
+  header: 'Save your game?'
+  newGame: 'New Save'
