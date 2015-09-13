@@ -16,14 +16,13 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
   intlWrapper: inject.service(),
   layout: layout,
 
-  choices: computed('line.choices', 'line.intl.choices', {
+  choices: computed('line.choices', {
     get() {
-      const intlChoices = this.get('line.intl.choices');
-      const choices = intlChoices ? intlChoices : this.get('line.choices');
+      const choices = this.get('line.choices');
       const keys = Object.keys(choices);
 
       return keys.map((key) => {
-        const value = Ember.typeOf(choices[key]) === 'string' ? choices[key] : choices[key].text;
+        const value = choices[key];
         const text = this.get('intlWrapper').tryIntl(value, value);
 
         return {
@@ -39,11 +38,13 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
     }
   }).readOnly(),
 
-  header: computed('line.header', 'line.intl.header', {
+  header: computed('line.header', {
     get() {
+      const header = this.get('line.header');
+
       return this.get('intlWrapper').tryIntl(
-        this.get('line.header'),
-        this.get('line.intl.header')
+        header,
+        header
       );
     }
   }).readOnly(),

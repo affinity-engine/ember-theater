@@ -4,6 +4,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/directable-component'
 
 const {
   computed,
+  get,
   inject,
   on
 } = Ember;
@@ -23,11 +24,13 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     }
   }).readOnly(),
 
-  displayName: computed('line.displayName', 'line.intl.displayName', {
+  displayName: computed('line.displayName', {
     get() {
+      const displayName = this.get('line.displayName');
+
       return this.get('intlWrapper').tryIntl(
-        this.get('line.displayName'),
-        this.get('line.intl.displayName')
+        displayName,
+        displayName
       );
     }
   }).readOnly(),
@@ -36,9 +39,10 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
   }),
 
-  name: computed('character.name', 'line.displayName', 'line.intl', {
+  name: computed('character.name', 'displayName', {
     get() {
       const displayName = this.get('displayName');
+      
       if (displayName) { return displayName; }
 
       return this.get('intlWrapper').tryIntl(
@@ -52,12 +56,14 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
   }),
 
-  text: computed('line.intl', 'line.text', {
+  text: computed('line.text', {
     get() {
+      const line = this.get('line');
+      const text = get(line, 'text');
+
       return this.get('intlWrapper').tryIntl(
-        this.get('line.text'),
-        this.get('line.intl.text'),
-        this.get('line.intl')
+        text,
+        line
       );
     }
   }).readOnly(),

@@ -20,7 +20,7 @@
 .et-menu-bar {
   @extend .et-panel;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -35,10 +35,10 @@
   }
 
   .et-menu-bar-dropdown {
-    @extend .et-panel;
     position: absolute;
     border-top: 0;
     border-right: 0;
+    background-color: $et-menu-bar-dropdown-background-color;
     margin-top: $et-menu-bar-dropdown-top-margin;
     right: $et-menu-bar-dropdown-right;
     padding: $et-menu-bar-dropdown-padding;

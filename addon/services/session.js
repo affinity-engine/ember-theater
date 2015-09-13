@@ -85,6 +85,22 @@ export default Service.extend({
     db.saveDatabase();
   },
 
+  refreshAutosave() {
+    const currentState = {};
+    const autosave = this.get('autosave');
+    const saveCollection = this.get('saveCollection');
+
+    autosave.savePoints = [];
+    autosave.sceneId = '';
+    saveCollection.update(autosave);
+    db.saveDatabase();
+
+    this.setProperties({
+      autosave,
+      currentState
+    });
+  },
+
   saves: computed('saveCollection', {
     get() {
       return this.get('saveCollection').find();

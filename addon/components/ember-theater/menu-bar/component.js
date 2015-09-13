@@ -22,11 +22,16 @@ export default Component.extend({
       this.set('saveMenuOpen', true);
     },
 
-    toggleSaveMenu() {
-      this.toggleProperty('saveMenuOpen');
+    toggleControlProperty(property) {
+      this.toggleProperty(property);
+    },
+
+    toInitialScene() {
+      this.attrs.toInitialScene();
     },
 
     toScene(scene) {
+      this.closeEverything();
       this.attrs.toScene(scene);
     }
   }

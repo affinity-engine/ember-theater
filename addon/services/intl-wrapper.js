@@ -3,11 +3,12 @@ import Ember from 'ember';
 const {
   get,
   inject,
+  isBlank,
   Service
 } = Ember;
 
 export default Service.extend({
-  intl: inject.service(),
+  i18n: inject.service(),
 
   tryIntl(local, ...intlKeys) {
     let translation;
@@ -19,24 +20,27 @@ export default Service.extend({
       translation = this.formatMessage(key);
     }
 
-    if (translation) {
-      return translation;
-    } else {
+    if (isBlank(translation) || !translation) {
       return local;
+    } else {
+      return translation.string;
     }
   },
 
-  formatMessage(key) {
-    const intl = this.get('intl');
-    const locale = intl.get('locale');
-    const translation = intl.get('adapter').findTranslationByKey(locale, this.getId(key)); 
+  formatMessage(data) {
+    const i18n = this.get('i18n');
+    const id = this.getId(data);
+
+    if (!i18n.exists(id)) { return false; }
     
-    if (translation) { 
-      return intl.formatMessage(translation, get(key, 'options'));
-    }
+    return i18n.t(id, get(data, 'text.options'));
   },
 
-  getId(key) {
-    return get(key, 'id') ? get(key, 'id') : key;
+  getId(data) {
+    const text = get(data, 'text');
+
+    if (isBlank(text)) { return data; }
+    
+    return get(text, 'id') ? get(text, 'id') : text;
   }
 });

@@ -25,15 +25,15 @@ export default Scene.extend({
     const session = this.get('session');
     const saves = session.get('saves');
     const choices = { 
-      done74923: { class: 'et-choice-close', icon: 'arrow-right', text: 'emberTheaterSave.done' },
-      newSave74923: { icon: 'save', text: 'emberTheaterSave.newGame', inputable: true }
+      done74923: { class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.save.done' },
+      newSave74923: { icon: 'save', text: 'ember-theater.save.newGame', inputable: true }
     };
     
     saves.forEach((save) => {
       if (save.name !== 'autosave') { choices[save.name] = { text: save.name, object: save }; }
     });
 
-    const choice = await director.choice({ intl: { header: 'emberTheaterSave.header', choices: choices } });
+    const choice = await director.choice({ header: 'ember-theater.save.header', choices: choices });
 
     switch (choice.key) {
       case 'done74923': return director.transitionToScene(this.get('options.nextSceneId'));

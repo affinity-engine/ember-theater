@@ -16,15 +16,18 @@ export default Component.extend(ModulePrefixMixin, {
   session: inject.service(),
 
   actions: {
-    toInitialScene() {
-      let sceneId;
+    startGame() {
       const savePoints = this.get('session.autosave.savePoints');
 
       if (savePoints.length > 0) {
-        sceneId = savePoints[0].sceneId;
+        this.send('toScene', savePoints[0].sceneId);
       } else {
-        sceneId = this.get('initialScene');
+        this.send('toInitialScene');
       }
+    },
+
+    toInitialScene() {
+      const sceneId = this.get('initialScene');
 
       this.send('toScene', sceneId);
     },

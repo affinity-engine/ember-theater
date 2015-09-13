@@ -13,10 +13,10 @@ export default Component.extend({
   tagName: 'button',
 
   triggerOpen: on('focusIn', 'mouseEnter', function() {
-    run.once(this, this.attrs.open);
+    run.once(this, this.attrs.focusControl);
   }),
 
   triggerToggle: on('click', 'touchStart', function() {
-    run.once(this, this.attrs.toggle);
+    run.once(this, this.attrs.clickControl);
   })
 });

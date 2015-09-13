@@ -1,8 +1,10 @@
 {{#if scene}}
-  {{ember-theater/menu-bar toScene=(action 'toScene')}}
+  {{ember-theater/menu-bar
+    toInitialScene=(action 'toInitialScene')
+    toScene=(action 'toScene')}}
   {{ember-theater/director
     scene=scene
     toScene=(action 'toScene')}}
 {{else}}
-  {{ember-theater/curtain complete=(action 'toInitialScene')}}
+  {{ember-theater/curtain complete=(action 'startGame')}}
 {{/if}}
