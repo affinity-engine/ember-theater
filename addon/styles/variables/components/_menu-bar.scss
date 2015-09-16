@@ -9,7 +9,7 @@ $et-menu-bar-padding: $et-menu-bar-vertical-rhythm 4vh !default;
 $et-menu-bar-opacity: 0.95 !default;
 $et-menu-bar-transition-speed: $et-default-transition-speed !default;
 
-$et-menu-bar-dropdown-top-margin: $et-menu-bar-vertical-rhythm !default;
+$et-menu-bar-dropdown-height: $et-menu-bar-height - $et-panel-border-width !default;
 $et-menu-bar-dropdown-right: 0 !default;
 $et-menu-bar-dropdown-padding: $et-menu-bar-vertical-rhythm * 2 4vh !default;
 $et-menu-bar-dropdown-background-color: $et-secondary-color !default;

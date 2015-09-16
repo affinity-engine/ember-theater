@@ -4,13 +4,15 @@
   top: $et-menu-bar-top;
   left: $et-menu-bar-left;
   right: $et-menu-bar-right;
-  transition: transform $et-menu-bar-transition-speed ease;
+  transition: transform $et-menu-bar-transition-speed ease, height $et-menu-bar-transition-speed ease;
 }
 
 .et-menu-bar-container {
   height: $et-menu-bar-height / 5;
 
-  &:hover, .et-menu-bar {
+  &:hover {
+    height: $et-menu-bar-height;
+
     .et-menu-bar {
       transform: translateY(0);
     }
@@ -39,7 +41,7 @@
     border-top: 0;
     border-right: 0;
     background-color: $et-menu-bar-dropdown-background-color;
-    margin-top: $et-menu-bar-dropdown-top-margin;
+    top: $et-menu-bar-dropdown-height;
     right: $et-menu-bar-dropdown-right;
     padding: $et-menu-bar-dropdown-padding;
   }
