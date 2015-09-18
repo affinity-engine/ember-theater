@@ -21,7 +21,7 @@ export default Service.extend({
     }
 
     if (isBlank(translation) || !translation) {
-      return local;
+      return this.getId(local);
     } else {
       return translation.string;
     }
@@ -37,6 +37,8 @@ export default Service.extend({
   },
 
   getId(data) {
+    if (isBlank(data)) { return; }
+
     const text = get(data, 'text');
 
     if (isBlank(text)) { return data; }

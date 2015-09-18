@@ -10,13 +10,33 @@ const {
 } = Ember;
 
 export default Ember.Component.extend(DirectableComponentMixin, {
+  acceptsKeyResponder: true,
   classNameBindings: ['line.class'],
   classNames: ['et-dialogue'],
   currentText: Ember.A(),
-  keyboard: inject.service(),
   intlWrapper: inject.service(),
   layout: layout,
   store: inject.service(),
+
+  makeKeyResponder: on('didInsertElement', function() {
+    this.becomeKeyResponder();
+  }),
+
+  unmakeKeyResponder: on('willDestroyElement', function() {
+    this.resignKeyResponder();
+  }),
+
+  insertSpace() {
+    if (this.get('pageCompleted')) {
+      this.setProperties({
+        pageCompleted: false,
+        rapidText: false,
+        triggerPageTurn: true
+      });
+    } else {
+      this.set('rapidText', true);
+    }
+  },
 
   character: computed('line.character', {
     get() {
@@ -35,10 +55,6 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     }
   }).readOnly(),
 
-  destroyKeyPressWatcher: on('willDestroyElement', function() {
-    this.get('keyboard').stopListeningFor(' ', this, '_resolveKeyPress');
-  }),
-
   name: computed('character.name', 'displayName', {
     get() {
       const displayName = this.get('displayName');
@@ -51,10 +67,6 @@ export default Ember.Component.extend(DirectableComponentMixin, {
       );
     }
   }).readOnly(),
-
-  setupKeyPressWatcher: on('didInsertElement', function() {
-    this.get('keyboard').listenFor(' ', this, '_resolveKeyPress');
-  }),
 
   text: computed('line.text', {
     get() {
@@ -81,18 +93,6 @@ export default Ember.Component.extend(DirectableComponentMixin, {
       return 20;
     }
   }).readOnly(),
-
-  _resolveKeyPress() {
-    if (this.get('pageCompleted')) {
-      this.setProperties({
-        pageCompleted: false,
-        rapidText: false,
-        triggerPageTurn: true
-      });
-    } else {
-      this.set('rapidText', true);
-    }
-  },
 
   actions: {
     completePage() {

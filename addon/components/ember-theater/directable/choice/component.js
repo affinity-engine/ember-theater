@@ -7,7 +7,8 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 const {
   Component,
   computed,
-  inject
+  inject,
+  merge
 } = Ember;
 
 export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
@@ -25,15 +26,11 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
         const value = choices[key];
         const text = this.get('intlWrapper').tryIntl(value, value);
 
-        return {
-          class: choices[key].class,
-          icon: choices[key].icon,
+        return merge({
           input: '',
-          inputable: choices[key].inputable,
-          object: choices[key].object,
-          key: key,
-          text: text
-        };
+          key,
+          text
+        }, choices[key]);
       });
     }
   }).readOnly(),

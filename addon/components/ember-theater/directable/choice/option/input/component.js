@@ -7,6 +7,7 @@ const {
 } = Ember;
 
 export default TextField.extend({
+  acceptsKeyResponder: true,
   classNames: ['et-choice-input'],
   keyboard: inject.service(),
 
@@ -14,21 +15,19 @@ export default TextField.extend({
     this.attrs.toggleInput();
   }),
 
-  destroyKeyPressWatcher: on('willDestroyElement', function() {
-    this.get('keyboard').stopListeningFor('Enter', this, '_resolveKeyPress');
-  }),
-
   focus: on('didInsertElement', function() {
     this.$().focus();
   }),
 
-  setupKeyPressWatcher: on('didInsertElement', function() {
-    this.get('keyboard').listenFor('Enter', this, '_resolveKeyPress', {
-      actOnInputElement: true
-    });
+  insertNewline() {
+    this.attrs.choose();
+  },
+
+  makeKeyResponder: on('focusIn', function() {
+    this.becomeKeyResponder(true);
   }),
 
-  _resolveKeyPress() {
-    this.attrs.choose();
-  }
+  unmakeKeyResponder: on('willDestroyElement', function() {
+    this.resignKeyResponder();
+  })
 });

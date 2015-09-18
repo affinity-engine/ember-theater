@@ -69,18 +69,32 @@ export default Service.extend({
     });
   },
 
-  persistAutosave() {
-    this.persistSave(this.get('autosave'));
+  updateAutosave(sceneId) {
+    const {
+      autosave,
+      currentState
+    } = this.getProperties('autosave', 'currentState');
+
+    const savePoints = Ember.$.extend([], autosave.savePoints);
+    const data = Ember.$.extend({}, currentState);
+    
+    savePoints.unshift({ sceneId: sceneId, data: data });
+    autosave.savePoints = savePoints;
+
+    this.set('autosave', autosave);
+    this.persistSave(autosave);
   },
 
-  persistSave(save, sceneId) {
-    const {
-      currentState,
+  persistSave(save) {
+     const {
+      autosave,
       db,
       saveCollection
-    } = this.getProperties('currentState', 'db', 'saveCollection');
+    } = this.getProperties('autosave', 'db', 'saveCollection');
+    
+    const savePoints = Ember.$.extend([], autosave.savePoints);
+    save.savePoints = savePoints;
 
-    save.savePoints.unshift({ sceneId: sceneId, data: currentState });
     saveCollection.update(save);
     db.saveDatabase();
   },
