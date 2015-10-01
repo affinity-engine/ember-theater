@@ -12,15 +12,9 @@
     margin: 0;
     opacity: $et-dialogue-opacity;
     box-sizing: border-box;
-
-    .letter-by-letter {
-      text-align: $et-dialogue-text-align;
-      line-height: $et-dialogue-line-height;
-    }
-
-    .letter-by-letter__character {
-      font-size: $et-dialogue-font-size;
-    }
+    font-size: $et-dialogue-font-size;
+    text-align: $et-dialogue-text-align;
+    line-height: $et-dialogue-line-height;
 
     .et-dialogue-caption {
       @extend .et-panel;
@@ -30,6 +24,12 @@
       left: $et-dialogue-caption-left;
       padding: $et-dialogue-caption-padding;
       font-size: $et-dialogue-caption-font-size;
+    }
+
+    .et-dialogue-body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
   }
 }

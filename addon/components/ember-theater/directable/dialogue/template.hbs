@@ -1,11 +1,7 @@
 {{#if name}}
   <div class='et-dialogue-caption'>{{name}}</div>
 {{/if}}
-{{letter-by-letter
-  completePage=(action 'completePage')
-  completeText=(action 'completeText')
-  pageCompleted=pageCompleted
-  speed=textSpeed
-  triggerPageTurn=triggerPageTurn
-  turnPage=(action 'turnPage')
-  text=text}}
+{{ember-theater/directable/dialogue/text
+  text=text
+  textSpeed=textSpeed
+  completeText=(action 'completeText')}}

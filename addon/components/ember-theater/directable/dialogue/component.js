@@ -10,33 +10,12 @@ const {
 } = Ember;
 
 export default Ember.Component.extend(DirectableComponentMixin, {
-  acceptsKeyResponder: true,
   classNameBindings: ['line.class'],
   classNames: ['et-dialogue'],
   currentText: Ember.A(),
   intlWrapper: inject.service(),
   layout: layout,
   store: inject.service(),
-
-  makeKeyResponder: on('didInsertElement', function() {
-    this.becomeKeyResponder();
-  }),
-
-  unmakeKeyResponder: on('willDestroyElement', function() {
-    this.resignKeyResponder();
-  }),
-
-  insertSpace() {
-    if (this.get('pageCompleted')) {
-      this.setProperties({
-        pageCompleted: false,
-        rapidText: false,
-        triggerPageTurn: true
-      });
-    } else {
-      this.set('rapidText', true);
-    }
-  },
 
   character: computed('line.character', {
     get() {
@@ -90,7 +69,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
       const characterSpeed = this.get('character.textSpeed');
       if (characterSpeed) { return characterSpeed; }
 
-      return 20;
+      return 30;
     }
   }).readOnly(),
 

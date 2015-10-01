@@ -13,7 +13,7 @@ export default Component.extend({
   tagName: 'span',
 
   checkIfCurrent: on('didRender', function() {
-    if (!this.get('visible') && this.get('currentCharacter') === this.get('index')) {
+    if (!this.get('visible') && this.get('activeCharacterIndex') === this.get('index')) {
       this.set('visible', true);
 
       const speed = this.get('speed');
@@ -27,7 +27,7 @@ export default Component.extend({
       run.later(() => {
         if (this.get('isDestroying')) { return; }
 
-        this.attrs.incrementCurrentCharacter();
+        this.attrs.incrementActiveCharacterIndex();
       }, speed);
     }
   })
