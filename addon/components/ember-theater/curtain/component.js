@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
+import { singularize } from 'ember-inflector';
 
 const {
   Component,
@@ -75,8 +76,9 @@ export default Component.extend(ModulePrefixMixin, {
     const modulePrefix = this.get('modulePrefix');
 
     this.get('modelNames').forEach((modelName) => {
+      const singularModelName = singularize(modelName);
       const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
-      const data = store.push(fixtures);
+      const data = store.push(store.normalize(singularModelName, fixtures));
 
       this.set(Ember.String.camelize(modelName), Ember.A(data));
     });

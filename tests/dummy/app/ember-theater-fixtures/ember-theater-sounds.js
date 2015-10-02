@@ -1,17 +1,9 @@
-export default {
-  data: [{
-    type: 'ember-theater-sound',
-    id: 'song__bolero',
-    attributes: {
-      path: 'sounds/songs/bolero',
-      formats: ['mp3']
-    }
-  }, {
-    type: 'ember-theater-sound',
-    id: 'se__blaster',
-    attributes: {
-      path: 'sounds/se/blaster',
-      formats: ['wav']
-    }
-  }]
-};
+export default [{
+  id: 'song__bolero',
+  path: 'sounds/songs/bolero',
+  formats: ['mp3']
+}, {
+  id: 'se__blaster',
+  path: 'sounds/se/blaster',
+  formats: ['wav']
+}];
