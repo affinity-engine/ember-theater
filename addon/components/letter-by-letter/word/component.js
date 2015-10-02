@@ -32,19 +32,20 @@ export default Component.extend({
       this.set('isActive', true);
     } else if (this.get('wordByWord')) {
       this.resetMeta();
+      this.set('isComplete', true);
     }
   }),
 
   resetMeta() {
     this.setProperties({
-      isComplete: true,
+      isComplete: false,
       activeCharacterIndex: 0,
       isActive: false
     });
   },
 
   wordChanged: observer('word', function() {
-    this.set('isComplete', false);
+    this.resetMeta();
   }),
 
   actions: {
