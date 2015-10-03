@@ -1,6 +1,6 @@
 import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
 
 export default EmberTheaterDirection.extend({
-  componentType: 'ember-theater/directable/backdrop',
+  componentType: 'ember-theater/director/backdrop',
   layer: 'stage.background.backdrop'
 });

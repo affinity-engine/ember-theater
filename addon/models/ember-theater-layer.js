@@ -1,40 +1,43 @@
 import Ember from 'ember';
 
-const { copy } = Ember;
+const { 
+  computed,
+  copy
+} = Ember;
 
 export default Ember.Object.extend({
-  directables: Ember.A(),
-  layers: Ember.A(),
+  directions: computed(() => Ember.A()),
+  layers: computed(() => Ember.A()),
 
-  addChildLayer(layerName, directable) {
+  addChildLayer(layerName, direction) {
     const layers = this.get('layers');
     let layer = layers.find((layer) => {
       return layer.get('name') === layerName;
     });
 
     if (!layer) {
-      // `directables` and `layers` need to be reset or they'll leak into other layers
+      // `direction` and `layers` need to be reset or they'll leak into other layers
       layer = this.constructor.create({
-        directables: Ember.A(),
+        directions: Ember.A(),
         layers: Ember.A(),
         name: layerName
       });
       layers.pushObject(layer);
     }
 
-    layer.clearSingleton(directable);
-    layer.addDirectable(directable);
+    layer.clearSingleton(direction);
+    layer.addDirection(direction);
   },
 
-  addDirectable(directable) {
-    const layerNames = directable.get('layer').split(/\.|\//);
+  addDirection(direction) {
+    const layerNames = direction.get('layer').split(/\.|\//);
     const nextLayer = layerNames[layerNames.indexOf(this.get('name')) + 1];
 
     if (nextLayer) {
-      this.addChildLayer(nextLayer, directable);
+      this.addChildLayer(nextLayer, direction);
     } else {
-      this.clearSingleton(directable);
-      this.get('directables').pushObject(directable);
+      this.clearSingleton(direction);
+      this.get('directions').pushObject(direction);
     }
   },
 
@@ -43,31 +46,31 @@ export default Ember.Object.extend({
 
     layers.forEach((layer) => {
       layer.clearChildLayers();
-      layer.clearDirectables();
+      layer.clearDirections();
       layer.destroy();
     });
 
     layers.clear();
   },
 
-  clearDirectables() {
-    const directables = this.get('directables');
+  clearDirections() {
+    const directions = this.get('directions');
 
-    directables.forEach((directable) => {
-      directable.destroy();
+    directions.forEach((direction) => {
+      direction.destroy();
     });
-    directables.clear();
+    directions.clear();
   },
 
-  clearSingleton(directable) {
-    if (directable.get('singletonLayer') === this.get('name')) {
+  clearSingleton(direction) {
+    if (direction.get('singletonLayer') === this.get('name')) {
       this.clearChildLayers();
     }
   },
 
-  gatherDirectables() {
-    return this.get('layers').reduce((directables, layer) => {
-      return directables.pushObjects(layer.gatherDirectables());
-    }, Ember.A(copy(this.get('directables'))));
+  gatherDirections() {
+    return this.get('layers').reduce((direction, layer) => {
+      return direction.pushObjects(layer.gatherDirections());
+    }, Ember.A(copy(this.get('directions'))));
   }
 });

@@ -17,9 +17,9 @@ export default Component.extend({
   }),
 
   actions: {
-    destroyDirectable(directable) {
-      this.get('directables').removeObject(directable);
-      directable.destroy();
+    destroyDirection(direction) {
+      this.get('directions').removeObject(direction);
+      direction.destroy();
     }
   }
 });

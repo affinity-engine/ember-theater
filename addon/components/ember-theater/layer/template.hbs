@@ -1,12 +1,12 @@
-{{#each directables as |directable|}}
-  {{component directable.componentType
-    line=directable.line
-    destroyDirectable=(action 'destroyDirectable' directable)}}
+{{#each directions as |direction|}}
+  {{component direction.componentType
+    line=direction.line
+    destroyDirection=(action 'destroyDirection' direction)}}
 {{/each}}
 
 {{#each layers as |layer|}}
   {{ember-theater/layer
-    directables=layer.directables
+    directions=layer.directions
     layers=layer.layers
     name=layer.name}}
 {{/each}}

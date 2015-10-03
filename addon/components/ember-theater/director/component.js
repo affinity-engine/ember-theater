@@ -52,34 +52,34 @@ export default Component.extend(ModulePrefixMixin, {
     this._resetTheaterLayer();
 
     directionNames.forEach((name) => {
-      let direction = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
+      let theaterDirection = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
 
       this[name] = (line) => {
         const theaterLayer = this.get('theaterLayer'); 
-        const directables = theaterLayer.gatherDirectables();
-        const isOnStage = isPresent(line.id) && directables.isAny('line.id', line.id);
+        const directions = theaterLayer.gatherDirections();
+        const isOnStage = isPresent(line.id) && directions.isAny('line.id', line.id);
         const createOrUpdate = isOnStage ? 'setProperties' : 'create';
 
         if (isOnStage) {
-          direction = directables.find((directable) => {
-            return directable.get('line.id') === line.id;
+          theaterDirection = directions.find((direction) => {
+            return direction.get('line.id') === line.id;
           });
         }
 
         return new Promise((resolve) => {
           line.resolve = resolve;
 
-          const directable = direction[createOrUpdate]({
+          const direction = theaterDirection[createOrUpdate]({
             container: this.get('container'),
             scene: this,
             line: line
           });
 
-          if (directable.perform) {
-            directable.perform();
-            directable.destroy();
+          if (direction.perform) {
+            direction.perform();
+            direction.destroy();
           } else if (!isOnStage) {
-            theaterLayer.addDirectable(directable);
+            theaterLayer.addDirection(direction);
           }
         });
       };
@@ -102,7 +102,7 @@ export default Component.extend(ModulePrefixMixin, {
 
   _resetTheaterLayer() {
     const theaterLayer = EmberTheaterLayer.create({
-      directables: Ember.A(),
+      directions: Ember.A(),
       layers: Ember.A(),
       name: 'theater'
     });

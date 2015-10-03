@@ -1,0 +1,12 @@
+{{#if isInput}}
+  {{ember-theater/director/choice/option/input
+    choice=choice
+    value=choice.input
+    choose=(action 'choose' choice)
+    toggleInput=(action 'toggleInput')}}
+{{else}}
+  {{ember-theater/director/choice/option/button
+    choice=choice
+    choose=(action 'choose' choice)
+    toggleInput=(action 'toggleInput')}}
+{{/if}}

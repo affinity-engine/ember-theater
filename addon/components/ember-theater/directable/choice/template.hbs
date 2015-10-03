@@ -1,8 +1,0 @@
-{{#if header}}
-  <div class='et-choice-header'>{{header}}</div>
-{{/if}}
-{{#each choices as |choice|}}
-  {{ember-theater/directable/choice/option
-    choice=choice
-    choose=(action 'choose' choice)}}
-{{/each}}

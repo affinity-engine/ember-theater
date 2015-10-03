@@ -7,14 +7,14 @@ module.exports = {
   description: 'Generates a direction for ember-theater.',
 
   beforeInstall: function(options) {
-    options.entity.name = 'ember-theater/directable/' + options.entity.name;
+    options.entity.name = 'ember-theater/director/' + options.entity.name;
     blueprints.forEach(function(blueprint) {
       blueprint.install(options);
     });
   },
 
   beforeUninstall: function(options) {
-    options.entity.name = 'ember-theater/directable/' + options.entity.name;
+    options.entity.name = 'ember-theater/director/' + options.entity.name;
     blueprints.forEach(function(blueprint) {
       blueprint.uninstall(options);
     });
