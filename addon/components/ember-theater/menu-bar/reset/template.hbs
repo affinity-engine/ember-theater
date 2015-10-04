@@ -1,0 +1,8 @@
+{{fa-icon 'refresh' spin=hovering}}
+{{#if isOpen}}
+  {{#ember-theater/menu-bar/confirm
+    cancel=(action 'cancel')
+    confirm=(action 'confirm')}}
+    If you reset the game, you'll lose all autosave progress.
+  {{/ember-theater/menu-bar/confirm}}
+{{/if}}

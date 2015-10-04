@@ -1,12 +1,15 @@
 import Ember from 'ember';
 
 const {
+  isPresent,
   Mixin,
   on
 } = Ember;
 
 export default Mixin.create({
   destroyDirection: on('willDestroyElement', function() {
-    this.attrs.destroyDirection();
+    if (isPresent(this.attrs.destroyDirection)) {
+      this.attrs.destroyDirection();
+    }
   })
 });

@@ -6,8 +6,11 @@ import layout from './template';
 const {
   Component,
   computed,
+  get,
   inject,
+  isEmpty,
   isPresent,
+  observer,
   on,
   RSVP
 } = Ember;
@@ -17,19 +20,13 @@ const { Promise } = RSVP;
 export default Component.extend(ModulePrefixMixin, {
   classNames: ['et-director'],
   layout: layout,
+  emberTheaterSceneManager: inject.service(),
   session: inject.service(),
-
-  loadScene: on('didRender', function() {
-    const scene = this.get('scene');
-
-    this.set('sceneId', scene.get('id'));
-    scene.script(this);
-  }),
 
   transitionToScene(sceneId, options) {
     Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
-      this.attrs.toScene(sceneId, options);
       this._resetTheaterLayer();
+      this._toScene(sceneId, options);
       Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
     });
   },
@@ -52,16 +49,17 @@ export default Component.extend(ModulePrefixMixin, {
     this._resetTheaterLayer();
 
     directionNames.forEach((name) => {
-      let theaterDirection = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
+      const directionFactory = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
 
       this[name] = (line) => {
+        let direction;
         const theaterLayer = this.get('theaterLayer'); 
         const directions = theaterLayer.gatherDirections();
         const isOnStage = isPresent(line.id) && directions.isAny('line.id', line.id);
         const createOrUpdate = isOnStage ? 'setProperties' : 'create';
 
         if (isOnStage) {
-          theaterDirection = directions.find((direction) => {
+          direction = directions.find((direction) => {
             return direction.get('line.id') === line.id;
           });
         }
@@ -69,11 +67,17 @@ export default Component.extend(ModulePrefixMixin, {
         return new Promise((resolve) => {
           line.resolve = resolve;
 
-          const direction = theaterDirection[createOrUpdate]({
+          const values = {
             container: this.get('container'),
             scene: this,
             line: line
-          });
+          };
+
+          if (isPresent(direction)) {
+            direction = direction.setProperties(values);
+          } else {
+            direction = directionFactory.create(values);
+          }
 
           if (direction.perform) {
             direction.perform();
@@ -110,5 +114,47 @@ export default Component.extend(ModulePrefixMixin, {
     this.set('theaterLayer', theaterLayer);
 
     return theaterLayer;
-  }
+  },
+
+  _sceneIdChanged: observer('emberTheaterSceneManager.sceneId', function() {
+    const sceneId = this.get('emberTheaterSceneManager.sceneId');
+
+    if (isPresent(sceneId)) {
+      this.transitionToScene(sceneId);
+    }
+  }),
+
+  _loadInitialScene: on('didRender', function() {
+    if (isEmpty(this.get('scene'))) {
+      let sceneId;
+      const savePoints = this.get('session.autosave.savePoints');
+
+      if (savePoints.length > 0) {
+        sceneId = savePoints[0].sceneId;
+      } else {
+        sceneId = this.get('emberTheaterSceneManager.sceneId');
+      }
+
+      this._toScene(sceneId);
+    }
+  }),
+
+  _toScene(sceneId, options) {
+    const modulePrefix = this.get('modulePrefix');
+    const sceneFactory = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
+    const scene = sceneFactory.create({
+      container: this.get('container'),
+      id: sceneId,
+      options: options
+    })
+
+    if (isEmpty(options) || get(options, 'autosave') !== false) {
+      this.get('session').updateAutosave(sceneId);
+    }
+
+    this.set('scene', scene);
+    this.set('emberTheaterSceneManager.sceneId', sceneId);
+
+    scene.script(this);
+  },
 });

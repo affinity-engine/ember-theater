@@ -16,10 +16,7 @@ export default Ember.Object.extend({
     });
 
     if (!layer) {
-      // `direction` and `layers` need to be reset or they'll leak into other layers
       layer = this.constructor.create({
-        directions: Ember.A(),
-        layers: Ember.A(),
         name: layerName
       });
       layers.pushObject(layer);

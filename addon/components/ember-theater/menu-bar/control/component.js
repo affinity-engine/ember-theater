@@ -1,22 +1,39 @@
 import Ember from 'ember';
-import layout from './template';
 
 const {
   Component,
-  on,
-  run
+  on
 } = Ember;
 
 export default Component.extend({
   classNames: ['et-menu-bar-control-icon'],
-  layout: layout,
   tagName: 'button',
 
-  triggerOpen: on('focusIn', 'mouseEnter', function() {
-    run.once(this, this.attrs.focusControl);
+  acceptsKeyResponder: true,
+  
+  becomeKeyResponderOnFocus: on('focusIn', function() {
+    this.becomeKeyResponder();
   }),
 
-  triggerToggle: on('click', 'touchStart', function() {
-    run.once(this, this.attrs.clickControl);
-  })
+  resignKeyResponderOnFocusOut: on('focusOut', function() {
+    this.resignKeyResponder();
+  }),
+
+  toggleOpen: on('click', 'insertNewLine', 'touchEnd', function() {
+    this.toggleProperty('isOpen');
+  }),
+
+  startHovering: on('focusIn', 'mouseEnter', function() {
+    this.startHoverEffect();
+  }),
+
+  stopHovering: on('focusOut', 'mouseLeave', function() {
+    this.stopHoverEffect();
+  }),
+
+  actions: {
+    closeMenu() {
+      this.set('isOpen', false);
+    }
+  }
 });

@@ -1,13 +1,5 @@
 <div class='et-menu-bar'>
-  {{ember-theater/menu-bar/control
-    iconName='save'
-    focusControl=(action 'openSaveMenu')
-    clickControl=(action 'toggleControlProperty' 'saveMenuOpen')}}
-  {{ember-theater/menu-bar/control
-    iconName='refresh'
-    clickControl=(action 'toInitialScene')}}
-  {{#if saveMenuOpen}}
-    {{ember-theater/menu-bar/save-menu
-      toScene=(action 'toScene')}}
-  {{/if}}
+  {{#each options as |componentName|}}
+    {{component componentName}}
+  {{/each}}
 </div>

@@ -50,7 +50,6 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
     choose(choice) {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         this.get('line.resolve')(choice);
-        this.attrs.destroyDirection();
       });
     }
   }

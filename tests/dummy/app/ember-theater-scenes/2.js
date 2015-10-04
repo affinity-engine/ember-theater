@@ -5,6 +5,6 @@ export default Scene.extend({
     await director.backdrop({ id: 'beach--night', options: { duration: 0 } });
     const test = director.getStat('test');
     director.setStat('test', test + 1);
-    director.transitionToScene('save', { nextSceneId: 2 });
+    director.transitionToScene(2, { autosave: false });
   }
 });

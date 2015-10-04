@@ -22,7 +22,8 @@
 .et-menu-bar {
   @extend .et-panel;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: flex-end;
+  flex-direction: row;
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -33,7 +34,7 @@
 
   .et-menu-bar-control-icon {
     @extend .et-button;
-    align-self: flex-end;
+    margin-left: $et-panel-border-width;
   }
 
   .et-menu-bar-dropdown {

@@ -2,11 +2,15 @@ import Ember from 'ember';
 
 const {
   computed,
+  inject,
+  isPresent,
   on,
   Service
 } = Ember;
 
 export default Service.extend({
+  emberTheaterSceneManager: inject.service(),
+
   getCurrentSessionItem(key) {
     return this.get(`currentState.${key}`);
   },
@@ -38,7 +42,7 @@ export default Service.extend({
   getSavesFromLocalStorage: on('init', function() {
     const db = new loki('game');
     db.loadDatabase({}, () => {
-      let autosave, currentState, saveCollection;
+      let autosave, currentState, initialSceneId, saveCollection;
 
       saveCollection = db.getCollection('saves');
 
@@ -46,8 +50,9 @@ export default Service.extend({
         autosave = saveCollection.findOne({ name: 'autosave' });
         currentState = autosave.savePoints[0].data;
       } else {
+        initialSceneId = this.get('emberTheaterSceneManager.initialSceneId');
         saveCollection = db.addCollection('saves', { indices: ['name'] });
-        autosave = saveCollection.insert({ name: 'autosave', savePoints: [] });
+        autosave = saveCollection.insert({ initialSceneId, name: 'autosave', savePoints: [] });
         currentState = {};
       }
 
@@ -57,6 +62,10 @@ export default Service.extend({
         db,
         saveCollection
       });
+
+      if (isPresent(initialSceneId)) {
+        this.updateAutosave(initialSceneId);
+      }
     });
   }),
 
@@ -100,12 +109,16 @@ export default Service.extend({
   },
 
   refreshAutosave() {
+    const {
+      autosave,
+      db,
+      saveCollection
+    } = this.getProperties('autosave', 'db', 'saveCollection');
     const currentState = {};
-    const autosave = this.get('autosave');
-    const saveCollection = this.get('saveCollection');
+    const initialSceneId = this.get('emberTheaterSceneManager.initialSceneId');
 
     autosave.savePoints = [];
-    autosave.sceneId = '';
+    autosave.sceneId = initialSceneId;
     saveCollection.update(autosave);
     db.saveDatabase();
 
@@ -113,6 +126,8 @@ export default Service.extend({
       autosave,
       currentState
     });
+
+    this.updateAutosave(initialSceneId);
   },
 
   saves: computed('saveCollection', {

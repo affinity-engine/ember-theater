@@ -4,7 +4,8 @@ import ModulePrefixMixin from '../../mixins/module-prefix';
 
 const {
   Component,
-  inject
+  computed,
+  on
 } = Ember;
 
 export default Component.extend(ModulePrefixMixin, {
@@ -13,34 +14,20 @@ export default Component.extend(ModulePrefixMixin, {
   attributeBindings: ['aria-live'],
   classNames: ['ember-theater'],
   layout: layout,
-  session: inject.service(),
+
+  initializeComponents: on('didReceiveAttrs', function() {
+    this.send('resetComponents');
+  }),
 
   actions: {
+    resetComponents() {
+      const initialEmberTheaterComponents = this.get('initialEmberTheaterComponents');
+
+      this.set('emberTheaterComponents', Ember.Object.create(initialEmberTheaterComponents));
+    },
+
     startGame() {
-      const savePoints = this.get('session.autosave.savePoints');
-
-      if (savePoints.length > 0) {
-        this.send('toScene', savePoints[0].sceneId);
-      } else {
-        this.send('toInitialScene');
-      }
-    },
-
-    toInitialScene() {
-      const sceneId = this.get('initialScene');
-
-      this.send('toScene', sceneId);
-    },
-
-    toScene(sceneId, options) {
-      const modulePrefix = this.get('modulePrefix');
-      const scene = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
-
-      this.set('scene', scene.create({
-        container: this.get('container'),
-        id: sceneId,
-        options: options
-      }));
+      this.set('mediaIsLoaded', true);
     }
   }
 });

@@ -1,0 +1,6 @@
+{{fa-icon 'cloud-download'}}
+{{#if isOpen}}
+  {{#modal-dialog}}
+    {{ember-theater/menu-bar/load/menu closeMenu=(action 'closeMenu')}}
+  {{/modal-dialog}}
+{{/if}}

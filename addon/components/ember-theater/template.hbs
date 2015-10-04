@@ -1,10 +1,7 @@
-{{#if scene}}
-  {{ember-theater/menu-bar
-    toInitialScene=(action 'toInitialScene')
-    toScene=(action 'toScene')}}
-  {{ember-theater/director
-    scene=scene
-    toScene=(action 'toScene')}}
+{{#if mediaIsLoaded}}
+  {{#each-in emberTheaterComponents as |componentName options|}}
+    {{component componentName options=options}}
+  {{/each-in}}
 {{else}}
   {{ember-theater/curtain complete=(action 'startGame')}}
 {{/if}}
