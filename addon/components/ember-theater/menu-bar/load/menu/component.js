@@ -14,16 +14,17 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   emberTheaterSceneManager: inject.service(),
+  emberTheaterSaveStateManager: inject.service(),
   layout: layout,
-  saves: alias('session.saves'),
-  session: inject.service(),
 
-  initializeLine: on('init', function() {
+  initializeLine: on('init', async function() {
+    const saves = await this.get('emberTheaterSaveStateManager.saves');
+
     new Promise((resolve) => {
       const choices = Ember.Object.create();
       
-      this.get('saves').forEach((save) => {
-        choices.set(save.name, { text: save.name, object: save });
+      saves.forEach((save) => {
+        choices.set(save.id, { text: save.get('name'), object: save });
       });
 
       const line = {
@@ -34,8 +35,8 @@ export default Component.extend({
 
       this.set('line', line);
     }).then((choice) => {
-      this.get('session').loadGame(choice.object);
-      this.set('emberTheaterSceneManager.sceneId', choice.object.savePoints[0].sceneId);
+      this.get('emberTheaterSaveStateManager').loadRecord(choice.object);
+      this.set('emberTheaterSceneManager.sceneId', choice.object.get('activeState.sceneId'));
       this.attrs.closeMenu();
     });
   })

@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:session', 'Unit | Service | session', {
+moduleFor('service:ember-theater-save-state-manager', 'Unit | Service | ember theater save state manager', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

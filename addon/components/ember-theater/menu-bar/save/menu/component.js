@@ -14,20 +14,21 @@ const { Promise } = RSVP;
 
 export default Component.extend({
   emberTheaterSceneManager: inject.service(),
+  emberTheaterSaveStateManager: inject.service(),
   layout: layout,
-  saves: alias('session.saves'),
-  session: inject.service(),
 
-  initializeLine: on('init', function() {
+  initializeLine: on('init', async function() {
+    const saves = await this.get('emberTheaterSaveStateManager.saves');
+
     new Promise((resolve) => {
-      const saves = this.get('saves');
       const choices = Ember.Object.create({ 
         done74923: { class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.save.done' },
         newSave74923: { icon: 'save', text: 'ember-theater.save.newGame', inputable: true }
       });
 
       saves.forEach((save) => {
-        if (save.name !== 'autosave') { choices.set(save.name, { text: save.name, object: save }); }
+        const name = save.get('name');
+        if (name !== 'autosave') { choices.set(save.id, { text: name, object: save }); }
       });
 
       const line = {
@@ -38,12 +39,12 @@ export default Component.extend({
 
       this.set('line', line);
     }).then((choice) => {
-      const session = this.get('session');
+      const saveStateManager = this.get('emberTheaterSaveStateManager');
 
       switch (choice.key) {
         case 'done74923': return this.attrs.closeMenu();
-        case 'newSave74923': session.createSave(choice.input); break;
-        default: session.persistSave(choice.object);
+        case 'newSave74923': saveStateManager.createRecord(choice.input); break;
+        default: saveStateManager.updateRecord(choice.object);
       }
 
       this.attrs.closeMenu();

@@ -21,6 +21,7 @@ export default Component.extend(ModulePrefixMixin, {
   classNames: ['et-director'],
   layout: layout,
   emberTheaterSceneManager: inject.service(),
+  emberTheaterSaveStateManager: inject.service(),
   session: inject.service(),
 
   transitionToScene(sceneId, options) {
@@ -32,15 +33,15 @@ export default Component.extend(ModulePrefixMixin, {
   },
 
   getStat(key) {
-    return this.get('session').getCurrentSessionItem(key);
+    return this.get('emberTheaterSaveStateManager').getStateValue(key);
   },
 
   setStat(key, value) {
-    this.get('session').setCurrentSessionItem(key, value);
+    return this.get('emberTheaterSaveStateManager').setStateValue(key, value);
   },
 
   removeStat(key) {
-    this.get('session').removeCurrentSessionItem(key);
+    return this.get('emberTheaterSaveStateManager').deleteStateValue(key);
   },
 
   _defineDirections: on('init', function() {
@@ -124,22 +125,22 @@ export default Component.extend(ModulePrefixMixin, {
     }
   }),
 
-  _loadInitialScene: on('didRender', function() {
+  _loadInitialScene: on('didRender', async function() {
     if (isEmpty(this.get('scene'))) {
-      let sceneId;
-      const savePoints = this.get('session.autosave.savePoints');
+      const options = { autosave: false };
+      const autosave = await this.get('emberTheaterSaveStateManager.autosave');
+      let sceneId = autosave.get('activeState.sceneId');
 
-      if (savePoints.length > 0) {
-        sceneId = savePoints[0].sceneId;
-      } else {
+      if (isEmpty(sceneId)) {
         sceneId = this.get('emberTheaterSceneManager.sceneId');
+        options.autosave = true;
       }
 
-      this._toScene(sceneId);
+      this._toScene(sceneId, options);
     }
   }),
 
-  _toScene(sceneId, options) {
+  _toScene: async function(sceneId, options) {
     const modulePrefix = this.get('modulePrefix');
     const sceneFactory = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
     const scene = sceneFactory.create({
@@ -149,7 +150,10 @@ export default Component.extend(ModulePrefixMixin, {
     })
 
     if (isEmpty(options) || get(options, 'autosave') !== false) {
-      this.get('session').updateAutosave(sceneId);
+      const saveStateManager = this.get('emberTheaterSaveStateManager');
+      const autosave = await saveStateManager.get('autosave');
+      saveStateManager.appendActiveState({ sceneId });
+      saveStateManager.updateRecord(autosave);
     }
 
     this.set('scene', scene);

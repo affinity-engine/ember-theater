@@ -1,12 +1,6 @@
 import DS from 'ember-data';
-import Ember from 'ember';
+import NormalizePatchMixin from 'ember-theater/mixins/json-serializer-normalize-patch';
 
-export default DS.JSONSerializer.extend({
-  normalize(modelClass, resourceHash) {
-    if (Ember.typeOf(resourceHash) === 'array') {
-      return this.normalizeResponse(this.store, modelClass, resourceHash, null, 'findAll');
-    } else {
-      return this._super(modelClass, resourceHash);
-    }
-  }
-});
+const { JSONSerializer } = DS;
+
+export default JSONSerializer.extend(NormalizePatchMixin);

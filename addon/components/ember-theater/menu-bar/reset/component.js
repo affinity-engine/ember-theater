@@ -6,8 +6,8 @@ const { inject } = Ember;
 
 export default MenuBarControl.extend({
   emberTheaterSceneManager: inject.service(),
+  emberTheaterSaveStateManager: inject.service(),
   layout: layout,
-  session: inject.service(),
 
   startHoverEffect() {
     this.set('hovering', true);
@@ -23,7 +23,7 @@ export default MenuBarControl.extend({
     },
 
     confirm() {
-      this.get('session').refreshAutosave();
+      this.get('emberTheaterSaveStateManager').resetAutosave();
       this.get('emberTheaterSceneManager').toInitialScene();
       this.set('isOpen', false);
     }

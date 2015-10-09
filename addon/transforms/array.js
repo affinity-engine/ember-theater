@@ -5,11 +5,7 @@ const { Transform } = DS;
 
 export default Transform.extend({
   deserialize: function(serialized) {
-    switch (Ember.typeOf(serialized)) {
-      case 'array': return serialized;
-      case 'string': return [serialized];
-      default: return [];
-    }
+    return Ember.A(serialized);
   },
 
   serialize: function(deserialized) {
