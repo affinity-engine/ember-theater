@@ -1,6 +1,6 @@
-import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
+import { Direction } from 'ember-theater';
 
-export default EmberTheaterDirection.extend({
+export default Direction.extend({
   componentType: 'ember-theater/director/<%= dasherizedModuleName %>',
   layer: '<%= dasherizedModuleName %>'
 
