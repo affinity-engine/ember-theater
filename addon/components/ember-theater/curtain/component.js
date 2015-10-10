@@ -77,7 +77,7 @@ export default Component.extend(ModulePrefixMixin, {
 
     this.get('modelNames').forEach((modelName) => {
       const singularModelName = singularize(modelName);
-      const fixtures = require(`${modulePrefix}/ember-theater-fixtures/${modelName}`)['default'];
+      const fixtures = require(`${modulePrefix}/ember-theater/fixtures/${modelName}`)['default'];
       const data = store.push(store.normalize(singularModelName, fixtures));
 
       this.set(Ember.String.camelize(modelName), Ember.A(data));
@@ -91,7 +91,7 @@ export default Component.extend(ModulePrefixMixin, {
     get() {
       const paths = Object.keys(require.entries);
       const modulePrefix = this.get('modulePrefix');
-      const regex = new RegExp(`${modulePrefix}\/ember-theater-fixtures\/(.*)`);
+      const regex = new RegExp(`${modulePrefix}\/ember-theater/fixtures\/(.*)`);
       
       return paths.filter((path) => {
         return regex.test(path);

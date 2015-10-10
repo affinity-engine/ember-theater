@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import EmberTheaterDirection from 'ember-theater/models/ember-theater-direction';
+import { Direction } from 'ember-theater';
 import layerName from 'ember-theater/utils/layer-name';
 
 const {
@@ -7,7 +7,7 @@ const {
   run
 } = Ember;
 
-export default EmberTheaterDirection.extend({
+export default Direction.extend({
   perform() {
     const line = this.get('line');
     const filterId = get(line, 'id');

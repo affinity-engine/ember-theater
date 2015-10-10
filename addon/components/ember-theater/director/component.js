@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import EmberTheaterLayer from 'ember-theater/models/ember-theater-layer';
+import { Layer } from 'ember-theater';
 import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 import layout from './template';
 
@@ -50,7 +50,7 @@ export default Component.extend(ModulePrefixMixin, {
     this._resetTheaterLayer();
 
     directionNames.forEach((name) => {
-      const directionFactory = require(`${modulePrefix}/ember-theater-directions/${name}`)['default'];
+      const directionFactory = require(`${modulePrefix}/ember-theater/directions/${name}`)['default'];
 
       this[name] = (line) => {
         let direction;
@@ -95,7 +95,7 @@ export default Component.extend(ModulePrefixMixin, {
     get() {
       const paths = Object.keys(require.entries);
       const modulePrefix = this.get('modulePrefix');
-      const regex = new RegExp(`${modulePrefix}\/ember-theater-directions\/(.*)`);
+      const regex = new RegExp(`${modulePrefix}\/ember-theater/directions\/(.*)`);
 
       return paths.filter((path) => {
         return regex.test(path);
@@ -106,7 +106,7 @@ export default Component.extend(ModulePrefixMixin, {
   }).readOnly(),
 
   _resetTheaterLayer() {
-    const theaterLayer = EmberTheaterLayer.create({
+    const theaterLayer = Layer.create({
       directions: Ember.A(),
       layers: Ember.A(),
       name: 'theater'
@@ -142,7 +142,7 @@ export default Component.extend(ModulePrefixMixin, {
 
   _toScene: async function(sceneId, options) {
     const modulePrefix = this.get('modulePrefix');
-    const sceneFactory = require(`${modulePrefix}/ember-theater-scenes/${sceneId}`)['default'];
+    const sceneFactory = require(`${modulePrefix}/ember-theater/scenes/${sceneId}`)['default'];
     const scene = sceneFactory.create({
       container: this.get('container'),
       id: sceneId,
