@@ -24,7 +24,7 @@ export default MenuBarControl.extend({
 
     confirm() {
       this.get('emberTheaterSaveStateManager').resetAutosave();
-      this.get('emberTheaterSceneManager').toInitialScene();
+      this.get('emberTheaterSceneManager').resetScene();
       this.set('isOpen', false);
     }
   }

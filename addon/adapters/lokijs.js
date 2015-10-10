@@ -9,7 +9,7 @@ const {
   RSVP
 } = Ember;
 
-const { Promise } = RSVP;
+const { resolve } = RSVP;
 
 export default Adapter.extend({
   indices: [],
@@ -82,11 +82,9 @@ export default Adapter.extend({
   },
 
   _promiseWrap(records) {
-    return new Promise((resolve) => {
-      const data = isPresent(records) ? records : [];
+    const data = isPresent(records) ? records : [];
 
-      resolve(data);
-    });
+    return resolve(data);
   },
 
   _saveDatabase() {

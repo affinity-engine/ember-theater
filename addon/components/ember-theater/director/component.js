@@ -25,11 +25,38 @@ export default Component.extend(ModulePrefixMixin, {
   session: inject.service(),
 
   transitionToScene(sceneId, options) {
-    Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
-      this._resetTheaterLayer();
-      this._toScene(sceneId, options);
-      Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
+    this.get('emberTheaterSceneManager').toScene(sceneId, options);
+  },
+
+  _sceneChanged: observer('emberTheaterSceneManager.scene', function() {
+    const sceneManager = this.get('emberTheaterSceneManager');
+    const scene = sceneManager.get('scene');
+
+    if (isPresent(scene)) {
+      sceneManager.startSceneChange();
+      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
+        this._resetTheaterLayer();
+        Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
+        sceneManager.endSceneChange();
+        scene.script(this);
+      });
+    }
+  }),
+
+  _liftCurtains: on('didRender', function() {
+    this.get('emberTheaterSceneManager').liftCurtains();
+  }),
+
+  _resetTheaterLayer() {
+    const theaterLayer = Layer.create({
+      directions: Ember.A(),
+      layers: Ember.A(),
+      name: 'theater'
     });
+
+    this.set('theaterLayer', theaterLayer);
+
+    return theaterLayer;
   },
 
   getStat(key) {
@@ -103,62 +130,5 @@ export default Component.extend(ModulePrefixMixin, {
         return regex.exec(path)[1];
       });
     }
-  }).readOnly(),
-
-  _resetTheaterLayer() {
-    const theaterLayer = Layer.create({
-      directions: Ember.A(),
-      layers: Ember.A(),
-      name: 'theater'
-    });
-
-    this.set('theaterLayer', theaterLayer);
-
-    return theaterLayer;
-  },
-
-  _sceneIdChanged: observer('emberTheaterSceneManager.sceneId', function() {
-    const sceneId = this.get('emberTheaterSceneManager.sceneId');
-
-    if (isPresent(sceneId)) {
-      this.transitionToScene(sceneId);
-    }
-  }),
-
-  _loadInitialScene: on('didRender', async function() {
-    if (isEmpty(this.get('scene'))) {
-      const options = { autosave: false };
-      const autosave = await this.get('emberTheaterSaveStateManager.autosave');
-      let sceneId = autosave.get('activeState.sceneId');
-
-      if (isEmpty(sceneId)) {
-        sceneId = this.get('emberTheaterSceneManager.sceneId');
-        options.autosave = true;
-      }
-
-      this._toScene(sceneId, options);
-    }
-  }),
-
-  _toScene: async function(sceneId, options) {
-    const modulePrefix = this.get('modulePrefix');
-    const sceneFactory = require(`${modulePrefix}/ember-theater/scenes/${sceneId}`)['default'];
-    const scene = sceneFactory.create({
-      container: this.get('container'),
-      id: sceneId,
-      options: options
-    })
-
-    if (isEmpty(options) || get(options, 'autosave') !== false) {
-      const saveStateManager = this.get('emberTheaterSaveStateManager');
-      const autosave = await saveStateManager.get('autosave');
-      saveStateManager.appendActiveState({ sceneId });
-      saveStateManager.updateRecord(autosave);
-    }
-
-    this.set('scene', scene);
-    this.set('emberTheaterSceneManager.sceneId', sceneId);
-
-    scene.script(this);
-  },
+  }).readOnly()
 });
