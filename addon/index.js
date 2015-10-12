@@ -6,4 +6,4 @@ export {
   Direction,
   Layer,
   Scene
-}
+};

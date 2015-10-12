@@ -4,7 +4,6 @@ import ModulePrefixMixin from '../../mixins/module-prefix';
 
 const {
   Component,
-  computed,
   on
 } = Ember;
 

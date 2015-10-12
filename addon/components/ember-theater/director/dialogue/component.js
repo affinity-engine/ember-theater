@@ -4,8 +4,7 @@ import layout from './template';
 const {
   computed,
   get,
-  inject,
-  on
+  inject
 } = Ember;
 
 export default Ember.Component.extend({

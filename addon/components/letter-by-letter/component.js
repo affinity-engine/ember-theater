@@ -1,12 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 
-const {
-  Component,
-  computed,
-  on,
-  run
-} = Ember;
+const { Component } = Ember;
 
 export default Component.extend({
   activeWordIndex: 0,

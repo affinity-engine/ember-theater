@@ -5,8 +5,7 @@ const {
   Component,
   computed,
   observer,
-  on,
-  run
+  on
 } = Ember;
 
 const {

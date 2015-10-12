@@ -32,8 +32,7 @@ export default Adapter.extend({
   },
 
   deleteRecord(store, type, snapshot) {
-    const record = this._findOrAddCollection(type).remove(snapshot.id);
-
+    this._findOrAddCollection(type).remove(snapshot.id);
     this._saveDatabase();
 
     return store.unloadRecord(snapshot);
