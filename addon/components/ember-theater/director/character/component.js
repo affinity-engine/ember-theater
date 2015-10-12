@@ -7,6 +7,7 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 
 const { 
   Component, 
+  computed,
   inject,
   on, 
   run 
@@ -15,7 +16,7 @@ const {
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   classNames: ['et-character'],
   layout: layout,
-  expressionContainers: Ember.A([]),
+  expressionContainers: computed(() => Ember.A([])),
   store: inject.service(),
 
   setCharacter: on('didInitAttrs', function() {
