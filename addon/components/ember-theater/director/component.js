@@ -4,40 +4,30 @@ import layout from './template';
 
 const {
   Component,
-  computed,
-  get,
   inject,
   isBlank,
   isPresent,
   observer,
-  on,
-  RSVP
+  on
 } = Ember;
-
-const {
-  Promise,
-  resolve
-} = RSVP;
 
 export default Component.extend({
   classNames: ['et-director'],
   layout: layout,
   emberTheaterSceneManager: inject.service(),
-  emberTheaterSaveStateManager: inject.service(),
-  session: inject.service(),
 
   addDirection(direction) {
     this.get('theaterLayer').addDirection(direction);
   },
 
-  findDirectionWithId(id) {
+  findDirectionWithId(id, type) {
     if (isBlank(id)) { return; }
 
     const theaterLayer = this.get('theaterLayer'); 
     const directions = theaterLayer.gatherDirections();
 
     return directions.find((direction) => {
-      return direction.get('line.id') === id;
+      return direction.get('line.id') === id && direction.get('type') === type;
     });
   },
 

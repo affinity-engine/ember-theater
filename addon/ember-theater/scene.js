@@ -30,13 +30,14 @@ export default Ember.Object.extend(ModulePrefixMixin, {
         if (this.get('isAborted')) { return resolve(); }
 
         const direction = directionFactory.create({
-          container: this.get('container')
+          container: this.get('container'),
+          type: name
         });
 
         if (isPresent(direction.perform)) {
           return this._performMetaDirection(direction, ...directionArgs);
         } else {
-          return this._performDirectionOnStage(direction, ...directionArgs);
+          return this._performDirectionOnStage(direction, name, ...directionArgs);
         }
       };
     });
@@ -48,9 +49,9 @@ export default Ember.Object.extend(ModulePrefixMixin, {
     });
   },
 
-  _performDirectionOnStage(direction, line) {
+  _performDirectionOnStage(direction, name, line) {
     const director = this.get('director');
-    const activeDirection = director.findDirectionWithId(line.id);
+    const activeDirection = director.findDirectionWithId(line.id, name);
 
     return new Promise((resolve) => {
       line.resolve = resolve;
