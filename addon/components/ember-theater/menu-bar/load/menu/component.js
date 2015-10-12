@@ -36,7 +36,9 @@ export default Component.extend({
       this.set('line', line);
     }).then((choice) => {
       this.get('emberTheaterSaveStateManager').loadRecord(choice.object);
-      this.get('emberTheaterSceneManager').toScene(choice.object.get('activeState.sceneId'));
+      this.get('emberTheaterSceneManager').toScene(choice.object.get('activeState.sceneId'), {
+        autosave: false
+      });
       this.attrs.closeMenu();
     });
   })

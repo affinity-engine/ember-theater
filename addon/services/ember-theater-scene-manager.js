@@ -13,14 +13,6 @@ const {
 export default Service.extend(ModulePrefixMixin, {
   emberTheaterSaveStateManager: inject.service(),
 
-  startSceneChange() {
-    this.set('sceneChangeUnderway', true);
-  },
-
-  endSceneChange() {
-    this.set('sceneChangeUnderway', false);
-  },
-
   setInitialSceneId: observer('scene.id', function() {
     const {
       initialSceneId,
@@ -55,7 +47,8 @@ export default Service.extend(ModulePrefixMixin, {
   },
 
   toScene: async function(sceneId, options) {
-    if (this.get('sceneChangeUnderway')) { return; }
+    const oldScene = this.get('scene');
+    if (isPresent(oldScene)) { oldScene.abort(); }
 
     const modulePrefix = this.get('modulePrefix');
     const sceneFactory = require(`${modulePrefix}/ember-theater/scenes/${sceneId}`)['default'];

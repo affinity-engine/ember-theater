@@ -86,9 +86,7 @@ export default Service.extend({
     const activeState = this.get('activeState');
     const mergedState = merge(optionalValues, activeState);
 
-    if (Object.keys(mergedState).length > 0) {
-      this.get('statePoints').pushObject(mergedState);
-    }
+    this.get('statePoints').pushObject(mergedState);
   },
 
   deleteStateValue(key) {
