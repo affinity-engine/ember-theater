@@ -83,8 +83,8 @@ export default Service.extend({
 
   // STATE MANAGEMENT // 
   appendActiveState(optionalValues) {
-    const activeState = this.get('activeState');
-    const mergedState = merge(optionalValues, activeState);
+    const activeState = Ember.$.extend({}, this.get('activeState'));
+    const mergedState = merge(activeState, optionalValues);
 
     this.get('statePoints').pushObject(mergedState);
   },
