@@ -4,7 +4,8 @@ import layout from './template';
 const {
   computed,
   get,
-  inject
+  inject,
+  on
 } = Ember;
 
 export default Ember.Component.extend({
@@ -14,6 +15,18 @@ export default Ember.Component.extend({
   intlWrapper: inject.service(),
   layout: layout,
   store: inject.service(),
+
+  handleFastboot: on('didInitAttrs', function() {
+    if (this.get('fastboot')) {
+      this.resolveLine();
+    }
+  }),
+
+  resolveLine() {
+    Ember.$('body').off('.speak');
+    this.get('line.resolve')();
+    this.attrs.destroyDirection();
+  },
 
   character: computed('line.character', {
     get() {
@@ -35,7 +48,7 @@ export default Ember.Component.extend({
   name: computed('character.name', 'displayName', {
     get() {
       const displayName = this.get('displayName');
-      
+
       if (displayName) { return displayName; }
 
       return this.get('intlWrapper').tryIntl(
@@ -78,9 +91,7 @@ export default Ember.Component.extend({
 
     completeText() {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        Ember.$('body').off('.speak');
-        this.get('line.resolve')();
-        this.attrs.destroyDirection();
+        this.resolveLine();
       });
     },
 

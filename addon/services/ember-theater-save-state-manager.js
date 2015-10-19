@@ -12,6 +12,7 @@ const {
 
 export default Service.extend({
   activeState: computed(() => Ember.Object.create()),
+  sceneRecord: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
   store: inject.service(),
 
@@ -46,17 +47,20 @@ export default Service.extend({
   resetAutosave: async function() {
     const autosave = await this.get('autosave');
     
-    this.get('statePoints').clear();
     this.set('activeState', Ember.Object.create());
+    this.set('sceneRecord', Ember.Object.create());
+    this.get('statePoints').clear();
 
     this.updateRecord(autosave);
   },
 
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
+    const sceneRecord = Ember.$.extend({}, this.get('sceneRecord'));
     const statePoints = Ember.$.extend([], this.get('statePoints'));
     const record = this.get('store').createRecord('ember-theater-local-save', {
       name,
+      sceneRecord,
       statePoints
     });
 
@@ -68,17 +72,35 @@ export default Service.extend({
   },
 
   loadRecord(record) {
-    const { activeState, statePoints } = record.getProperties('activeState', 'statePoints');
+    const {
+      activeState,
+      sceneRecord,
+      statePoints
+    } = record.getProperties('activeState', 'sceneRecord', 'statePoints');
 
-    this.setProperties({ activeState, statePoints });
+    this.setProperties({ activeState, sceneRecord, statePoints });
   },
 
   updateRecord: async function(record) {
+    const sceneRecord = Ember.$.extend({}, this.get('sceneRecord'));
     const statePoints = Ember.$.extend([], this.get('statePoints'));
 
-    record.set('statePoints', statePoints);
+    record.setProperties({
+      sceneRecord,
+      statePoints
+    });
 
     return await record.save();
+  },
+
+  // SCENE RECORD MANAGEMENT // 
+  updateSceneRecord(key, value) {
+    value = value === undefined ? null : value;
+    this.set(`sceneRecord.${key}`, value);
+  },
+
+  clearSceneRecord() {
+    this.set('sceneRecord', Ember.Object.create());
   },
 
   // STATE MANAGEMENT // 

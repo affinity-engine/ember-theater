@@ -8,7 +8,8 @@ const {
   Component,
   computed,
   inject,
-  merge
+  merge,
+  on
 } = Ember;
 
 export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
@@ -16,6 +17,17 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
   classNames: ['et-choice'],
   intlWrapper: inject.service(),
   layout: layout,
+
+  handleFastboot: on('didInitAttrs', function() {
+    if (this.get('fastboot')) {
+      const choice = this.get('fastbootResult');
+      this.resolveLine(choice);
+    }
+  }),
+
+  resolveLine(choice) {
+    this.get('line.resolve')(choice);
+  },
 
   choices: computed('line.choices', {
     get() {
@@ -49,7 +61,7 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
   actions: {
     choose(choice) {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        this.get('line.resolve')(choice);
+        this.resolveLine(choice);
       });
     }
   }

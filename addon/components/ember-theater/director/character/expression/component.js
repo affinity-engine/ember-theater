@@ -4,6 +4,7 @@ const {
   Component, 
   computed,
   inject,
+  merge,
   on 
 } = Ember;
 
@@ -16,7 +17,7 @@ export default Component.extend({
   intlWrapper: inject.service(),
   src: alias('expression.src'),
   tagName: 'img',
-
+  
   caption: computed('expression.caption', {
     get() {
       return this.get('intlWrapper').tryIntl(
@@ -28,12 +29,17 @@ export default Component.extend({
 
   performLine: on('didRender', function() {
     const line = this.get('line');
+    const options = line.options || {};
+
+    if (this.get('fastboot')) {
+      merge(options, { duration: 0 });
+    }
 
     if (!this.element || this.get('previousLine') === line) { return; }
     
     this.set('previousLine', line);
 
-    Ember.$.Velocity.animate(this.element, line.effect, line.options).then(() => {
+    Ember.$.Velocity.animate(this.element, line.effect, options).then(() => {
       if (line.resolve) { line.resolve(); }
     });
   })

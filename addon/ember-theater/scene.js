@@ -3,6 +3,8 @@ import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 
 const {
   computed,
+  get,
+  inject,
   isBlank,
   isPresent,
   on,
@@ -15,6 +17,9 @@ const {
 } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
+  emberTheaterSceneManager: inject.service(),
+  sceneRecordsCount: -1,
+
   abort() {
     this.set('isAborted', true);
   },
@@ -28,17 +33,41 @@ export default Ember.Object.extend(ModulePrefixMixin, {
 
       this[Ember.String.camelize(name)] = (...directionArgs) => {
         if (this.get('isAborted')) { return resolve(); }
+        
+        let fastboot, fastbootResult;
+        const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
 
+        if (this.get('isLoading')) {
+          const sceneRecord = this.get('sceneRecord');
+          fastbootResult = sceneRecord[sceneRecordsCount];
+
+          if (fastbootResult !== undefined) {
+            fastboot = true;
+          } else {
+            this.toggleProperty('isLoading');
+          }
+        }
+
+        let directionPromise;
         const direction = directionFactory.create({
           container: this.get('container'),
+          fastboot,
+          fastbootResult,
           type: name
         });
 
         if (isPresent(direction.perform)) {
-          return this._performMetaDirection(direction, ...directionArgs);
+          directionPromise = this._performMetaDirection(direction, ...directionArgs);
         } else {
-          return this._performDirectionOnStage(direction, name, ...directionArgs);
+          directionPromise = this._performDirectionOnStage(direction, name, ...directionArgs);
         }
+
+        directionPromise.then((value) => {
+          const sceneManager = this.get('emberTheaterSceneManager');
+          sceneManager.updateSceneRecord(sceneRecordsCount, value);
+        });
+
+        return directionPromise;
       };
     });
   }),

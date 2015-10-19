@@ -11,6 +11,7 @@ const { computed } = Ember;
 
 export default Model.extend(LokiJSModelMixin, {
   name: attr('string'),
+  sceneRecord: attr('object'),
   statePoints: attr('array'),
 
   activeState: computed('statePoints', {

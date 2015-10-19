@@ -1,6 +1,8 @@
 {{#each directions as |direction|}}
   {{component direction.componentType
     line=direction.line
+    fastboot=direction.fastboot
+    fastbootResult=direction.fastbootResult
     destroyDirection=(action 'destroyDirection' direction)}}
 {{/each}}
 

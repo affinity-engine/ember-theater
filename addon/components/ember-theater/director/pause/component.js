@@ -11,6 +11,12 @@ const {
 export default Component.extend(DirectionComponentMixin, {
   keyboard: inject.service(),
 
+  handleFastboot: on('didInitAttrs', function() {
+    if (this.get('fastboot')) {
+      this._resolve();
+    }
+  }),
+
   setup: on('didInsertElement', function() {
     const line = this.get('line');
 

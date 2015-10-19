@@ -13,6 +13,10 @@ const {
 export default Service.extend(ModulePrefixMixin, {
   emberTheaterSaveStateManager: inject.service(),
 
+  updateSceneRecord(key, value) {
+    this.get('emberTheaterSaveStateManager').updateSceneRecord(key, value);
+  },
+
   setInitialSceneId: observer('scene.id', function() {
     const {
       initialSceneId,
@@ -46,23 +50,29 @@ export default Service.extend(ModulePrefixMixin, {
     }
   },
 
-  toScene: async function(sceneId, options) {
+  toScene: async function(sceneId, options = {}) {
     const oldScene = this.get('scene');
     if (isPresent(oldScene)) { oldScene.abort(); }
+
+    const saveStateManager = this.get('emberTheaterSaveStateManager');
+    const sceneRecord = saveStateManager.get('sceneRecord');
 
     const modulePrefix = this.get('modulePrefix');
     const sceneFactory = require(`${modulePrefix}/ember-theater/scenes/${sceneId}`)['default'];
     const scene = sceneFactory.create({
       container: this.get('container'),
       id: sceneId,
-      options: options
+      isLoading: options.loading,
+      options,
+      sceneRecord
     })
 
-    if (isEmpty(options) || get(options, 'autosave') !== false) {
-      const saveStateManager = this.get('emberTheaterSaveStateManager');
+    if (get(options, 'autosave') !== false) {
       const autosave = await saveStateManager.get('autosave');
+
       saveStateManager.appendActiveState({ sceneId });
       saveStateManager.updateRecord(autosave);
+      saveStateManager.clearSceneRecord();
     }
 
     this.set('scene', scene);
