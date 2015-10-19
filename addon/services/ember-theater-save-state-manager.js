@@ -73,6 +73,8 @@ export default Service.extend({
   },
 
   loadRecord(record) {
+    record.reload();
+
     const {
       activeState,
       sceneRecord,
