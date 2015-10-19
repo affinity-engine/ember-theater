@@ -17,12 +17,11 @@ export default Service.extend(ModulePrefixMixin, {
     this.get('emberTheaterSaveStateManager').updateSceneRecord(key, value);
   },
 
-  setInitialSceneId: observer('scene.id', function() {
+  setInitialSceneId: observer('sceneId', function() {
     const {
       initialSceneId,
-      scene
-    } = this.getProperties('initialSceneId', 'scene');
-    const sceneId = scene.id;
+      sceneId
+    } = this.getProperties('initialSceneId', 'sceneId');
 
     if (isEmpty(initialSceneId) && isPresent(sceneId)) {
       this.set('initialSceneId', sceneId);
