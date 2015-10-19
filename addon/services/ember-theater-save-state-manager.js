@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import nativeCopy from 'ember-theater/utils/native-copy';
 
 const {
   computed,
@@ -56,8 +57,8 @@ export default Service.extend({
 
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
-    const sceneRecord = Ember.$.extend({}, this.get('sceneRecord'));
-    const statePoints = Ember.$.extend([], this.get('statePoints'));
+    const sceneRecord = nativeCopy(this.get('sceneRecord'));
+    const statePoints = nativeCopy(this.get('statePoints'));
     const record = this.get('store').createRecord('ember-theater-local-save', {
       name,
       sceneRecord,
@@ -82,8 +83,8 @@ export default Service.extend({
   },
 
   updateRecord: async function(record) {
-    const sceneRecord = Ember.$.extend({}, this.get('sceneRecord'));
-    const statePoints = Ember.$.extend([], this.get('statePoints'));
+    const sceneRecord = nativeCopy(this.get('sceneRecord'));
+    const statePoints = nativeCopy(this.get('statePoints'));
 
     record.setProperties({
       sceneRecord,
@@ -105,7 +106,7 @@ export default Service.extend({
 
   // STATE MANAGEMENT // 
   appendActiveState(optionalValues) {
-    const activeState = Ember.$.extend({}, this.get('activeState'));
+    const activeState = nativeCopy(this.get('activeState'));
     const mergedState = merge(activeState, optionalValues);
 
     this.get('statePoints').pushObject(mergedState);
