@@ -33,7 +33,7 @@ export default Component.extend({
 
       const line = {
         choices: choices,
-        header: 'Load a game',
+        header: 'ember-theater.save.header',
         resolve: resolve
       };
 

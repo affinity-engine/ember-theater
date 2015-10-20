@@ -112,6 +112,14 @@ export default Service.extend({
     const mergedState = merge(activeState, optionalValues);
 
     this.get('statePoints').pushObject(mergedState);
+    this.set('activeState', activeState);
+  },
+
+  loadStatePoint(statePoints) {
+    const activeState = statePoints.get('lastObject');
+
+    this.setProperties({ activeState, statePoints });
+    this.clearSceneRecord();
   },
 
   deleteStateValue(key) {

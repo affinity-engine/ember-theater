@@ -10,6 +10,7 @@ export default Controller.extend({
   emberTheaterSceneManager: inject.service(),
   initialEmberTheaterComponents: {
     'ember-theater/menu-bar': Ember.A([
+      'ember-theater/menu-bar/rewind',
       'ember-theater/menu-bar/load',
       'ember-theater/menu-bar/save',
       'ember-theater/menu-bar/reset'

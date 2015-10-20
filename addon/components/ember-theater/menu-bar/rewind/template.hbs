@@ -1,0 +1,6 @@
+{{fa-icon 'backward'}}
+{{#if isOpen}}
+  {{#modal-dialog}}
+    {{ember-theater/menu-bar/rewind/menu closeMenu=(action 'closeMenu')}}
+  {{/modal-dialog}}
+{{/if}}

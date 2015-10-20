@@ -66,12 +66,15 @@ export default Service.extend(ModulePrefixMixin, {
       sceneRecord
     })
 
+    if (!options.loading) {
+      saveStateManager.clearSceneRecord();
+    }
+
     if (get(options, 'autosave') !== false) {
       const autosave = await saveStateManager.get('autosave');
 
       saveStateManager.appendActiveState({ sceneId });
       saveStateManager.updateRecord(autosave);
-      saveStateManager.clearSceneRecord();
     }
 
     this.set('scene', scene);
