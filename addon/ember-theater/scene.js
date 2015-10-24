@@ -17,7 +17,7 @@ const {
 } = RSVP;
 
 export default Ember.Object.extend(ModulePrefixMixin, {
-  emberTheaterSceneManager: inject.service(),
+  emberTheaterStageManager: inject.service(),
   sceneRecordsCount: -1,
 
   abort() {
@@ -30,70 +30,13 @@ export default Ember.Object.extend(ModulePrefixMixin, {
 
     directionNames.forEach((name) => {
       const directionFactory = require(`${modulePrefix}/ember-theater/directions/${name}`)['default'];
+      const stageManager = this.get('emberTheaterStageManager');
 
       this[Ember.String.camelize(name)] = (...directionArgs) => {
-        if (this.get('isAborted')) { return resolve(); }
-        
-        let fastboot, fastbootResult;
-        const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
-
-        if (this.get('isLoading')) {
-          const sceneRecord = this.get('sceneRecord');
-          fastbootResult = sceneRecord[sceneRecordsCount];
-
-          if (fastbootResult !== undefined) {
-            fastboot = true;
-          } else {
-            this.toggleProperty('isLoading');
-          }
-        }
-
-        let directionPromise;
-        const direction = directionFactory.create({
-          container: this.get('container'),
-          fastboot,
-          fastbootResult,
-          type: name
-        });
-
-        if (isPresent(direction.perform)) {
-          directionPromise = this._performMetaDirection(direction, ...directionArgs);
-        } else {
-          directionPromise = this._performDirectionOnStage(direction, name, ...directionArgs);
-        }
-
-        directionPromise.then((value) => {
-          const sceneManager = this.get('emberTheaterSceneManager');
-          sceneManager.updateSceneRecord(sceneRecordsCount, value);
-        });
-
-        return directionPromise;
+        return stageManager.handleDirection(this, directionFactory, name, directionArgs);
       };
     });
   }),
-
-  _performMetaDirection(direction, ...directionArgs) {
-    return new Promise((resolve) => {
-      direction.perform(resolve, ...directionArgs);
-    });
-  },
-
-  _performDirectionOnStage(direction, name, line) {
-    const director = this.get('director');
-    const activeDirection = director.findDirectionWithId(line.id, name);
-
-    return new Promise((resolve) => {
-      line.resolve = resolve;
-
-      if (isBlank(activeDirection)) {
-        direction.set('line', line);
-        director.addDirection(direction);
-      } else {
-        activeDirection.set('line', line);
-        direction.destroy();
-      }
-    });
-  },
 
   _directionNames: computed({
     get() {

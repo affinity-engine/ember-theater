@@ -1,8 +1,9 @@
 import Ember from 'ember';
 
-const { 
+const {
   computed,
-  copy
+  copy,
+  isPresent
 } = Ember;
 
 export default Ember.Object.extend({
