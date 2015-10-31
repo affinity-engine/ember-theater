@@ -19,16 +19,13 @@ export default Service.extend({
   directions: computed(() => Ember.A()),
   emberTheaterSceneManager: inject.service(),
 
-  resetTheaterLayer() {
+  clearDirections() {
     this.get('directions').clear();
+  },
 
-    const theaterLayer = Layer.create({
-      unsortedDirections: Ember.A(),
-      layers: Ember.A(),
-      name: 'theater'
-    });
-
-    this.set('theaterLayer', theaterLayer);
+  removeDirection(direction) {
+    this.get('directions').removeObject(direction);
+    direction.destroy();
   },
 
   findDirectionWithId(id, type) {
@@ -103,6 +100,5 @@ export default Service.extend({
 
   _addDirection(direction) {
     this.get('directions').pushObject(direction);
-    this.get('theaterLayer').addDirection(direction);
   }
 });

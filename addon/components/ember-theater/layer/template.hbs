@@ -1,4 +1,4 @@
-{{#each directions as |direction|}}
+{{#each layerDirections as |direction|}}
   {{component direction.componentType
     line=direction.line
     fastboot=direction.fastboot
@@ -6,9 +6,8 @@
     destroyDirection=(action 'destroyDirection' direction)}}
 {{/each}}
 
-{{#each layers as |layer|}}
+{{#each-in childLayers as |name directions|}}
   {{ember-theater/layer
-    directions=layer.directions
-    layers=layer.layers
-    name=layer.name}}
-{{/each}}
+    directions=directions
+    name=name}}
+{{/each-in}}

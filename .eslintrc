@@ -1,0 +1,12 @@
+{
+  "extends": "ember",
+  "parser": "babel-eslint",
+  "globals": {
+    "loki": true
+  },
+  "rules": {
+    "no-ternary": 0,
+    "no-restricted-syntax": [2, "WithStatement"],
+    "space-before-function-paren": [2, "never"]
+  }
+}
