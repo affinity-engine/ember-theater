@@ -31,6 +31,7 @@ export default Component.extend({
   childLayers: computed('directions.[]', {
     get() {
       const name = this.get('name');
+      const parentName = name ? `${name}.` : '';
 
       const childLayerDirections = this.get('directions').filter((direction) => {
         return direction.get('layer').replace(name, '').length > 1;
@@ -41,7 +42,10 @@ export default Component.extend({
       })).uniq();
 
       return childLayerNames.reduce((layers, layer) => {
-        layers[layer] = childLayerDirections.filter((direction) => {
+        const subName = layer.replace(parentName, '').split('.')[0];
+        const childLayerName = name ? `${name}.${subName}` : subName;
+
+        layers[childLayerName] = childLayerDirections.filter((direction) => {
           return direction.get('layer') === layer;
         });
 

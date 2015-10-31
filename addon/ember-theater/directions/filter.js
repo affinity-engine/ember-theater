@@ -8,13 +8,13 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  perform() {
-    const line = this.get('line');
+  perform(resolve, line) {
     const filterId = get(line, 'id');
     const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
     const duration = get(line, 'options.duration') ? get(line, 'options.duration') : 0;
     const keyframeName = Ember.guidFor(this);
-    const queryString = get(line, 'layer').split(/\.|\//).reduce((queryString, name) => {
+    const layer = get(line, 'layer') ? get(line, 'layer') : '';
+    const queryString = layer.split(/\.|\//).reduce((queryString, name) => {
       return `${queryString} .${layerName(name)}`;
     }, '');
     const $layer = Ember.$(queryString);
@@ -38,7 +38,7 @@ export default Direction.extend({
         '-webkit-filter': effect,
         'filter': effect
       });
-      get(line, 'resolve')();
+      resolve();
     }, duration);
     
     document.styleSheets[0].insertRule( keyframes, 0 );
