@@ -17,7 +17,7 @@ module.exports = {
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-inflector', target: '1.9.3' });
     }).then(function() {
-      return _this.addAddonToProject({ name: 'ember-key-responder', target: '0.4.2' });
+      return _this.addAddonToProject({ name: 'ember-keyboard', target: '0.0.3' });
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-legacy-views', target: '0.2.0' });
     }).then(function() {

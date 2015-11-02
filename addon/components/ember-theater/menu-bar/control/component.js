@@ -9,17 +9,7 @@ export default Component.extend({
   classNames: ['et-menu-bar-control-icon'],
   tagName: 'button',
 
-  acceptsKeyResponder: true,
-  
-  becomeKeyResponderOnFocus: on('focusIn', function() {
-    this.becomeKeyResponder();
-  }),
-
-  resignKeyResponderOnFocusOut: on('focusOut', function() {
-    this.resignKeyResponder();
-  }),
-
-  toggleOpen: on('click', 'insertNewLine', 'touchEnd', function() {
+  toggleOpen: on('click', 'touchEnd', function() {
     this.toggleProperty('isOpen');
   }),
 

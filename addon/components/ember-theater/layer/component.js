@@ -44,10 +44,15 @@ export default Component.extend({
       return childLayerNames.reduce((layers, layer) => {
         const subName = layer.replace(parentName, '').split('.')[0];
         const childLayerName = name ? `${name}.${subName}` : subName;
-
-        layers[childLayerName] = childLayerDirections.filter((direction) => {
+        const childLayer = childLayerDirections.filter((direction) => {
           return direction.get('layer') === layer;
         });
+
+        if (layers[childLayerName]) {
+          layers[childLayerName] = layers[childLayerName].concat(childLayer);
+        } else {
+          layers[childLayerName] = childLayer;
+        }
 
         return layers;
       }, {});
