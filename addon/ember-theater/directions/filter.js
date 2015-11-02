@@ -14,9 +14,7 @@ export default Direction.extend({
     const duration = get(line, 'options.duration') ? get(line, 'options.duration') : 0;
     const keyframeName = Ember.guidFor(this);
     const layer = get(line, 'layer') ? get(line, 'layer') : '';
-    const queryString = layer.split(/\.|\//).reduce((queryString, name) => {
-      return `${queryString} .${layerName(name)}`;
-    }, '');
+    const queryString = `.${layerName(layer)}`;
     const $layer = Ember.$(queryString);
     const previousFilter = $layer.css('filter') !== 'none' ? $layer.css('filter') : $layer.css('-webkit-filter');
 
