@@ -5,14 +5,83 @@ import layerName from 'ember-theater/utils/layer-name';
 const {
   Component,
   computed,
-  inject
+  guidFor,
+  inject,
+  isPresent,
+  run
 } = Ember;
 
 export default Component.extend({
+  attributeBindings: ['animationName:animation-name', 'style'],
   classNames: ['et-layer'],
   classNameBindings: ['layerName'],
+  emberTheaterLayerManager: inject.service(),
   emberTheaterStageManager: inject.service(),
   layout: layout,
+
+  style: computed('animation', 'filterAnimationName', 'filter', {
+    get() {
+      const {
+        animation,
+        filterAnimationName,
+        filter
+      } = this.getProperties('animation', 'filterAnimationName', 'filter');
+
+      return `
+      animation: ${animation};
+      animation-name: ${filterAnimationName};
+      filter: ${filter};
+      -webkit-filter: ${filter};
+      `
+    }
+  }).readOnly(),
+
+  animationName: computed('emberTheaterLayerManager.filters.[]', {
+    get() {
+      const layerName = this.get('layerName');
+      const filter = this.get('emberTheaterLayerManager.filters').find((filter) => {
+        return filter.get('layer') === layerName;
+      });
+
+      if (isPresent(filter)) {
+        const {
+          duration,
+          effect,
+          previousFilter
+        } = filter.getProperties('duration', 'effect', 'previousFilter');
+
+        const keyframeName = guidFor(this);
+        const animation = `keyframeName ${duration}ms linear 1`;
+        const keyframes = `@keyframes ${keyframeName} {
+        from {
+        -webkit-filter: ${previousFilter};
+        filter: ${previousFilter};
+        }
+        to {
+        -webkit-filter: ${effect};
+        filter: ${effect};
+        }
+        }`;
+
+        document.styleSheets[0].insertRule( keyframes, 0 );
+
+        if (duration > 0) {
+          run.later(() => {
+            this.set('filter', effect);
+          }, duration);
+        } else {
+          this.set('filter', effect);
+        }
+
+        this.setProperties({
+          animation,
+          filterAnimationName: keyframeName
+        });
+
+        this.get('emberTheaterLayerManager').completeFilterTransition(layerName);
+      }
+    }
+  }).readOnly(),
 
   layerDirections: computed('directions.[]', {
     get() {
@@ -36,7 +105,7 @@ export default Component.extend({
       const childLayerDirections = this.get('directions').filter((direction) => {
         return direction.get('layer').replace(name, '').length > 1;
       })
-      
+
       const childLayerNames = Ember.A(childLayerDirections.map((direction) => {
         return direction.get('layer');
       })).uniq();

@@ -17,6 +17,7 @@ const { alias } = computed;
 export default Component.extend({
   classNames: ['et-director'],
   layout: layout,
+  emberTheaterLayerManager: inject.service(),
   emberTheaterSceneManager: inject.service(),
   emberTheaterStageManager: inject.service(),
   directions: alias('emberTheaterStageManager.directions'),
@@ -27,6 +28,7 @@ export default Component.extend({
     if (isPresent(scene)) {
       Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
         this.get('emberTheaterStageManager').clearDirections();
+        this.get('emberTheaterLayerManager').clearFilters();
         Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
         scene.script();
       });
