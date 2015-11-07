@@ -1,48 +1,38 @@
 import Ember from 'ember';
+import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
   computed,
+  get,
   inject,
   merge,
+  observer,
   on
 } = Ember;
 
 const { alias } = computed;
 
-export default Component.extend({
+export default Component.extend(VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'src'],
   classNames: ['et-character-expression'],
-  previousLine: null,
-  emberTheaterTranslate: inject.service(),
-  src: alias('expression.src'),
   tagName: 'img',
+
+  emberTheaterTranslate: inject.service(),
+
+  src: alias('expression.src'),
 
   caption: computed('expression.caption', {
     get() {
-      return this.get('emberTheaterTranslate').translate(
-        this.get('expression.caption'),
-        `expressions.${this.get('expression.id')}`
-      );
+      const fallback = get(this, 'expression.caption');
+      const translation = `expressions.${this.get('expression.id')}`;
+
+      return get(this, 'emberTheaterTranslate').translate(fallback, translation);
     }
   }),
 
-  performLine: on('didRender', function() {
-    const line = this.get('line');
-    const options = line.options || {};
-
-    if (this.get('autoResolve')) {
-      merge(options, { duration: 0 });
-    }
-
-    if (!this.element || this.get('previousLine') === line) { return; }
-
-    this.set('previousLine', line);
-
-    animate(this.element, line.effect, options).then(() => {
-      if (line.resolve) { line.resolve(); }
-    });
-  })
-
+  perform: on('didInsertElement', observer('line', function() {
+    this.executeLine();
+  }))
 });

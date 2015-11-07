@@ -5,41 +5,44 @@ import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 const { 
   Component, 
   computed, 
+  get,
   inject,
   observer,
-  on 
+  on,
+  set 
 } = Ember;
 
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],
   classNames: ['et-backdrop'],
-  emberTheaterTranslate: inject.service(),
-  store: inject.service(),
   tagName: 'img',
 
-  caption: computed('backdrop.caption', {
+  emberTheaterTranslate: inject.service(),
+  store: inject.service(),
+
+  caption: computed('backdrop.caption', 'backdrop.id', {
     get() {
-      return this.get('emberTheaterTranslate').translate(
-        this.get('backdrop.caption'),
-        `backdrops.${this.get('backdrop.id')}`
-      );
+      const fallback = get(this, 'backdrop.caption');
+      const translation = `backdrops.${get(this, 'backdrop.id')}`;
+
+      return get(this, 'emberTheaterTranslate').translate(fallback, translation);
     }
   }).readOnly(),
 
   style: computed('backdrop.src', {
     get() {
-      return `background-image: url(${this.get('backdrop.src')});`;
+      return `background-image: url(${get(this, 'backdrop.src')});`;
     }
   }).readOnly(),
 
   setBackdrop: on('didInitAttrs', function() {
-    const line = this.get('line');
-    const backdrop = this.get('store').peekRecord('ember-theater-backdrop', line.id);
+    const backdropId = get(this, 'line.id');
+    const backdrop = get(this, 'store').peekRecord('ember-theater-backdrop', backdropId);
 
-    this.set('backdrop', backdrop);
+    set(this, 'backdrop', backdrop);
   }),
 
-  animateBackdrop: on('didInsertElement', observer('line', function() {
+  perform: on('didInsertElement', observer('line', function() {
     this.executeLine();
   }))
 });

@@ -8,33 +8,37 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 const { 
   Component, 
   computed,
+  get,
   inject,
   isBlank,
   isPresent,
   observer,
   on, 
-  run 
+  run,
+  set 
 } = Ember;
 
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   attributeBindings: ['style'],
   classNames: ['et-character'],
   layout: layout,
-  expressionContainers: computed(() => Ember.A([])),
+
   store: inject.service(),
 
-  setCharacter: on('didInitAttrs', function() {
-    const line = this.get('line');
-    const character = this.get('store').peekRecord('ember-theater-character', line.id);
+  expressionContainers: computed(() => Ember.A([])),
 
-    this.set('character', character);
+  setCharacter: on('didInitAttrs', function() {
+    const characterId = get(this, 'line.id');
+    const character = get(this, 'store').peekRecord('ember-theater-character', characterId);
+
+    set(this, 'character', character);
   }),
 
   style: computed('character.height', {
     get() {
-    const height = this.get('character.height');
+      const height = get(this, 'character.height');
 
-    return `height: ${height}vh;`;
+      return `height: ${height}vh;`;
     }
   }).readOnly(),
 
@@ -48,18 +52,18 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, Wind
     }, 25);
   }),
 
-  performLine: on('didInsertElement', observer('line', function() {
-    const line = this.get('line');
+  perform: on('didInsertElement', observer('line', function() {
+    const line = get(this, 'line');
 
     // by default, a line will 'transition.fadeIn' if it has no effect.
     // we do not want that to happen when there is an expression change.
-    if (isPresent(line.effect) || isBlank(line.expression)) {
+    if (isPresent(get(line, 'effect')) || isBlank(get(line, 'expression'))) {
       this.executeLine();
     }
   })),
 
   watchForExpressionChange: observer('line', function() {
-    const line = this.get('line.expression');
+    const line = get(this, 'line.expression');
 
     if (isPresent(line)) {
       this.changeExpression(line);
@@ -96,7 +100,7 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, Wind
     transitionOut.resolve = () => {
       this.get('expressionContainers').removeObject(oldExpression);
     };
-    
+
     oldExpression.set('line', transitionOut);
 
     // let the transition in resolve the line if there is no primary line effect
