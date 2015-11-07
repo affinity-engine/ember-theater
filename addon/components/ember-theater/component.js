@@ -1,13 +1,12 @@
 import Ember from 'ember';
 import layout from './template';
-import ModulePrefixMixin from '../../mixins/module-prefix';
 
 const {
   Component,
   on
 } = Ember;
 
-export default Component.extend(ModulePrefixMixin, {
+export default Component.extend({
   'aria-live': 'polite',
   ariaRole: 'region',
   attributeBindings: ['aria-live'],

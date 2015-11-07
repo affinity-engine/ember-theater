@@ -9,11 +9,15 @@ const {
   Component, 
   computed,
   inject,
+  isBlank,
+  isPresent,
+  observer,
   on, 
   run 
 } = Ember;
 
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, WindowResizeMixin, {
+  attributeBindings: ['style'],
   classNames: ['et-character'],
   layout: layout,
   expressionContainers: computed(() => Ember.A([])),
@@ -26,18 +30,44 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, Wind
     this.set('character', character);
   }),
 
-  activateImage() {
-    const expression = this.$('.et-character-expression').first();
+  style: computed('character.height', {
+    get() {
+    const height = this.get('character.height');
 
-    return Ember.$.Velocity.animate(expression, {
-      opacity: 100
-    }, 0);
-  },
+    return `height: ${height}vh;`;
+    }
+  }).readOnly(),
+
+  // during a window resize, the img dimensions get out of proportion. by forcing the browser
+  // to redraw the element, we force it to also recalculate the ratios.
+  handleWindowResize: on('windowResize', function() {
+    this.$().css('display', 'none');
+
+    run.later(() => {
+      this.$().css('display', 'block');
+    }, 25);
+  }),
+
+  performLine: on('didInsertElement', observer('line', function() {
+    const line = this.get('line');
+
+    // by default, a line will 'transition.fadeIn' if it has no effect.
+    // we do not want that to happen when there is an expression change.
+    if (isPresent(line.effect) || isBlank(line.expression)) {
+      this.executeLine();
+    }
+  })),
+
+  watchForExpressionChange: observer('line', function() {
+    const line = this.get('line.expression');
+
+    if (isPresent(line)) {
+      this.changeExpression(line);
+    }
+  }),
 
   addInitialExpression: on('didInsertElement', function() {
     let expression;
-    const line = this.get('line.expression');
-    const transitionIn = this.get('line.expression.transitionIn') ? line.transitionIn : { effect: { opacity: 1 } };
 
     if (this.get('line.expression.id')) {
       expression = this.get('store').peekRecord('ember-theater-character-expression', line.id); 
@@ -45,78 +75,32 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, Wind
       expression = this.get('character.defaultExpression');
     }
 
+    const line = this.get('line.expression');
+    const transitionIn = this.get('line.expression.transitionIn') ? line.transitionIn : { effect: 'fadeIn' };
+
     const expressionContainer = Ember.Object.create({
       expression: expression,
       line: transitionIn
     });
-    const height = this.get('character.height');
 
-    this.$().height(`${height}vh`);
     this.get('expressionContainers').pushObject(expressionContainer);
-
-    run.later(() => {
-      this.adjustImageSizes();
-    });
   }),
 
-  adjustImageSizes() {
-    const height = this.get('character.height');
-    const stageHeight = this.get('stageHeight');
-    const largestWidth = this.determineWidth(height * stageHeight / 100);
-
-    this.$().width(largestWidth).css('left', largestWidth - (largestWidth * 1.5));
-  },
-
-  adjustStageSize: on('didInsertElement', function() {
-    const stage = this.nearestOfType(Director).$();
-
-    this.set('stageWidth', stage.width());
-    this.set('stageHeight', stage.height());
-  }),
-
-  // Uses JQuery `each`, which changes `this` to the current element. Therefore, no fat arrow.
-  determineWidth(height) {
-    let largestWidth = 0;
-
-    this.$('.et-character-expression').each(function() {
-      const $img = Ember.$(this);
-      const width = $img.prop('naturalWidth') * height / $img.prop('naturalHeight');
-
-      if (width > largestWidth) {
-        largestWidth = width;
-      }
-
-      $img.width(width);
-    });
-
-    return largestWidth;
-  },
-
-  handleWindowResize: on('windowResize', function() {
-    this.adjustStageSize();
-    this.adjustImageSizes();
-  }),
-
-  performLine: on('didUpdate', function() {
-    this.executeLine();
-  }),
-
-  changeExpression: on('didRender', function() {
-    const line = this.get('line.expression');
-    if (!line || !this.element || this.get('previousExpressionLine') === line) { return; }
-    
-    this.set('previousExpressionLine', line);
-
+  changeExpression(line) {
     const expression = this.get('store').peekRecord('ember-theater-character-expression', line.id); 
     const oldExpression = this.get('expressionContainers.firstObject');
     const transitionIn = line.transitionIn.effect ? line.transitionIn : { effect: 'fadeIn', options: line.transitionIn.options };
     const transitionOut = line.transitionOut.effect ? line.transitionOut : { effect: 'fadeOut', options: line.transitionOut.options };
 
+    // remove the previous expression once it completes transitioning out
     transitionOut.resolve = () => {
       this.get('expressionContainers').removeObject(oldExpression);
     };
+    
+    oldExpression.set('line', transitionOut);
 
-    if (!this.get('line.effect')) {
+    // let the transition in resolve the line if there is no primary line effect
+    if (isBlank(this.get('line.effect'))) {
       transitionIn.resolve = this.get('line.resolve');
     }
 
@@ -125,11 +109,6 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, Wind
       expression: expression
     });
 
-    oldExpression.set('line', transitionOut);
     this.get('expressionContainers').pushObject(expressionContainer);
- 
-    run.later(() => {
-      this.adjustImageSizes();
-    });
-  })
+  }
 });

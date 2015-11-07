@@ -7,8 +7,6 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  previousLine: null,
-
   executeLine() {
     const line = this.get('line');
     const options = line.options || {};
@@ -17,13 +15,9 @@ export default Mixin.create({
       merge(options, { duration: 0 });
     }
     
-    if (!this.element || this.get('previousLine') === line) { return; }
-
-    this.set('previousLine', line);
-    
     run.next(() => {
       // do nothing if the element isn't present or the line is purely a expression change
-      if (!this.element || (!line.effect && line.expression)) { return; }
+      // if (!this.element || (!line.effect && line.expression)) { return; }
 
       const effect = line.effect ? line.effect : 'transition.fadeIn';
 

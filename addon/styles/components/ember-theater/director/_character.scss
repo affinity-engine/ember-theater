@@ -1,14 +1,19 @@
 .ember-theater {
   .et-character {
-    @extend .et-hidden;
     position: absolute;
     bottom: 0;
     left: 0;
     z-index: 10;
 
+    .et-character-expression-container {
+      position: absolute;
+      transform: translateX(-50%);
+      height: 100%;
+    }
+
     .et-character-expression {
       @extend .et-hidden;
-      position: absolute;
+      position: relative;
       height: 100%;
     }
   }

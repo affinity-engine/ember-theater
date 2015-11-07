@@ -6,11 +6,12 @@ const {
   Component, 
   computed, 
   inject,
+  observer,
   on 
 } = Ember;
 
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
-  attributeBindings: ['caption:alt'],
+  attributeBindings: ['caption:alt', 'style'],
   classNames: ['et-backdrop'],
   intlWrapper: inject.service(),
   store: inject.service(),
@@ -23,7 +24,13 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
         `backdrops.${this.get('backdrop.id')}`
       );
     }
-  }),
+  }).readOnly(),
+
+  style: computed('backdrop.src', {
+    get() {
+      return `background-image: url(${this.get('backdrop.src')});`;
+    }
+  }).readOnly(),
 
   setBackdrop: on('didInitAttrs', function() {
     const line = this.get('line');
@@ -32,13 +39,7 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
     this.set('backdrop', backdrop);
   }),
 
-  setImagePath: on('didRender', function() {
-    const element = this.$();
-
-    if (element) {
-      element.css('background-image',`url(${this.get('backdrop.src')})`);
-    }
-
+  animateBackdrop: on('didInsertElement', observer('line', function() {
     this.executeLine();
-  })
+  }))
 });

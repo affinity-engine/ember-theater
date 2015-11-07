@@ -1,6 +1,9 @@
 {{#each expressionContainers as |expressionContainer|}}
-  {{ember-theater/director/character/expression
-    expression=expressionContainer.expression
-    fastboot=fastboot
-    line=expressionContainer.line}}
+  <div class='et-character-expression-container'>
+    {{ember-theater/director/character/expression
+      expression=expressionContainer.expression
+      fastboot=fastboot
+      line=expressionContainer.line
+    }}
+  </div>
 {{/each}}
