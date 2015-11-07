@@ -1,8 +1,8 @@
 {{#each layerDirections as |direction|}}
   {{component direction.componentType
     line=direction.line
-    fastboot=direction.fastboot
-    fastbootResult=direction.fastbootResult
+    autoResolve=direction.autoResolve
+    autoResolveResult=direction.autoResolveResult
     destroyDirection=(action 'destroyDirection' direction)}}
 {{/each}}
 

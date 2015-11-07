@@ -11,8 +11,8 @@ const {
 export default Component.extend(DirectionComponentMixin, {
   keyboard: inject.service(),
 
-  handleFastboot: on('didInitAttrs', function() {
-    if (this.get('fastboot')) {
+  handleautoResolve: on('didInitAttrs', function() {
+    if (this.get('autoResolve')) {
       this._resolve();
     }
   }),

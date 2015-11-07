@@ -39,15 +39,15 @@ export default Service.extend({
   handleDirection(scene, factory, name, args) {
     if (scene.get('isAborted')) { return resolve(); }
 
-    let fastboot, fastbootResult;
+    let autoResolve, autoResolveResult;
     const sceneRecordsCount = scene.incrementProperty('sceneRecordsCount');
 
     if (scene.get('isLoading')) {
       const sceneRecord = scene.get('sceneRecord');
-      fastbootResult = sceneRecord[sceneRecordsCount];
+      autoResolveResult = sceneRecord[sceneRecordsCount];
 
-      if (fastbootResult !== undefined) {
-        fastboot = true;
+      if (autoResolveResult !== undefined) {
+        autoResolve = true;
       } else {
         scene.set('isLoading', false);
       }
@@ -56,8 +56,8 @@ export default Service.extend({
     let directionPromise;
     const direction = factory.create({
       container: this.get('container'),
-      fastboot,
-      fastbootResult,
+      autoResolve,
+      autoResolveResult,
       type: name
     });
 

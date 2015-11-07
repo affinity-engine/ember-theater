@@ -32,7 +32,7 @@ export default Component.extend({
     const line = this.get('line');
     const options = line.options || {};
 
-    if (this.get('fastboot')) {
+    if (this.get('autoResolve')) {
       merge(options, { duration: 0 });
     }
 

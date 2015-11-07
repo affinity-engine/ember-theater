@@ -17,8 +17,8 @@ export default Ember.Component.extend({
   layout: layout,
   store: inject.service(),
 
-  handleFastboot: on('didInitAttrs', function() {
-    if (this.get('fastboot')) {
+  handleautoResolve: on('didInitAttrs', function() {
+    if (this.get('autoResolve')) {
       this.resolveLine();
     }
   }),

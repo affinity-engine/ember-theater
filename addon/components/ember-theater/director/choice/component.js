@@ -19,9 +19,9 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
   emberTheaterTranslate: inject.service(),
   layout: layout,
 
-  handleFastboot: on('didInitAttrs', function() {
-    if (this.get('fastboot')) {
-      const choice = this.get('fastbootResult');
+  handleautoResolve: on('didInitAttrs', function() {
+    if (this.get('autoResolve')) {
+      const choice = this.get('autoResolveResult');
       this.resolveLine(choice);
     }
   }),
