@@ -16,7 +16,7 @@ const {
 export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
   classNameBindings: ['line.class'],
   classNames: ['et-choice'],
-  intlWrapper: inject.service(),
+  emberTheaterTranslate: inject.service(),
   layout: layout,
 
   handleFastboot: on('didInitAttrs', function() {
@@ -38,13 +38,13 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
 
       return keys.map((key) => {
         const value = choices[key];
-        const text = this.get('intlWrapper').tryIntl(value, value);
+        const text = this.get('emberTheaterTranslate').translate(value);
 
-        return merge({
+        return Ember.$.extend(choices[key], {
           input: '',
           key,
           text
-        }, choices[key]);
+        });
       });
     }
   }).readOnly(),
@@ -53,10 +53,7 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
     get() {
       const header = this.get('line.header');
 
-      return this.get('intlWrapper').tryIntl(
-        header,
-        header
-      );
+      return this.get('emberTheaterTranslate').translate(header);
     }
   }).readOnly(),
 

@@ -15,13 +15,13 @@ export default Component.extend({
   attributeBindings: ['caption:alt', 'src'],
   classNames: ['et-character-expression'],
   previousLine: null,
-  intlWrapper: inject.service(),
+  emberTheaterTranslate: inject.service(),
   src: alias('expression.src'),
   tagName: 'img',
 
   caption: computed('expression.caption', {
     get() {
-      return this.get('intlWrapper').tryIntl(
+      return this.get('emberTheaterTranslate').translate(
         this.get('expression.caption'),
         `expressions.${this.get('expression.id')}`
       );

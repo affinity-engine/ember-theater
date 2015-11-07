@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('service:intl-wrapper', 'Unit | Service | intl wrapper', {
+moduleFor('service:ember-theater-translate', 'Unit | Service | ember theater translate', {
   // Specify the other units that are required for this test.
   // needs: ['service:foo']
 });

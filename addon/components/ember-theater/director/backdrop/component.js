@@ -13,13 +13,13 @@ const {
 export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],
   classNames: ['et-backdrop'],
-  intlWrapper: inject.service(),
+  emberTheaterTranslate: inject.service(),
   store: inject.service(),
   tagName: 'img',
 
   caption: computed('backdrop.caption', {
     get() {
-      return this.get('intlWrapper').tryIntl(
+      return this.get('emberTheaterTranslate').translate(
         this.get('backdrop.caption'),
         `backdrops.${this.get('backdrop.id')}`
       );

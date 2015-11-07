@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   classNameBindings: ['line.class'],
   classNames: ['et-dialogue'],
   currentText: Ember.A(),
-  intlWrapper: inject.service(),
+  emberTheaterTranslate: inject.service(),
   layout: layout,
   store: inject.service(),
 
@@ -39,10 +39,7 @@ export default Ember.Component.extend({
     get() {
       const displayName = this.get('line.displayName');
 
-      return this.get('intlWrapper').tryIntl(
-        displayName,
-        displayName
-      );
+      return this.get('emberTheaterTranslate').translate(displayName);
     }
   }).readOnly(),
 
@@ -52,7 +49,7 @@ export default Ember.Component.extend({
 
       if (displayName) { return displayName; }
 
-      return this.get('intlWrapper').tryIntl(
+      return this.get('emberTheaterTranslate').translate(
         this.get('character.name'),
         `characters.${this.get('line.character')}`
       );
@@ -64,7 +61,7 @@ export default Ember.Component.extend({
       const line = this.get('line');
       const text = get(line, 'text');
 
-      return this.get('intlWrapper').tryIntl(
+      return this.get('emberTheaterTranslate').translate(
         text,
         line
       );
