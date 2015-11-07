@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import animate from 'ember-theater/utils/animate';
 
 const {
   computed,
@@ -90,7 +91,7 @@ export default Ember.Component.extend({
     },
 
     completeText() {
-      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
+      animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         this.resolveLine();
       });
     },

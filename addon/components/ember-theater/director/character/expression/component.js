@@ -1,11 +1,12 @@
 import Ember from 'ember';
+import animate from 'ember-theater/utils/animate';
 
-const { 
-  Component, 
+const {
+  Component,
   computed,
   inject,
   merge,
-  on 
+  on
 } = Ember;
 
 const { alias } = computed;
@@ -17,7 +18,7 @@ export default Component.extend({
   intlWrapper: inject.service(),
   src: alias('expression.src'),
   tagName: 'img',
-  
+
   caption: computed('expression.caption', {
     get() {
       return this.get('intlWrapper').tryIntl(
@@ -36,10 +37,10 @@ export default Component.extend({
     }
 
     if (!this.element || this.get('previousLine') === line) { return; }
-    
+
     this.set('previousLine', line);
 
-    Ember.$.Velocity.animate(this.element, line.effect, options).then(() => {
+    animate(this.element, line.effect, options).then(() => {
       if (line.resolve) { line.resolve(); }
     });
   })

@@ -3,6 +3,7 @@ import layout from './template';
 import DirectionComponentMixin from 'ember-theater/mixins/direction-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import WindowResizeMixin from 'ember-theater/mixins/window-resize';
+import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
@@ -61,7 +62,7 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
 
   actions: {
     choose(choice) {
-      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
+      animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         this.resolveLine(choice);
       });
     }

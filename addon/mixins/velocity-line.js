@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import animate from 'ember-theater/utils/animate';
 
 const { 
   merge,
@@ -21,7 +22,7 @@ export default Mixin.create({
 
       const effect = line.effect ? line.effect : 'transition.fadeIn';
 
-      Ember.$.Velocity.animate(this.element, effect, options).then(() => {
+      animate(this.element, effect, options).then(() => {
         this.get('line.resolve')();
       });
     });

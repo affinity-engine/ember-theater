@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
@@ -18,7 +19,7 @@ export default Component.extend({
 
       const speed = this.get('speed');
 
-      Ember.$.Velocity.animate(this.element, {
+      animate(this.element, {
         opacity: [1, 0],
         translateY: [0, '-0.3vh'],
         translateX: [0, '0.2vh']

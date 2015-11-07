@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 import { onKeyDown, ActivateKeyboardOnInsertMixin } from 'ember-keyboard';
+import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
@@ -27,9 +28,9 @@ export default Component.extend(ActivateKeyboardOnInsertMixin, WindowResizeMixin
       if (this.get('words.length') === 0) {
         this.attrs.completeText();
       } else {
-        Ember.$.Velocity.animate(this.$('.letter-by-letter'), { opacity: 0 }, { duration: 100 }).then(() => {
+        animate(this.$('.letter-by-letter'), { opacity: 0 }, { duration: 100 }).then(() => {
           this.get('visibleWords').clear();
-          Ember.$.Velocity.animate(this.$('.letter-by-letter'), { opacity: 1 }, { duration: 0 });
+          animate(this.$('.letter-by-letter'), { opacity: 1 }, { duration: 0 });
           this.set('activeWordIndex', 0);
           this.addWord();
         });

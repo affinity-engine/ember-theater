@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { Layer } from 'ember-theater';
 import layout from './template';
+import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
@@ -26,10 +27,10 @@ export default Component.extend({
     const scene = this.get('emberTheaterSceneManager.scene');
 
     if (isPresent(scene)) {
-      Ember.$.Velocity.animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
+      animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
         this.get('emberTheaterStageManager').clearDirections();
         this.get('emberTheaterLayerManager').clearFilters();
-        Ember.$.Velocity.animate(this.element, { opacity: 1 }, { duration: 0 });
+        animate(this.element, { opacity: 1 }, { duration: 0 });
         scene.script();
       });
     }
