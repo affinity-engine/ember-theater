@@ -38,12 +38,12 @@ export default Service.extend({
   },
 
   handleDirection(factory, type, args) {
-    const promise = this._handleDirection(factory, ...args);
+    const promise = this._handleDirection(factory, type, ...args);
 
     return this._handlePromiseResolution(promise);
   },
 
-  _handleDirection(factory, ...args) {
+  _handleDirection(factory, type, ...args) {
     const direction = this._instantiateFactory(factory, { type });
 
     return new Promise((resolve) => {

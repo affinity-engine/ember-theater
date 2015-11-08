@@ -13,7 +13,6 @@ const {
 
 export default Ember.Object.extend({
   emberTheaterStageManager: inject.service(),
-  sceneRecordsCount: -1,
 
   abort() {
     this.set('isAborted', true);
@@ -32,6 +31,6 @@ export default Ember.Object.extend({
 
     const stageManager = get(this, 'emberTheaterStageManager');
 
-    return stageManager.handleDirection(factory, type, line);
+    return stageManager.handleDirection(factory, type, args);
   }
 });
