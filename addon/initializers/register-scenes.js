@@ -1,13 +1,11 @@
-import gatherModuleNames from 'ember-theater/utils/gather-module-names';
+import gatherModules from 'ember-theater/utils/gather-modules';
 import config from 'ember-get-config';
 
 const modulePrefix = config.modulePrefix;
-const sceneNames = gatherModuleNames('ember-theater\/scenes');
+const scenes = gatherModules('ember-theater\/scenes');
 
 export function initialize(container, application) {
-  sceneNames.forEach((sceneName) => {
-    const scene = requirejs(`${modulePrefix}\/ember-theater\/scenes\/${sceneName}`).default;
-
+  scenes.forEach((scene, sceneName) => {
     application.register(`scene:${sceneName}`, scene);
   });
 }

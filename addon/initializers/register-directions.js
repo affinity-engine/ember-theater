@@ -1,16 +1,12 @@
 import Ember from 'ember';
-import gatherModuleNames from 'ember-theater/utils/gather-module-names';
-import config from 'ember-get-config';
+import gatherModules from 'ember-theater/utils/gather-modules';
 
 const { String: { camelize } } = Ember;
-const modulePrefix = config.modulePrefix;
 
-const directionNames = gatherModuleNames('ember-theater\/directions');
+const directions = gatherModules('ember-theater\/directions');
 
 export function initialize(container, application) {
-  directionNames.forEach((directionName) => {
-    const direction = requirejs(`${modulePrefix}\/ember-theater\/directions\/${directionName}`).default;
-
+  directions.forEach((direction, directionName) => {
     application.register(`direction:${directionName}`, direction, { singleton: false });
     registerDirectionHandler(application, directionName);
   });
