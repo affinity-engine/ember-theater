@@ -1,6 +1,6 @@
-import { Direction } from 'ember-theater';
+import { Directable } from 'ember-theater';
 
-export default Direction.extend({
+export default Directable.extend({
   componentType: 'ember-theater/director/choice',
   layer: 'theater.text.choice'
 });
