@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import gatherModules from 'ember-theater/utils/gather-modules';
 
+const { get } = Ember;
 const { String: { camelize } } = Ember;
 
 export function initialize(container, application) {
@@ -15,7 +16,9 @@ export function initialize(container, application) {
 function registerDirectionProxy(application, directionName) {
   const directionProxy = function directionProxy(...args) {
     // the scene is the context here 
-    return this.handleDirection(directionName, args);
+    const factory = get(this, 'container').lookupFactory(`direction:${directionName}`);
+
+    return this.proxyDirection(directionName, factory, args);
   };
 
   application.register(`direction:${directionName}-proxy`, directionProxy, { instantiate: false });

@@ -16,88 +16,73 @@ const {
 } = RSVP;
 
 export default Service.extend({
-  directions: computed(() => Ember.A()),
   emberTheaterSceneManager: inject.service(),
 
-  clearDirections() {
-    this.get('directions').clear();
+  directables: computed(() => Ember.A()),
+
+  clearDirectables() {
+    this.get('directables').clear();
   },
 
-  removeDirection(direction) {
-    this.get('directions').removeObject(direction);
-    direction.destroy();
+  removeDirectable(directable) {
+    this.get('directables').removeObject(directable);
+    directable.destroy();
   },
 
-  findDirectionWithId(id, type) {
+  findDirectableWithId(id, type) {
     if (isBlank(id)) { return; }
 
-    return this.get('directions').find((direction) => {
-      return direction.get('line.id') === id && direction.get('type') === type;
+    return this.get('directables').find((directable) => {
+      return directable.get('line.id') === id && directable.get('type') === type;
     });
   },
 
-  handleDirection(scene, factory, name, args) {
-    if (scene.get('isAborted')) { return resolve(); }
+  handleDirectable(factory, type, line, autoResolve, autoResolveResult, sceneRecordsCount) {
+    const promise = this._handleDirectable(factory, type, line, autoResolve, autoResolveResult);
 
-    let autoResolve, autoResolveResult;
-    const sceneRecordsCount = scene.incrementProperty('sceneRecordsCount');
-
-    if (scene.get('isLoading')) {
-      const sceneRecord = scene.get('sceneRecord');
-      autoResolveResult = sceneRecord[sceneRecordsCount];
-
-      if (autoResolveResult !== undefined) {
-        autoResolve = true;
-      } else {
-        scene.set('isLoading', false);
-      }
-    }
-
-    let directionPromise;
-    const direction = factory.create({
-      autoResolve,
-      autoResolveResult,
-      type: name
-    });
-
-    if (isPresent(direction.perform)) {
-      directionPromise = this._performMetaDirection(direction, ...args);
-    } else {
-      directionPromise = this._performDirectionOnStage(direction, name, ...args);
-    }
-
-    directionPromise.then((value) => {
-      const sceneManager = this.get('emberTheaterSceneManager');
-      sceneManager.updateSceneRecord(sceneRecordsCount, value);
-    });
-
-    return directionPromise;
+    return this._handlePromiseResolution(promise, sceneRecordsCount);
   },
 
-  _performMetaDirection(direction, ...directionArgs) {
+  handleDirection(factory, type, args, autoResolve, autoResolveResult, sceneRecordsCount) {
+    const direction = this._instantiateFactory(factory, { autoResolve, autoResolveResult, type });
+    const promise = this._handleDirection(direction, ...args);
+
+    return this._handlePromiseResolution(promise, sceneRecordsCount);
+  },
+
+  _handleDirection(direction, ...args) {
     return new Promise((resolve) => {
-      direction.perform(resolve, ...directionArgs);
+      direction.perform(resolve, ...args);
     });
   },
 
-  _performDirectionOnStage(direction, name, line) {
+  _handleDirectable(factory, type, line, autoResolve, autoResolveResult) {
     const director = this.get('director');
-    const activeDirection = this.findDirectionWithId(line.id, name);
+    const activeDirectable = this.findDirectableWithId(line.id, type);
 
     return new Promise((resolve) => {
       line.resolve = resolve;
 
-      if (isBlank(activeDirection)) {
-        direction.set('line', line);
-        this._addDirection(direction);
+      if (isBlank(activeDirectable)) {
+        const directable = this._instantiateFactory(factory, { autoResolve, autoResolveResult, line, type });
+
+        this.get('directables').pushObject(directable);
       } else {
-        activeDirection.set('line', line);
-        direction.destroy();
+        activeDirectable.set('line', line);
       }
     });
   },
 
-  _addDirection(direction) {
-    this.get('directions').pushObject(direction);
+  _instantiateFactory(factory, properties) {
+    return factory.create(properties);
+  },
+
+  _handlePromiseResolution(promise, sceneRecordsCount) {
+    promise.then((value) => {
+      const sceneManager = this.get('emberTheaterSceneManager');
+      sceneManager.updateSceneRecord(sceneRecordsCount, value);
+    });
+
+    return promise;
   }
 });

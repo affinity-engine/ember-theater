@@ -21,14 +21,14 @@ export default Component.extend({
   emberTheaterLayerManager: inject.service(),
   emberTheaterSceneManager: inject.service(),
   emberTheaterStageManager: inject.service(),
-  directions: alias('emberTheaterStageManager.directions'),
+  directables: alias('emberTheaterStageManager.directables'),
 
   _sceneChanged: observer('emberTheaterSceneManager.scene', function() {
     const scene = this.get('emberTheaterSceneManager.scene');
 
     if (isPresent(scene)) {
       animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
-        this.get('emberTheaterStageManager').clearDirections();
+        this.get('emberTheaterStageManager').clearDirectables();
         this.get('emberTheaterLayerManager').clearFilters();
         animate(this.element, { opacity: 1 }, { duration: 0 });
         scene.script();

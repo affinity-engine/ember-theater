@@ -26,7 +26,7 @@ export default Ember.Component.extend({
   resolveLine() {
     Ember.$('body').off('.speak');
     this.get('line.resolve')();
-    this.attrs.destroyDirection();
+    this.attrs.destroyDirectable();
   },
 
   character: computed('line.character', {

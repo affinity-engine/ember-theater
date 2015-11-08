@@ -28,7 +28,7 @@ export default Component.extend(DirectionComponentMixin, PerfectScrollbarMixin, 
 
   resolveLine(choice) {
     this.get('line.resolve')(choice);
-    this.attrs.destroyDirection();
+    this.attrs.destroyDirectable();
   },
 
   choices: computed('line.choices', {

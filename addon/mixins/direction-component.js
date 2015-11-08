@@ -7,9 +7,9 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  destroyDirection: on('willDestroyElement', function() {
-    if (isPresent(this.attrs.destroyDirection)) {
-      this.attrs.destroyDirection();
+  destroyDirectable: on('willDestroyElement', function() {
+    if (isPresent(this.attrs.destroyDirectable)) {
+      this.attrs.destroyDirectable();
     }
   })
 });

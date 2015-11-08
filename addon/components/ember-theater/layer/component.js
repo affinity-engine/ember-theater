@@ -83,10 +83,10 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  layerDirections: computed('directions.[]', {
+  layerDirectables: computed('directables.[]', {
     get() {
-      return this.get('directions').filter((direction) => {
-        return direction.get('layer') === this.get('name');
+      return this.get('directables').filter((directable) => {
+        return directable.get('layer') === this.get('name');
       });
     }
   }).readOnly(),
@@ -97,24 +97,24 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  childLayers: computed('directions.[]', {
+  childLayers: computed('directables.[]', {
     get() {
       const name = this.get('name');
       const parentName = name ? `${name}.` : '';
 
-      const childLayerDirections = this.get('directions').filter((direction) => {
-        return direction.get('layer').replace(name, '').length > 1;
+      const childLayerDirectables = this.get('directables').filter((directable) => {
+        return directable.get('layer').replace(name, '').length > 1;
       })
 
-      const childLayerNames = Ember.A(childLayerDirections.map((direction) => {
-        return direction.get('layer');
+      const childLayerNames = Ember.A(childLayerDirectables.map((directable) => {
+        return directable.get('layer');
       })).uniq();
 
       return childLayerNames.reduce((layers, layer) => {
         const subName = layer.replace(parentName, '').split('.')[0];
         const childLayerName = name ? `${name}.${subName}` : subName;
-        const childLayer = childLayerDirections.filter((direction) => {
-          return direction.get('layer') === layer;
+        const childLayer = childLayerDirectables.filter((directable) => {
+          return directable.get('layer') === layer;
         });
 
         if (layers[childLayerName]) {
@@ -129,8 +129,8 @@ export default Component.extend({
   }).readOnly(),
 
   actions: {
-    destroyDirection(direction) {
-      this.get('emberTheaterStageManager').removeDirection(direction);
+    destroyDirectable(directable) {
+      this.get('emberTheaterStageManager').removeDirectable(directable);
     }
   }
 });

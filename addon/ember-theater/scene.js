@@ -12,11 +12,6 @@ const {
   set
 } = Ember;
 
-const {
-  Promise,
-  resolve
-} = RSVP;
-
 export default Ember.Object.extend(ModulePrefixMixin, {
   emberTheaterStageManager: inject.service(),
   sceneRecordsCount: -1,
@@ -25,10 +20,37 @@ export default Ember.Object.extend(ModulePrefixMixin, {
     this.set('isAborted', true);
   },
 
-  handleDirection(type, args) {
-    const stageManager = get(this, 'emberTheaterStageManager');
-    const factory = get(this, 'container').lookupFactory(`direction:${type}`);
+  proxyDirectable(type, factory, line) {
+    if (get(this, 'isAborted')) { return resolve(); }
 
-    return stageManager.handleDirection(this, factory, type, args);
-  }
+    const stageManager = get(this, 'emberTheaterStageManager');
+
+    return stageManager.handleDirectable(factory, type, line, ...this._handleAutoResolve());
+  },
+
+  proxyDirection(type, factory, args) {
+    if (get(this, 'isAborted')) { return resolve(); }
+
+    const stageManager = get(this, 'emberTheaterStageManager');
+
+    return stageManager.handleDirection(factory, type, line, ...this._handleAutoResolve());
+  },
+
+  _handleAutoResolve() {
+    let autoResolve, autoResolveResult;
+    const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
+
+    if (get(this, 'isLoading')) {
+      const sceneRecord = get(this, 'sceneRecord');
+      autoResolveResult = sceneRecord[sceneRecordsCount];
+
+      if (autoResolveResult !== undefined) {
+        autoResolve = true;
+      } else {
+        set(this, 'isLoading', false);
+      }
+    }
+
+    return [autoResolve, autoResolveResult, sceneRecordsCount];
+  },
 });
