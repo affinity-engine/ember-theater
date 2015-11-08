@@ -8,7 +8,8 @@ const {
   isBlank,
   isPresent,
   on,
-  RSVP
+  RSVP,
+  set
 } = Ember;
 
 const {
@@ -24,31 +25,10 @@ export default Ember.Object.extend(ModulePrefixMixin, {
     this.set('isAborted', true);
   },
 
-  _defineDirections: on('init', function() {
-    const modulePrefix = this.get('modulePrefix');
-    const directionNames = this.get('_directionNames');
+  handleDirection(type, args) {
+    const stageManager = get(this, 'emberTheaterStageManager');
+    const factory = get(this, 'container').lookupFactory(`direction:${type}`);
 
-    directionNames.forEach((name) => {
-      const directionFactory = require(`${modulePrefix}/ember-theater/directions/${name}`)['default'];
-      const stageManager = this.get('emberTheaterStageManager');
-
-      this[Ember.String.camelize(name)] = (...directionArgs) => {
-        return stageManager.handleDirection(this, directionFactory, name, directionArgs);
-      };
-    });
-  }),
-
-  _directionNames: computed({
-    get() {
-      const paths = Object.keys(require.entries);
-      const modulePrefix = this.get('modulePrefix');
-      const regex = new RegExp(`${modulePrefix}\/ember-theater/directions\/(.*)`);
-
-      return paths.filter((path) => {
-        return regex.test(path);
-      }).map((path) => {
-        return regex.exec(path)[1];
-      });
-    }
-  }).readOnly()
+    return stageManager.handleDirection(this, factory, type, args);
+  }
 });

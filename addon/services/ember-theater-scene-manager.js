@@ -56,10 +56,8 @@ export default Service.extend(ModulePrefixMixin, {
     const saveStateManager = this.get('emberTheaterSaveStateManager');
     const sceneRecord = saveStateManager.get('sceneRecord');
 
-    const modulePrefix = this.get('modulePrefix');
-    const sceneFactory = require(`${modulePrefix}/ember-theater/scenes/${sceneId}`)['default'];
+    const sceneFactory = this.get('container').lookupFactory(`scene:${sceneId}`);
     const scene = sceneFactory.create({
-      container: this.get('container'),
       id: sceneId,
       isLoading: options.loading,
       options,

@@ -1,0 +1,1 @@
+export { default } from 'ember-theater/utils/gather-module-names';

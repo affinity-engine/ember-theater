@@ -55,7 +55,6 @@ export default Service.extend({
 
     let directionPromise;
     const direction = factory.create({
-      container: this.get('container'),
       autoResolve,
       autoResolveResult,
       type: name
