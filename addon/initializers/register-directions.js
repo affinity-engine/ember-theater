@@ -3,26 +3,23 @@ import gatherModules from 'ember-theater/utils/gather-modules';
 
 const { String: { camelize } } = Ember;
 
-const directions = gatherModules('ember-theater\/directions');
-
 export function initialize(container, application) {
+  const directions = gatherModules('ember-theater\/directions');
+
   directions.forEach((direction, directionName) => {
     application.register(`direction:${directionName}`, direction, { singleton: false });
-    registerDirectionHandler(application, directionName);
+    registerDirectionProxy(application, directionName);
   });
 }
 
-// creates a function on all scenes that will trigger the direction
-const registerDirectionHandler = function registerDirectionHandler(application, directionName) {
-  const methodName = camelize(directionName);
-
-  const directionHandler = function directionHandler(...args) {
+function registerDirectionProxy(application, directionName) {
+  const directionProxy = function directionProxy(...args) {
     // the scene is the context here 
     return this.handleDirection(directionName, args);
   };
 
-  application.register(`direction:${directionName}-handler`, directionHandler, { instantiate: false });
-  application.inject('scene', methodName, `direction:${directionName}-handler`);
+  application.register(`direction:${directionName}-proxy`, directionProxy, { instantiate: false });
+  application.inject('scene', camelize(directionName), `direction:${directionName}-proxy`);
 };
 
 export default {
