@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import DirectionComponentMixin from 'ember-theater/mixins/direction-component';
+import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 
 const { 
@@ -12,7 +12,7 @@ const {
   set 
 } = Ember;
 
-export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
+export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],
   classNames: ['et-backdrop'],
   tagName: 'img',
@@ -36,13 +36,9 @@ export default Component.extend(DirectionComponentMixin, VelocityLineMixin, {
   }).readOnly(),
 
   setBackdrop: on('didInitAttrs', function() {
-    const backdropId = get(this, 'line.id');
-    const backdrop = get(this, 'store').peekRecord('ember-theater-backdrop', backdropId);
+    const id = get(this, 'directable.id');
+    const backdrop = get(this, 'store').peekRecord('ember-theater-backdrop', id);
 
     set(this, 'backdrop', backdrop);
-  }),
-
-  perform: on('didInsertElement', observer('line', function() {
-    this.executeLine();
-  }))
+  })
 });

@@ -1,43 +1,48 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
+import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 
 const {
   computed,
   get,
   inject,
-  on
+  on,
+  typeOf
 } = Ember;
 
-export default Ember.Component.extend({
-  classNameBindings: ['line.class'],
+export default Ember.Component.extend(DirectableComponentMixin, {
+  classNameBindings: ['options.class'],
   classNames: ['et-dialogue'],
   currentText: Ember.A(),
   emberTheaterTranslate: inject.service(),
   layout: layout,
   store: inject.service(),
 
-  handleautoResolve: on('didInitAttrs', function() {
+  handleAutoResolve: on('didInitAttrs', function() {
     if (this.get('autoResolve')) {
-      this.resolveLine();
+      this.resolve();
     }
   }),
 
-  resolveLine() {
+  resolve() {
     Ember.$('body').off('.speak');
-    this.get('line.resolve')();
+    this.get('directable.resolve')();
     this.attrs.destroyDirectable();
   },
 
-  character: computed('line.character', {
+  character: computed('directable.character', {
     get() {
-      return this.get('store').peekRecord('ember-theater-character', this.get('line.character'));
+      const characterOrId = get(this, 'directable.character');
+      const id = typeOf(characterOrId) === 'object' ? get(characterOrId, 'id') : characterOrId;
+
+      return this.get('store').peekRecord('ember-theater-character', id);
     }
   }).readOnly(),
 
-  displayName: computed('line.displayName', {
+  displayName: computed('directable.character.displayName', {
     get() {
-      const displayName = this.get('line.displayName');
+      const displayName = get(this, 'directable.character.displayName');
 
       return this.get('emberTheaterTranslate').translate(displayName);
     }
@@ -51,28 +56,24 @@ export default Ember.Component.extend({
 
       return this.get('emberTheaterTranslate').translate(
         this.get('character.name'),
-        `characters.${this.get('line.character')}`
+        `characters.${this.get('directable.character')}`
       );
     }
   }).readOnly(),
 
-  text: computed('line.text', {
+  text: computed('directable.text', {
     get() {
-      const line = this.get('line');
-      const text = get(line, 'text');
+      const text = get(this, 'directable.text');
 
-      return this.get('emberTheaterTranslate').translate(
-        text,
-        line
-      );
+      return this.get('emberTheaterTranslate').translate(text);
     }
   }).readOnly(),
 
-  textSpeed: computed('rapidText', 'line.speed', 'character.textSpeed', {
+  textSpeed: computed('rapidText', 'directable.options.speed', 'character.textSpeed', {
     get() {
       if (this.get('rapidText')) { return 0; }
 
-      const lineSpeed = this.get('line.speed');
+      const lineSpeed = this.get('directable.options.speed');
       if (lineSpeed) { return lineSpeed; }
 
       const characterSpeed = this.get('character.textSpeed');
@@ -89,7 +90,7 @@ export default Ember.Component.extend({
 
     completeText() {
       animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        this.resolveLine();
+        this.resolve();
       });
     },
 

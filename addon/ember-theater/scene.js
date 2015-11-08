@@ -18,12 +18,12 @@ export default Ember.Object.extend({
     this.set('isAborted', true);
   },
 
-  proxyDirectable(type, factory, [line]) {
+  proxyDirectable(type, factory, args) {
     if (get(this, 'isAborted')) { return resolve(); }
 
     const stageManager = get(this, 'emberTheaterStageManager');
 
-    return stageManager.handleDirectable(factory, type, line);
+    return stageManager.handleDirectable(factory, type, args);
   },
 
   proxyDirection(type, factory, args) {

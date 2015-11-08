@@ -51,37 +51,39 @@ export default Service.extend({
     });
   },
 
-  handleDirectable(factory, type, line) {
-    const promise = this._handleDirectable(factory, type, line);
+  handleDirectable(factory, type, args) {
+    const promise = this._handleDirectable(factory, type, args);
 
     return this._handlePromiseResolution(promise);
   },
 
-  _handleDirectable(factory, type, line) {
-    const id = get(line, 'id');
+  _handleDirectable(factory, type, args) {
+    const id = args[0];
     const directable = this.findDirectableWithId(id, type);
 
     return new Promise((resolve) => {
-      set(line, 'resolve', resolve);
-
       if (isBlank(directable)) {
-        this._addNewDirectable(factory, type, line, id);
+        this._addNewDirectable(factory, type, args, resolve);
       } else {
-        this._updateDirectable(directable, line);
+        this._updateDirectable(directable, args, resolve);
       }
     });
   },
 
-  _addNewDirectable(factory, type, line, id) {
-    const directable = this._instantiateFactory(factory, { id, line, type });
+  _addNewDirectable(factory, type, args, resolve) {
+    const directable = this._instantiateFactory(factory, { resolve, type });
+
+    directable.parseArgs(...args);
     get(this, 'directables').pushObject(directable);
   },
 
-  _updateDirectable(directable, line) {
+  _updateDirectable(directable, args, resolve) {
     // typically, `advanceSceneRecord` is called in `_instantiateFactory`, but since the directable
     // is already instantiated, we call it manually here.
     get(this, 'emberTheaterSceneManager').advanceSceneRecord();
-    set(directable, 'line', line);
+
+    set(directable, 'resolve', resolve);
+    directable.parseArgs(...args);
   },
 
   _instantiateFactory(factory, additionalProperties = {}) {

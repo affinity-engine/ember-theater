@@ -1,13 +1,13 @@
 {{#each layerDirectables as |directable|}}
   {{component directable.componentType
-    line=directable.line
-    autoResolve=directable.autoResolve
-    autoResolveResult=directable.autoResolveResult
-    destroyDirectable=(action 'destroyDirectable' directable)}}
+    directable=directable
+    destroyDirectable=(action 'destroyDirectable' directable)
+  }}
 {{/each}}
 
 {{#each-in childLayers as |name directables|}}
   {{ember-theater/layer
     directables=directables
-    name=name}}
+    name=name
+  }}
 {{/each-in}}

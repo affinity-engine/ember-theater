@@ -2,28 +2,30 @@ import Ember from 'ember';
 import animate from 'ember-theater/utils/animate';
 
 const { 
+  Mixin,
   get,
   isPresent,
   merge,
-  Mixin
+  observer,
+  on
 } = Ember;
 
 export default Mixin.create({
-  executeLine() {
-    const line = get(this, 'line');
-    const effect = get(line, 'effect') || 'transition.fadeIn';
-    const options = get(line, 'options') || {};
+  perform: on('didInsertElement', observer('directable.effect', function() {
+    const directable = get(this, 'directable');
+    const effect = get(directable, 'effect');
+    const options = get(directable, 'options') || {};
 
     if (get(this, 'autoResolve')) {
       merge(options, { duration: 0 });
     }
 
     animate(this.element, effect, options).then(() => {
-      const resolve = get(line, 'resolve');
+      const resolve = get(directable, 'resolve');
 
       if (isPresent(resolve)) {
         resolve();
       }
     });
-  }
+  }))
 });

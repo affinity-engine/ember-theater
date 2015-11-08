@@ -11,12 +11,11 @@ const {
 export default Direction.extend({
   emberTheaterLayerManager: inject.service(),
 
-  perform(resolve, line) {
-    const filterId = get(line, 'id');
-    const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
-    const duration = get(line, 'options.duration') ? get(line, 'options.duration') : 0;
-    const layer = get(line, 'layer') ? get(line, 'layer') : '';
+  perform(resolve, layer, effect, options) {
+    // const filterId = get(line, 'id');
+    // const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
+    const duration = get(options, 'duration') ? get(options, 'duration') : 0;
 
-    this.get('emberTheaterLayerManager').addFilter(effect, duration, layerName(layer));
+    get(this, 'emberTheaterLayerManager').addFilter(effect, duration, layerName(layer));
   }
 });

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import DirectionComponentMixin from 'ember-theater/mixins/direction-component';
+import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 
 const {
   Component,
@@ -8,7 +8,7 @@ const {
   on
 } = Ember;
 
-export default Component.extend(DirectionComponentMixin, {
+export default Component.extend(DirectableComponentMixin, {
   store: inject.service(),
 
   audio: computed('line', {

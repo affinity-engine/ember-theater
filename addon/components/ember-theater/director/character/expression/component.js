@@ -30,9 +30,5 @@ export default Component.extend(VelocityLineMixin, {
 
       return get(this, 'emberTheaterTranslate').translate(fallback, translation);
     }
-  }),
-
-  perform: on('didInsertElement', observer('line', function() {
-    this.executeLine();
-  }))
+  })
 });
