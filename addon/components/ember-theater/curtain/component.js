@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import layout from './template';
-import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 import { singularize } from 'ember-inflector';
+import config from 'ember-get-config';
+
+const modulePrefix = config.modulePrefix;
 
 const {
   Component,
@@ -18,7 +20,7 @@ const {
   union
 } = computed;
 
-export default Component.extend(ModulePrefixMixin, {
+export default Component.extend({
   classNames: ['ember-theater__curtain'],
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterExpressions'),
   layout: layout,
@@ -73,7 +75,6 @@ export default Component.extend(ModulePrefixMixin, {
 
   loadResources: on('didInsertElement', function() {
     const store = this.get('store');
-    const modulePrefix = this.get('modulePrefix');
 
     this.get('modelNames').forEach((modelName) => {
       const singularModelName = singularize(modelName);
@@ -90,14 +91,13 @@ export default Component.extend(ModulePrefixMixin, {
   modelNames: computed({
     get() {
       const paths = Object.keys(require.entries);
-      const modulePrefix = this.get('modulePrefix');
       const regex = new RegExp(`${modulePrefix}\/ember-theater/fixtures\/(.*)`);
-      
+
       return paths.filter((path) => {
         return regex.test(path);
       }).map((path) => {
         return regex.exec(path)[1];
-      });  
+      });
     }
   }),
 

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 
 const {
   get,
@@ -10,7 +9,7 @@ const {
   Service
 } = Ember;
 
-export default Service.extend(ModulePrefixMixin, {
+export default Service.extend({
   emberTheaterSaveStateManager: inject.service(),
 
   updateSceneRecord(key, value) {

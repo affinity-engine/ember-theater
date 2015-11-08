@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import ModulePrefixMixin from 'ember-theater/mixins/module-prefix';
 
 const {
   computed,
@@ -12,7 +11,7 @@ const {
   set
 } = Ember;
 
-export default Ember.Object.extend(ModulePrefixMixin, {
+export default Ember.Object.extend({
   emberTheaterStageManager: inject.service(),
   sceneRecordsCount: -1,
 
