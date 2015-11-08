@@ -6,7 +6,9 @@ const {
   isEmpty,
   isPresent,
   observer,
-  Service
+  Service,
+  set,
+  setProperties
 } = Ember;
 
 export default Service.extend({
@@ -14,6 +16,23 @@ export default Service.extend({
 
   updateSceneRecord(key, value) {
     this.get('emberTheaterSaveStateManager').updateSceneRecord(key, value);
+  },
+
+  advanceSceneRecord() {
+    const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
+
+    if (get(this, 'isLoading')) {
+      const sceneRecord = get(this, 'emberTheaterSaveStateManager.sceneRecord');
+      const autoResolveResult = sceneRecord[sceneRecordsCount];
+
+      if (autoResolveResult !== undefined) {
+        return { autoResolve: true, autoResolveResult };
+      } else {
+        set(this, 'isLoading', false);
+      }
+    }
+
+    return { };
   },
 
   setInitialSceneId: observer('sceneId', function() {
@@ -53,17 +72,20 @@ export default Service.extend({
     if (isPresent(oldScene)) { oldScene.abort(); }
 
     const saveStateManager = this.get('emberTheaterSaveStateManager');
-    const sceneRecord = saveStateManager.get('sceneRecord');
 
     const sceneFactory = this.get('container').lookupFactory(`scene:${sceneId}`);
     const scene = sceneFactory.create({
       id: sceneId,
-      isLoading: options.loading,
-      options,
-      sceneRecord
+      options
     })
 
-    if (!options.loading) {
+    const isLoading = get(options, 'loading');
+    setProperties(this, {
+      isLoading,
+      sceneRecordsCount: -1
+    });
+
+    if (!isLoading) {
       saveStateManager.clearSceneRecord();
     }
 

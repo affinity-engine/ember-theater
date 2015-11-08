@@ -3,6 +3,7 @@ import { Layer } from 'ember-theater';
 
 const {
   computed,
+  get,
   inject,
   isBlank,
   isPresent,
@@ -37,26 +38,29 @@ export default Service.extend({
     });
   },
 
-  handleDirectable(factory, type, line, autoResolve, autoResolveResult, sceneRecordsCount) {
-    const promise = this._handleDirectable(factory, type, line, autoResolve, autoResolveResult);
+  handleDirection(factory, type, args) {
+    const promise = this._handleDirection(factory, ...args);
 
-    return this._handlePromiseResolution(promise, sceneRecordsCount);
+    return this._handlePromiseResolution(promise);
   },
 
-  handleDirection(factory, type, args, autoResolve, autoResolveResult, sceneRecordsCount) {
+  _handleDirection(factory, ...args) {
+    const { autoResolve, autoResolveResult } = this.get('emberTheaterSceneManager').advanceSceneRecord();
     const direction = this._instantiateFactory(factory, { autoResolve, autoResolveResult, type });
-    const promise = this._handleDirection(direction, ...args);
 
-    return this._handlePromiseResolution(promise, sceneRecordsCount);
-  },
-
-  _handleDirection(direction, ...args) {
     return new Promise((resolve) => {
       direction.perform(resolve, ...args);
     });
   },
 
-  _handleDirectable(factory, type, line, autoResolve, autoResolveResult) {
+  handleDirectable(factory, type, line) {
+    const promise = this._handleDirectable(factory, type, line);
+
+    return this._handlePromiseResolution(promise);
+  },
+
+  _handleDirectable(factory, type, line) {
+    const { autoResolve, autoResolveResult } = this.get('emberTheaterSceneManager').advanceSceneRecord();
     const director = this.get('director');
     const activeDirectable = this.findDirectableWithId(line.id, type);
 
@@ -77,10 +81,12 @@ export default Service.extend({
     return factory.create(properties);
   },
 
-  _handlePromiseResolution(promise, sceneRecordsCount) {
+  _handlePromiseResolution(promise) {
+    const sceneManager = get(this, 'emberTheaterSceneManager');
+    const key = get(sceneManager, 'sceneRecordsCount');
+
     promise.then((value) => {
-      const sceneManager = this.get('emberTheaterSceneManager');
-      sceneManager.updateSceneRecord(sceneRecordsCount, value);
+      sceneManager.updateSceneRecord(key, value);
     });
 
     return promise;
