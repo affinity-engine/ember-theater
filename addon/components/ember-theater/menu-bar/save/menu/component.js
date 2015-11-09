@@ -31,13 +31,13 @@ export default Component.extend({
         if (name !== 'autosave') { choices.set(save.id, { text: name, object: save }); }
       });
 
-      const line = {
+      const directable = Ember.Object.create({
         choices: choices,
         header: 'ember-theater.save.header',
         resolve: resolve
-      };
+      });
 
-      this.set('line', line);
+      this.set('directable', directable);
     }).then((choice) => {
       const saveStateManager = this.get('emberTheaterSaveStateManager');
 

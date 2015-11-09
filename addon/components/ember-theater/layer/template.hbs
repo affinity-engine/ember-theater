@@ -1,8 +1,5 @@
 {{#each layerDirectables as |directable|}}
-  {{component directable.componentType
-    directable=directable
-    destroyDirectable=(action 'destroyDirectable' directable)
-  }}
+  {{component directable.componentType directable=directable}}
 {{/each}}
 
 {{#each-in childLayers as |name directables|}}

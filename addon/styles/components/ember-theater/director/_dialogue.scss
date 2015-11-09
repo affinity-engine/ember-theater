@@ -1,35 +1,33 @@
-.ember-theater {
-  .et-dialogue {
+.et-dialogue {
+  @extend .et-panel;
+  position: absolute;
+  z-index: 100;
+  bottom: $et-dialogue-bottom;
+  left: $et-dialogue-left;
+  right: $et-dialogue-right;
+  height: $et-dialogue-height;
+  padding: $et-dialogue-padding;
+  padding-bottom: $et-dialogue-padding-bottom;
+  margin: 0;
+  opacity: $et-dialogue-opacity;
+  box-sizing: border-box;
+  font-size: $et-dialogue-font-size;
+  text-align: $et-dialogue-text-align;
+  line-height: $et-dialogue-line-height;
+
+  .et-dialogue-caption {
     @extend .et-panel;
     position: absolute;
-    z-index: 100;
-    bottom: $et-dialogue-bottom;
-    left: $et-dialogue-left;
-    right: $et-dialogue-right;
-    height: $et-dialogue-height;
-    padding: $et-dialogue-padding;
-    padding-bottom: $et-dialogue-padding-bottom;
-    margin: 0;
-    opacity: $et-dialogue-opacity;
     box-sizing: border-box;
-    font-size: $et-dialogue-font-size;
-    text-align: $et-dialogue-text-align;
-    line-height: $et-dialogue-line-height;
+    top: $et-dialogue-caption-top;
+    left: $et-dialogue-caption-left;
+    padding: $et-dialogue-caption-padding;
+    font-size: $et-dialogue-caption-font-size;
+  }
 
-    .et-dialogue-caption {
-      @extend .et-panel;
-      position: absolute;
-      box-sizing: border-box;
-      top: $et-dialogue-caption-top;
-      left: $et-dialogue-caption-left;
-      padding: $et-dialogue-caption-padding;
-      font-size: $et-dialogue-caption-font-size;
-    }
-
-    .et-dialogue-body {
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
-    }
+  .et-dialogue-body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
   }
 }

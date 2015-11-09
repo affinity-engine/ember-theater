@@ -8,6 +8,7 @@ import animate from 'ember-theater/utils/animate';
 const {
   Component,
   computed,
+  get,
   inject,
   merge,
   on
@@ -21,14 +22,9 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
   handleautoResolve: on('didInitAttrs', function() {
     if (this.get('autoResolve')) {
       const choice = this.get('autoResolveResult');
-      this.resolve(choice);
+      this.resolveAndDestroy(choice);
     }
   }),
-
-  resolve(choice) {
-    this.get('directable.resolve')(choice);
-    this.attrs.destroyDirectable();
-  },
 
   choices: computed('directable.choices', {
     get() {
@@ -59,7 +55,7 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
   actions: {
     choose(choice) {
       animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        this.resolve(choice);
+        this.resolveAndDestroy(choice);
       });
     }
   }

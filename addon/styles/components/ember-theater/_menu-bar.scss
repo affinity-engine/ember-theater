@@ -53,3 +53,26 @@
     padding: $et-menu-bar-save-menu-button-padding;
   }
 }
+
+.et-confirm-box {
+  position: absolute;
+  top: 31vh;
+  left: 31vw;
+  right: 31vw;
+  font-size: $et-confirm-box-font-size;
+  padding: $et-confirm-box-padding;
+  background-color: $et-confirm-box-background-color;
+  color: $et-confirm-box-color;
+
+  .et-confirm-box-buttons {
+    text-align: center;
+    margin: $et-confirm-box-buttons-margin;
+  }
+
+  .et-confirm-box-button {
+    @extend .et-button;
+    padding: $et-confirm-box-padding;
+    border: none;
+    cursor: pointer;
+  }
+}

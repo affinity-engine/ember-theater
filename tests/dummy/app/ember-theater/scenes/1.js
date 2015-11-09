@@ -2,13 +2,13 @@ import { Scene } from 'ember-theater';
 
 export default Scene.extend({
   script: async function() {
-    await this.choice('1.choice1.header', { A: { text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, B: '1.choice1.B' });
-    this.filter('theater.text', 'blur(10px)', { duration: 50 });
-    await this.dialogue('steven', '1.noId');
-    this.filter('theater.text', 'blur(5px)', { duration: 500 });
-    await this.dialogue({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
-    await this.dialogue('steven', "I was so happy when Garnet said she was gonna come on this trip with me and Dad! (Ruby and Sapphire look at each other and frown) Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me? I was so happy when Garnet said she was gonna come on this trip with me and Dad! (Ruby and Sapphire look at each other and frown) Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me?");
-    this.filter('theater.text', 'blur(0)', { duration: 500 });
+    // await this.choice('1.choice1.header', { A: { text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, B: '1.choice1.B' });
+    // this.filter('theater.text', 'blur(10px)', { duration: 50 });
+    // await this.dialogue('steven', '1.noId');
+    // this.filter('theater.text', 'blur(5px)', { duration: 500 });
+    // await this.dialogue({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
+    // await this.dialogue('steven', "I was so happy when Garnet said she was gonna come on this trip with me and Dad! (Ruby and Sapphire look at each other and frown) Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me? I was so happy when Garnet said she was gonna come on this trip with me and Dad! (Ruby and Sapphire look at each other and frown) Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me?");
+    // this.filter('theater.text', 'blur(0)', { duration: 500 });
     await this.backdrop('beach', { duration: 500 });
     await this.backdrop('beach', 'transition.fadeOut', { duration: 500 });
     this.backdrop('beach--night', { duration: 5000 });

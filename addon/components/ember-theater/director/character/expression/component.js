@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 import animate from 'ember-theater/utils/animate';
 
@@ -14,7 +15,7 @@ const {
 
 const { alias } = computed;
 
-export default Component.extend(VelocityLineMixin, {
+export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'src'],
   classNames: ['et-character-expression'],
   tagName: 'img',

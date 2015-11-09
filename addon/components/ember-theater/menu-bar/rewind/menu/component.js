@@ -5,6 +5,7 @@ const {
   Component,
   get,
   inject,
+  isPresent,
   on
 } = Ember;
 
@@ -28,18 +29,20 @@ export default Component.extend({
         choices.set(choiceId, { text: name, object: Ember.A(points.slice(0, index + 1)) });
       });
 
-      const line = {
+      const directable = Ember.Object.create({
         choices: choices,
         header: 'ember-theater.rewind.header',
         resolve: resolve
-      };
-
-      this.set('line', line);
-    }).then((choice) => {
-      this.get('emberTheaterSaveStateManager').loadStatePoint(choice.object);
-      this.get('emberTheaterSceneManager').toScene(choice.object.get('lastObject.sceneId'), {
-        autosave: false
       });
+
+      this.set('directable', directable);
+    }).then((choice) => {
+      if (isPresent(get(choice, 'object'))) {
+        this.get('emberTheaterSaveStateManager').loadStatePoint(choice.object);
+        this.get('emberTheaterSceneManager').toScene(choice.object.get('lastObject.sceneId'), {
+          autosave: false
+        });
+      }
       this.attrs.closeMenu();
     });
   })

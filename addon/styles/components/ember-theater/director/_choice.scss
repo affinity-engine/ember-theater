@@ -1,54 +1,52 @@
-.ember-theater {
-  .et-choice {
-    @extend .et-panel;
-    z-index: 1000;
+.et-choice {
+  @extend .et-panel;
+  z-index: 1000;
+  position: absolute;
+  box-sizing: border-box;
+  transform: translateY(-$et-choice-top);
+  top: $et-choice-top;
+  right: $et-choice-right;
+  left: $et-choice-left;
+  max-height: 100vh;
+  padding: $et-choice-padding;
+  background-color: $et-choice-background-color;
+  opacity: $et-choice-opacity;
+
+  .et-choice-header {
+    font-size: $et-choice-header-font-size;
+    margin-bottom: $et-choice-header-margin-bottom;
+  }
+
+  .et-choice-option {
+    @extend .et-button;
+    display: block;
+    margin-bottom: $et-choice-option-margin-bottom;
+    width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .et-choice-option, .et-choice-header, .et-choice-input {
+    line-height: $et-choice-child-line-height;
+    text-align: $et-choice-child-text-align;
+  }
+
+  .et-choice-input {
+    @extend .et-input;
+    width: 100%;
+  }
+
+  .et-choice-close {
     position: absolute;
-    box-sizing: border-box;
-    transform: translateY(-$et-choice-top);
-    top: $et-choice-top;
-    right: $et-choice-right;
-    left: $et-choice-left;
-    max-height: 100vh;
-    padding: $et-choice-padding;
-    background-color: $et-choice-background-color;
-    opacity: $et-choice-opacity;
+    top: $et-choice-padding;
+    right: $et-choice-padding;
+    padding: 0 $et-choice-padding;
+    width: inherit;
 
-    .et-choice-header {
-      font-size: $et-choice-header-font-size;
-      margin-bottom: $et-choice-header-margin-bottom;
-    }
-
-    .et-choice-option {
-      @extend .et-button;
-      display: block;
-      margin-bottom: $et-choice-option-margin-bottom;
-      width: 100%;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    .et-choice-option, .et-choice-header, .et-choice-input {
-      line-height: $et-choice-child-line-height;
-      text-align: $et-choice-child-text-align;
-    }
-
-    .et-choice-input {
-      @extend .et-input;
-      width: 100%;
-    }
-
-    .et-choice-close {
-      position: absolute;
-      top: $et-choice-padding;
-      right: $et-choice-padding;
-      padding: 0 $et-choice-padding;
-      width: inherit;
-
-      .et-choice-option-text {
-        @extend .sr-only;
-      }
+    .et-choice-option-text {
+      @extend .sr-only;
     }
   }
 }

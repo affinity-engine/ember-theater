@@ -37,17 +37,19 @@ export default Service.extend({
     const id = this._getId(meta);
 
     if (i18n.exists(id)) { 
-      const options = get(meta, 'options');
+      const options = get(meta, 'options') || get(meta, 'text.options');
 
       return i18n.t(id, options);
     }
   },
 
   /**
-     The translation id can be nested in one of two places:
+     The translation id can be nested in one of four places:
      
      ```js
        translatable: 'id';
+       translatable: { text: 'id' };
+       translatable: { text: { id: 'id', options: {} } };
        translatable: { id: 'id', options: {} };
      ```
 
@@ -58,14 +60,19 @@ export default Service.extend({
      @private
   */
   _getId(meta) {
-    // scenario: `translatable: undefined`
+    // scenario: `undefined`
     if (isBlank(meta)) { return; }
 
-    // scenario: `translatable: 'id'`
-    const id = get(meta, 'id');
-    if (isBlank(id)) { return meta; }
+    const text = get(meta, 'text');
+    const id = isBlank(text) ? get(meta, 'id') : get(text, 'id');
 
-    // scenario: `translatable: { id: 'id', options: {} }`
+    // scenario: `'id'`
+    if (isBlank(id) && isBlank(text)) { return meta; }
+
+    // scenario: `translatable: { text: 'id' }`
+    if (isBlank(id)) { return text; }
+
+    // scenario: `translatable: { id: 'id', options: {} }` || `translatable: { text: { id: 'id' } }`
     return id;
   }
 });

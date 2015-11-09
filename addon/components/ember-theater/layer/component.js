@@ -126,11 +126,5 @@ export default Component.extend({
         return layers;
       }, {});
     }
-  }).readOnly(),
-
-  actions: {
-    destroyDirectable(directable) {
-      this.get('emberTheaterStageManager').removeDirectable(directable);
-    }
-  }
+  }).readOnly()
 });

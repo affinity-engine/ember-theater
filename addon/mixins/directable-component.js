@@ -18,10 +18,21 @@ export default Mixin.create({
 
     set(directable, 'component', this);
   }),
+
+  resolve(...args) {
+    get(this, 'directable.resolve')(...args);
+  },
+
+  resolveAndDestroy(...args) {
+    this.resolve(...args);
+    get(this, 'directable').destroy();
+  },
   
   destroyDirectable: on('willDestroyElement', function() {
-    if (isPresent(this.attrs.destroyDirectable)) {
-      this.attrs.destroyDirectable();
+    const directable = get(this, 'directable')
+    
+    if (isPresent(directable)) {
+      directable.destroy();
     }
   })
 });

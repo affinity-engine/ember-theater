@@ -21,14 +21,14 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (this.get('autoResolve')) {
-      this.resolve();
+      this.resolveAndDestroy();
     }
   }),
 
   resolve() {
     Ember.$('body').off('.speak');
     this.get('directable.resolve')();
-    this.attrs.destroyDirectable();
+    get(this, 'directable').destroy();
   },
 
   character: computed('directable.character', {
@@ -90,7 +90,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
     completeText() {
       animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
-        this.resolve();
+        this.resolveAndDestroy();
       });
     },
 

@@ -1,6 +1,10 @@
 {{#modal-dialog}}
-  {{yield}}
-  <button {{action 'cancel'}}>Cancel</button>
-  <button {{action 'confirm'}}>Confirm</button>
+  <div class='et-confirm-box'>
+    {{yield}}
+    <div class='et-confirm-box-buttons'>
+      <button class='et-confirm-box-button' {{action 'cancel'}}>Cancel</button>
+      <button class='et-confirm-box-button' {{action 'confirm'}}>Confirm</button>
+    </div>
+  </div>
 {{/modal-dialog}}
 

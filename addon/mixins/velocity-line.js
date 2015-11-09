@@ -21,11 +21,7 @@ export default Mixin.create({
     }
 
     animate(this.element, effect, options).then(() => {
-      const resolve = get(directable, 'resolve');
-
-      if (isPresent(resolve)) {
-        resolve();
-      }
+      this.resolve();
     });
   }))
 });

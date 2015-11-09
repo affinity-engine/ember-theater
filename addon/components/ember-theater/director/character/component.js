@@ -4,9 +4,11 @@ import Director from 'ember-theater/components/ember-theater/director/component'
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 import WindowResizeMixin from 'ember-theater/mixins/window-resize';
+import { Directable } from 'ember-theater';
 
 const {
   Component,
+  K,
   computed,
   get,
   inject,
@@ -28,7 +30,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
   expressionContainers: computed(() => Ember.A([])),
 
-  changeExpression(resolve, id, transitionIn = {}, transitionOut = {}) {
+    changeExpression(resolve, id, transitionIn = {}, transitionOut = {}) {
     this._transitionOutExpressions(transitionOut);
     this._transitionInExpression(resolve, id, transitionIn);
   },
@@ -67,7 +69,11 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
     const expressionContainer = Ember.Object.create({
       expression,
-      directable: { effect: 'transition.fadeIn', options: { duration: 0 } }
+      directable: Directable.create({
+        effect: 'transition.fadeIn',
+        options: { duration: 0 },
+        resolve: K
+      })
     });
 
     this.get('expressionContainers').pushObject(expressionContainer);
@@ -79,12 +85,12 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
     if (isBlank(get(transition, 'effect'))) {
       set(transition, 'effect', 'transition.fadeOut');
     }
-    
+
     set(transition, 'resolve', () => {
       get(this, 'expressionContainers').removeObjects(expression);
     });
-   
-    set(expression, 'directable', transition);
+
+    set(expression, 'directable', Directable.create(transition));
   },
 
   _transitionInExpression(resolve, id, transition) {
@@ -98,7 +104,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
     const expressionContainer = Ember.Object.create({
       expression,
-      directable: transition
+      directable: Directable.create(transition)
     });
 
     get(this, 'expressionContainers').unshiftObject(expressionContainer);
