@@ -11,13 +11,14 @@ export default Directable.extend({
   layer: 'theater.stage.background.backdrop',
 
   parseArgs(id, effectOrOptions, optionsOnly) {
-    const effect = isPresent(optionsOnly) ? effectOrOptions : 'transition.fadeIn';
-    const options = isPresent(optionsOnly) ? optionsOnly : effectOrOptions;
+    const effectIsPresent = isPresent(optionsOnly);
 
-    setProperties(this, {
+    const properties = {
       id,
-      effect,
-      options
-    });
+      effect: effectIsPresent ? effectOrOptions : 'transition.fadeIn',
+      options: effectIsPresent ? optionsOnly : effectOrOptions
+    };
+
+    setProperties(this, properties);
   }
 });

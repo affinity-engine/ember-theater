@@ -17,14 +17,12 @@ export default Directable.extend({
       isPresent(get(textOrOptions, 'id')) ||
       isPresent(get(textOrOptions, 'text'));
 
-    const character = characterIsPresent ? characterOrText : undefined;
-    const text = characterIsPresent ? textOrOptions : characterOrText;
-    const options = characterIsPresent ? optionsOnly : textOrOptions;
+    const properties = {
+      character: characterIsPresent ? characterOrText : undefined,
+      text: characterIsPresent ? textOrOptions : characterOrText,
+      options: characterIsPresent ? optionsOnly : textOrOptions
+    }
 
-    setProperties(this, {
-      character,
-      text,
-      options
-    });
+    setProperties(this, properties);
   }
 });

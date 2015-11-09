@@ -12,16 +12,16 @@ export default Directable.extend({
   layer: 'theater.stage.foreground.character',
 
   parseArgs(characterOrId, effectOrOptions, optionsOnly) {
-    const id = typeOf(characterOrId) === 'object' ? get(characterOrId, 'id') : characterOrId;
-    const character = typeOf(characterOrId) !== 'object' ? characterOrId : undefined;
-    const effect = isPresent(optionsOnly) ? effectOrOptions : 'transition.fadeIn';
-    const options = isPresent(optionsOnly) ? optionsOnly : effectOrOptions;
+    const characterIsPresent = typeOf(characterOrId) === 'object';
+    const effectIsPresent = isPresent(optionsOnly);
 
-    setProperties(this, {
-      id,
-      character,
-      effect,
-      options
-    });
+    const properties = {
+      id: characterIsPresent ? get(characterOrId, 'id') : characterOrId,
+      character: characterIsPresent ? characterOrId : undefined,
+      effect: effectIsPresent ? effectOrOptions : 'transition.fadeIn',
+      options: effectIsPresent ? optionsOnly : effectOrOptions
+    }
+
+    setProperties(this, properties);
   }
 });

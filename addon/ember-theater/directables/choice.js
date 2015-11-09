@@ -12,14 +12,14 @@ export default Directable.extend({
   layer: 'theater.text.choice',
 
   parseArgs(headerOrChoices, choicesOrOptions, optionsOnly) {
-    const header = typeOf(headerOrChoices) === 'string' ? headerOrChoices : undefined;
-    const choices = typeOf(headerOrChoices) === 'string' ? choicesOrOptions : headerOrChoices;
-    const options = isPresent(optionsOnly) ? optionsOnly : isPresent(header) ? undefined : choicesOrOptions;
+    const headerIsPresent = typeOf(headerOrChoices) === 'string';
 
-    setProperties(this, {
-      choices,
-      header,
-      options
-    });
+    const properties = {
+      header: headerIsPresent ? headerOrChoices : undefined,
+      choices: headerIsPresent ? choicesOrOptions : headerOrChoices,
+      options: headerIsPresent ? optionsOnly : choicesOrOptions
+    }
+
+    setProperties(this, properties);
   }
 });
