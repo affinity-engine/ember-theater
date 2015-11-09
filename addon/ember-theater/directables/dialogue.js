@@ -12,26 +12,14 @@ export default Directable.extend({
   componentType: 'ember-theater/director/dialogue',
   layer: 'theater.text.dialogue',
 
-  parseArgs(characterOrText, textOrOptions, optionsOnly) {
-    let character, text, options;
+  parseArgs(characterOrText, textOrOptions = {}, optionsOnly = {}) {
+    const characterIsPresent = typeOf(textOrOptions) === 'string' ||
+      isPresent(get(textOrOptions, 'id')) ||
+      isPresent(get(textOrOptions, 'text'));
 
-    // 10 megabucks to anyone who can devise a cleaner approach to this
-    // Note that character and text can come as either strings or objects
-    if (isPresent(optionsOnly)) {
-      character = characterOrText;
-      text = textOrOptions;
-      options = optionsOnly;
-    } else if (isPresent(textOrOptions)) {
-      if (typeOf(textOrOptions) === 'string' || (typeOf(textOrOptions) === 'object' && isPresent(get(textOrOptions, 'id')))) {
-        character = characterOrText;
-        text = textOrOptions;
-      } else {
-        text = characterOrText;
-        options = textOrOptions;
-      }
-    } else {
-      text = characterOrText;
-    }
+    const character = characterIsPresent ? characterOrText : undefined;
+    const text = characterIsPresent ? textOrOptions : characterOrText;
+    const options = characterIsPresent ? optionsOnly : textOrOptions;
 
     setProperties(this, {
       character,
