@@ -1,0 +1,1 @@
+export { default } from 'ember-theater/services/dynamic-rulesheet';

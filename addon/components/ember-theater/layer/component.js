@@ -5,95 +5,91 @@ import layerName from 'ember-theater/utils/layer-name';
 const {
   Component,
   computed,
-  guidFor,
+  generateGuid,
+  get,
+  getProperties,
   inject,
   isPresent,
-  run
+  observer,
+  on,
+  run,
+  set
 } = Ember;
+const { alias } = computed;
 
 export default Component.extend({
   attributeBindings: ['animationName:animation-name', 'style'],
   classNames: ['et-layer'],
   classNameBindings: ['layerName'],
-  emberTheaterLayerManager: inject.service(),
-  emberTheaterStageManager: inject.service(),
   layout: layout,
 
-  style: computed('animation', 'filterAnimationName', 'filter', {
+  emberTheaterLayerManager: inject.service(),
+  emberTheaterStageManager: inject.service(),
+
+  animation: alias('layerFilter.animation'),
+  animationName: alias('layerFilter.animationName'),
+
+  style: computed('animation', 'keyframeName', 'filter', {
     get() {
       const {
         animation,
-        filterAnimationName,
+        animationName,
         filter
-      } = this.getProperties('animation', 'filterAnimationName', 'filter');
+      } = getProperties(this, 'animation', 'animationName', 'filter');
 
       return `
       animation: ${animation};
-      animation-name: ${filterAnimationName};
+      animation-name: ${animationName};
       filter: ${filter};
       -webkit-filter: ${filter};
-      `
+      `.replace(/\n|\s{2}/g, ''); 
     }
   }).readOnly(),
 
-  animationName: computed('emberTheaterLayerManager.filters.[]', {
+  layerFilter: computed('emberTheaterLayerManager.filters.[]', {
     get() {
-      const layerName = this.get('layerName');
-      const filter = this.get('emberTheaterLayerManager.filters').find((filter) => {
-        return filter.get('layer') === layerName;
-      });
+      const layerName = get(this, 'layerName');
 
-      if (isPresent(filter)) {
-        const {
-          duration,
-          effect,
-          previousFilter
-        } = filter.getProperties('duration', 'effect', 'previousFilter');
-
-        const keyframeName = guidFor(this);
-        const animation = `keyframeName ${duration}ms linear 1`;
-        const keyframes = `@keyframes ${keyframeName} {
-        from {
-        -webkit-filter: ${previousFilter};
-        filter: ${previousFilter};
-        }
-        to {
-        -webkit-filter: ${effect};
-        filter: ${effect};
-        }
-        }`;
-
-        document.styleSheets[0].insertRule( keyframes, 0 );
-
-        if (duration > 0) {
-          run.later(() => {
-            this.set('filter', effect);
-          }, duration);
-        } else {
-          this.set('filter', effect);
-        }
-
-        this.setProperties({
-          animation,
-          filterAnimationName: keyframeName
-        });
-
-        this.get('emberTheaterLayerManager').completeFilterTransition(layerName);
-      }
+      return get(this, 'emberTheaterLayerManager.filters').find((filter) => {
+        return get(filter, 'layer') === layerName;
+      }) || {};
     }
-  }).readOnly(),
+  }),
+
+  setFilter: on('didInsertElement', function() {
+    this.element.addEventListener('animationend', () => {
+      const { layerFilter: {
+        effect,
+        resolve
+      } } = getProperties(this, 'layerFilter');
+
+      // there's a brief moment after an animation ends before which Ember changes the css through
+      // `set(this, 'filter', effect)`. To get around this, we manually set the `filter` with jquery,
+      // knowing that Ember will overwrite our changes with `attributeBindings: ['style']`.
+      this.$().css({ filter: effect, '-webkit-filter': effect });
+      set(this, 'filter', effect);
+
+      if (isPresent(resolve)) { resolve(); }
+    });
+  }),
+
+  resetFilter: observer('layerFilter.effect', function() {
+    // we need to manually reset the filter whenever the effect changes, or else the new effect will
+    // not display
+    set(this, 'filter', undefined);
+  }),
 
   layerDirectables: computed('directables.[]', {
     get() {
-      return this.get('directables').filter((directable) => {
-        return directable.get('layer') === this.get('name');
+      return get(this, 'directables').filter((directable) => {
+        return get(directable, 'layer') === this.get('name');
       });
     }
   }).readOnly(),
 
   layerName: computed('name', {
     get() {
-      return layerName(this.get('name'));
+      return layerName(get(this, 'name'));
     }
   }).readOnly(),
 

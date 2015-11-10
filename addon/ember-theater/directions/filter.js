@@ -5,17 +5,25 @@ import layerName from 'ember-theater/utils/layer-name';
 const {
   get,
   inject,
-  run
+  run,
+  typeOf
 } = Ember;
 
 export default Direction.extend({
   emberTheaterLayerManager: inject.service(),
 
-  perform(resolve, layer, effect, options) {
+  perform(resolve, layerOrEffect, effectOrOptions = {}, optionsOnly = {}) {
+    const layerIsPresent = typeOf(effectOrOptions) === 'string' || typeOf(effectOrOptions) === 'array';
+    
+    const layer = layerIsPresent ? layerOrEffect : '';
+    const effect = layerIsPresent ? effectOrOptions : layerOrEffect;
+    const options = layerIsPresent ? optionsOnly : effectOrOptions;
+
+    const duration = get(options, 'duration') || 0;
+
     // const filterId = get(line, 'id');
     // const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
-    const duration = get(options, 'duration') ? get(options, 'duration') : 0;
 
-    get(this, 'emberTheaterLayerManager').addFilter(effect, duration, layerName(layer));
+    get(this, 'emberTheaterLayerManager').addFilter(resolve, effect, options, layerName(layer));
   }
 });

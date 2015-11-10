@@ -3,7 +3,9 @@ import layout from './template';
 
 const {
   Component,
+  K,
   computed,
+  get,
   inject,
   on,
   RSVP
