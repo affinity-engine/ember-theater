@@ -6,19 +6,22 @@ const {
   Component, 
   computed, 
   get,
-  inject,
   observer,
   on,
   set 
 } = Ember;
+
+const { alias } = computed;
+const { inject: { service } } = Ember;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],
   classNames: ['et-backdrop'],
   tagName: 'img',
 
-  emberTheaterTranslate: inject.service(),
-  store: inject.service(),
+  emberTheaterTranslate: service(),
+
+  backdrop: alias('directable.backdrop'),
 
   caption: computed('backdrop.caption', 'backdrop.id', {
     get() {
@@ -33,12 +36,5 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
     get() {
       return `background-image: url(${get(this, 'backdrop.src')});`;
     }
-  }).readOnly(),
-
-  setBackdrop: on('didInitAttrs', function() {
-    const id = get(this, 'directable.id');
-    const backdrop = get(this, 'store').peekRecord('ember-theater-backdrop', id);
-
-    set(this, 'backdrop', backdrop);
-  })
+  }).readOnly()
 });

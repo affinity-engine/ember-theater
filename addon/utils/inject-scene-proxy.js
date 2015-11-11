@@ -12,6 +12,7 @@ export default function injectSceneProxy(application, type, name) {
     return this[method](name, factory, args);
   };
 
+  application.inject('direction', 'store', `service:store`);
   application.register(`${type}:${name}-proxy`, proxy, { instantiate: false });
   application.inject('scene', camelize(name), `${type}:${name}-proxy`);
 };

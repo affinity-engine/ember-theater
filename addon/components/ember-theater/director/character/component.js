@@ -19,6 +19,8 @@ const {
   set,
   typeOf
 } = Ember;
+
+const { alias } = computed;
 const { run: { later } } = Ember;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
@@ -26,13 +28,13 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   classNames: ['et-character'],
   layout: layout,
 
-  store: inject.service(),
-
   expressionContainers: computed(() => Ember.A([])),
 
-    changeExpression(resolve, id, transitionIn = {}, transitionOut = {}) {
+  character: alias('directable.character'),
+
+  changeExpression(resolve, expression, transitionIn = {}, transitionOut = {}) {
     this._transitionOutExpressions(transitionOut);
-    this._transitionInExpression(resolve, id, transitionIn);
+    this._transitionInExpression(resolve, expression, transitionIn);
   },
 
   style: computed('character.height', {
@@ -50,27 +52,16 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
     later(() => {
       this.$().css('display', 'block');
-    }, 25);
-  }),
-
-  setCharacter: on('didInitAttrs', function() {
-    const id = get(this, 'directable.id');
-    const character = get(this, 'store').peekRecord('ember-theater-character', id);
-
-    set(this, 'character', character);
+    }, 50);
   }),
 
   addInitialExpression: on('didInsertElement', function() {
-    const directable = get(this, 'directable');
-    const expressionId = get(directable, 'character.expression');
-    const expression = isPresent(expressionId) ?
-      get(this, 'store').peekRecord('ember-theater-character-expression', expressionId) :
-      get(this, 'character.defaultExpression');
+    const expression = get(this, 'directable.initialExpression');
 
     const expressionContainer = Ember.Object.create({
       expression,
       directable: Directable.create({
-        effect: 'transition.fadeIn',
+        effect: { opacity: 1 },
         options: { duration: 0 },
         resolve: K
       })
@@ -93,9 +84,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
     set(expression, 'directable', Directable.create(transition));
   },
 
-  _transitionInExpression(resolve, id, transition) {
-    const expression = get(this, 'store').peekRecord('ember-theater-character-expression', id);
-
+  _transitionInExpression(resolve, expression, transition) {
     if (isBlank(get(transition, 'effect'))) {
       set(transition, 'effect', 'transition.fadeIn');
     }

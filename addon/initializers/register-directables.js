@@ -8,6 +8,8 @@ export function initialize(container, application) {
     application.register(`directable:${directableName}`, directable, { singleton: false });
     injectSceneProxy(application, 'directable', directableName);
   });
+
+  application.inject('directable', 'store', 'service:store');
 }
 
 export default {

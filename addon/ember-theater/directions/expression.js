@@ -14,11 +14,12 @@ export default Direction.extend({
     @param {*} exampleParam
   */
 
-  perform(resolve, characterId, ...args) {
+  perform(resolve, characterId, expressionId, ...args) {
     const stageManager = get(this, 'emberTheaterStageManager');
     const directable = stageManager.findDirectableWithId(characterId, 'character');
     const character = get(directable, 'component');
+    const expression = this.store.peekRecord('ember-theater-character-expression', expressionId);
 
-    character.changeExpression(resolve, ...args);
+    character.changeExpression(resolve, expression, ...args);
   }
 });
