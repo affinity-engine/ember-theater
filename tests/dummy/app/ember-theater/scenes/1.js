@@ -19,7 +19,7 @@ export default Scene.extend({
     switch (choiceOne.key) {
       case 'A': await this.expression('steven', 'steven--jumping', { effect: 'transition.whirlIn', options: { duration: 1000 } }, { effect: 'transition.whirlOut', options: { duration: 1000 } }); break;
       case 'B': await this.character('steven', 'callout.bounce', { duration: 1000 }); break;
-      case 'C': this.sound({ id: 'song__bolero' }); break;
+      case 'C': this.sound('song__bolero'); break;
     }
     await this.dialogue('steven', 'How was that?!');
     // this.setData('test', 0);
