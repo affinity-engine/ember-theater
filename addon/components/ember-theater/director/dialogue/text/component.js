@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import WindowResizeMixin from 'ember-theater/mixins/window-resize';
-import { onKeyDown, ActivateKeyboardOnInsertMixin } from 'ember-keyboard';
+import { keyDown, EKOnInsertMixin } from 'ember-keyboard';
 import animate from 'ember-theater/utils/animate';
 
 const {
@@ -11,14 +11,14 @@ const {
   run
 } = Ember;
 
-export default Component.extend(ActivateKeyboardOnInsertMixin, WindowResizeMixin, {
+export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
   classNames: ['et-dialogue-body'],
   layout: layout,
   visibleWords: computed(() => Ember.A()),
   words: computed(() => Ember.A()),
 
-  advanceText: onKeyDown(' ', 'Enter', function() {
+  advanceText: on(keyDown(' '), 'Enter', function() {
     if (this.get('pageComplete')) {
       this.setProperties({
         pageComplete: false,

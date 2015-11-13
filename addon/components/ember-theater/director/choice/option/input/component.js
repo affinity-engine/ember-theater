@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { onKeyDown } from 'ember-keyboard';
+import { keyDown } from 'ember-keyboard';
 
 const {
   on,
@@ -17,7 +17,7 @@ export default TextField.extend({
     this.$().focus();
   }),
 
-  complete: onKeyDown('Enter', function() {
+  complete: on(keyDown('Enter'), function() {
     this.attrs.choose();
   })
 });
