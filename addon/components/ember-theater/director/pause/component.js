@@ -1,56 +1,52 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
+import { EKOnInsertMixin, keyUp } from 'ember-keyboard';
 
 const {
   Component,
-  inject,
+  get,
+  getProperties,
+  isPresent,
   on,
   run
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, {
-  keyboard: inject.service(),
-
+export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, {
   handleautoResolve: on('didInitAttrs', function() {
-    if (this.get('autoResolve')) {
+    if (get(this, 'autoResolve')) {
       this._resolve();
     }
   }),
 
   setup: on('didInsertElement', function() {
-    const line = this.get('line');
+    const directable = get(this, 'directable');
+    const {
+      duration,
+      keys
+    } = getProperties(directable, 'duration', 'keys');
 
-    if (line.key) {
-      this._setupKeyPressWatcher();
+    if (isPresent(keys)) {
+      this._setupKeyPressWatcher(keys);
     }
 
-    if (line.duration) {
+    if (isPresent(duration)) {
       run.later(() => {
         this._resolve();
-      }, line.duration);
+      }, duration);
     }
   }),
 
-  teardown: on('willDestroyElement', function() {
+  _teardown: on('willDestroyElement', function() {
     this._resolve();
   }),
 
   _resolve() {
-    this._unbindKey();
-    this.get('line.resolve')();
+    get(this, 'directable.resolve')();
   },
 
-  _setupKeyPressWatcher() {
-    const key = this.get('line.key');
-
-    this.get('keyboard').listenFor(key, this, '_resolve');
-  },
-
-  _unbindKey() {
-    const key = this.get('line.key');
-
-    if (key) {
-      this.get('keyboard').stopListeningFor(key, this, '_resolve');
-    }
+  _setupKeyPressWatcher(keys) {
+    keys.forEach((key) => {
+      this.on(keyUp(key), this._resolve);
+    });
   }
 });
