@@ -1,3 +1,11 @@
+.et-text-word {
+  opacity: 0;
+}
+
+.et-text-letter {
+  opacity: 0;
+}
+
 .et-dialogue {
   @extend .et-panel;
   position: absolute;
@@ -25,9 +33,13 @@
     font-size: $et-dialogue-caption-font-size;
   }
 
-  .et-dialogue-body {
+  .et-dialogue-body-container {
     overflow: hidden;
     width: 100%;
     height: 100%;
+
+    .et-dialogue-body {
+      padding-bottom: 100vh;
+    }
   }
 }

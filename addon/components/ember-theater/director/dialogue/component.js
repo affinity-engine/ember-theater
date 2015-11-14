@@ -79,7 +79,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
       const characterSpeed = this.get('character.textSpeed');
       if (characterSpeed) { return characterSpeed; }
 
-      return 30;
+      return 300;
     }
   }).readOnly(),
 

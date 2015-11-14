@@ -4,121 +4,157 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 import { keyDown, EKOnInsertMixin } from 'ember-keyboard';
 import animate from 'ember-theater/utils/animate';
 
+const wordClass = 'et-text-word';
+const letterClass = 'et-text-letter';
+
 const {
   Component,
   computed,
+  get,
+  isBlank,
+  isPresent,
   on,
-  run
+  set,
+  setProperties
 } = Ember;
+
+const { String: { htmlSafe } } = Ember;
+const { run: { later } } = Ember;
 
 export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
-  classNames: ['et-dialogue-body'],
+  classNames: ['et-dialogue-body-container'],
   layout: layout,
-  visibleWords: computed(() => Ember.A()),
-  words: computed(() => Ember.A()),
 
-  advanceText: on(keyDown(' '), 'Enter', function() {
-    if (this.get('pageComplete')) {
-      this.setProperties({
-        pageComplete: false,
-        wordByWord: false
-      });
-
-      if (this.get('words.length') === 0) {
-        this.attrs.completeText();
-      } else {
-        animate(this.$('.letter-by-letter'), { opacity: 0 }, { duration: 100 }).then(() => {
-          this.get('visibleWords').clear();
-          animate(this.$('.letter-by-letter'), { opacity: 1 }, { duration: 0 });
-          this.set('activeWordIndex', 0);
-          this.addWord();
-        });
-      }
+  advanceText: on(keyDown(' '), function() {
+    if (get(this, 'pageLoaded')) {
+      this.turnPage();
     } else {
-      this.setProperties({
-        pageComplete: true,
-        wordByWord: true
-      });
+      set(this, 'instaWritingPage', true);
     }
   }),
 
-  addWord() {
-    const nextWord = this.get('words').shift();
+  turnPage() {
+    const nextPageFirstWord = this.nextPageFirstWord();
 
-    if (nextWord) {
-      this.get('visibleWords').pushObject(nextWord);
+    this.scrollToWord(nextPageFirstWord);
+
+    if (isBlank(nextPageFirstWord)) {
+      return this.attrs.completeText();
+    } else {
+      set(this, 'currentPageFirstWord', nextPageFirstWord);
     }
-
-    run.next(() => {
-      if (this.textHasOverflown()) {
-        this.removeWord();
-      } else if (nextWord) {
-        this.addWord();
-      }
-    });
   },
 
-  body: computed({
-    get() {
-      return this.$('div.letter-by-letter');
-    }
-  }).readOnly(),
+  nextPageFirstWord() {
+    const $words = get(this, '$words');
+    const $container = this.$().parent();
+    const offsetBottom = $container.offset().top + $container.height();
 
-  bodyContainer: computed({
-    get() {
-      return this.$();
-    }
-  }).readOnly(),
+    return $words.filter(function() {
+      // note, jquery `filter` sets `this` to the current item in the array
+      return $(this).offset().top >= offsetBottom;
+    })[0];
+  },
 
-  createBuffer: on('didInitAttrs', function() {
-    const text = this.get('text');
-    if (!text || this.get('words.length') > 0 || this.get('visibleWords.length') > 0) { return; }
+  scrollToFirstWord: on('didInsertElement', function() {
+    const $words = get(this, '$words');
+    const firstWord = $words.first();
 
-    this.get('visibleWords').clear();
-    this.set('words', Ember.A(text.split(' ')));
-    this.addWord();
+    this.scrollToWord(firstWord);
+
+    set(this, 'currentPageFirstWord', firstWord);
   }),
-
-  handleWindowResize() {
-    if (!this.get('pageComplete')) { return; }
-
-    run.next(() => {
-      if (this.textHasOverflown()) {
-        this.removeWord();
-      } else {
-        this.addWord();
-      }
-    });
-  },
-
-  removeWord() {
-    const word = this.get('visibleWords').popObject();
-    this.get('words').unshiftObject(word);
-
-    run.next(() => {
-      if (this.textHasOverflown()) {
-        this.removeWord();
-      }
-    });
-  },
-
-  textHasOverflown() {
-    const {
-      body,
-      bodyContainer
-    } = this.getProperties('body', 'bodyContainer');
-
-    return body.height() > bodyContainer.height();
-  },
 
   windowResize: on('windowResize', function() {
-    run.debounce(this, this.handleWindowResize, 100);
+    const currentPageFirstWord = get(this, 'currentPageFirstWord');
+
+    this.scrollToWord(currentPageFirstWord);
   }),
 
-  actions: {
-    textComplete() {
-      this.set('pageComplete', true);
+  scrollToWord(word) {
+    const $words = get(this, '$words');
+    const $container = this.$();
+    const $word = this.$(word);
+    const scrollTop = $word.offset().top - $container.offset().top + $container.scrollTop();
+
+    $container.scrollTop(scrollTop);
+
+    this.writeWord($words.index($word));
+  },
+
+  words: computed('text', {
+    get() {
+      // the first half the regex matches tags (eg, `<strong>`), while the second half matches and
+      // removes all spaces.
+      return get(this, 'text').match(/<.*?>|[^<\s]+/g);
     }
+  }).readOnly(),
+
+  formattedText: computed('words', {
+    get() {
+      return htmlSafe(get(this, 'words').map((word) => {
+        // test if the word is actually a tag
+        return /<.*?./.test(word) ? word : `<span class="${wordClass}">${word}</span>`;
+      }).join(' '));
+    }
+  }).readOnly(),
+
+  $words: computed('formattedText', {
+    get() {
+      return this.$(`span.${wordClass}`);
+    }
+  }).readOnly(),
+
+  writeWord(index) {
+    const $words = get(this, '$words');
+    const $word = $words.eq(index);
+    const nextPageFirstWord = this.nextPageFirstWord();
+
+    // stop if the word has already been written
+    if ($word.css('opacity') === '1') { return; }
+
+    if ((isBlank(nextPageFirstWord) && index < $words.length) || index < $words.index(nextPageFirstWord)) {
+      set(this, 'pageLoaded', false);
+    } else {
+      // stop if last word in whole dialogue or last word in page
+      
+      return setProperties(this, {
+        instaWritingPage: false,
+        pageLoaded: true
+      });
+    }
+
+    const letters = $word.text().split('');
+
+    $word.css('opacity', 1);
+
+    if (get(this, 'instaWritingPage')) {
+      this.writeWord(index + 1);
+    } else {
+      $word.html(letters.map((letter) => `<span class="${letterClass}">${letter}</span>`).join(''));
+      this.writeLetter($word, letters.length, 0, index);
+    }
+  },
+
+  writeLetter($word, wordLength, characterIndex, wordIndex) {
+    const duration = get(this, 'instaWritingPage') ? 0 : get(this, 'textSpeed');
+    const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
+
+    animate($letter, {
+      opacity: [1, 0],
+      translateY: [0, '-0.3vh'],
+      translateX: [0, '-0.2vh']
+    }, { duration });
+
+    later(() => {
+      characterIndex++;
+
+      if (characterIndex < wordLength) {
+        this.writeLetter($word, wordLength, characterIndex, wordIndex);
+      } else {
+        this.writeWord(wordIndex + 1);
+      }
+    }, duration / 10);
   }
 });
