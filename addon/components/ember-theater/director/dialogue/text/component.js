@@ -9,7 +9,7 @@ const wordClass = 'et-text-word';
 const letterClass = 'et-text-letter';
 
 const htmlTagRegex = '<.*?>';
-const customTagRegex = '{.*?}';
+const customTagRegex = '[#\/]{.*?}';
 
 const {
   Component,
@@ -181,12 +181,10 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   },
 
   executeCustomTag(text, index) {
-    const content = text.match(/{(.*?)}/)[1];
+    const [, openingOrClosing, content] = text.match(/(#|\/){(.*?)}/);
     const args = content.split(' ');
-    const methodParts = args.shift().split(/(#|\/)/);
-    const method = methodParts.pop();
-    const methodType = methodParts.pop();
-    const isClosingTag = methodType === '/' ? true : methodType === '#' ? false : undefined;
+    const method = args.shift();
+    const isClosingTag = openingOrClosing === '/';
 
     this[method].perform(this, index, isClosingTag, ...args);
   }
