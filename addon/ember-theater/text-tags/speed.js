@@ -26,5 +26,7 @@ export default TextTag.extend({
 
     set(context, 'textSpeed', speed);
     context.writeWord(index + 1);
+
+    this.destroy();
   }
 });

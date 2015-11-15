@@ -19,5 +19,7 @@ export default TextTag.extend({
     later(() => {
       context.resolve();
     }, duration || 0);
+
+    this.destroy();
   }
 });

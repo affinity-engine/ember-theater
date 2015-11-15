@@ -23,5 +23,7 @@ export default TextTag.extend({
     });
 
     context.scrollToWord(nextWord);
+
+    this.destroy();
   }
 });

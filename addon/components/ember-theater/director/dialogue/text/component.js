@@ -195,6 +195,6 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     const method = args.shift();
     const isClosingTag = openingOrClosing === '/';
 
-    this[method].perform(this, index, isClosingTag, ...args);
+    this[method].create().perform(this, index, isClosingTag, ...args);
   }
 });

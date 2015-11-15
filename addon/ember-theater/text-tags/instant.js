@@ -21,5 +21,7 @@ export default TextTag.extend({
     }
 
     context.writeWord(index + 1);
+
+    this.destroy();
   }
 });
