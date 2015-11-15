@@ -20,10 +20,11 @@ export default TextTag.extend({
     @method perform
     @param {Object} context
     @param {Number} index
+    @param {Boolean} isClosingTag
     @param {String} [duration]
   */
 
-  perform(context, index, duration) {
+  perform(context, index, isClosingTag, duration) {
     setProperties(this, { context, index });
 
     const keys = get(context, 'keys');

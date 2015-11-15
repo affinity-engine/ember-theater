@@ -15,10 +15,11 @@ export default TextTag.extend({
     @method perform
     @param {Object} context
     @param {Number} index
+    @param {Boolean} isClosingTag
     @param {String} speed
   */
 
-  perform(context, index, speed) {
+  perform(context, index, isClosingTag, speed) {
     if (speed.charAt(0) === '*') {
       speed = parseInt(get(context, 'textSpeed'), 10) * parseFloat(speed.substring(1), 10);
     }

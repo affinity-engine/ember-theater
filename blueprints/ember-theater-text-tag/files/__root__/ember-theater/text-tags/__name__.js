@@ -7,8 +7,9 @@ export default TextTag.extend({
     @method perform
     @param {Object} context
     @param {Number} index
+    @param {Boolean} isClosingTag
     @param {*} exampleParam
   */
 
-  perform(context, index) {}
+  perform(context, index, isClosingTag) {}
 });

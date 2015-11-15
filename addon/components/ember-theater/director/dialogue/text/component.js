@@ -9,7 +9,7 @@ const wordClass = 'et-text-word';
 const letterClass = 'et-text-letter';
 
 const htmlTagRegex = '<.*?>';
-const customTagRegex = '{{.*?}}';
+const customTagRegex = '{.*?}';
 
 const {
   Component,
@@ -62,7 +62,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     if (get(this, 'pageLoaded')) {
       this.turnPage();
     } else {
-      set(this, 'instaWritingPage', true);
+      set(this, 'instantWritePage', true);
     }
   },
 
@@ -140,14 +140,14 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     } else {
       // stop if past the last word in whole dialogue or the last word on the current page
       return setProperties(this, {
-        instaWritingPage: false,
+        instantWritePage: false,
         pageLoaded: true
       });
     }
 
     if ($word.hasClass(customTagClass)) {
       this.executeCustomTag($word.text(), index);
-    } else if (get(this, 'instaWritingPage')) {
+    } else if (get(this, 'instantWritePage') || get(this, 'instantWriteText')) {
       this.writeWord(index + 1);
     } else {
       const letters = $word.text().split('');
@@ -160,7 +160,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   },
 
   writeLetter($word, wordLength, characterIndex, wordIndex) {
-    const duration = get(this, 'instaWritingPage') ? 0 : get(this, 'textSpeed');
+    const duration = get(this, 'instantWritePage') ? 0 : get(this, 'textSpeed');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     animate($letter, {
@@ -181,10 +181,13 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   },
 
   executeCustomTag(text, index) {
-    const content = text.match(/{{(.*?)}}/)[1];
+    const content = text.match(/{(.*?)}/)[1];
     const args = content.split(' ');
-    const method = args.shift();
+    const methodParts = args.shift().split(/(#|\/)/);
+    const method = methodParts.pop();
+    const methodType = methodParts.pop();
+    const isClosingTag = methodType === '/' ? true : methodType === '#' ? false : undefined;
 
-    this[method].perform(this, index, ...args);
+    this[method].perform(this, index, isClosingTag, ...args);
   }
 });
