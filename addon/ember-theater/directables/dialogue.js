@@ -17,8 +17,10 @@ export default Directable.extend({
       isPresent(get(textOrOptions, 'id')) ||
       isPresent(get(textOrOptions, 'text'));
 
+    const character = charaterIsPresent ? this.store.peekRecord('ember-theater-character', characterOrText);
+
     const properties = {
-      character: characterIsPresent ? characterOrText : undefined,
+      character,
       text: characterIsPresent ? textOrOptions : characterOrText,
       options: characterIsPresent ? optionsOnly : textOrOptions
     }
