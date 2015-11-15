@@ -6,8 +6,9 @@ export default Direction.extend({
 
     @method perform
     @for Scene
+    @param {Function} resolve
     @param {*} exampleParam
   */
 
-  perform() {}
+  perform(resolve) {}
 });

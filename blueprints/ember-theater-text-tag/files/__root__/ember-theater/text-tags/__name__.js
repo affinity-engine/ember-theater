@@ -2,7 +2,7 @@ import { TextTag } from 'ember-theater';
 
 export default TextTag.extend({
   /**
-    Provide a description of what your direction does.
+    Provide a description of what your text tag does.
 
     @method perform
     @param {Object} context

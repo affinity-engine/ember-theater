@@ -36,11 +36,11 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
       // and the last part matches and removes spaces.
       const regex = new RegExp(`${htmlTagRegex}|${customTagRegex}|[^<\\s]+`, 'g');
 
-      return get(this, 'text').match(regex);
+      return Ember.A(get(this, 'text').match(regex));
     }
   }).readOnly(),
 
-  formattedText: computed('words', {
+  formattedText: computed('words.[]', {
     get() {
       return htmlSafe(get(this, 'words').map((word) => {
         // test if the word is actually a tag
@@ -93,7 +93,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     })[0];
   },
 
-  setupKeyHandlers: on('didInsertElement', function() {
+  setupKeyHandlers: on('didReceiveAttrs', function() {
     const keys = get(this, 'keys');
 
     keys.forEach((key) => {
