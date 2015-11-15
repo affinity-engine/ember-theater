@@ -24,11 +24,14 @@ const {
 
 const { String: { htmlSafe } } = Ember;
 const { run: { later } } = Ember;
+const { computed: { or } } = Ember;
 
 export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
   classNames: ['et-dialogue-body-container'],
   layout: layout,
+
+  isInstant: or('instantWritePage', 'instantWriteText'),
 
   words: computed('text', {
     get() {
@@ -147,7 +150,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
 
     if ($word.hasClass(customTagClass)) {
       this.executeCustomTag($word.text(), index);
-    } else if (get(this, 'instantWritePage') || get(this, 'instantWriteText')) {
+    } else if (get(this, 'isInstant')) {
       this.writeWord(index + 1);
     } else {
       const letters = $word.text().split('');
@@ -160,7 +163,13 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   },
 
   writeLetter($word, wordLength, characterIndex, wordIndex) {
-    const duration = get(this, 'instantWritePage') ? 0 : get(this, 'textSpeed');
+    if (get(this, 'isInstant')) {
+      const text = $word.text().trim();
+
+      $word.html(text);
+    }
+
+    const duration = get(this, 'textSpeed');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     animate($letter, {
