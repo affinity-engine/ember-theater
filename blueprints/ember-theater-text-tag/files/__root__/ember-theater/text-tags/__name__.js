@@ -5,9 +5,10 @@ export default TextTag.extend({
     Provide a description of what your direction does.
 
     @method perform
-    @for Scene
+    @param {Object} context
+    @param {Number} index
     @param {*} exampleParam
   */
 
-  perform() {}
+  perform(context, index) {}
 });

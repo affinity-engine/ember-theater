@@ -11,7 +11,7 @@ export default Scene.extend({
     // this.filter('theater.text', 'blur(5px)', { duration: 500 });
     // await this.dialogue({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
     this.backdrop('beach');
-    await this.dialogue('steven', "I was <strong>so happy</strong> when Garnet {{pause 1000}} said she was gonna come on this trip with me and Dad! {{speed 500}} (Ruby and Sapphire look at each other and frown) {{speed 300}} Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me?");
+    await this.dialogue('steven', "I was <strong>so happy</strong> when Garnet {{speed *.03}} said she was gonna come on this trip with me and Dad! {{speed 500}} (Ruby and Sapphire look at each other and frown) {{speed 300}} Home's been awful! Here's been awful! I thought you wanted to have a fun time but, everyone's been acting awful too! It-It just came with us! I don't understand! (He looks at the ground) Is it- is it me?");
     // this.filter('theater.text', 'blur(0)', { duration: 500 });
     this.backdrop('beach--night', { duration: 5000 });
     await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });

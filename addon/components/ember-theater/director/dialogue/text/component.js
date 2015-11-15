@@ -72,10 +72,14 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     this.scrollToWord(nextPageFirstWord);
 
     if (isBlank(nextPageFirstWord)) {
-      return this.attrs.resolve();
+      this.resolve();
     } else {
       set(this, 'currentPageFirstWord', nextPageFirstWord);
     }
+  },
+
+  resolve() {
+    this.attrs.resolve();
   },
 
   nextPageFirstWord() {
