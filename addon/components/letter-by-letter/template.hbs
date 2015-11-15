@@ -1,9 +1,0 @@
-{{#each words key='@index' as |word index|}}
-  {{letter-by-letter/word 
-    activeWordIndex=activeWordIndex
-    index=index
-    speed=speed
-    word=word
-    wordByWord=wordByWord
-    incrementActiveWordIndex=(action 'incrementActiveWordIndex')}}
-{{/each}}

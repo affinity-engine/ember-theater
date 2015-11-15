@@ -48,6 +48,12 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     }
   }).readOnly(),
 
+  keys: computed('directable.options.keys', {
+    get() {
+      return get(this, 'directable.options.keys') || [' '];
+    }
+  }).readOnly(),
+
   name: computed('character.name', 'displayName', {
     get() {
       const displayName = this.get('displayName');
@@ -81,21 +87,13 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
       return 300;
     }
-  }).readOnly(),
+  }),
 
   actions: {
-    completePage() {
-      this.set('pageCompleted', true);
-    },
-
     completeText() {
       animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         this.resolveAndDestroy();
       });
-    },
-
-    turnPage() {
-      this.set('triggerPageTurn', false);
     }
   }
 });

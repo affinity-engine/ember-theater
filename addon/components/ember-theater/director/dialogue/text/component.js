@@ -4,8 +4,12 @@ import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 import { keyDown, EKOnInsertMixin } from 'ember-keyboard';
 import animate from 'ember-theater/utils/animate';
 
+const customTagClass = 'et-text-tag';
 const wordClass = 'et-text-word';
 const letterClass = 'et-text-letter';
+
+const htmlTagRegex = '<.*?>';
+const customTagRegex = '{{.*?}}';
 
 const {
   Component,
@@ -26,13 +30,41 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   classNames: ['et-dialogue-body-container'],
   layout: layout,
 
-  advanceText: on(keyDown(' '), function() {
+  words: computed('text', {
+    get() {
+      // the first part of the regex matches html tags (eg, `<strong>`), the second part et-text-tags,
+      // and the last part matches and removes spaces.
+      const regex = new RegExp(`${htmlTagRegex}|${customTagRegex}|[^<\\s]+`, 'g');
+
+      return get(this, 'text').match(regex);
+    }
+  }).readOnly(),
+
+  formattedText: computed('words', {
+    get() {
+      return htmlSafe(get(this, 'words').map((word) => {
+        // test if the word is actually a tag
+        return new RegExp(htmlTagRegex).test(word) ? word :
+          new RegExp(customTagRegex).test(word) ?
+          `<span class="${customTagClass} ${wordClass}" aria-hidden="true">${word}</span>` :
+          `<span class="${wordClass}">${word}</span>`;
+      }).join(' '));
+    }
+  }).readOnly(),
+
+  $words: computed('formattedText', {
+    get() {
+      return this.$(`span.${wordClass}`);
+    }
+  }).readOnly(),
+
+  advanceText() {
     if (get(this, 'pageLoaded')) {
       this.turnPage();
     } else {
       set(this, 'instaWritingPage', true);
     }
-  }),
+  },
 
   turnPage() {
     const nextPageFirstWord = this.nextPageFirstWord();
@@ -40,7 +72,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     this.scrollToWord(nextPageFirstWord);
 
     if (isBlank(nextPageFirstWord)) {
-      return this.attrs.completeText();
+      return this.attrs.resolve();
     } else {
       set(this, 'currentPageFirstWord', nextPageFirstWord);
     }
@@ -56,6 +88,14 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
       return $(this).offset().top >= offsetBottom;
     })[0];
   },
+
+  setupKeyHandlers: on('didInsertElement', function() {
+    const keys = get(this, 'keys');
+
+    keys.forEach((key) => {
+      this.on(keyDown(key), this.advanceText);
+    });
+  }),
 
   scrollToFirstWord: on('didInsertElement', function() {
     const $words = get(this, '$words');
@@ -83,29 +123,6 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     this.writeWord($words.index($word));
   },
 
-  words: computed('text', {
-    get() {
-      // the first half the regex matches tags (eg, `<strong>`), while the second half matches and
-      // removes all spaces.
-      return get(this, 'text').match(/<.*?>|[^<\s]+/g);
-    }
-  }).readOnly(),
-
-  formattedText: computed('words', {
-    get() {
-      return htmlSafe(get(this, 'words').map((word) => {
-        // test if the word is actually a tag
-        return /<.*?./.test(word) ? word : `<span class="${wordClass}">${word}</span>`;
-      }).join(' '));
-    }
-  }).readOnly(),
-
-  $words: computed('formattedText', {
-    get() {
-      return this.$(`span.${wordClass}`);
-    }
-  }).readOnly(),
-
   writeWord(index) {
     const $words = get(this, '$words');
     const $word = $words.eq(index);
@@ -117,24 +134,25 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     if ((isBlank(nextPageFirstWord) && index < $words.length) || index < $words.index(nextPageFirstWord)) {
       set(this, 'pageLoaded', false);
     } else {
-      // stop if last word in whole dialogue or last word in page
-      
+      // stop if past the last word in whole dialogue or the last word on the current page
       return setProperties(this, {
         instaWritingPage: false,
         pageLoaded: true
       });
     }
 
-    const letters = $word.text().split('');
-
-    $word.css('opacity', 1);
-
-    if (get(this, 'instaWritingPage')) {
+    if ($word.hasClass(customTagClass)) {
+      this.executeCustomTag($word.text(), index);
+    } else if (get(this, 'instaWritingPage')) {
       this.writeWord(index + 1);
     } else {
+      const letters = $word.text().split('');
+
       $word.html(letters.map((letter) => `<span class="${letterClass}">${letter}</span>`).join(''));
       this.writeLetter($word, letters.length, 0, index);
     }
+
+    $word.css('opacity', 1);
   },
 
   writeLetter($word, wordLength, characterIndex, wordIndex) {
@@ -156,5 +174,13 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
         this.writeWord(wordIndex + 1);
       }
     }, duration / 10);
+  },
+
+  executeCustomTag(text, index) {
+    const content = text.match(/{{(.*?)}}/)[1];
+    const args = content.split(' ');
+    const method = args.shift();
+
+    this[method].perform(this, index, ...args);
   }
 });

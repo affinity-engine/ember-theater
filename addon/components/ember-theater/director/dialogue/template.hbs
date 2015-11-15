@@ -2,6 +2,7 @@
   <div class='et-dialogue-caption'>{{name}}</div>
 {{/if}}
 {{ember-theater/director/dialogue/text
+  keys=keys
   text=text
   textSpeed=textSpeed
-  completeText=(action 'completeText')}}
+  resolve=(action 'completeText')}}
