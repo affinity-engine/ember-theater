@@ -16,7 +16,7 @@ const {
 
 export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
   classNames: ['et-choice'],
-  emberTheaterTranslate: inject.service(),
+  translator: inject.service('ember-theater/translator'),
   layout: layout,
 
   handleautoResolve: on('didInitAttrs', function() {
@@ -33,7 +33,7 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
 
       return keys.map((key) => {
         const value = choices[key];
-        const text = this.get('emberTheaterTranslate').translate(value);
+        const text = this.get('translator').translate(value);
 
         return Ember.$.extend(choices[key], {
           input: '',
@@ -48,7 +48,7 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
     get() {
       const header = this.get('directable.header');
 
-      return this.get('emberTheaterTranslate').translate(header);
+      return this.get('translator').translate(header);
     }
   }).readOnly(),
 

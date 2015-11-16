@@ -10,12 +10,12 @@ const {
 } = Ember;
 
 export default Component.extend({
-  emberTheaterSceneManager: inject.service(),
-  emberTheaterSaveStateManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
+  saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
 
   initializeLine: on('init', async function() {
-    const points = await this.get('emberTheaterSaveStateManager.statePoints');
+    const points = await this.get('saveStateManager.statePoints');
 
     new Promise((resolve) => {
       const choices = Ember.Object.create({ 
@@ -38,8 +38,8 @@ export default Component.extend({
       this.set('directable', directable);
     }).then((choice) => {
       if (isPresent(get(choice, 'object'))) {
-        this.get('emberTheaterSaveStateManager').loadStatePoint(choice.object);
-        this.get('emberTheaterSceneManager').toScene(choice.object.get('lastObject.sceneId'), {
+        this.get('saveStateManager').loadStatePoint(choice.object);
+        this.get('sceneManager').toScene(choice.object.get('lastObject.sceneId'), {
           autosave: false
         });
       }

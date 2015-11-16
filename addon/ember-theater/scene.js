@@ -12,7 +12,7 @@ const {
 } = Ember;
 
 export default Ember.Object.extend({
-  emberTheaterStageManager: inject.service(),
+  stageManager: inject.service('ember-theater/stage-manager'),
 
   abort() {
     this.set('isAborted', true);
@@ -21,7 +21,7 @@ export default Ember.Object.extend({
   proxyDirectable(type, factory, args) {
     if (get(this, 'isAborted')) { return resolve(); }
 
-    const stageManager = get(this, 'emberTheaterStageManager');
+    const stageManager = get(this, 'stageManager');
 
     return stageManager.handleDirectable(factory, type, args);
   },
@@ -29,7 +29,7 @@ export default Ember.Object.extend({
   proxyDirection(type, factory, args) {
     if (get(this, 'isAborted')) { return resolve(); }
 
-    const stageManager = get(this, 'emberTheaterStageManager');
+    const stageManager = get(this, 'stageManager');
 
     return stageManager.handleDirection(factory, type, args);
   }

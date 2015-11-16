@@ -12,17 +12,17 @@ const {
 } = Ember;
 
 export default Service.extend({
-  emberTheaterSaveStateManager: inject.service(),
+  saveStateManager: inject.service('ember-theater/save-state-manager'),
 
   updateSceneRecord(key, value) {
-    this.get('emberTheaterSaveStateManager').updateSceneRecord(key, value);
+    this.get('saveStateManager').updateSceneRecord(key, value);
   },
 
   advanceSceneRecord() {
     const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
 
     if (get(this, 'isLoading')) {
-      const sceneRecord = get(this, 'emberTheaterSaveStateManager.sceneRecord');
+      const sceneRecord = get(this, 'saveStateManager.sceneRecord');
       const autoResolveResult = sceneRecord[sceneRecordsCount];
 
       if (autoResolveResult !== undefined) {
@@ -55,7 +55,7 @@ export default Service.extend({
   liftCurtains: async function() {
     if (isEmpty(this.get('scene'))) {
       const options = { autosave: false };
-      const autosave = await this.get('emberTheaterSaveStateManager.autosave');
+      const autosave = await this.get('saveStateManager.autosave');
       let sceneId = autosave.get('activeState.sceneId');
 
       if (isEmpty(sceneId)) {
@@ -71,7 +71,7 @@ export default Service.extend({
     const oldScene = this.get('scene');
     if (isPresent(oldScene)) { oldScene.abort(); }
 
-    const saveStateManager = this.get('emberTheaterSaveStateManager');
+    const saveStateManager = this.get('saveStateManager');
 
     const sceneFactory = this.get('container').lookupFactory(`scene:${sceneId}`);
     const scene = sceneFactory.create({

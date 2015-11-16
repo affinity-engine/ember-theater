@@ -5,7 +5,7 @@ const { get } = Ember;
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
-  emberTheaterStageManager: service(),
+  stageManager: service('ember-theater/stage-manager'),
   /**
     Provide a description of what your direction does.
 
@@ -15,7 +15,7 @@ export default Direction.extend({
   */
 
   perform(resolve, characterId, expressionId, ...args) {
-    const stageManager = get(this, 'emberTheaterStageManager');
+    const stageManager = get(this, 'stageManager');
     const directable = stageManager.findDirectableWithId(characterId, 'character');
     const character = get(directable, 'component');
     const expression = this.store.peekRecord('ember-theater-character-expression', expressionId);

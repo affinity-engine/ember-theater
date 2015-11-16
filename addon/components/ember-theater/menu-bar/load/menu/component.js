@@ -15,12 +15,12 @@ const { alias } = computed;
 const { Promise } = RSVP;
 
 export default Component.extend({
-  emberTheaterSceneManager: inject.service(),
-  emberTheaterSaveStateManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
+  saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
 
   initializeLine: on('init', async function() {
-    const saves = await this.get('emberTheaterSaveStateManager.saves');
+    const saves = await this.get('saveStateManager.saves');
 
     new Promise((resolve) => {
       const choices = Ember.Object.create({ 
@@ -40,8 +40,8 @@ export default Component.extend({
       this.set('directable', directable);
     }).then((choice) => {
       if (isPresent(get(choice, 'object'))) {
-        this.get('emberTheaterSaveStateManager').loadRecord(choice.object);
-        this.get('emberTheaterSceneManager').toScene(choice.object.get('activeState.sceneId'), {
+        this.get('saveStateManager').loadRecord(choice.object);
+        this.get('sceneManager').toScene(choice.object.get('activeState.sceneId'), {
           autosave: false,
           loading: true
         });

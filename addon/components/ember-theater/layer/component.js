@@ -23,8 +23,8 @@ export default Component.extend({
   classNameBindings: ['layerName'],
   layout: layout,
 
-  emberTheaterLayerManager: inject.service(),
-  emberTheaterStageManager: inject.service(),
+  layerManager: inject.service('ember-theater/layer-manager'),
+  stageManager: inject.service('ember-theater/stage-manager'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),
@@ -46,11 +46,11 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  layerFilter: computed('emberTheaterLayerManager.filters.[]', {
+  layerFilter: computed('layerManager.filters.[]', {
     get() {
       const layerName = get(this, 'layerName');
 
-      return get(this, 'emberTheaterLayerManager.filters').find((filter) => {
+      return get(this, 'layerManager.filters').find((filter) => {
         return get(filter, 'layer') === layerName;
       }) || {};
     }

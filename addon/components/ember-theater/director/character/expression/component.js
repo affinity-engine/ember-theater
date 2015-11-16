@@ -20,7 +20,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   classNames: ['et-character-expression'],
   tagName: 'img',
 
-  emberTheaterTranslate: inject.service(),
+  translator: inject.service('ember-theater/translator'),
 
   src: alias('expression.src'),
 
@@ -29,7 +29,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
       const fallback = get(this, 'expression.caption');
       const translation = `expressions.${this.get('expression.id')}`;
 
-      return get(this, 'emberTheaterTranslate').translate(fallback, translation);
+      return get(this, 'translator').translate(fallback, translation);
     }
   })
 });

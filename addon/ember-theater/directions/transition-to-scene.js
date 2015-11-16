@@ -4,10 +4,10 @@ import { Direction } from 'ember-theater';
 const { inject } = Ember;
 
 export default Direction.extend({
-  emberTheaterSceneManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
 
   perform(resolve, sceneId, options) {
-    this.get('emberTheaterSceneManager').toScene(sceneId, options);
+    this.get('sceneManager').toScene(sceneId, options);
 
     resolve();
   }

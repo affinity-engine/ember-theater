@@ -2,13 +2,13 @@ import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 
-const { 
-  Component, 
-  computed, 
+const {
+  Component,
+  computed,
   get,
   observer,
   on,
-  set 
+  set
 } = Ember;
 
 const { alias } = computed;
@@ -19,7 +19,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   classNames: ['et-backdrop'],
   tagName: 'img',
 
-  emberTheaterTranslate: service(),
+  translator: service('ember-theater/translator'),
 
   backdrop: alias('directable.backdrop'),
 
@@ -28,7 +28,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
       const fallback = get(this, 'backdrop.caption');
       const translation = `backdrops.${get(this, 'backdrop.id')}`;
 
-      return get(this, 'emberTheaterTranslate').translate(fallback, translation);
+      return get(this, 'translator').translate(fallback, translation);
     }
   }).readOnly(),
 

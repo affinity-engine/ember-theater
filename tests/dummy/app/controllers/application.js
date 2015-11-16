@@ -7,7 +7,7 @@ const {
 } = Ember;
 
 export default Controller.extend({
-  emberTheaterSceneManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
   initialEmberTheaterComponents: {
     'ember-theater/menu-bar': Ember.A([
       'ember-theater/menu-bar/rewind',
@@ -19,6 +19,6 @@ export default Controller.extend({
   },
 
   setInitialScene: on('init', function() {
-    this.set('emberTheaterSceneManager.sceneId', 1);
+    this.set('sceneManager.sceneId', 1);
   })
 });

@@ -5,8 +5,8 @@ import MenuBarControl from 'ember-theater/components/ember-theater/menu-bar/cont
 const { inject } = Ember;
 
 export default MenuBarControl.extend({
-  emberTheaterSceneManager: inject.service(),
-  emberTheaterSaveStateManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
+  saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
 
   startHoverEffect() {
@@ -23,8 +23,8 @@ export default MenuBarControl.extend({
     },
 
     confirm() {
-      this.get('emberTheaterSaveStateManager').resetAutosave();
-      this.get('emberTheaterSceneManager').resetScene();
+      this.get('saveStateManager').resetAutosave();
+      this.get('sceneManager').resetScene();
       this.set('isOpen', false);
     }
   }

@@ -18,7 +18,7 @@ const { RSVP: {
 } } = Ember;
 
 export default Service.extend({
-  emberTheaterSceneManager: inject.service(),
+  sceneManager: inject.service('ember-theater/scene-manager'),
 
   directables: computed(() => Ember.A()),
 
@@ -80,21 +80,21 @@ export default Service.extend({
   _updateDirectable(directable, args, resolve) {
     // typically, `advanceSceneRecord` is called in `_instantiateFactory`, but since the directable
     // is already instantiated, we call it manually here.
-    get(this, 'emberTheaterSceneManager').advanceSceneRecord();
+    get(this, 'sceneManager').advanceSceneRecord();
 
     set(directable, 'resolve', resolve);
     directable.parseArgs(...args);
   },
 
   _instantiateFactory(factory, additionalProperties = {}) {
-    const properties = get(this, 'emberTheaterSceneManager').advanceSceneRecord();
+    const properties = get(this, 'sceneManager').advanceSceneRecord();
     merge(properties, additionalProperties);
 
     return factory.create(properties);
   },
 
   _handlePromiseResolution(promise) {
-    const sceneManager = get(this, 'emberTheaterSceneManager');
+    const sceneManager = get(this, 'sceneManager');
     const key = get(sceneManager, 'sceneRecordsCount');
 
     promise.then((value) => {

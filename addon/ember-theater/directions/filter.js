@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  emberTheaterLayerManager: inject.service(),
+  layerManager: inject.service('ember-theater/layer-manager'),
 
   perform(resolve, layerOrEffect, effectOrOptions = {}, optionsOnly = {}) {
     const layerIsPresent = typeOf(effectOrOptions) === 'string' || typeOf(effectOrOptions) === 'array';
@@ -24,6 +24,6 @@ export default Direction.extend({
     // const filterId = get(line, 'id');
     // const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
 
-    get(this, 'emberTheaterLayerManager').addFilter(resolve, effect, options, layerName(layer));
+    get(this, 'layerManager').addFilter(resolve, effect, options, layerName(layer));
   }
 });

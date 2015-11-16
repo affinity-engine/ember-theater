@@ -18,18 +18,18 @@ const { alias } = computed;
 export default Component.extend({
   classNames: ['et-director'],
   layout: layout,
-  emberTheaterLayerManager: inject.service(),
-  emberTheaterSceneManager: inject.service(),
-  emberTheaterStageManager: inject.service(),
-  directables: alias('emberTheaterStageManager.directables'),
+  layerManager: inject.service('ember-theater/layer-manager'),
+  sceneManager: inject.service('ember-theater/scene-manager'),
+  stageManager: inject.service('ember-theater/stage-manager'),
+  directables: alias('stageManager.directables'),
 
-  _sceneChanged: observer('emberTheaterSceneManager.scene', function() {
-    const scene = this.get('emberTheaterSceneManager.scene');
+  _sceneChanged: observer('sceneManager.scene', function() {
+    const scene = this.get('sceneManager.scene');
 
     if (isPresent(scene)) {
       animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
-        this.get('emberTheaterStageManager').clearDirectables();
-        this.get('emberTheaterLayerManager').clearFilters();
+        this.get('stageManager').clearDirectables();
+        this.get('layerManager').clearFilters();
         animate(this.element, { opacity: 1 }, { duration: 0 });
         scene.script();
       });
@@ -37,6 +37,6 @@ export default Component.extend({
   }),
 
   _liftCurtains: on('didInsertElement', function() {
-    this.get('emberTheaterSceneManager').liftCurtains();
+    this.get('sceneManager').liftCurtains();
   })
 });

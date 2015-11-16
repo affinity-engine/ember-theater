@@ -18,7 +18,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
   classNames: ['et-dialogue'],
   layout: layout,
 
-  emberTheaterTranslate: inject.service(),
+  translator: inject.service('ember-theater/translator'),
   config: inject.service('ember-theater/config'),
 
   character: alias('directable.character'),
@@ -45,14 +45,14 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     get() {
       const displayName = get(this, 'directable.options.displayName');
 
-      return get(this, 'emberTheaterTranslate').translate(displayName);
+      return get(this, 'translator').translate(displayName);
     }
   }).readOnly(),
 
   name: computed('character.name', 'displayName', {
     get() {
       return get(this, 'displayName') ||
-        get(this, 'emberTheaterTranslate').translate(get(this, 'character.name'));
+        get(this, 'translator').translate(get(this, 'character.name'));
     }
   }).readOnly(),
 
@@ -60,7 +60,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     get() {
       const text = get(this, 'directable.text');
 
-      return get(this, 'emberTheaterTranslate').translate(text);
+      return get(this, 'translator').translate(text);
     }
   }).readOnly(),
 

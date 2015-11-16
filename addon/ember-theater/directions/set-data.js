@@ -4,10 +4,10 @@ import { Direction } from 'ember-theater';
 const { inject } = Ember;
 
 export default Direction.extend({
-  emberTheaterSaveStateManager: inject.service(),
+  saveStateManager: inject.service('ember-theater/save-state-manager'),
 
   perform(resolve, key, value) {
-    this.get('emberTheaterSaveStateManager').setStateValue(key, value);
+    this.get('saveStateManager').setStateValue(key, value);
 
     resolve();
   }
