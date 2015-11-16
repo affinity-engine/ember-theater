@@ -27,7 +27,7 @@ export default Service.extend({
 
   autosave: computed({
     get: async function() {
-      let autosave = await this.get('store').queryRecord('ember-theater-local-save', {
+      let autosave = await this.get('store').queryRecord('ember-theater/local-save', {
         name: 'autosave'
       });
 
@@ -41,7 +41,7 @@ export default Service.extend({
 
   saves: computed({
     get: async function() {
-      return await this.get('store').findAll('ember-theater-local-save');
+      return await this.get('store').findAll('ember-theater/local-save');
     }
   }).readOnly(),
 
@@ -59,7 +59,7 @@ export default Service.extend({
   createRecord: async function(name) {
     const sceneRecord = nativeCopy(this.get('sceneRecord'));
     const statePoints = nativeCopy(this.get('statePoints'));
-    const record = this.get('store').createRecord('ember-theater-local-save', {
+    const record = this.get('store').createRecord('ember-theater/local-save', {
       name,
       sceneRecord,
       statePoints

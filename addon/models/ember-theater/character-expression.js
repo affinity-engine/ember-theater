@@ -2,14 +2,16 @@ import DS from 'ember-data';
 
 const { 
   attr, 
-  Model
+  belongsTo, 
+  Model 
 } = DS;
 
 export default Model.extend({
-  componentType: 'ember-theater-stage-backdrop',
+  character: belongsTo('ember-theater/character', { inverse: 'expressions' }),
 
   caption: attr('string'),
+  height: attr('number'),
   intl: attr('boolean'),
-  position: attr('string'),
+  opacity: attr('number'),
   src: attr('string')
 });

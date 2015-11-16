@@ -1,4 +1,4 @@
-import <%= camelizedModuleName %> from '<%= dasherizedPackageName %>/ember-theater-scenes/<%= dasherizedModuleName %>';
+import <%= camelizedModuleName %> from '<%= dasherizedPackageName %>/ember-theater/scenes/<%= dasherizedModuleName %>';
 import { module, test } from 'qunit';
 
 module('Unit | EmberTheaterScene | <%= dasherizedModuleName %>');

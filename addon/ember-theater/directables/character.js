@@ -17,11 +17,11 @@ export default Directable.extend({
     const effectIsPresent = isPresent(optionsOnly);
 
     const id = expressionIsPresent ? get(expressionOrId, 'id') : expressionOrId;
-    const character = this.store.peekRecord('ember-theater-character', id);
+    const character = this.store.peekRecord('ember-theater/character', id);
 
     const expressionId = get(expressionOrId, 'expression');
     const initialExpression = isPresent(expressionId) ?
-      this.store.peekRecord('ember-theater-character-expression', expressionId) :
+      this.store.peekRecord('ember-theater/character-expression', expressionId) :
       get(character, 'defaultExpression');
 
     const properties = {

@@ -18,7 +18,7 @@ export default Direction.extend({
     const stageManager = get(this, 'stageManager');
     const directable = stageManager.findDirectableWithId(characterId, 'character');
     const character = get(directable, 'component');
-    const expression = this.store.peekRecord('ember-theater-character-expression', expressionId);
+    const expression = this.store.peekRecord('ember-theater/character-expression', expressionId);
 
     character.changeExpression(resolve, expression, ...args);
   }

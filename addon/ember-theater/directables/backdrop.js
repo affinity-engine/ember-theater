@@ -12,7 +12,7 @@ export default Directable.extend({
 
   parseArgs(id, effectOrOptions, optionsOnly) {
     const effectIsPresent = isPresent(optionsOnly);
-    const backdrop = this.store.peekRecord('ember-theater-backdrop', id);
+    const backdrop = this.store.peekRecord('ember-theater/backdrop', id);
 
     const properties = {
       id,
