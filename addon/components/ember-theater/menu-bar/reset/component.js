@@ -1,31 +1,36 @@
-import Ember from 'ember';
 import layout from './template';
 import MenuBarControl from 'ember-theater/components/ember-theater/menu-bar/control/component';
 
-const { inject } = Ember;
+const {
+  get,
+  inject,
+  set
+} = Ember;
 
 export default MenuBarControl.extend({
+  layout,
+  keys: 'resetMenuKeys',
+
   sceneManager: inject.service('ember-theater/scene-manager'),
   saveStateManager: inject.service('ember-theater/save-state-manager'),
-  layout: layout,
 
   startHoverEffect() {
-    this.set('hovering', true);
+    set(this, 'hovering', true);
   },
 
   stopHoverEffect() {
-    this.set('hovering', false);
+    set(this, 'hovering', false);
   },
 
   actions: {
     cancel() {
-      this.set('isOpen', false);
+      set(this, 'isOpen', false);
     },
 
     confirm() {
-      this.get('saveStateManager').resetAutosave();
-      this.get('sceneManager').resetScene();
-      this.set('isOpen', false);
+      get(this, 'saveStateManager').resetAutosave();
+      get(this, 'sceneManager').resetScene();
+      set(this, 'isOpen', false);
     }
   }
 });

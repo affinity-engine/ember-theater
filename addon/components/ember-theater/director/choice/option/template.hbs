@@ -3,10 +3,16 @@
     choice=choice
     value=choice.input
     choose=(action 'choose' choice)
-    toggleInput=(action 'toggleInput')}}
+    toggleInput=(action 'toggleInput')
+  }}
 {{else}}
   {{ember-theater/director/choice/option/button
+    activeIndex=activeIndex
+    index=index
     choice=choice
+    focusDown=focusDown
+    focusUp=focusUp
     choose=(action 'choose' choice)
-    toggleInput=(action 'toggleInput')}}
+    toggleInput=(action 'toggleInput')
+  }}
 {{/if}}

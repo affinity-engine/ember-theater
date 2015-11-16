@@ -1,6 +1,9 @@
 export default {
   textSpeed: 300,
-  textSpeedMultiplier: 1,
   acceptKeys: [' ', 'Enter'],
-  cancelKeys: ['Escape']
+  cancelKeys: ['Escape'],
+  loadMenuKeys: ['ctrl+l'],
+  resetMenuKeys: ['ctrl+r'],
+  rewindMenuKeys: ['ctrl+b'],
+  saveMenuKeys: ['ctrl+s']
 };

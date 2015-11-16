@@ -1,8 +1,13 @@
 {{#if header}}
   <div class='et-choice-header'>{{header}}</div>
 {{/if}}
-{{#each choices as |choice|}}
+{{#each choices as |choice index|}}
   {{ember-theater/director/choice/option
+    activeIndex=activeIndex
+    index=index
     choice=choice
-    choose=(action 'choose' choice)}}
+    choose=(action 'choose' choice)
+    focusDown=(action 'focusDown' index)
+    focusUp=(action 'focusUp' index)
+  }}
 {{/each}}

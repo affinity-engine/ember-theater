@@ -1,15 +1,15 @@
 import Ember from 'ember';
 import layout from './template';
+import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
 const {
-  Component,
   get,
   inject,
   isPresent,
   on
 } = Ember;
 
-export default Component.extend({
+export default Menu.extend({
   sceneManager: inject.service('ember-theater/scene-manager'),
   saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,

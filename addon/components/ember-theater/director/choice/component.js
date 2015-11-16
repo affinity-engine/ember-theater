@@ -2,8 +2,11 @@ import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
-import WindowResizeMixin from 'ember-theater/mixins/window-resize';
 import animate from 'ember-theater/utils/animate';
+import {
+  keyUp,
+  EKOnInsertMixin
+} from 'ember-keyboard';
 
 const {
   Component,
@@ -11,32 +14,35 @@ const {
   get,
   inject,
   merge,
-  on
+  on,
+  set
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin, WindowResizeMixin, {
+export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, {
+  activeIndex: 0,
   classNames: ['et-choice'],
-  translator: inject.service('ember-theater/translator'),
   layout: layout,
 
-  handleautoResolve: on('didInitAttrs', function() {
-    if (this.get('autoResolve')) {
-      const choice = this.get('autoResolveResult');
+  translator: inject.service('ember-theater/translator'),
+
+  handleAutoResolve: on('didInitAttrs', function() {
+    if (get(this, 'autoResolve')) {
+      const choice = get(this, 'autoResolveResult');
+
       this.resolveAndDestroy(choice);
     }
   }),
 
   choices: computed('directable.choices', {
     get() {
-      const choices = this.get('directable.choices');
+      const choices = get(this, 'directable.choices');
       const keys = Object.keys(choices);
 
       return keys.map((key) => {
         const value = choices[key];
-        const text = this.get('translator').translate(value);
+        const text = get(this, 'translator').translate(value);
 
         return Ember.$.extend(choices[key], {
-          input: '',
           key,
           text
         });
@@ -46,17 +52,39 @@ export default Component.extend(DirectableComponentMixin, PerfectScrollbarMixin,
 
   header: computed('directable.header', {
     get() {
-      const header = this.get('directable.header');
+      const header = get(this, 'directable.header');
 
-      return this.get('translator').translate(header);
+      return get(this, 'translator').translate(header);
     }
   }).readOnly(),
+
+  setNumericalKey: on('didReceiveAttrs', function() {
+    const choices = get(this, 'choices');
+
+    choices.forEach((choice, index) => {
+      this.on(keyUp((index + 1).toString()), () => set(this, 'activeIndex', index));
+    });
+  }),
 
   actions: {
     choose(choice) {
       animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
         this.resolveAndDestroy(choice);
       });
+    },
+
+    focusDown(index) {
+      const length = get(this, 'choices.length');
+      const activeIndex = index + 1 === length ? 0 : index + 1;
+
+      set(this, 'activeIndex', activeIndex);
+    },
+
+    focusUp(index) {
+      const length = get(this, 'choices.length');
+      const activeIndex = index - 1 < 0 ? length - 1 : index - 1;
+
+      set(this, 'activeIndex', activeIndex);
     }
   }
 });

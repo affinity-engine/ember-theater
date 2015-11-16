@@ -1,19 +1,14 @@
 import Ember from 'ember';
 import layout from './template';
 
-const {
-  Component,
-  computed
-} = Ember;
+const { Component } = Ember;
+
+const { computed: { and } } = Ember;
 
 export default Component.extend({
   layout: layout,
 
-  isInput: computed('choice.inputable', 'inputOpen', {
-    get() {
-      return this.get('choice.inputable') && this.get('inputOpen');
-    }
-  }),
+  isInput: and('choice.inputable', 'inputOpen'),
 
   actions: {
     choose(choice) {

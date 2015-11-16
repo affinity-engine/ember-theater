@@ -1,5 +1,10 @@
 import Ember from 'ember';
 
+import {
+  keyUp,
+  EKOnInsertMixin
+} from 'ember-keyboard';
+
 const {
   Component,
   K,
@@ -8,9 +13,19 @@ const {
   set
 } = Ember;
 
-export default Component.extend({
+const { inject: { service } } = Ember;
+
+export default Component.extend(EKOnInsertMixin, {
   classNames: ['et-menu-bar-control-icon'],
   tagName: 'button',
+
+  config: service('ember-theater/config'),
+
+  setupFocusKeystroke: on('init', function() {
+    const keys = get(this, `config.${get(this, 'keys')}`);
+
+    keys.forEach((key) => this.on(keyUp(key), () => this.toggleOpen()));
+  }),
 
   initializeFilter: on('init', function() {
     const filter = get(this, 'container').lookupFactory('direction:filter').create();

@@ -66,9 +66,11 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   textSpeed: computed('directable.options.speed', 'character.textSpeed', {
     get() {
+      const defaultSpeed = get(this, 'config.textSpeed');
+
       return get(this, 'directable.options.speed') ||
         get(this, 'character.textSpeed') ||
-        300;
+        defaultSpeed;
     }
   }),
 

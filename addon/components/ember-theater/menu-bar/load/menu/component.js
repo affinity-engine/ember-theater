@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
+import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
 const {
-  Component,
   computed,
   get,
   inject,
@@ -14,7 +14,7 @@ const {
 const { alias } = computed;
 const { Promise } = RSVP;
 
-export default Component.extend({
+export default Menu.extend({
   sceneManager: inject.service('ember-theater/scene-manager'),
   saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
