@@ -19,6 +19,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
   layout: layout,
 
   emberTheaterTranslate: inject.service(),
+  config: inject.service('ember-theater/config'),
 
   character: alias('directable.character'),
   instantWriteText: alias('directable.options.instant'),
@@ -36,7 +37,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   keys: computed('directable.options.keys', {
     get() {
-      return get(this, 'directable.options.keys') || [' '];
+      return get(this, 'directable.options.keys') || get(this, 'config.acceptKeys');
     }
   }).readOnly(),
 
