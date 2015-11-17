@@ -25,7 +25,7 @@ export default Component.extend({
   images: union('emberTheaterBackdrops', 'emberTheaterCharacterExpressions'),
   layout: layout,
   loadedImages: filterBy('images', 'fileLoaded', true),
-  loadedSounds: filterBy('emberTheaterSounds', 'audio'),
+  loadedSounds: filterBy('sounds', 'audio'),
   store: inject.service('store'),
 
   checkForMediaLoadCompletion: on('didRender', function() {
@@ -56,8 +56,8 @@ export default Component.extend({
   },
 
   loadSounds() {
-    const sounds = this.get('emberTheaterSounds');
-    if (!sounds) { return this.set('emberTheaterSounds', Ember.A()); }
+    const sounds = this.get('sounds');
+    if (!sounds) { return this.set('sounds', Ember.A()); }
 
     sounds.forEach((item) => {
       const audio = new window.buzz.sound(get(item, 'path'), {
@@ -101,9 +101,9 @@ export default Component.extend({
     }
   }),
 
-  soundsLoaded: computed('loadedSounds.length', 'emberTheaterSounds.length', {
+  soundsLoaded: computed('loadedSounds.length', 'sounds.length', {
     get() {
-      return this.get('loadedSounds.length') >= this.get('emberTheaterSounds.length');
+      return this.get('loadedSounds.length') >= this.get('sounds.length');
     }
   })
 });
