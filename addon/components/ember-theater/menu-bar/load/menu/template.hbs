@@ -1,3 +1,7 @@
 {{#if directable}}
-  {{ember-theater/director/choice directable=directable}}
+  {{ember-theater/director/choice
+    activeIndex=1
+    directable=directable
+    keyboardPriority=10000
+  }}
 {{/if}}

@@ -18,19 +18,17 @@ export default Menu.extend({
     const points = await this.get('saveStateManager.statePoints');
 
     new Promise((resolve) => {
-      const choices = Ember.Object.create({ 
-        done74923: { class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.rewind.done' }
-      });
+      const choices = [{ 
+        class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.rewind.done'
+      }];
 
-      points.forEach((point, index) => {
+      points.reverse().forEach((point, index) => {
         const name = get(point, 'sceneId');
-        const choiceId = (points.length - index).toString(); // sort most recent statePoints first
 
-        choices.set(choiceId, { text: name, object: Ember.A(points.slice(0, index + 1)) });
+        choices.push({ text: name, object: Ember.A(points.slice(0, index + 1)) });
       });
 
       const directable = Ember.Object.create({
-        options: { keyboardPriority: 10000 },
         choices: choices,
         header: 'ember-theater.rewind.header',
         resolve: resolve

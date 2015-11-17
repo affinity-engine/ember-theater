@@ -15,11 +15,11 @@ export default Scene.extend({
     // this.filter('theater.text', 'blur(0)', { duration: 500 });
     this.backdrop('beach--night', { duration: 5000 });
     await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });
-    const choiceOne = await this.choice('What should I do?', { A: 'Whirl!', B: 'Jump!', C: 'Play Bolero!', D: 'Something', E: 'Filler', F: 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', G: 'Here is another short statement.', H: 'Okay, that last one was still kind of long.', I: 'Really actually totally short.', J: 'Okay, really really short.', K: 'Truly short.', L: 'Short and sweet.', M: 'Shorter.', N: 'S' });
+    const choiceOne = await this.choice('What should I do?', ['Whirl!', { key: 'B', text: 'Jump!' }, 'Play Bolero!', 'Something', 'Filler', 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', 'Here is another short statement.', 'Okay, that last one was still kind of long.', 'Really actually totally short.', 'Okay, really really short.', 'Truly short.', 'Short and sweet.', 'Shorter.', 'S' ]);
     switch (choiceOne.key) {
-      case 'A': await this.expression('steven', 'steven--jumping', { effect: 'transition.whirlIn', options: { duration: 1000 } }, { effect: 'transition.whirlOut', options: { duration: 1000 } }); break;
+      case 0: await this.expression('steven', 'steven--jumping', { effect: 'transition.whirlIn', options: { duration: 1000 } }, { effect: 'transition.whirlOut', options: { duration: 1000 } }); break;
       case 'B': await this.character('steven', 'callout.bounce', { duration: 1000 }); break;
-      case 'C': this.sound('song__bolero'); break;
+      case 2: this.sound('song__bolero'); break;
     }
     await this.dialogue('steven', 'How was that?!');
     this.setData('test', 0);

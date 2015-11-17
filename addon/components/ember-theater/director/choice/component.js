@@ -33,16 +33,15 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
     }
   }),
 
-  choices: computed('directable.choices', {
+  choices: computed('directable.choices.[]', {
     get() {
       const choices = get(this, 'directable.choices');
-      const keys = Object.keys(choices);
 
-      return keys.map((key) => {
-        const value = choices[key];
+      return choices.map((value, index) => {
+        const key = get(value, 'key') || index;
         const text = get(this, 'translator').translate(value);
 
-        return Ember.$.extend(choices[key], {
+        return Ember.$.extend(value, {
           key,
           text
         });
@@ -55,12 +54,6 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
       const header = get(this, 'directable.header');
 
       return get(this, 'translator').translate(header);
-    }
-  }).readOnly(),
-
-  keyboardPriority: computed('directable.options.keyboardPriority', {
-    get() {
-      return get(this, 'directable.options.keyboardPriority') || 0;
     }
   }).readOnly(),
 

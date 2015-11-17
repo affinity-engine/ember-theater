@@ -23,16 +23,15 @@ export default Menu.extend({
     const saves = await this.get('saveStateManager.saves');
 
     new Promise((resolve) => {
-      const choices = Ember.Object.create({ 
-        done74923: { class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.load.done' }
-      });
+      const choices = [{
+        class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.load.done'
+      }];
 
       saves.forEach((save) => {
-        choices.set(save.id, { text: save.get('name'), object: save });
+        choices.push({ key: save.id, text: save.get('name'), object: save });
       });
 
       const directable = Ember.Object.create({
-        options: { keyboardPriority: 10000 },
         choices: choices,
         header: 'ember-theater.load.header',
         resolve: resolve

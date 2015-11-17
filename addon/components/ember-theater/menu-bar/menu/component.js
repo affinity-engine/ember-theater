@@ -15,6 +15,7 @@ const { inject: { service } } = Ember;
 
 export default Component.extend(EKOnInsertMixin, {
   config: service('ember-theater/config'),
+  keyboardPriority: 10000,
 
   setupCancelKeys: on('init', function() {
     const cancelKeys = get(this, 'config.cancelKeys');
