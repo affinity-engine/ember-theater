@@ -8,7 +8,8 @@ const {
   isPresent,
   merge,
   on,
-  Service
+  Service,
+  set
 } = Ember;
 
 export default Service.extend({
@@ -28,11 +29,12 @@ export default Service.extend({
   autosave: computed({
     get: async function() {
       let autosave = await this.get('store').queryRecord('ember-theater/local-save', {
-        name: 'autosave'
+        isAutosave: true
       });
 
       if (isEmpty(autosave)) {
         autosave = await this.createRecord('autosave');
+        set(autosave, 'isAutosave', true);
       }
 
       return autosave;

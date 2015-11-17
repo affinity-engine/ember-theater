@@ -8,45 +8,40 @@ const {
   inject,
   isPresent,
   on,
-  RSVP
+  RSVP,
+  set
 } = Ember;
 
 const { alias } = computed;
-const { Promise } = RSVP;
 
 export default Menu.extend({
-  sceneManager: inject.service('ember-theater/scene-manager'),
-  saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
+  header: 'ember-theater.load.header',
 
-  initializeLine: on('init', async function() {
-    const saves = await this.get('saveStateManager.saves');
+  populateChoices: async function() {
+    const saves = await get(this, 'saveStateManager.saves');
+    const choices = get(this, 'choices');
 
-    new Promise((resolve) => {
-      const choices = [{
-        class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.load.done'
-      }];
-
-      saves.forEach((save) => {
-        choices.push({ key: save.id, text: save.get('name'), object: save });
+    saves.forEach((save) => {
+      choices.pushObject({
+        key: get(save, 'id'),
+        object: save,
+        text: get(save, 'name')
       });
-
-      const directable = Ember.Object.create({
-        choices: choices,
-        header: 'ember-theater.load.header',
-        resolve: resolve
-      });
-
-      this.set('directable', directable);
-    }).then((choice) => {
-      if (isPresent(get(choice, 'object'))) {
-        this.get('saveStateManager').loadRecord(choice.object);
-        this.get('sceneManager').toScene(choice.object.get('activeState.sceneId'), {
-          autosave: false,
-          loading: true
-        });
-      }
-      this.attrs.closeMenu();
     });
-  })
+  },
+
+  resolve(choice) {
+    const save = get(choice, 'object');
+
+    if (isPresent(save)) {
+      get(this, 'saveStateManager').loadRecord(save);
+      get(this, 'sceneManager').toScene(get(save, 'activeState.sceneId'), {
+        autosave: false,
+        loading: true
+      });
+    }
+
+    this.attrs.closeMenu();
+  }
 });

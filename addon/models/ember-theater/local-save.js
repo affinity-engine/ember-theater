@@ -10,6 +10,7 @@ const {
 const { computed } = Ember;
 
 export default Model.extend(LokiJSModelMixin, {
+  isAutosave: attr('boolean'),
   name: attr('string'),
   sceneRecord: attr('object'),
   statePoints: attr('array'),

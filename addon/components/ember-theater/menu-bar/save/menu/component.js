@@ -15,45 +15,41 @@ const { alias } = computed;
 const { Promise } = RSVP;
 
 export default Menu.extend({
-  sceneManager: inject.service('ember-theater/scene-manager'),
-  saveStateManager: inject.service('ember-theater/save-state-manager'),
   layout: layout,
+  header: 'ember-theater.save.header',
 
-  initializeLine: on('init', async function() {
-    const saves = await this.get('saveStateManager.saves');
+  populateChoices: async function() {
+    const saves = await get(this, 'saveStateManager.saves');
+    const choices = get(this, 'choices');
 
-    new Promise((resolve) => {
-      const choices = [{ 
-        class: 'et-choice-close', icon: 'arrow-right', text: 'ember-theater.save.done'
-      }, {
-        icon: 'save', text: 'ember-theater.save.newGame', inputable: true
-      }];
-
-      saves.forEach((save) => {
-        const name = save.get('name');
-
-        if (name !== 'autosave') {
-          choices.push({ key: save.id, text: name, object: save });
-        }
-      });
-
-      const directable = Ember.Object.create({
-        choices: choices,
-        header: 'ember-theater.save.header',
-        resolve: resolve
-      });
-
-      this.set('directable', directable);
-    }).then((choice) => {
-      const saveStateManager = this.get('saveStateManager');
-
-      switch (choice.key) {
-        case 0: return this.attrs.closeMenu();
-        case 1: saveStateManager.createRecord(choice.input); break;
-        default: saveStateManager.updateRecord(choice.object);
-      }
-
-      this.attrs.closeMenu();
+    // Position is important. New Game must be the second choice, as its position determines the way
+    // this choice is resolved.
+    choices.pushObject({
+      icon: 'save',
+      inputable: true,
+      text: 'ember-theater.save.newGame'
     });
-  })
+
+    saves.forEach((save) => {
+      if (!get(save, 'isAutosave')) {
+        choices.pushObject({
+          key: get(save, 'id'),
+          object: save,
+          text: get(save, 'name')
+        });
+      }
+    });
+  },
+
+  resolve(choice) {
+    const saveStateManager = get(this, 'saveStateManager');
+
+    switch (get(choice, 'key')) {
+      case 0: return this.attrs.closeMenu();
+      case 1: saveStateManager.createRecord(get(choice, 'input')); break;
+      default: saveStateManager.updateRecord(get(choice, 'object'));
+    }
+
+    this.attrs.closeMenu();
+  }
 });
