@@ -22,7 +22,7 @@ export default Scene.extend({
       case 'C': this.sound('song__bolero'); break;
     }
     await this.dialogue('steven', 'How was that?!');
-    // this.setData('test', 0);
-    // this.transitionToScene(2);
+    this.setData('test', 0);
+    this.transitionToScene(2);
   }
 });

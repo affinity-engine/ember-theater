@@ -34,6 +34,7 @@ export default Menu.extend({
       });
 
       const directable = Ember.Object.create({
+        options: { keyboardPriority: 10000 },
         choices: choices,
         header: 'ember-theater.save.header',
         resolve: resolve

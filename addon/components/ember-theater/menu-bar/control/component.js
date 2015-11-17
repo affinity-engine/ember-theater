@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 import {
-  keyUp,
+  keyDown,
   EKOnInsertMixin
 } from 'ember-keyboard';
 
@@ -24,7 +24,10 @@ export default Component.extend(EKOnInsertMixin, {
   setupFocusKeystroke: on('init', function() {
     const keys = get(this, `config.${get(this, 'keys')}`);
 
-    keys.forEach((key) => this.on(keyUp(key), () => this.toggleOpen()));
+    keys.forEach((key) => this.on(keyDown(key), (event) => {
+      this.toggleOpen();
+      event.preventDefault();
+    }));
   }),
 
   initializeFilter: on('init', function() {

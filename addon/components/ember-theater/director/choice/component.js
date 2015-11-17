@@ -58,10 +58,18 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
     }
   }).readOnly(),
 
+  keyboardPriority: computed('directable.options.keyboardPriority', {
+    get() {
+      return get(this, 'directable.options.keyboardPriority') || 0;
+    }
+  }).readOnly(),
+
   setNumericalKey: on('didReceiveAttrs', function() {
     const choices = get(this, 'choices');
 
-    choices.forEach((choice, index) => {
+    choices.find((choice, index) => {
+      if (index >= 9) { return true; }
+
       this.on(keyUp((index + 1).toString()), () => set(this, 'activeIndex', index));
     });
   }),

@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { keyDown } from 'ember-keyboard';
+import { keyDown, keyUp } from 'ember-keyboard';
 
 const {
   on,
@@ -9,7 +9,7 @@ const {
 export default TextField.extend({
   classNames: ['et-choice-input'],
 
-  closeInput: on('focusOut', function() {
+  closeInput: on('focusOut', keyUp('Escape'), function() {
     this.attrs.toggleInput();
   }),
 
