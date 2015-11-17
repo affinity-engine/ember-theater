@@ -23,7 +23,7 @@ export default Menu.extend({
       }];
 
       points.reverse().forEach((point, index) => {
-        const name = get(point, 'sceneId');
+        const name = get(point, 'sceneName');
 
         choices.push({ text: name, object: Ember.A(points.slice(0, index + 1)) });
       });

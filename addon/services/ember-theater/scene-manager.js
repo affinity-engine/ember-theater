@@ -92,7 +92,10 @@ export default Service.extend({
     if (get(options, 'autosave') !== false) {
       const autosave = await saveStateManager.get('autosave');
 
-      saveStateManager.appendActiveState({ sceneId });
+      saveStateManager.appendActiveState({
+        sceneId,
+        sceneName: get(scene, 'name') || sceneId
+      });
       saveStateManager.updateRecord(autosave);
     }
 

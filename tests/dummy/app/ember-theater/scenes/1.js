@@ -1,6 +1,8 @@
 import { Scene } from 'ember-theater';
 
 export default Scene.extend({
+  name: 'The Beach',
+
   script: async function() {
     // await this.choice('1.choice1.header', { A: { text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, B: '1.choice1.B' });
     // this.filter('theater.text', ['blur(0px)', 'blur(10px)'], { duration: 1000 });
