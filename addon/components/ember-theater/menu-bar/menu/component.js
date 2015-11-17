@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from './template';
 
 import {
   keyUp,
@@ -18,6 +19,7 @@ const { RSVP: { Promise } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Component.extend(EKOnInsertMixin, {
+  layout,
   keyboardPriority: 10000,
 
   config: service('ember-theater/config'),

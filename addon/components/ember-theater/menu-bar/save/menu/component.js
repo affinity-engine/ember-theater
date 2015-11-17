@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import layout from './template';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
 const {
@@ -15,7 +14,6 @@ const { alias } = computed;
 const { Promise } = RSVP;
 
 export default Menu.extend({
-  layout: layout,
   header: 'ember-theater.save.header',
 
   populateChoices: async function() {

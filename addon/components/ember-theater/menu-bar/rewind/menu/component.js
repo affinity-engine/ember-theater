@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import layout from './template';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
 const {
@@ -10,7 +9,6 @@ const {
 } = Ember;
 
 export default Menu.extend({
-  layout: layout,
   header: 'ember-theater.rewind.header',
 
   populateChoices: async function() {
