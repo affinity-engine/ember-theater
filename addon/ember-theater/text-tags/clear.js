@@ -7,12 +7,12 @@ export default TextTag.extend({
   /**
     Clears all the preceding text.
 
-    @method perform
+    @method start
     @param {Object} context
     @param {Number} index
   */
 
-  perform(context, index) {
+  start(context, index) {
     const $words = get(context, '$words');
     const nextWord = $words.eq(index + 1);
 

@@ -5,23 +5,35 @@ const { set } = Ember;
 
 export default TextTag.extend({
   /**
-    Provide a description of what your text tag does.
+    Instantly displays the text between this start and the stop.
 
-    @method perform
+    @method start
     @param {Object} context
     @param {Number} index
-    @param {Boolean} isClosingTag
   */
 
-  perform(context, index, isClosingTag) {
-    if (isClosingTag) {
-      set(context, 'instantWriteText', false);
-    } else {
-      set(context, 'instantWriteText', true);
-    }
+  start(context, index) {
+    set(context, 'instantWriteText', true);
 
+    this.complete(context, index);
+  },
+
+  /**
+    Returns text to normal speed.
+
+    @method stop
+    @param {Object} context
+    @param {Number} index
+  */
+
+  stop(context, index) {
+    set(context, 'instantWriteText', false);
+
+    this.complete(context, index);
+  },
+
+  complete(context, index) {
     context.writeWord(index + 1);
-
     this.destroy();
   }
 });

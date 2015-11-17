@@ -4,12 +4,26 @@ export default TextTag.extend({
   /**
     Provide a description of what your text tag does.
 
-    @method perform
+    @method start
     @param {Object} context
     @param {Number} index
-    @param {Boolean} isClosingTag
     @param {*} exampleParam
   */
 
-  perform(context, index, isClosingTag) {}
+  start(context, index) {
+  
+  },
+
+  /**
+    Provide a description of what your text closing tag does.
+
+    @method stop
+    @param {Object} context
+    @param {Number} index
+    @param {*} exampleParam
+  */
+
+  stop(context, index) {
+  
+  }
 });

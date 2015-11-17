@@ -192,9 +192,10 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   executeCustomTag(text, index) {
     const [, openingOrClosing, content] = text.match(/(#|\/){(.*?)}/);
     const args = content.split(' ');
-    const method = args.shift();
-    const isClosingTag = openingOrClosing === '/';
+    const tagName = args.shift();
+    const tag = this[tagName].create();
+    const method = openingOrClosing === '#' ? 'start' : 'stop';
 
-    this[method].create().perform(this, index, isClosingTag, ...args);
+    tag[method](this, index, ...args);
   }
 });

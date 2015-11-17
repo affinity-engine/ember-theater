@@ -12,14 +12,13 @@ export default TextTag.extend({
     following number. Note that lower numbers are faster, so multiply by a fraction (eg, `0.5`) to
     make the text go faster.
 
-    @method perform
+    @method start
     @param {Object} context
     @param {Number} index
-    @param {Boolean} isClosingTag
     @param {String} speed
   */
 
-  perform(context, index, isClosingTag, speed) {
+  start(context, index, speed) {
     if (speed.charAt(0) === '*') {
       speed = parseInt(get(context, 'textSpeed'), 10) * parseFloat(speed.substring(1), 10);
     }

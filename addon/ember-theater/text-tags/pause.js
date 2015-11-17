@@ -17,14 +17,13 @@ export default TextTag.extend({
     the provided duration elapses. Note that it temporarily disables the component's
     standard keyboard bindings to avoid conflict.
 
-    @method perform
+    @method start
     @param {Object} context
     @param {Number} index
-    @param {Boolean} isClosingTag
     @param {String} [duration]
   */
 
-  perform(context, index, isClosingTag, duration) {
+  start(context, index, duration) {
     setProperties(this, { context, index });
 
     const keys = get(context, 'keys');
