@@ -3,9 +3,7 @@ import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component
 
 const {
   get,
-  inject,
-  isPresent,
-  on
+  isPresent
 } = Ember;
 
 export default Menu.extend({

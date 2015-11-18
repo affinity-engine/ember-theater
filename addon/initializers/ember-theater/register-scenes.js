@@ -4,7 +4,7 @@ export function initialize(container, application) {
   const scenes = gatherModules('ember-theater\/scenes');
 
   scenes.forEach((scene, sceneName) => {
-    application.register(`scene:${sceneName}`, scene), { singleton: false };
+    application.register(`scene:${sceneName}`, scene, { singleton: false });
   });
 }
 

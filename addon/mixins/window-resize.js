@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 const {
-  Evented, 
-  Mixin, 
-  on 
+  Evented,
+  Mixin,
+  on
 } = Ember;
 
 export default Mixin.create(Evented, {

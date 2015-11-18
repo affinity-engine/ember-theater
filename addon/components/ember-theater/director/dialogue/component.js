@@ -7,8 +7,7 @@ const {
   computed,
   get,
   inject,
-  on,
-  typeOf
+  on
 } = Ember;
 
 const { alias } = computed;

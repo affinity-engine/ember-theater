@@ -2,7 +2,6 @@ import Ember from 'ember';
 import { Directable } from 'ember-theater';
 
 const {
-  isPresent,
   setProperties,
   typeOf
 } = Ember;
@@ -15,10 +14,10 @@ export default Directable.extend({
     const headerIsPresent = typeOf(headerOrChoices) === 'string';
 
     const properties = {
-      header: headerIsPresent ? headerOrChoices : undefined,
+      header: headerIsPresent ? headerOrChoices : null,
       choices: headerIsPresent ? choicesOrOptions : headerOrChoices,
       options: headerIsPresent ? optionsOnly : choicesOrOptions
-    }
+    };
 
     setProperties(this, properties);
   }

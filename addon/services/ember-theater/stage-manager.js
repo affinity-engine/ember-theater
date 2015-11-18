@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { Layer } from 'ember-theater';
 
 const {
   Service,
@@ -7,15 +6,11 @@ const {
   get,
   inject,
   isBlank,
-  isPresent,
   merge,
   set
 } = Ember;
 
-const { RSVP: {
-  Promise,
-  resolve
-} } = Ember;
+const { RSVP: { Promise } } = Ember;
 
 export default Service.extend({
   sceneManager: inject.service('ember-theater/scene-manager'),
@@ -88,6 +83,7 @@ export default Service.extend({
 
   _instantiateFactory(factory, additionalProperties = {}) {
     const properties = get(this, 'sceneManager').advanceSceneRecord();
+
     merge(properties, additionalProperties);
 
     return factory.create(properties);

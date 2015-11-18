@@ -5,10 +5,7 @@ import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 const {
   Component,
   computed,
-  get,
-  observer,
-  on,
-  set
+  get
 } = Ember;
 
 const { alias } = computed;

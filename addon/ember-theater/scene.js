@@ -1,18 +1,11 @@
 import Ember from 'ember';
 
-const {
-  computed,
-  get,
-  inject,
-  isBlank,
-  isPresent,
-  on,
-  RSVP,
-  set
-} = Ember;
+const { get } = Ember;
+const { RSVP: { resolve } } = Ember;
+const { inject: { service } } = Ember;
 
 export default Ember.Object.extend({
-  stageManager: inject.service('ember-theater/stage-manager'),
+  stageManager: service('ember-theater/stage-manager'),
 
   abort() {
     this.set('isAborted', true);

@@ -42,10 +42,12 @@ export default Component.extend({
 
   loadImages() {
     const images = this.get('images');
+
     if (!images) { return this.set('images', Ember.A()); }
 
     images.forEach((item) => {
       const image = new Image();
+
       image.src = get(item, 'src');
 
       image.onload = run.bind(this, () => {
@@ -57,6 +59,7 @@ export default Component.extend({
 
   loadSounds() {
     const sounds = this.get('sounds');
+
     if (!sounds) { return this.set('sounds', Ember.A()); }
 
     sounds.forEach((item) => {
@@ -78,7 +81,7 @@ export default Component.extend({
 
     this.get('modelNames').forEach((modelName) => {
       const singularModelName = singularize(modelName);
-      const fixtures = require(`${modulePrefix}/ember-theater/fixtures/${modelName}`)['default'];
+      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
       const data = store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
 
       this.set(Ember.String.camelize(modelName), Ember.A(data));
@@ -90,7 +93,7 @@ export default Component.extend({
 
   modelNames: computed({
     get() {
-      const paths = Object.keys(require.entries);
+      const paths = Object.keys(requirejs.entries);
       const regex = new RegExp(`${modulePrefix}\/ember-theater/fixtures\/(.*)`);
 
       return paths.filter((path) => {

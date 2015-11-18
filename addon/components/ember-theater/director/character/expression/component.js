@@ -1,16 +1,12 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
-import animate from 'ember-theater/utils/animate';
 
 const {
   Component,
   computed,
   get,
-  inject,
-  merge,
-  observer,
-  on
+  inject
 } = Ember;
 
 const { alias } = computed;

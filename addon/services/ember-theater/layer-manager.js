@@ -6,10 +6,10 @@ const {
   generateGuid,
   get,
   getProperties,
-  isPresent,
   setProperties,
   typeOf
 } = Ember;
+
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
@@ -25,7 +25,7 @@ export default Service.extend({
   },
 
   addFilter(resolve, effect, { duration = 0, timing = 'linear', iterations = 1, destroy }, layer) {
-    const filters = get(this, 'filters')
+    const filters = get(this, 'filters');
     const filter = this.getFilter(layer) || Ember.Object.create({ layer });
     const previousKeyframes = get(filter, 'keyframes');
     const animationName = generateGuid(filter, 'filter');
@@ -35,11 +35,11 @@ export default Service.extend({
     const keyframeStates = effects.reduce((states, state, index) => {
       const percent = index / totalEffects * 100;
 
-     return `${states}${percent}%{-webkit-filter:${state};filter:${state};}`;
-    }, ''); 
+      return `${states}${percent}%{-webkit-filter:${state};filter:${state};}`;
+    }, '');
     const keyframes = `@keyframes ${animationName} { ${keyframeStates} }`;
-
     const dynamicRulesheet = get(this, 'dynamicRulesheet');
+
     dynamicRulesheet.deleteRule(previousKeyframes);
     dynamicRulesheet.insertRule(keyframes);
 

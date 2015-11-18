@@ -13,7 +13,6 @@ const {
   computed,
   get,
   inject,
-  merge,
   on,
   set
 } = Ember;

@@ -2,16 +2,9 @@ import Ember from 'ember';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
 const {
-  computed,
   get,
-  inject,
-  isPresent,
-  on,
-  RSVP,
-  set
+  isPresent
 } = Ember;
-
-const { alias } = computed;
 
 export default Menu.extend({
   header: 'ember-theater.load.header',

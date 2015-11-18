@@ -1,10 +1,9 @@
 import Ember from 'ember';
 import animate from 'ember-theater/utils/animate';
 
-const { 
+const {
   Mixin,
   get,
-  isPresent,
   merge,
   observer,
   on

@@ -1,15 +1,13 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-const { Adapter } = DS;
-
 const {
   isPresent,
-  on,
-  RSVP
+  on
 } = Ember;
 
-const { resolve } = RSVP;
+const { Adapter } = DS;
+const { RSVP: { resolve } } = Ember;
 
 export default Adapter.extend({
   indices: [],
@@ -72,10 +70,18 @@ export default Adapter.extend({
   },
 
   _findOrAddCollection(type) {
-    const { db, indices } = this.getProperties('db', 'indices');
+    const {
+      db,
+      indices
+    } = this.getProperties('db', 'indices');
+
     let collection = db.getCollection(type.modelName);
 
-    if (!collection) { collection = db.addCollection(type.modelName, { indices }); }
+    if (!collection) {
+      collection = db.addCollection(type.modelName, {
+        indices
+      });
+    }
 
     return collection;
   },

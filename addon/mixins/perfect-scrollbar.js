@@ -9,7 +9,7 @@ export default Mixin.create({
   destroyPerfectScrollbar: on('willDestroyElement', function() {
     PerfectScrollbar.destroy(this.element);
   }),
-  
+
   initializePerfectScrollbar: on('didInsertElement', function() {
     PerfectScrollbar.initialize(this.element, {
       suppressScrollX: true

@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import { Layer } from 'ember-theater';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
 
@@ -7,7 +6,6 @@ const {
   Component,
   computed,
   inject,
-  isBlank,
   isPresent,
   observer,
   on
@@ -27,7 +25,7 @@ export default Component.extend({
     const scene = this.get('sceneManager.scene');
 
     if (isPresent(scene)) {
-      animate(this.element, { opacity: 0 }, { duration: 1000 }).then(()=> {
+      animate(this.element, { opacity: 0 }, { duration: 1000 }).then(() => {
         this.get('stageManager').clearDirectables();
         this.get('layerManager').clearFilters();
         animate(this.element, { opacity: 1 }, { duration: 0 });

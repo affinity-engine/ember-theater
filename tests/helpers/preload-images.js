@@ -1,21 +1,22 @@
 import Ember from 'ember';
 import config from '../../config/environment';
 
-export default Ember.Test.registerAsyncHelper('preloadImages', function(app) {
+export default Ember.Test.registerAsyncHelper('preloadImages', function() {
   return new Ember.RSVP.Promise(function(resolve) {
 
-    var loadedImages = 0;
+    let loadedImages = 0;
 
-    var checkForLoadCompletion = function() {
+    const checkForLoadCompletion = () => {
       loadedImages += 1;
       if (loadedImages >= config.imageSrcs.length) {
         resolve();
       }
     };
 
-    Ember.run(function() {
+    Ember.run(() => {
       config.imageSrcs.forEach((src) => {
         const image = new Image();
+
         image.src = `images/${src}`;
         image.onload = function() {
           checkForLoadCompletion();

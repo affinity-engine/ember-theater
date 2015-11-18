@@ -3,7 +3,7 @@ import nativeCopy from 'ember-theater/utils/native-copy';
 
 const {
   computed,
-  inject,
+  isBlank,
   isEmpty,
   isPresent,
   merge,
@@ -12,11 +12,14 @@ const {
   set
 } = Ember;
 
+const { inject: { service } } = Ember;
+
 export default Service.extend({
+  store: service(),
+
   activeState: computed(() => Ember.Object.create()),
   sceneRecord: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
-  store: inject.service(),
 
   initializeState: on('init', async function() {
     const autosave = await this.get('autosave');
@@ -49,7 +52,7 @@ export default Service.extend({
 
   resetAutosave: async function() {
     const autosave = await this.get('autosave');
-    
+
     this.set('activeState', Ember.Object.create());
     this.set('sceneRecord', Ember.Object.create());
     this.get('statePoints').clear();
@@ -98,17 +101,16 @@ export default Service.extend({
     return await record.save();
   },
 
-  // SCENE RECORD MANAGEMENT // 
+  // SCENE RECORD MANAGEMENT //
   updateSceneRecord(key, value) {
-    value = value === undefined ? null : value;
-    this.set(`sceneRecord.${key}`, value);
+    this.set(`sceneRecord.${key}`, isBlank(value) ? null : value);
   },
 
   clearSceneRecord() {
     this.set('sceneRecord', Ember.Object.create());
   },
 
-  // STATE MANAGEMENT // 
+  // STATE MANAGEMENT //
   appendActiveState(optionalValues) {
     const activeState = nativeCopy(this.get('activeState'));
     const mergedState = merge(activeState, optionalValues);
@@ -125,7 +127,7 @@ export default Service.extend({
   },
 
   deleteStateValue(key) {
-    return this.setStateValue(key, undefined);
+    return this.setStateValue(key, null);
   },
 
   getStateValue(key) {

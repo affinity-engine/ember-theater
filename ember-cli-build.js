@@ -8,8 +8,13 @@ module.exports = function(defaults) {
       includePolyfill: true,
       stage: 1
     },
+
     sassOptions: {
       extensions: 'scss'
+    },
+
+    'ember-cli-qunit': {
+      useLintTree: false
     }
   });
 

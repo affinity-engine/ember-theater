@@ -15,7 +15,7 @@ export default Direction.extend({
     const effect = effectIsPresent ?
       effectOrOptions :
       isPresent(get(options, 'fadeWith')) ? 'fadeWith' : 'play';
-    const audio =  this.store.peekRecord('ember-theater/sound', id).audio;
+    const audio = this.store.peekRecord('ember-theater/sound', id).audio;
 
     this._bindLoop(audio, options);
     this._bindFadeWith(effect, options);
@@ -28,7 +28,7 @@ export default Direction.extend({
   },
 
   _bindLoop(audio, options) {
-     if (isPresent(options) && get(options, 'loop')) {
+    if (isPresent(options) && get(options, 'loop')) {
       audio.loop();
     }
   },
@@ -39,7 +39,7 @@ export default Direction.extend({
       const audio = this.store.peekRecord('ember-theater/sound', id).audio;
 
       set(options, 'sound', audio);
-    } 
+    }
   },
 
   _buzzOptionsAdapter(options) {
@@ -55,7 +55,7 @@ export default Direction.extend({
       'event',
       'callback'
     ].filter((key) => {
-      return get(options, key) !== undefined;
+      return isPresent(get(options, key));
     }).map((key) => {
       return get(options, key);
     });

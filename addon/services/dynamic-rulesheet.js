@@ -5,11 +5,9 @@ const {
   Service,
   computed,
   get,
-  guidFor,
   on,
   set
 } = Ember;
-const { Object: { create } } = Ember;
 
 export default Service.extend({
   rulesheets: computed(() => A()),

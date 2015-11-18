@@ -30,7 +30,7 @@ export default Directable.extend({
       initialExpression,
       effect: effectIsPresent ? effectOrOptions : 'transition.fadeIn',
       options: effectIsPresent ? optionsOnly : effectOrOptions
-    }
+    };
 
     setProperties(this, properties);
   }

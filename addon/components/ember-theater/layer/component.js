@@ -5,14 +5,12 @@ import layerName from 'ember-theater/utils/layer-name';
 const {
   Component,
   computed,
-  generateGuid,
   get,
   getProperties,
   inject,
   isPresent,
   observer,
   on,
-  run,
   set
 } = Ember;
 const { alias } = computed;
@@ -42,16 +40,16 @@ export default Component.extend({
       animation-name: ${animationName};
       filter: ${filter};
       -webkit-filter: ${filter};
-      `.replace(/\n|\s{2}/g, ''); 
+      `.replace(/\n|\s{2}/g, '');
     }
   }).readOnly(),
 
   layerFilter: computed('layerManager.filters.[]', {
     get() {
-      const layerName = get(this, 'layerName');
+      const name = get(this, 'layerName');
 
       return get(this, 'layerManager.filters').find((filter) => {
-        return get(filter, 'layer') === layerName;
+        return get(filter, 'layer') === name;
       }) || {};
     }
   }),
@@ -76,7 +74,7 @@ export default Component.extend({
   resetFilter: observer('layerFilter.effect', function() {
     // we need to manually reset the filter whenever the effect changes, or else the new effect will
     // not display
-    set(this, 'filter', undefined);
+    set(this, 'filter', null);
   }),
 
   layerDirectables: computed('directables.[]', {
@@ -100,7 +98,7 @@ export default Component.extend({
 
       const childLayerDirectables = this.get('directables').filter((directable) => {
         return directable.get('layer').replace(name, '').length > 1;
-      })
+      });
 
       const childLayerNames = Ember.A(childLayerDirectables.map((directable) => {
         return directable.get('layer');

@@ -13,7 +13,7 @@ export default JSONSerializer.extend(NormalizePatchMixin, {
 
   serialize(snapshot) {
     const record = snapshot.attributes();
-    
+
     if (isPresent(snapshot.id)) {
       record.$loki = parseInt(snapshot.id, 10);
     }

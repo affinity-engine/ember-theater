@@ -16,7 +16,6 @@ const {
   computed,
   get,
   isBlank,
-  isPresent,
   on,
   set,
   setProperties
@@ -92,7 +91,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
 
     return $words.filter(function() {
       // note, jquery `filter` sets `this` to the current item in the array
-      return $(this).offset().top >= offsetBottom;
+      return Ember.$(this).offset().top >= offsetBottom;
     })[0];
   },
 
@@ -141,11 +140,13 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     if ((isBlank(nextPageFirstWord) && index < $words.length) || index < $words.index(nextPageFirstWord)) {
       set(this, 'pageLoaded', false);
     } else {
-      // stop if past the last word in whole dialogue or the last word on the current page
-      return setProperties(this, {
+      setProperties(this, {
         instantWritePage: false,
         pageLoaded: true
       });
+
+      // stop if past the last word in whole dialogue or the last word on the current page
+      return;
     }
 
     if ($word.hasClass(customTagClass)) {
@@ -179,10 +180,8 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     }, { duration });
 
     later(() => {
-      characterIndex++;
-
-      if (characterIndex < wordLength) {
-        this.writeLetter($word, wordLength, characterIndex, wordIndex);
+      if (characterIndex + 1 < wordLength) {
+        this.writeLetter($word, wordLength, characterIndex + 1, wordIndex);
       } else {
         this.writeWord(wordIndex + 1);
       }

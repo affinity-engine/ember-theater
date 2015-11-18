@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from './template';
-import Director from 'ember-theater/components/ember-theater/director/component';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/velocity-line';
 import WindowResizeMixin from 'ember-theater/mixins/window-resize';
@@ -11,13 +10,9 @@ const {
   K,
   computed,
   get,
-  inject,
   isBlank,
-  isPresent,
-  observer,
   on,
-  set,
-  typeOf
+  set
 } = Ember;
 
 const { alias } = computed;

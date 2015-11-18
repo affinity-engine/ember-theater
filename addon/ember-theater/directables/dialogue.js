@@ -19,13 +19,13 @@ export default Directable.extend({
 
     const character = characterIsPresent ?
       this.store.peekRecord('ember-theater/character', characterOrText) :
-      undefined;
+      null;
 
     const properties = {
       character,
       text: characterIsPresent ? textOrOptions : characterOrText,
       options: characterIsPresent ? optionsOnly : textOrOptions
-    }
+    };
 
     setProperties(this, properties);
   }

@@ -1,17 +1,7 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
-const {
-  K,
-  computed,
-  get,
-  inject,
-  on,
-  RSVP
-} = Ember;
-
-const { alias } = computed;
-const { Promise } = RSVP;
+const { get } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.save.header',

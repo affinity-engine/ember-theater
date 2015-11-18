@@ -13,6 +13,6 @@ export default function gatherModules(subRoute) {
 
     modules.set(moduleName, module);
 
-    return modules; 
+    return modules;
   }, new Map());
 }

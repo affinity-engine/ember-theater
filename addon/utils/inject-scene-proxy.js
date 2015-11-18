@@ -5,7 +5,7 @@ const { String: { camelize, capitalize } } = Ember;
 
 export default function injectSceneProxy(application, type, name) {
   const proxy = function proxy(...args) {
-    // the scene is the context here 
+    // the scene is the context here
     const factory = get(this, 'container').lookupFactory(`${type}:${name}`);
     const method = `proxy${capitalize(type)}`;
 
@@ -15,4 +15,4 @@ export default function injectSceneProxy(application, type, name) {
   application.inject('direction', 'store', `service:store`);
   application.register(`${type}:${name}-proxy`, proxy, { instantiate: false });
   application.inject('scene', camelize(name), `${type}:${name}-proxy`);
-};
+}

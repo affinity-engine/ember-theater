@@ -13,30 +13,27 @@ export default Service.extend({
   /**
     Translates and returns the first valid `metaTranslations`, if any. Otherwise, returns
     the first `metaTranslations` without translating it.
-    
+
     @method translate
     @param {Array} metaTranslations
+    @returns {String}
   */
   translate(...metaTranslations) {
     const fallback = metaTranslations[0];
-    const meta = metaTranslations.find((meta) => {
-      return this._getTranslation(meta);
+    const meta = metaTranslations.find((translation) => {
+      return this._getTranslation(translation);
     });
 
     const translation = this._getTranslation(meta);
 
-    if (isBlank(translation)) {
-      return this._getId(fallback);
-    } else {
-      return translation.string;
-    }
+    return isBlank(translation) ? this._getId(fallback) : translation.string;
   },
 
   _getTranslation(meta) {
     const i18n = this.get('i18n');
     const id = this._getId(meta);
 
-    if (i18n.exists(id)) { 
+    if (i18n.exists(id)) {
       const options = get(meta, 'options') || get(meta, 'text.options');
 
       return i18n.t(id, options);
@@ -45,7 +42,7 @@ export default Service.extend({
 
   /**
      The translation id can be nested in one of four places:
-     
+
      ```js
        translatable: 'id';
        translatable: { text: 'id' };
@@ -57,6 +54,7 @@ export default Service.extend({
 
      @method _getId
      @param {*} meta
+     @returns {String}
      @private
   */
   _getId(meta) {
