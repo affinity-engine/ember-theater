@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   get,
   inject,
-  isBlank,
   isEmpty,
   isPresent,
   observer,
@@ -24,18 +23,18 @@ export default Service.extend({
   },
 
   advanceSceneRecord() {
+    if (!get(this, 'isLoading')) { return {}; }
+
     const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
 
-    if (get(this, 'isLoading')) {
-      const sceneRecord = get(this, 'saveStateManager.sceneRecord');
-      const autoResolveResult = sceneRecord[sceneRecordsCount];
+    const sceneRecord = get(this, 'saveStateManager.sceneRecord');
+    const autoResolveResult = sceneRecord[sceneRecordsCount];
 
-      if (autoResolveResult !== undefined) {
-        return { autoResolve: true, autoResolveResult };
-      } else {
-        set(this, 'isLoading', false);
-      }
+    if (autoResolveResult !== undefined) {
+      return { autoResolve: true, autoResolveResult };
     }
+
+    set(this, 'isLoading', false);
 
     return {};
   },

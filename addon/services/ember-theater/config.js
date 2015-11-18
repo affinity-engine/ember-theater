@@ -4,7 +4,6 @@ import defaultConfig from 'ember-theater/ember-theater/default-config';
 
 const {
   Service,
-  merge,
   on,
   setProperties
 } = Ember;
