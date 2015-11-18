@@ -36,7 +36,7 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   keys: computed('directable.options.keys', {
     get() {
-      return get(this, 'directable.options.keys') || get(this, 'config.acceptKeys');
+      return get(this, 'directable.options.keys') || get(this, 'config.keys.accept');
     }
   }).readOnly(),
 
@@ -65,17 +65,18 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   textSpeed: computed('directable.options.speed', 'character.textSpeed', {
     get() {
-      const defaultSpeed = get(this, 'config.textSpeed');
-
       return get(this, 'directable.options.speed') ||
         get(this, 'character.textSpeed') ||
-        defaultSpeed;
+        get(this, 'config.speed.text');
     }
   }),
 
   actions: {
     completeText() {
-      animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
+      const duration = get(this, 'directable.options.transitionSpeed') ||
+        get(this, 'config.speed.transition');
+
+      animate(this.element, { opacity: 0 }, { duration }).then(() => {
         this.resolveAndDestroy();
       });
     }

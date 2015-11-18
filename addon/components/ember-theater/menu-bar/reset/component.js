@@ -11,7 +11,7 @@ const { inject: { service } } = Ember;
 
 export default MenuBarControl.extend({
   layout,
-  keys: 'resetMenuKeys',
+  keys: 'keys.resetMenu',
 
   sceneManager: service('ember-theater/scene-manager'),
   saveStateManager: service('ember-theater/save-state-manager'),

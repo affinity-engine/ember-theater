@@ -37,11 +37,20 @@ export default Component.extend(EKOnInsertMixin, {
   }),
 
   toggleOpen: on('click', 'touchEnd', function() {
+    const config = get(this, 'config.menu');
+
     this.toggleProperty('isOpen');
 
-    get(this, 'filter').perform(() => {
-      get(this, 'filter').perform(K, ['blur(10px)', 'blur(7px)', 'blur(10px)'], { duration: 5000, iterations: 'infinite' });
-    }, ['blur(0px)', 'blur(10px)'], { duration: 1000 });
+    const resolve = () => {
+      get(this, 'filter').perform(K, get(config, 'innerEffect'), {
+        duration: get(config, 'innerEffectDuration'),
+        iterations: 'infinite'
+      });
+    };
+
+    get(this, 'filter').perform(resolve, get(config, 'transitionIn'), {
+      duration: get(config, 'transitionInDuration')
+    });
   }),
 
   startHovering: on('focusIn', 'mouseEnter', function() {
@@ -54,8 +63,13 @@ export default Component.extend(EKOnInsertMixin, {
 
   actions: {
     closeMenu() {
-      this.set('isOpen', false);
-      get(this, 'filter').perform(K, ['blur(10px)', 'blur(0px)'], { duration: 500, destroy: true });
+      const config = get(this, 'config.menu');
+
+      set(this, 'isOpen', false);
+      get(this, 'filter').perform(K, get(config, 'transitionOut'), {
+        duration: get(config, 'transitionOutDuration'),
+        destroy: true
+      });
     }
   }
 });

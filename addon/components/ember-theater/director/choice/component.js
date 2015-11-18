@@ -68,7 +68,10 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
 
   actions: {
     choose(choice) {
-      animate(this.element, { opacity: 0 }, { duration: 100 }).then(() => {
+      const duration = get(this, 'directable.options.transitionSpeed') ||
+        get(this, 'config.speed.transition');
+
+      animate(this.element, { opacity: 0 }, { duration }).then(() => {
         this.resolveAndDestroy(choice);
       });
     },

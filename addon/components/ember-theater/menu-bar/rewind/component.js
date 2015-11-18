@@ -3,7 +3,7 @@ import MenuBarControl from 'ember-theater/components/ember-theater/menu-bar/cont
 
 export default MenuBarControl.extend({
   layout,
-  keys: 'rewindMenuKeys',
+  keys: 'keys.rewindMenu',
 
   startHoverEffect() {
     this.$('i').velocity({ translateY: '-0.15vw' }, { easing: 'easeInOut', duration: 500, delay: 150, loop: true });

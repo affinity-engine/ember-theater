@@ -27,7 +27,7 @@ export default Component.extend(EKOnInsertMixin, {
   sceneManager: service('ember-theater/scene-manager'),
 
   setupCancelKeys: on('init', function() {
-    const cancelKeys = get(this, 'config.cancelKeys');
+    const cancelKeys = get(this, 'config.keys.cancel');
 
     cancelKeys.forEach((key) => this.on(keyUp(key), () => this.attrs.closeMenu()));
   }),

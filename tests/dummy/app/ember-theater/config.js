@@ -1,3 +1,5 @@
 export default {
-  acceptKeys: [' ', 'Enter', 'a']
+  keys: {
+    accept: [' ', 'Enter', 'a']
+  }
 };

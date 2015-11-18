@@ -4,6 +4,7 @@ import defaultConfig from 'ember-theater/ember-theater/default-config';
 
 const {
   Service,
+  merge,
   on,
   setProperties
 } = Ember;
@@ -11,8 +12,8 @@ const {
 export default Service.extend({
   generateConfig: on('init', function() {
     const appConfig = requirejs(`${config.modulePrefix}\/ember-theater\/config`).default;
+    const mergedConfig = Ember.$.extend(true, {}, defaultConfig, appConfig);
 
-    setProperties(this, defaultConfig);
-    setProperties(this, appConfig);
+    setProperties(this, mergedConfig);
   })
 });
