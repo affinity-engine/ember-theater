@@ -8,7 +8,7 @@ export function initialize(container, application) {
 
   textTags.forEach((textTag, textTagName) => {
     application.register(`text-tag:${textTagName}`, textTag, { instantiate: false, singleton: false });
-    application.inject('component:ember-theater/director/dialogue/text', camelize(textTagName), `text-tag:${textTagName}`);
+    application.inject('component:ember-theater/director/text/body', camelize(textTagName), `text-tag:${textTagName}`);
   });
 }
 

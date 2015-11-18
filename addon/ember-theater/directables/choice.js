@@ -8,7 +8,7 @@ const {
 
 export default Directable.extend({
   componentType: 'ember-theater/director/choice',
-  layer: 'theater.text.choice',
+  layer: 'theater.prompt.choice',
 
   parseArgs(headerOrChoices, choicesOrOptions, optionsOnly) {
     const headerIsPresent = typeOf(headerOrChoices) === 'string';

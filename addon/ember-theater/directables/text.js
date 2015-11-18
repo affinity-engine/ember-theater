@@ -9,8 +9,8 @@ const {
 } = Ember;
 
 export default Directable.extend({
-  componentType: 'ember-theater/director/dialogue',
-  layer: 'theater.text.dialogue',
+  componentType: 'ember-theater/director/text',
+  layer: 'theater.prompt.text',
 
   parseArgs(characterOrText, textOrOptions = {}, optionsOnly = {}) {
     const characterIsPresent = typeOf(textOrOptions) === 'string' ||

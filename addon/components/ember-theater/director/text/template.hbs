@@ -1,9 +1,10 @@
 {{#if name}}
   <div class='et-dialogue-caption'>{{name}}</div>
 {{/if}}
-{{ember-theater/director/dialogue/text
+{{ember-theater/director/text/body
   instantWriteText=instantWriteText
   keys=keys
   text=text
   textSpeed=textSpeed
-  resolve=(action 'completeText')}}
+  resolve=(action 'completeText')
+}}
