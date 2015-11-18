@@ -3,6 +3,7 @@ import nativeCopy from 'ember-theater/utils/native-copy';
 
 const {
   computed,
+  get,
   isBlank,
   isEmpty,
   isPresent,
@@ -102,6 +103,10 @@ export default Service.extend({
   },
 
   // SCENE RECORD MANAGEMENT //
+  getSceneRecordValue(key) {
+    return get(this, `sceneRecord.${key}`);
+  },
+
   updateSceneRecord(key, value) {
     this.set(`sceneRecord.${key}`, isBlank(value) ? null : value);
   },

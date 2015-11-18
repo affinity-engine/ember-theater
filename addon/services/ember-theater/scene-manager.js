@@ -15,26 +15,29 @@ const {
 export default Service.extend({
   saveStateManager: inject.service('ember-theater/save-state-manager'),
 
+  getSceneRecordValue(key) {
+    return get(this, 'saveStateManager').getSceneRecordValue(key);
+  },
+
   updateSceneRecord(key, value) {
     this.get('saveStateManager').updateSceneRecord(key, value);
   },
 
   advanceSceneRecord() {
-    let sceneRecordResult = {};
     const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
 
     if (get(this, 'isLoading')) {
       const sceneRecord = get(this, 'saveStateManager.sceneRecord');
       const autoResolveResult = sceneRecord[sceneRecordsCount];
 
-      if (isBlank(autoResolveResult)) {
-        sceneRecordResult = { autoResolve: true, autoResolveResult };
+      if (autoResolveResult !== undefined) {
+        return { autoResolve: true, autoResolveResult };
       } else {
         set(this, 'isLoading', false);
       }
     }
 
-    return sceneRecordResult;
+    return {};
   },
 
   setInitialSceneId: observer('sceneId', function() {

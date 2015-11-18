@@ -92,6 +92,13 @@ export default Service.extend({
   _handlePromiseResolution(promise) {
     const sceneManager = get(this, 'sceneManager');
     const key = get(sceneManager, 'sceneRecordsCount');
+    const previousKey = key - 1;
+
+    // if the last direction doesn't await, but hasn't yet resolved, set the value to null
+    // so that the sceneRecord can keep loading
+    if (previousKey >= 0 && sceneManager.getSceneRecordValue(previousKey) === undefined) {
+      sceneManager.updateSceneRecord(previousKey, null);
+    }
 
     promise.then((value) => {
       sceneManager.updateSceneRecord(key, value);
