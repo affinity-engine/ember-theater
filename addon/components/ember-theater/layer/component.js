@@ -91,7 +91,7 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  childLayers: computed('directables.[]', {
+  childLayers: computed('directables.[].layer', {
     get() {
       const name = this.get('name');
       const parentName = name ? `${name}.` : '';

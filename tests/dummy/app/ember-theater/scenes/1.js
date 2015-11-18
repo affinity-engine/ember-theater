@@ -5,9 +5,9 @@ export default Scene.extend({
 
   script: async function() {
     await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
-    this.filter('theater.text', ['blur(0px)', 'blur(10px)'], { duration: 1000 });
+    this.filter('theater.prompt', ['blur(0px)', 'blur(10px)'], { duration: 1000 });
     await this.text('steven', '1.noId');
-    this.filter('theater.text', ['blur(10px)', 'blur(0px)'], { duration: 1000, destroy: true });
+    this.filter('theater.prompt', ['blur(10px)', 'blur(0px)'], { duration: 1000, destroy: true });
     await this.text('steven', '1.noId');
     await this.text({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
     this.backdrop('beach');
