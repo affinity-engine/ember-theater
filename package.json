@@ -40,7 +40,8 @@
     "ember-keyboard": "0.0.10",
     "ember-modal-dialog": "0.8.1",
     "ember-try": "0.0.6",
-    "eslint-config-ember": "0.2.0"
+    "eslint-config-ember": "0.2.0",
+    "js-string-escape": "^1.0.0"
   },
   "keywords": [
     "ember-addon"

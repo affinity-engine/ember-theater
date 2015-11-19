@@ -102,7 +102,6 @@ export default Service.extend({
 
     promise.then((value) => {
       sceneManager.updateSceneRecord(key, value);
-      console.log(key + ' ' + value);
     });
 
     return promise;
