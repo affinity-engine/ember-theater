@@ -23,9 +23,9 @@ export default Service.extend({
   },
 
   advanceSceneRecord() {
-    if (!get(this, 'isLoading')) { return {}; }
-
     const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
+
+    if (!get(this, 'isLoading')) { return {}; }
 
     const sceneRecord = get(this, 'saveStateManager.sceneRecord');
     const autoResolveResult = sceneRecord[sceneRecordsCount];
