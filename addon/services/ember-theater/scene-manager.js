@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 const {
   get,
-  inject,
   isEmpty,
   isPresent,
   observer,
@@ -11,33 +10,11 @@ const {
   setProperties
 } = Ember;
 
+const { inject: { service } } = Ember;
+
 export default Service.extend({
-  saveStateManager: inject.service('ember-theater/save-state-manager'),
-
-  getSceneRecordValue(key) {
-    return get(this, 'saveStateManager').getSceneRecordValue(key);
-  },
-
-  updateSceneRecord(key, value) {
-    this.get('saveStateManager').updateSceneRecord(key, value);
-  },
-
-  advanceSceneRecord() {
-    const sceneRecordsCount = this.incrementProperty('sceneRecordsCount');
-
-    if (!get(this, 'isLoading')) { return {}; }
-
-    const sceneRecord = get(this, 'saveStateManager.sceneRecord');
-    const autoResolveResult = sceneRecord[sceneRecordsCount];
-
-    if (autoResolveResult !== undefined) {
-      return { autoResolve: true, autoResolveResult };
-    }
-
-    set(this, 'isLoading', false);
-
-    return {};
-  },
+  saveStateManager: service('ember-theater/save-state-manager'),
+  sceneRecorder: service('ember-theater/scene-recorder'),
 
   setInitialSceneId: observer('sceneId', function() {
     const {
@@ -86,10 +63,8 @@ export default Service.extend({
 
     const isLoading = get(options, 'loading');
 
-    setProperties(this, {
-      isLoading,
-      sceneRecordsCount: -1
-    });
+    set(this, 'isLoading', isLoading);
+    get(this, 'sceneRecorder').resetIndex();
 
     if (!isLoading) {
       saveStateManager.clearSceneRecord();

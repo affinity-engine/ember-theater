@@ -13,7 +13,7 @@ const {
 const { RSVP: { Promise } } = Ember;
 
 export default Service.extend({
-  sceneManager: inject.service('ember-theater/scene-manager'),
+  sceneRecorder: inject.service('ember-theater/scene-recorder'),
 
   directables: computed(() => Ember.A()),
 
@@ -75,14 +75,14 @@ export default Service.extend({
   _updateDirectable(directable, args, resolve) {
     // typically, `advanceSceneRecord` is called in `_instantiateFactory`, but since the directable
     // is already instantiated, we call it manually here.
-    get(this, 'sceneManager').advanceSceneRecord();
+    get(this, 'sceneRecorder').advance();
 
     set(directable, 'resolve', resolve);
     directable.parseArgs(...args);
   },
 
   _instantiateFactory(factory, additionalProperties = {}) {
-    const properties = get(this, 'sceneManager').advanceSceneRecord();
+    const properties = get(this, 'sceneRecorder').advance();
 
     merge(properties, additionalProperties);
 
@@ -90,19 +90,7 @@ export default Service.extend({
   },
 
   _handlePromiseResolution(promise) {
-    const sceneManager = get(this, 'sceneManager');
-    const key = get(sceneManager, 'sceneRecordsCount');
-    const previousKey = key - 1;
-
-    // if the last direction doesn't await, but hasn't yet resolved, set the value to null
-    // so that the sceneRecord can keep loading
-    if (previousKey >= 0 && sceneManager.getSceneRecordValue(previousKey) === undefined) {
-      sceneManager.updateSceneRecord(previousKey, null);
-    }
-
-    promise.then((value) => {
-      sceneManager.updateSceneRecord(key, value);
-    });
+    get(this, 'sceneRecorder').recordEvent(promise);
 
     return promise;
   }
