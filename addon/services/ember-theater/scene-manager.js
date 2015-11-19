@@ -6,8 +6,7 @@ const {
   isPresent,
   observer,
   Service,
-  set,
-  setProperties
+  set
 } = Ember;
 
 const { inject: { service } } = Ember;

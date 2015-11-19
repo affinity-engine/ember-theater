@@ -3,12 +3,8 @@ import Ember from 'ember';
 const {
   get,
   inject,
-  isEmpty,
-  isPresent,
-  observer,
   Service,
-  set,
-  setProperties
+  set
 } = Ember;
 
 export default Service.extend({
@@ -60,6 +56,5 @@ export default Service.extend({
 
   _getRecord(key) {
     return get(this, 'saveStateManager').getSceneRecordValue(key);
-  },
-
+  }
 });
