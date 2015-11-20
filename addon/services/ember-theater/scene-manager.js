@@ -4,7 +4,6 @@ const {
   get,
   isEmpty,
   isPresent,
-  observer,
   Service,
   set
 } = Ember;
@@ -12,24 +11,14 @@ const {
 const { inject: { service } } = Ember;
 
 export default Service.extend({
+  config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneRecorder: service('ember-theater/scene-recorder'),
 
-  setInitialSceneId: observer('sceneId', function() {
-    const {
-      initialSceneId,
-      sceneId
-    } = this.getProperties('initialSceneId', 'sceneId');
-
-    if (isEmpty(initialSceneId) && isPresent(sceneId)) {
-      this.set('initialSceneId', sceneId);
-    }
-  }),
-
   resetScene() {
-    const initialSceneId = this.get('initialSceneId');
+    const id = get(this, 'config.initial.sceneId');
 
-    this.toScene(initialSceneId);
+    this.toScene(id);
   },
 
   liftCurtains: async function() {
@@ -39,7 +28,7 @@ export default Service.extend({
       let sceneId = autosave.get('activeState.sceneId');
 
       if (isEmpty(sceneId)) {
-        sceneId = this.get('sceneId');
+        sceneId = get(this, 'config.initial.sceneId');
         options.autosave = true;
       }
 

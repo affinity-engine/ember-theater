@@ -3,8 +3,11 @@ import layout from './template';
 
 const {
   Component,
-  on
+  set
 } = Ember;
+
+const { inject: { service } } = Ember;
+const { computed: { reads } } = Ember;
 
 export default Component.extend({
   'aria-live': 'polite',
@@ -13,19 +16,13 @@ export default Component.extend({
   classNames: ['ember-theater'],
   layout: layout,
 
-  initializeComponents: on('didReceiveAttrs', function() {
-    this.send('resetComponents');
-  }),
+  producer: service('ember-theater/producer'),
+
+  components: reads('producer.components'),
 
   actions: {
-    resetComponents() {
-      const initialEmberTheaterComponents = this.get('initialEmberTheaterComponents');
-
-      this.set('emberTheaterComponents', Ember.Object.create(initialEmberTheaterComponents));
-    },
-
     startGame() {
-      this.set('mediaIsLoaded', true);
+      set(this, 'mediaIsLoaded', true);
     }
   }
 });

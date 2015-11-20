@@ -1,7 +1,7 @@
 {{#if mediaIsLoaded}}
-  {{#each-in emberTheaterComponents as |componentName options|}}
-    {{component componentName options=options}}
-  {{/each-in}}
+  {{#each components as |componentName|}}
+    {{component componentName}}
+  {{/each}}
 {{else}}
   {{ember-theater/curtain complete=(action 'startGame')}}
 {{/if}}
