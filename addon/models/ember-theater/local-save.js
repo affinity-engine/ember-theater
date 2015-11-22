@@ -3,11 +3,14 @@ import Ember from 'ember';
 import LokiJSModelMixin from 'ember-theater/mixins/lokijs-model';
 
 const {
-  attr,
-  Model
+  Model,
+  attr
 } = DS;
 
-const { computed } = Ember;
+const {
+  computed,
+  get
+} = Ember;
 
 export default Model.extend(LokiJSModelMixin, {
   isAutosave: attr('boolean'),
@@ -17,9 +20,15 @@ export default Model.extend(LokiJSModelMixin, {
 
   activeState: computed('statePoints', {
     get() {
-      const data = this.get('statePoints.lastObject');
+      const data = get(this, 'statePoints.lastObject');
 
       return Ember.Object.create(data);
+    }
+  }).readOnly(),
+
+  updated: computed('meta.created', 'meta.updated', {
+    get() {
+      return get(this, 'meta.updated') || get(this, 'meta.created');
     }
   }).readOnly()
 });

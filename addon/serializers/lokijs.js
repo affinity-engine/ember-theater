@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import NormalizePatchMixin from 'ember-theater/mixins/json-serializer-normalize-patch';
+import nativeCopy from 'ember-theater/utils/native-copy';
 
 const { JSONSerializer } = DS;
 const { isPresent } = Ember;
@@ -17,6 +18,8 @@ export default JSONSerializer.extend(NormalizePatchMixin, {
     if (isPresent(snapshot.id)) {
       record.$loki = parseInt(snapshot.id, 10);
     }
+
+    record.meta = nativeCopy(record.meta);
 
     return record;
   }

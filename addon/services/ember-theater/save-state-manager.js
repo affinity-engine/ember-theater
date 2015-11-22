@@ -20,13 +20,13 @@ export default Service.extend({
   sceneRecord: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
-  mostRecentSave: computed('saves.@each.meta.updated', {
+  mostRecentSave: computed('saves.@each.updated', {
     get: async function() {
       await this._ensureAutosave();
 
       const saves = await get(this, 'saves');
 
-      return saves.sortBy('meta.updated').get('firstObject');
+      return saves.sortBy('updated').reverseObjects().get('firstObject');
     }
   }).readOnly(),
 
