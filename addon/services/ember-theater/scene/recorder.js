@@ -11,11 +11,15 @@ export default Service.extend({
   saveStateManager: inject.service('ember-theater/save-state-manager'),
   sceneManager: inject.service('ember-theater/scene-manager'),
 
-  resetIndex() {
+  reset(isLoading) {
     set(this, 'sceneRecordIndex', -1);
+
+    if (!isLoading) {
+      get(this, 'saveStateManager').clearSceneRecord();
+    }
   },
 
-  recordEvent(promise) {
+  record(promise) {
     const key = get(this, 'sceneRecordIndex');
 
     promise.then((value) => {

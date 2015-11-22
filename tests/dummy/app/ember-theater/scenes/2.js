@@ -6,6 +6,7 @@ export default Scene.extend({
     const test = await this.getData('test');
 
     this.setData('test', test + 1);
+    await this.pause(' ');
     this.transitionToScene(2, { autosave: false });
   }
 });

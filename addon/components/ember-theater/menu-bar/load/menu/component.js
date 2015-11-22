@@ -29,7 +29,7 @@ export default Menu.extend({
       get(this, 'saveStateManager').loadRecord(save);
       get(this, 'sceneManager').toScene(get(save, 'activeState.sceneId'), {
         autosave: false,
-        loading: true
+        isLoading: true
       });
     }
 

@@ -13,7 +13,7 @@ const {
 const { RSVP: { Promise } } = Ember;
 
 export default Service.extend({
-  sceneRecorder: inject.service('ember-theater/scene-recorder'),
+  sceneManager: inject.service('ember-theater/scene-manager'),
 
   directables: computed(() => Ember.A()),
 
@@ -75,14 +75,14 @@ export default Service.extend({
   _updateDirectable(directable, args, resolve) {
     // typically, `advanceSceneRecord` is called in `_instantiateFactory`, but since the directable
     // is already instantiated, we call it manually here.
-    get(this, 'sceneRecorder').advance();
+    get(this, 'sceneManager').advanceSceneRecord();
 
     set(directable, 'resolve', resolve);
     directable.parseArgs(...args);
   },
 
   _instantiateFactory(factory, additionalProperties = {}) {
-    const properties = get(this, 'sceneRecorder').advance();
+    const properties = get(this, 'sceneManager').advanceSceneRecord();
 
     merge(properties, additionalProperties);
 
@@ -90,7 +90,7 @@ export default Service.extend({
   },
 
   _handlePromiseResolution(promise) {
-    get(this, 'sceneRecorder').recordEvent(promise);
+    get(this, 'sceneManager').recordSceneRecordEvent(promise);
 
     return promise;
   }

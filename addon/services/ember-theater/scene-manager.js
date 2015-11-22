@@ -1,10 +1,8 @@
 import Ember from 'ember';
 
 const {
-  get,
-  isEmpty,
-  isPresent,
   Service,
+  get,
   set
 } = Ember;
 
@@ -12,8 +10,15 @@ const { inject: { service } } = Ember;
 
 export default Service.extend({
   config: service('ember-theater/config'),
-  saveStateManager: service('ember-theater/save-state-manager'),
-  sceneRecorder: service('ember-theater/scene-recorder'),
+  curtainPulley: service('ember-theater/scene/curtain-pulley'),
+  recorder: service('ember-theater/scene/recorder'),
+  transitionManager: service('ember-theater/scene/transition-manager'),
+
+  liftCurtains: async function() {
+    const { id, options } = await get(this, 'curtainPulley').liftCurtains();
+
+    this.toScene(id, options);
+  },
 
   resetScene() {
     const id = get(this, 'config.initial.sceneId');
@@ -21,53 +26,27 @@ export default Service.extend({
     this.toScene(id);
   },
 
-  liftCurtains: async function() {
-    if (isEmpty(this.get('scene'))) {
-      const options = { autosave: false };
-      const autosave = await this.get('saveStateManager.autosave');
-      let sceneId = autosave.get('activeState.sceneId');
+  toScene(id, options = {}) {
+    const scene = get(this, 'transitionManager').toScene(id, options);
 
-      if (isEmpty(sceneId)) {
-        sceneId = get(this, 'config.initial.sceneId');
-        options.autosave = true;
-      }
-
-      this.toScene(sceneId, options);
-    }
+    set(this, 'scene', scene);
   },
 
-  toScene: async function(sceneId, options = {}) {
-    const oldScene = this.get('scene');
-
-    if (isPresent(oldScene)) { oldScene.abort(); }
-
-    const saveStateManager = this.get('saveStateManager');
-
-    const sceneFactory = this.get('container').lookupFactory(`scene:${sceneId}`);
-    const scene = sceneFactory.create({
-      id: sceneId,
-      options
-    });
-
-    const isLoading = get(options, 'loading');
-
+  setIsLoading(isLoading) {
     set(this, 'isLoading', isLoading);
-    get(this, 'sceneRecorder').resetIndex();
+  },
 
-    if (!isLoading) {
-      saveStateManager.clearSceneRecord();
-    }
+  advanceSceneRecord() {
+    return get(this, 'recorder').advance();
+  },
 
-    if (get(options, 'autosave') !== false) {
-      const autosave = await saveStateManager.get('autosave');
+  recordSceneRecordEvent(promise) {
+    get(this, 'recorder').record(promise);
+  },
 
-      saveStateManager.appendActiveState({
-        sceneId,
-        sceneName: get(scene, 'name') || sceneId
-      });
-      saveStateManager.updateRecord(autosave);
-    }
+  resetSceneRecord() {
+    const isLoading = get(this, 'isLoading');
 
-    this.set('scene', scene);
+    get(this, 'recorder').reset(isLoading);
   }
 });

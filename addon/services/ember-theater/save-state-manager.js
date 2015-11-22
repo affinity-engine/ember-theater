@@ -5,10 +5,8 @@ const {
   computed,
   get,
   isBlank,
-  isEmpty,
   isPresent,
   merge,
-  on,
   Service,
   set
 } = Ember;
@@ -22,28 +20,33 @@ export default Service.extend({
   sceneRecord: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
-  initializeState: on('init', async function() {
-    const autosave = await this.get('autosave');
-
-    if (isPresent(autosave)) {
-      this.loadRecord(autosave);
-    }
-  }),
-
-  autosave: computed({
+  mostRecentSave: computed('saves.@each.meta.updated', {
     get: async function() {
-      let autosave = await this.get('store').queryRecord('ember-theater/local-save', {
-        isAutosave: true
-      });
+      await this._ensureAutosave();
 
-      if (isEmpty(autosave)) {
-        autosave = await this.createRecord('autosave');
-        set(autosave, 'isAutosave', true);
-      }
+      const saves = await get(this, 'saves');
 
-      return autosave;
+      return saves.sortBy('meta.updated').get('firstObject');
     }
   }).readOnly(),
+
+  autosave: computed({
+    get() {
+      return this.get('store').queryRecord('ember-theater/local-save', {
+        isAutosave: true
+      });
+    }
+  }).readOnly(),
+
+  _ensureAutosave: async function() {
+    if (isPresent(await get(this, 'autosave'))) { return; }
+
+    const autosave = await this.createRecord('autosave');
+
+    set(autosave, 'isAutosave', true);
+    autosave.save();
+    this.notifyPropertyChange('autosave');
+  },
 
   saves: computed({
     get: async function() {
@@ -87,7 +90,11 @@ export default Service.extend({
       statePoints
     } = record.getProperties('activeState', 'sceneRecord', 'statePoints');
 
-    this.setProperties({ activeState, sceneRecord, statePoints });
+    this.setProperties({
+      activeState: nativeCopy(activeState),
+      sceneRecord: nativeCopy(sceneRecord),
+      statePoints: Ember.A(nativeCopy(statePoints))
+    });
   },
 
   updateRecord: async function(record) {
