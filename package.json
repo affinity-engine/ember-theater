@@ -51,7 +51,7 @@
     "broccoli-static-compiler": "^0.2.2",
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "0.7.9",
-    "ember-cli-sass": "git+https://github.com/dukex/ember-cli-sass.git#bugfix/addon-styles",
+    "ember-cli-sass": "^5.1.0",
     "glob": "^5.0.15",
     "morgan": "^1.6.1",
     "node-buzz": "^1.1.4",

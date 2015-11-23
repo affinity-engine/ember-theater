@@ -6,5 +6,6 @@
 .ember-theater {
   @extend .et-full-screen;
   background-color: $et-blank-screen-background-color;
+  font-family: $et-primary-font-family;
   overflow: hidden;
 }

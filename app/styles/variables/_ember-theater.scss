@@ -1,3 +1,7 @@
+$et-primary-serif: "Andada" !default;
+$et-primary-sans-serif: "Comfortaa" !default;
+$et-primary-font-family: $et-primary-serif !default;
+
 $et-primary-color: #009393 !default;
 $et-secondary-color: #00585F !default;
 $et-highlight-color: #FF3800 !default;
@@ -9,7 +13,8 @@ $et-default-border-radius: 0.5vw !default;
 $et-default-border-width: 0.5vh !default;
 
 $et-default-font-size: 6vh !default;
-$et-large-font-size: $et-default-font-size * 1.1 !default;
+$et-small-font-size: $et-default-font-size * 0.875 !default;
+$et-large-font-size: $et-default-font-size * 1.125 !default;
 
 $et-default-line-height: 8vh !default;
 

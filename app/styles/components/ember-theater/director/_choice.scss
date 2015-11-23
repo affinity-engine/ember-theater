@@ -22,6 +22,9 @@
     display: block;
     margin-bottom: $et-choice-option-margin-bottom;
     width: 100%;
+    font-size: $et-choice-option-font-size;
+    font-weight: $et-choice-option-font-weight;
+    font-family: $et-choice-option-font-family;
 
     &:last-child {
       margin-bottom: 0;

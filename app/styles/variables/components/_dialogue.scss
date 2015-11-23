@@ -1,20 +1,19 @@
 $et-dialogue-width: 100vw !default;
+$et-dialogue-padding-base: 2.17vh;
 
 $et-dialogue-bottom: 0 !default;
 $et-dialogue-right: (100 - $et-dialogue-width) / 2 !default;
 $et-dialogue-left: (100 - $et-dialogue-width) / 2 !default;
-$et-dialogue-padding: 4.5vh !default;
-$et-dialogue-padding-bottom: $et-dialogue-padding  * 0.75 !default;
+$et-dialogue-padding: $et-dialogue-padding-base $et-dialogue-padding-base * 2 !default;
 $et-dialogue-opacity: $et-semi-transparency !default;
 $et-dialogue-font-size: $et-default-font-size !default;
 $et-dialogue-line-height: $et-default-line-height !default;
 $et-dialogue-text-align: justify !default;
 $et-dialogue-height: ($et-dialogue-line-height * 3) +
                      ($et-panel-border-width * 2) +
-                     $et-dialogue-padding +
-                     $et-dialogue-padding-bottom !default;
+                     ($et-dialogue-padding-base * 2) !default;
 
-$et-dialogue-caption-padding: $et-dialogue-padding / 4 $et-dialogue-padding / 2 !default;
-$et-dialogue-caption-font-size: $et-large-font-size !default;
-$et-dialogue-caption-top: -$et-dialogue-caption-font-size !default;
-$et-dialogue-caption-left: $et-dialogue-padding / 2 !default;
+$et-dialogue-caption-padding: 0 $et-dialogue-padding-base !default;
+$et-dialogue-caption-font-size: $et-small-font-size !default;
+$et-dialogue-caption-top: $et-dialogue-caption-font-size * -1.125 !default;
+$et-dialogue-caption-left: $et-dialogue-padding-base !default;
