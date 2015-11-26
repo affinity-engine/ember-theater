@@ -5,10 +5,10 @@ import {
   EKOnFocusMixin
 } from 'ember-keyboard';
 
-
 const {
   Component,
   get,
+  getProperties,
   on
 } = Ember;
 
@@ -21,14 +21,11 @@ export default Component.extend(EKOnFocusMixin, {
   classNames: ['et-choice-option'],
   tagName: 'button',
 
-  config: service('ember-theater/config'),
-
   setupKeys: on('init', function() {
-    const downKeys = get(this, 'config.keys.moveDown');
-    const upKeys = get(this, 'config.keys.moveUp');
+    const { moveDownKeys, moveUpKeys } = getProperties(this, 'moveDownKeys', 'moveUpKeys');
 
-    downKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusDown()));
-    upKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusUp()));
+    moveDownKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusDown()));
+    moveUpKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusUp()));
   }),
 
   setFocus: on('didRender', function() {

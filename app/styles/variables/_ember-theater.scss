@@ -13,8 +13,9 @@ $et-default-border-radius: 0.5vw !default;
 $et-default-border-width: 0.5vh !default;
 
 $et-default-font-size: 6vh !default;
-$et-small-font-size: $et-default-font-size * 0.875 !default;
-$et-large-font-size: $et-default-font-size * 1.125 !default;
+$et-tiny-font-size: $et-default-font-size * 0.7 !default;
+$et-small-font-size: $et-default-font-size * 0.85 !default;
+$et-large-font-size: $et-default-font-size * 1.15 !default;
 
 $et-default-line-height: 8vh !default;
 

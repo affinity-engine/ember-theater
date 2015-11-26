@@ -1,19 +1,22 @@
-$et-dialogue-width: 100vw !default;
 $et-dialogue-padding-base: 2.17vh;
 
 $et-dialogue-bottom: 0 !default;
-$et-dialogue-right: (100 - $et-dialogue-width) / 2 !default;
-$et-dialogue-left: (100 - $et-dialogue-width) / 2 !default;
 $et-dialogue-padding: $et-dialogue-padding-base $et-dialogue-padding-base * 2 !default;
 $et-dialogue-opacity: $et-semi-transparency !default;
 $et-dialogue-font-size: $et-default-font-size !default;
-$et-dialogue-line-height: $et-default-line-height !default;
 $et-dialogue-text-align: justify !default;
-$et-dialogue-height: ($et-dialogue-line-height * 3) +
-                     ($et-panel-border-width * 2) +
-                     ($et-dialogue-padding-base * 2) !default;
 
 $et-dialogue-caption-padding: 0 $et-dialogue-padding-base !default;
-$et-dialogue-caption-font-size: $et-small-font-size !default;
-$et-dialogue-caption-top: $et-dialogue-caption-font-size * -1.125 !default;
+$et-dialogue-caption-font-size: $et-tiny-font-size !default;
+$et-dialogue-caption-font-family: $et-primary-sans-serif !default;
+$et-dialogue-caption-font-weight: bold !default;
+$et-dialogue-caption-top: $et-dialogue-caption-font-size * -1.5 !default;
 $et-dialogue-caption-left: $et-dialogue-padding-base !default;
+
+$et-dialogue-wide-width: 100vw !default;
+$et-dialogue-wide-right: (100 - $et-dialogue-wide-width) / 2 !default;
+$et-dialogue-wide-left: (100 - $et-dialogue-wide-width) / 2 !default;
+$et-dialogue-wide-line-height: $et-default-line-height !default;
+$et-dialogue-wide-height: ($et-dialogue-wide-line-height * 3) +
+                     ($et-panel-border-width * 2) +
+                     ($et-dialogue-padding-base * 2) !default;

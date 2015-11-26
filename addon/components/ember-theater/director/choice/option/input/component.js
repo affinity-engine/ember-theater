@@ -9,8 +9,10 @@ const {
 export default TextField.extend({
   classNames: ['et-choice-input'],
 
-  closeInput: on('focusOut', keyUp('Escape'), function() {
-    this.attrs.toggleInput();
+  setKeys: on('didReceiveAttrs', function() {
+    const cancelKeys = get(this, 'cancelKeys');
+
+    cancelKeys.forEach((key) => this.on(keyUp(key), this.attrs.toggleInput));
   }),
 
   focus: on('didInsertElement', function() {

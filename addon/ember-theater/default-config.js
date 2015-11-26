@@ -1,13 +1,18 @@
 export default {
-  keys: {
-    accept: [' ', 'Enter'],
-    cancel: ['Escape'],
-    loadMenu: ['ctrl+l'],
-    moveDown: ['ArrowDown', 's'],
-    moveUp: ['ArrowUp', 'w'],
-    resetMenu: ['ctrl+r'],
-    rewindMenu: ['ctrl+b'],
-    saveMenu: ['ctrl+s']
+  globals: {
+    classNames: ['et-wide', 'et-coastal'],
+    speed: 300,
+    transitionDuration: 200,
+    keys: {
+      accept: [' ', 'Enter'],
+      cancel: ['Escape'],
+      loadMenu: ['ctrl+l'],
+      moveDown: ['ArrowDown', 's'],
+      moveUp: ['ArrowUp', 'w'],
+      resetMenu: ['ctrl+r'],
+      rewindMenu: ['ctrl+b'],
+      saveMenu: ['ctrl+s']
+    }
   },
   menu: {
     transitionIn: ['blur(0px)', 'blur(10px)'],
@@ -18,8 +23,6 @@ export default {
     innerEffectDuration: 5000
   },
   speed: {
-    sceneTransition: 750,
-    text: 300,
-    transition: 200
+    sceneTransition: 750
   }
 };

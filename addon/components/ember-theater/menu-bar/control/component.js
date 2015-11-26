@@ -22,7 +22,8 @@ export default Component.extend(EKOnInsertMixin, {
   config: service('ember-theater/config'),
 
   setupFocusKeystroke: on('init', function() {
-    const keys = get(this, `config.${get(this, 'keys')}`);
+    const keysPath = get(this, 'keys');
+    const keys = get(this, 'config').getProperty('menuBar', keysPath);
 
     keys.forEach((key) => this.on(keyDown(key), (event) => {
       this.toggleOpen();

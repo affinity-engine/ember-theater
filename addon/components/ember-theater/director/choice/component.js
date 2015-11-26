@@ -3,6 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import animate from 'ember-theater/utils/animate';
+import configurable from 'ember-theater/macros/configurable';
 import {
   keyUp,
   EKOnInsertMixin
@@ -18,11 +19,17 @@ const {
 } = Ember;
 
 export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, {
+  layout,
   activeIndex: 0,
   classNames: ['et-choice'],
-  layout: layout,
 
+  config: inject.service('ember-theater/config'),
   translator: inject.service('ember-theater/translator'),
+
+  moveUpKeys: configurable('choice', 'keys.moveUp'),
+  moveDownKeys: configurable('choice', 'keys.moveDown'),
+  cancelKeys: configurable('choice', 'keys.cancel'),
+  transitionOutDuration: configurable('choice', 'transitionOutDuration', 'transitionDuration'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
@@ -68,8 +75,7 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
 
   actions: {
     choose(choice) {
-      const duration = get(this, 'directable.options.transitionSpeed') ||
-        get(this, 'config.speed.transition');
+      const duration = get(this, 'transitionOutDuration');
 
       animate(this.element, { opacity: 0 }, { duration }).then(() => {
         this.resolveAndDestroy(choice);

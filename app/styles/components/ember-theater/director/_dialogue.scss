@@ -11,20 +11,26 @@
 }
 
 .et-dialogue {
-  @extend .et-panel;
   position: absolute;
   z-index: 100;
   bottom: $et-dialogue-bottom;
-  left: $et-dialogue-left;
-  right: $et-dialogue-right;
-  height: $et-dialogue-height;
   padding: $et-dialogue-padding;
   margin: 0;
   opacity: $et-dialogue-opacity;
   box-sizing: border-box;
   font-size: $et-dialogue-font-size;
   text-align: $et-dialogue-text-align;
-  line-height: $et-dialogue-line-height;
+
+  &.et-coastal {
+    @extend .et-panel;
+  }
+
+  &.et-wide {
+    left: 0;
+    right: 0;
+    height: $et-dialogue-wide-height;
+    line-height: $et-dialogue-wide-line-height;
+  }
 
   .et-dialogue-caption {
     @extend .et-panel;
@@ -34,6 +40,8 @@
     left: $et-dialogue-caption-left;
     padding: $et-dialogue-caption-padding;
     font-size: $et-dialogue-caption-font-size;
+    font-family: $et-dialogue-caption-font-family;
+    font-weight: $et-dialogue-caption-font-weight;
   }
 
   .et-dialogue-body-container {

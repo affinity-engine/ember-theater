@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
+import configurable from 'ember-theater/macros/configurable';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 
 const {
@@ -13,7 +14,7 @@ const {
 const { alias } = computed;
 
 export default Ember.Component.extend(DirectableComponentMixin, {
-  classNameBindings: ['directable.options.class'],
+  classNameBindings: ['additionalClassNames'],
   classNames: ['et-dialogue'],
   layout: layout,
 
@@ -22,6 +23,8 @@ export default Ember.Component.extend(DirectableComponentMixin, {
 
   character: alias('directable.character'),
   instantWriteText: alias('directable.options.instant'),
+  keys: configurable('text', 'keys.accept'),
+  transitionOutDuration: configurable('text', 'transitionOutDuration', 'transitionDuration'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
@@ -29,16 +32,19 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     }
   }),
 
+  additionalClassNames: computed('config.text.classNames', 'directable.options.classNames', {
+    get() {
+      const classes = get(this, 'directable.options.classNames') ||
+        get(this, 'config').getProperty('text', 'classNames');
+      
+      return classes.join(' ');
+    }
+  }).readOnly(),
+
   resolve() {
     get(this, 'directable.resolve')();
     get(this, 'directable').destroy();
   },
-
-  keys: computed('directable.options.keys', {
-    get() {
-      return get(this, 'directable.options.keys') || get(this, 'config.keys.accept');
-    }
-  }).readOnly(),
 
   displayName: computed('directable.options.displayName', {
     get() {
@@ -67,14 +73,13 @@ export default Ember.Component.extend(DirectableComponentMixin, {
     get() {
       return get(this, 'directable.options.speed') ||
         get(this, 'character.textSpeed') ||
-        get(this, 'config.speed.text');
+        get(this, 'config').getProperty('text', 'speed');
     }
   }),
 
   actions: {
     completeText() {
-      const duration = get(this, 'directable.options.transitionSpeed') ||
-        get(this, 'config.speed.transition');
+      const duration = get(this, 'transitionOutDuration');
 
       animate(this.element, { opacity: 0 }, { duration }).then(() => {
         this.resolveAndDestroy();

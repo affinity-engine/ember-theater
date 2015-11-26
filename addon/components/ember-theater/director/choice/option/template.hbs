@@ -2,6 +2,7 @@
   {{ember-theater/director/choice/option/input
     choice=choice
     value=choice.input
+    cancelKeys=cancelKeys
     choose=(action 'choose' choice)
     toggleInput=(action 'toggleInput')
   }}
@@ -11,6 +12,8 @@
     index=index
     choice=choice
     keyboardPriority=keyboardPriority
+    moveDownKeys=moveDownKeys
+    moveUpKeys=moveUpKeys
     focusDown=focusDown
     focusUp=focusUp
     choose=(action 'choose' choice)
