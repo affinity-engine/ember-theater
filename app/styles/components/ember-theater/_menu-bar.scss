@@ -20,7 +20,7 @@
 }
 
 .et-menu-bar {
-  @extend .et-panel;
+  @extend .et-coastal;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
@@ -34,7 +34,7 @@
 
   .et-menu-bar-control-icon {
     @extend .et-button;
-    margin-left: $et-panel-border-width;
+    margin-left: $et-coastal-border-width;
   }
 
   .et-menu-bar-dropdown {

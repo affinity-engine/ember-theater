@@ -5,6 +5,28 @@ const {
   get
 } = Ember;
 
+const configurableGet = function configurableGet(context, category, keys) {
+  const config = get(context, 'config');
+
+  const directableOption = keys.find((key) => get(context, `directable.options.${key}`));
+  const configCategory = keys.find((key) => get(context, `config.${category}.${key}`));
+  const configGlobal = keys.find((key) => get(context, `config.globals.${key}`));
+
+  return directableOption ||
+    config.getProperty(category, configCategory) ||
+    config.getProperty(category, configGlobal);
+}
+
+export function configurableClassNames(category) {
+  return computed('directable.options.classNames',
+                  `config.${category}.classNames`,
+                  'config.globals.classNames', {
+    get() {
+      return configurableGet(this, category, ['classNames']).join(' ');
+    }
+  }).readOnly()
+};
+
 export default function configurable(category, ...keys) {
   const properties = keys.reduce((properties, key) => {
     properties.push(`directable.options.${key}`);
@@ -16,15 +38,7 @@ export default function configurable(category, ...keys) {
 
   return computed(...properties, {
     get() {
-      const config = get(this, 'config');
-
-      const directableOption = keys.find((key) => get(this, `directable.options.${key}`));
-      const configCategory = keys.find((key) => get(this, `config.${category}.${key}`));
-      const configGlobal = keys.find((key) => get(this, `config.globals.${key}`));
-
-      return directableOption ||
-        config.getProperty(category, configCategory) ||
-        config.getProperty(category, configGlobal);
+      return configurableGet(this, category, keys);
     }
   }).readOnly()
 };

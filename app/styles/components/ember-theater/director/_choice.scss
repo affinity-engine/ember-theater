@@ -1,5 +1,4 @@
 .et-choice {
-  @extend .et-panel;
   z-index: 1000;
   position: absolute;
   box-sizing: border-box;
@@ -9,8 +8,6 @@
   left: $et-choice-left;
   max-height: 100vh;
   padding: $et-choice-padding;
-  background-color: $et-choice-background-color;
-  opacity: $et-choice-opacity;
 
   .et-choice-header {
     font-size: $et-choice-header-font-size;
@@ -23,8 +20,6 @@
     margin-bottom: $et-choice-option-margin-bottom;
     width: 100%;
     font-size: $et-choice-option-font-size;
-    font-weight: $et-choice-option-font-weight;
-    font-family: $et-choice-option-font-family;
 
     &:last-child {
       margin-bottom: 0;
@@ -50,6 +45,55 @@
 
     .et-choice-option-text {
       @extend .sr-only;
+    }
+  }
+
+  &.et-coastal {
+    @extend .et-coastal;
+
+    background-color: $et-choice-coastal-background-color;
+    opacity: $et-choice-coastal-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-coastal-font-family;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-coastal-font-weight;
+      font-family: $et-choice-option-coastal-font-family;
+    }
+  }
+
+  &.et-ember {
+    @extend .et-ember;
+
+    background-color: $et-choice-ember-background-color;
+    opacity: $et-choice-ember-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-ember-font-family;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-ember-font-weight;
+      font-family: $et-choice-option-ember-font-family;
+    }
+  }
+
+  &.et-paper {
+    @extend .et-paper;
+    
+    background-color: $et-choice-paper-background-color;
+    opacity: $et-choice-paper-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-paper-font-family;
+      color: $et-choice-header-paper-color;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-paper-font-weight;
+      font-family: $et-choice-option-paper-font-family;
     }
   }
 }

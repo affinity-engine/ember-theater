@@ -1,10 +1,11 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
-import configurable from 'ember-theater/macros/configurable';
+import configurable, { configurableClassNames } from 'ember-theater/macros/configurable';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 
 const {
+  Component,
   computed,
   get,
   inject,
@@ -13,10 +14,11 @@ const {
 
 const { alias } = computed;
 
-export default Ember.Component.extend(DirectableComponentMixin, {
-  classNameBindings: ['additionalClassNames'],
+export default Component.extend(DirectableComponentMixin, {
+  layout, 
+
+  classNameBindings: ['configurableClassNames'],
   classNames: ['et-dialogue'],
-  layout: layout,
 
   translator: inject.service('ember-theater/translator'),
   config: inject.service('ember-theater/config'),
@@ -25,21 +27,13 @@ export default Ember.Component.extend(DirectableComponentMixin, {
   instantWriteText: alias('directable.options.instant'),
   keys: configurable('text', 'keys.accept'),
   transitionOutDuration: configurable('text', 'transitionOutDuration', 'transitionDuration'),
+  configurableClassNames: configurableClassNames('text'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
       this.resolveAndDestroy();
     }
   }),
-
-  additionalClassNames: computed('config.text.classNames', 'directable.options.classNames', {
-    get() {
-      const classes = get(this, 'directable.options.classNames') ||
-        get(this, 'config').getProperty('text', 'classNames');
-      
-      return classes.join(' ');
-    }
-  }).readOnly(),
 
   resolve() {
     get(this, 'directable.resolve')();

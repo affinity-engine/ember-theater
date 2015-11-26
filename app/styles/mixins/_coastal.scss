@@ -1,0 +1,27 @@
+@mixin et-coastal-base {
+  border: $et-coastal-border-width solid $et-coastal-border-color;
+  background: $et-coastal-background;
+  color: $et-coastal-color;
+}
+
+.et-coastal {
+  @include et-coastal-base;
+
+  .et-button {
+    @include et-coastal-base;
+
+    &:hover, &:focus {
+      background-color: $et-button-coastal-hover-background-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-coastal-border-color;
+    background: $et-input-coastal-background-color;
+    color: $et-input-coastal-color;
+
+    &:focus {
+      border-color: $et-input-coastal-focus-border-color;
+    }
+  }
+}

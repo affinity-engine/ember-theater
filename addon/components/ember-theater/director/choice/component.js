@@ -3,7 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import animate from 'ember-theater/utils/animate';
-import configurable from 'ember-theater/macros/configurable';
+import configurable, { configurableClassNames } from 'ember-theater/macros/configurable';
 import {
   keyUp,
   EKOnInsertMixin
@@ -20,7 +20,9 @@ const {
 
 export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, {
   layout,
+
   activeIndex: 0,
+  classNameBindings: ['configurableClassNames'],
   classNames: ['et-choice'],
 
   config: inject.service('ember-theater/config'),
@@ -30,6 +32,7 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
   moveDownKeys: configurable('choice', 'keys.moveDown'),
   cancelKeys: configurable('choice', 'keys.cancel'),
   transitionOutDuration: configurable('choice', 'transitionOutDuration', 'transitionDuration'),
+  configurableClassNames: configurableClassNames('choice'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {

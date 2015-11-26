@@ -13,34 +13,11 @@
 .et-dialogue {
   position: absolute;
   z-index: 100;
-  bottom: $et-dialogue-bottom;
-  padding: $et-dialogue-padding;
-  margin: 0;
-  opacity: $et-dialogue-opacity;
   box-sizing: border-box;
-  font-size: $et-dialogue-font-size;
   text-align: $et-dialogue-text-align;
 
-  &.et-coastal {
-    @extend .et-panel;
-  }
-
-  &.et-wide {
-    left: 0;
-    right: 0;
-    height: $et-dialogue-wide-height;
-    line-height: $et-dialogue-wide-line-height;
-  }
-
   .et-dialogue-caption {
-    @extend .et-panel;
-    position: absolute;
     box-sizing: border-box;
-    top: $et-dialogue-caption-top;
-    left: $et-dialogue-caption-left;
-    padding: $et-dialogue-caption-padding;
-    font-size: $et-dialogue-caption-font-size;
-    font-family: $et-dialogue-caption-font-family;
     font-weight: $et-dialogue-caption-font-weight;
   }
 
@@ -51,6 +28,58 @@
 
     .et-dialogue-body {
       padding-bottom: 100vh;
+    }
+  }
+
+  &.et-coastal {
+    opacity: $et-dialogue-coastal-opacity;
+    font-family: $et-dialogue-coastal-font-family;
+
+    .et-dialogue-caption {
+      @extend .et-coastal;
+
+      font-family: $et-dialogue-caption-coastal-font-family;
+    }
+  }
+
+  &.et-ember {
+    opacity: $et-dialogue-ember-opacity;
+    font-family: $et-dialogue-ember-font-family;
+
+    .et-dialogue-caption {
+      @extend .et-ember;
+
+      font-family: $et-dialogue-caption-ember-font-family;
+    }
+  }
+
+  &.et-paper {
+    opacity: $et-dialogue-paper-opacity;
+    font-family: $et-dialogue-paper-font-family;
+
+    .et-dialogue-caption {
+      @extend .et-paper;
+
+      font-family: $et-dialogue-caption-paper-font-family;
+    }
+  }
+
+  &.et-full-width {
+    left: 0;
+    right: 0;
+    bottom: $et-dialogue-full-width-bottom;
+    height: $et-dialogue-full-width-height;
+    line-height: $et-dialogue-full-width-line-height;
+    font-size: $et-dialogue-full-width-font-size;
+    padding: $et-dialogue-full-width-padding;
+    margin: $et-dialogue-full-width-margin;
+
+    .et-dialogue-caption {
+      position: absolute;
+      top: $et-dialogue-caption-full-width-top;
+      left: $et-dialogue-caption-full-width-left;
+      padding: $et-dialogue-caption-full-width-padding;
+      font-size: $et-dialogue-caption-full-width-font-size;
     }
   }
 }

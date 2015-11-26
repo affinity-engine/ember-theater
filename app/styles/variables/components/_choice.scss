@@ -5,16 +5,36 @@ $et-choice-top: 20% !default;
 $et-choice-right: (100 - $et-choice-width) / 2 !default;
 $et-choice-left: (100 - $et-choice-width) / 2 !default;
 $et-choice-padding: $et-choice-rhythm * 5 !default;
-$et-choice-background-color: $et-secondary-color !default;
-$et-choice-opacity: $et-semi-transparency !default;
 
 $et-choice-header-font-size: $et-large-font-size !default;
 $et-choice-header-margin-bottom: $et-choice-rhythm * 10 !default;
 
 $et-choice-option-margin-bottom: $et-choice-rhythm !default;
 $et-choice-option-font-size: $et-small-font-size !default;
-$et-choice-option-font-weight: bold !default;
-$et-choice-option-font-family: $et-primary-sans-serif !default;
 
 $et-choice-child-line-height: $et-default-line-height !default;
 $et-choice-child-text-align: center !default;
+
+$et-choice-opacity: $et-semi-transparency !default;
+$et-choice-header-font-family: $et-primary-serif !default;
+$et-choice-option-font-weight: bold !default;
+$et-choice-option-font-family: $et-primary-sans-serif !default;
+
+$et-choice-coastal-background-color: $et-coastal-secondary-color !default;
+$et-choice-coastal-opacity: $et-choice-opacity !default;
+$et-choice-header-coastal-font-family: $et-choice-header-font-family !default;
+$et-choice-option-coastal-font-weight: $et-choice-option-font-weight !default;
+$et-choice-option-coastal-font-family: $et-choice-option-font-family !default;
+
+$et-choice-ember-background-color: $et-ember-secondary-color !default;
+$et-choice-ember-opacity: $et-choice-opacity !default;
+$et-choice-header-ember-font-family: $et-choice-header-font-family !default;
+$et-choice-option-ember-font-weight: $et-choice-option-font-weight !default;
+$et-choice-option-ember-font-family: $et-choice-option-font-family !default;
+
+$et-choice-paper-background-color: $et-paper-secondary-color !default;
+$et-choice-paper-opacity: $et-choice-opacity !default;
+$et-choice-header-paper-font-family: $et-choice-header-font-family !default;
+$et-choice-header-paper-color: $et-paper-primary-color !default;
+$et-choice-option-paper-font-weight: $et-choice-option-font-weight !default;
+$et-choice-option-paper-font-family: $et-choice-option-font-family !default;

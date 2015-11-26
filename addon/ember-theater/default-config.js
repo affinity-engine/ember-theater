@@ -1,6 +1,6 @@
 export default {
   globals: {
-    classNames: ['et-wide', 'et-coastal'],
+    classNames: ['et-full-width', 'et-paper'],
     speed: 300,
     transitionDuration: 200,
     keys: {

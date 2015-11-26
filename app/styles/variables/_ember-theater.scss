@@ -2,12 +2,7 @@ $et-primary-serif: "Andada" !default;
 $et-primary-sans-serif: "Comfortaa" !default;
 $et-primary-font-family: $et-primary-serif !default;
 
-$et-primary-color: #009393 !default;
-$et-secondary-color: #00585F !default;
-$et-highlight-color: #FF3800 !default;
-$et-neutral-color: #FFFCC4 !default;
-
-$et-blank-screen-background-color: $et-secondary-color !default;
+$et-blank-screen-background-color: #121212 !default;
 
 $et-default-border-radius: 0.5vw !default;
 $et-default-border-width: 0.5vh !default;
@@ -24,7 +19,10 @@ $et-default-transition-speed: 500ms;
 
 @import "mixins/button";
 @import "mixins/input";
-@import "mixins/panel";
+
+@import "mixins/coastal";
+@import "mixins/ember";
+@import "mixins/paper";
 
 @import "components/choice";
 @import "components/dialogue";

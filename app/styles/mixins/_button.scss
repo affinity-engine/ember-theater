@@ -1,12 +1,10 @@
 .et-button {
-  @extend .et-panel;
   cursor: pointer;
   border-radius: $et-button-border-radius;
   font-size: $et-button-font-size;
-  transition: background $et-button-transition-speed ease;
+  transition: all $et-button-transition-speed ease;
 
   &:hover, &:focus {
-    background-color: $et-button-hover-background-color;
     outline: 0;
   }
-} 
+}

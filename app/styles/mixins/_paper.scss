@@ -1,0 +1,28 @@
+@mixin et-paper-base {
+  border: $et-paper-border-width solid $et-paper-border-color;
+  background: $et-paper-background;
+  color: $et-paper-color;
+}
+
+.et-paper {
+  @include et-paper-base;
+
+  .et-button {
+    @include et-paper-base;
+
+    &:hover, &:focus {
+      background-color: $et-button-paper-hover-background-color;
+      color: $et-button-paper-hover-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-paper-border-color;
+    background: $et-input-paper-background-color;
+    color: $et-input-paper-color;
+
+    &:focus {
+      border-color: $et-input-paper-focus-border-color;
+    }
+  }
+}
