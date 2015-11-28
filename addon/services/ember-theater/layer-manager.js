@@ -14,7 +14,7 @@ const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Service.extend({
-  dynamicRulesheet: service(),
+  dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),
 
@@ -38,10 +38,10 @@ export default Service.extend({
       return `${states}${percent}%{-webkit-filter:${state};filter:${state};}`;
     }, '');
     const keyframes = `@keyframes ${animationName} { ${keyframeStates} }`;
-    const dynamicRulesheet = get(this, 'dynamicRulesheet');
+    const dynamicStylesheet = get(this, 'dynamicStylesheet');
 
-    dynamicRulesheet.deleteRule(previousKeyframes);
-    dynamicRulesheet.insertRule(keyframes);
+    dynamicStylesheet.deleteRule(previousKeyframes);
+    dynamicStylesheet.insertRule(keyframes);
 
     setProperties(filter, {
       animation,
@@ -64,10 +64,10 @@ export default Service.extend({
   },
 
   destroyFilter(filter) {
-    const { dynamicRulesheet, filters } = getProperties(this, 'dynamicRulesheet', 'filters');
+    const { dynamicStylesheet, filters } = getProperties(this, 'dynamicStylesheet', 'filters');
     const keyframes = get(filter, 'keyframes');
 
-    dynamicRulesheet.deleteRule(keyframes);
+    dynamicStylesheet.deleteRule(keyframes);
     filters.removeObject(filter);
     filter.destroy();
   },
