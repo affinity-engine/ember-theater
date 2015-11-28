@@ -9,6 +9,7 @@ const {
 const { inject: { service } } = Ember;
 
 export default Service.extend({
+  layerManager: service('ember-theater/layer-manager'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/scene-manager'),
 
@@ -22,6 +23,8 @@ export default Service.extend({
     sceneManager.resetSceneRecord();
 
     this._updateAutosave(scene, options);
+
+    get(this, 'layerManager').clearFilters();
 
     return scene;
   },
