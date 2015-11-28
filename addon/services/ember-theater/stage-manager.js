@@ -4,17 +4,12 @@ const {
   Service,
   computed,
   get,
-  inject,
   isBlank,
   merge,
   setProperties
 } = Ember;
 
-const { RSVP: { Promise } } = Ember;
-
 export default Service.extend({
-  sceneManager: inject.service('ember-theater/scene-manager'),
-
   directables: computed(() => Ember.A()),
 
   clearDirectables() {
@@ -51,26 +46,5 @@ export default Service.extend({
 
   _updateDirectable(directable, properties, resolve) {
     setProperties(directable, merge(properties, { resolve }));
-  },
-
-  handleDirection(factory, type, args) {
-    const promise = this._handleDirection(factory, type, ...args);
-
-    return this._handlePromiseResolution(promise);
-  },
-
-  _handleDirection(factory, type, ...args) {
-    const properties = get(this, 'sceneManager').advanceSceneRecord();
-    const direction = factory.create(merge(properties, { type }));
-
-    return new Promise((resolve) => {
-      direction.perform(resolve, ...args);
-    });
-  },
-
-  _handlePromiseResolution(promise) {
-    get(this, 'sceneManager').recordSceneRecordEvent(promise);
-
-    return promise;
   }
 });

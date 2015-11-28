@@ -5,7 +5,7 @@ const { RSVP: { resolve } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Ember.Object.extend({
-  stageManager: service('ember-theater/stage-manager'),
+  stageDirector: service('ember-theater/stage-director'),
 
   abort() {
     this.set('isAborted', true);
@@ -14,8 +14,8 @@ export default Ember.Object.extend({
   proxyDirection(type, factory, args) {
     if (get(this, 'isAborted')) { return resolve(); }
 
-    const stageManager = get(this, 'stageManager');
+    const stageDirector = get(this, 'stageDirector');
 
-    return stageManager.handleDirection(factory, type, args);
+    return stageDirector.direct(factory, type, args);
   }
 });
