@@ -1,18 +1,18 @@
 import Ember from 'ember';
-import { Directable } from 'ember-theater';
+import { Direction } from 'ember-theater';
 
 const {
   get,
   isPresent,
-  setProperties,
   typeOf
 } = Ember;
 
-export default Directable.extend({
-  componentType: 'ember-theater/director/character',
-  layer: 'theater.stage.foreground.character',
+const { inject: { service } } = Ember;
 
-  parseArgs(expressionOrId, effectOrOptions, optionsOnly) {
+export default Direction.extend({
+  stageManager: service('ember-theater/stage-manager'),
+
+  perform(resolve, expressionOrId, effectOrOptions, optionsOnly) {
     const expressionIsPresent = typeOf(expressionOrId) === 'object';
     const effectIsPresent = isPresent(optionsOnly);
 
@@ -24,14 +24,17 @@ export default Directable.extend({
       this.store.peekRecord('ember-theater/character-expression', expressionId) :
       get(character, 'defaultExpression');
 
+    const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
+
     const properties = {
       id,
       character,
       initialExpression,
+      options,
       effect: effectIsPresent ? effectOrOptions : 'transition.fadeIn',
-      options: effectIsPresent ? optionsOnly : effectOrOptions
+      layer: get(options, 'layer') || 'theater.stage.foreground.character'
     };
 
-    setProperties(this, properties);
+    get(this, 'stageManager').handleDirectable(id, 'character', properties, resolve);
   }
 });

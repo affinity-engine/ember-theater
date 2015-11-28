@@ -3,12 +3,12 @@ import DirectableComponentMixin from 'ember-theater/mixins/directable-component'
 
 const {
   Component,
-  computed,
   get,
   getProperties,
   inject,
   isPresent,
-  on
+  on,
+  set
 } = Ember;
 
 export default Component.extend(DirectableComponentMixin, {
@@ -29,7 +29,7 @@ export default Component.extend(DirectableComponentMixin, {
     audio[effect](...this._buzzOptionsAdapter(options));
 
     audio.bindOnce(`ended.${this.id}`, () => {
-      resolve();
+      get(this, 'resolve')();
     });
   }),
 
@@ -55,7 +55,7 @@ export default Component.extend(DirectableComponentMixin, {
 
   _bindFadeWith(effect, options) {
     if (effect === 'fadeWith') {
-      const audio = get(this, 'directable.fadeWith');
+      const audio = get(this, 'directable.fadeWithAudio');
 
       set(options, 'sound', audio);
     }

@@ -7,7 +7,7 @@ const {
   inject,
   isBlank,
   merge,
-  set
+  setProperties
 } = Ember;
 
 const { RSVP: { Promise } } = Ember;
@@ -32,6 +32,27 @@ export default Service.extend({
     });
   },
 
+  handleDirectable(id, type, properties, resolve) {
+    const directable = this.findDirectableWithId(id, type);
+
+    if (isBlank(directable)) {
+      this._addNewDirectable(merge(properties, { id, type, resolve }));
+    } else {
+      this._updateDirectable(directable, properties, resolve);
+    }
+  },
+
+  _addNewDirectable(properties) {
+    const Directable = this.container.lookup('directable:main');
+    const directable = Directable.create(properties);
+
+    get(this, 'directables').pushObject(directable);
+  },
+
+  _updateDirectable(directable, properties, resolve) {
+    setProperties(directable, merge(properties, { resolve }));
+  },
+
   handleDirection(factory, type, args) {
     const promise = this._handleDirection(factory, type, ...args);
 
@@ -39,54 +60,12 @@ export default Service.extend({
   },
 
   _handleDirection(factory, type, ...args) {
-    const direction = this._instantiateFactory(factory, { type });
+    const properties = get(this, 'sceneManager').advanceSceneRecord();
+    const direction = factory.create(merge(properties, { type }));
 
     return new Promise((resolve) => {
       direction.perform(resolve, ...args);
     });
-  },
-
-  handleDirectable(factory, type, args) {
-    const promise = this._handleDirectable(factory, type, args);
-
-    return this._handlePromiseResolution(promise);
-  },
-
-  _handleDirectable(factory, type, args) {
-    const id = args[0];
-    const directable = this.findDirectableWithId(id, type);
-
-    return new Promise((resolve) => {
-      if (isBlank(directable)) {
-        this._addNewDirectable(factory, type, args, resolve);
-      } else {
-        this._updateDirectable(directable, args, resolve);
-      }
-    });
-  },
-
-  _addNewDirectable(factory, type, args, resolve) {
-    const directable = this._instantiateFactory(factory, { resolve, type });
-
-    directable.parseArgs(...args);
-    get(this, 'directables').pushObject(directable);
-  },
-
-  _updateDirectable(directable, args, resolve) {
-    // typically, `advanceSceneRecord` is called in `_instantiateFactory`, but since the directable
-    // is already instantiated, we call it manually here.
-    get(this, 'sceneManager').advanceSceneRecord();
-
-    set(directable, 'resolve', resolve);
-    directable.parseArgs(...args);
-  },
-
-  _instantiateFactory(factory, additionalProperties = {}) {
-    const properties = get(this, 'sceneManager').advanceSceneRecord();
-
-    merge(properties, additionalProperties);
-
-    return factory.create(properties);
   },
 
   _handlePromiseResolution(promise) {

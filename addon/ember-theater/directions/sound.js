@@ -4,15 +4,15 @@ import { Direction } from 'ember-theater';
 const {
   get,
   isPresent,
-  setProperties,
   typeOf
 } = Ember;
 
-export default Direction.extend({
-  componentType: 'ember-theater/director/sound',
-  layer: 'theater.backstage.sound',
+const { inject: { service } } = Ember;
 
-  parseArgs(id, effectOrOptions, optionsOnly) {
+export default Direction.extend({
+  stageManager: service('ember-theater/stage-manager'),
+
+  perform(resolve, id, effectOrOptions, optionsOnly) {
     const effectIsPresent = typeOf(effectOrOptions) === 'string';
     const options = Ember.Object.create(effectIsPresent ? optionsOnly : effectOrOptions);
     const effect = effectIsPresent ?
@@ -22,16 +22,17 @@ export default Direction.extend({
 
     const fadeWithId = get(options, 'fadeWith');
     const fadeWithAudio = isPresent(fadeWithAudio) ?
-      this.store.peekRecord('ember-theater/sound', id).audio :
+      this.store.peekRecord('ember-theater/sound', fadeWithId).audio :
       undefined;
 
     const properties = {
       audio,
       effect,
       fadeWithAudio,
-      options
+      options,
+      layer: get(options, 'layer') || 'theater.backstage.sound'
     };
 
-    setProperties(this, properties);
+    get(this, 'stageManager').handleDirectable(id, 'sound', properties, resolve);
   }
 });

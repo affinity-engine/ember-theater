@@ -25,6 +25,6 @@ export default Scene.extend({
     }
     await this.text('steven', 'How was that?!');
     this.setData('test', 0);
-    this.transitionToScene(2);
+    // this.transitionToScene(2);
   }
 });

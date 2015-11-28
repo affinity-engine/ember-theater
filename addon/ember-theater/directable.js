@@ -1,5 +1,20 @@
 import Ember from 'ember';
 
+const {
+  computed,
+  get
+} = Ember;
+
 export default Ember.Object.extend({
-  layer: 'stage'
+  componentType: computed('type', {
+    get() {
+      return `ember-theater/director/${get(this, 'type')}`;
+    }
+  }).readOnly(),
+
+  layer: computed('options.layer', {
+    get() {
+      return get(this, 'options.layer') || 'theater';
+    }
+  })
 });
