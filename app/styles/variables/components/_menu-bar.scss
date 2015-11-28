@@ -6,22 +6,6 @@ $et-menu-bar-left: 0 !default;
 $et-menu-bar-right: 0 !default;
 $et-menu-bar-height: 10.5vh !default;
 $et-menu-bar-padding: $et-menu-bar-vertical-rhythm 4vh !default;
-$et-menu-bar-opacity: 0.95 !default;
 $et-menu-bar-transition-speed: $et-default-transition-speed !default;
 
-$et-menu-bar-dropdown-height: $et-menu-bar-height - $et-coastal-border-width !default;
-$et-menu-bar-dropdown-right: 0 !default;
-$et-menu-bar-dropdown-padding: $et-menu-bar-vertical-rhythm * 2 4vh !default;
-
-$et-menu-bar-save-menu-button-padding: 0 2vh !default;
-
-$et-confirm-box-rhythm: 0.1vw !default;
-$et-confirm-box-font-size: $et-default-font-size !default;
-$et-confirm-box-padding: $et-confirm-box-rhythm * 5 !default;
-
-$et-confirm-box-buttons-margin: $et-confirm-box-rhythm * 5 !default;
-
-
-$et-menu-bar-dropdown-background-color: $et-coastal-secondary-color !default;
-$et-confirm-box-background-color: $et-coastal-secondary-color !default;
-$et-confirm-box-color: $et-coastal-neutral-color !default;
+$et-menu-bar-icon-margin-left: $et-menu-bar-vertical-rhythm !default;

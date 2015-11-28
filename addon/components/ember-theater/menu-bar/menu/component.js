@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import configurable from 'ember-theater/macros/configurable';
 
 import {
   keyUp,
@@ -25,9 +26,11 @@ export default Component.extend(EKOnInsertMixin, {
   config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/scene-manager'),
+  cancelKeys: configurable('menuBar', 'keys.cancel'),
+  menuBarClassNames: configurable('menuBar', 'classNames'),
 
   setupCancelKeys: on('init', function() {
-    const cancelKeys = get(this, 'config.keys.cancel');
+    const cancelKeys = get(this, 'cancelKeys');
 
     cancelKeys.forEach((key) => this.on(keyUp(key), () => this.attrs.closeMenu()));
   }),
@@ -48,6 +51,7 @@ export default Component.extend(EKOnInsertMixin, {
   }),
 
   renderDirectable() {
+    const classNames = get(this, 'menuClassNames') || get(this, 'menuBarClassNames');
     const {
       choices,
       header
@@ -57,7 +61,8 @@ export default Component.extend(EKOnInsertMixin, {
       const directable = Ember.Object.create({
         choices,
         header,
-        resolve
+        resolve,
+        options: { classNames }
       });
 
       set(this, 'directable', directable);

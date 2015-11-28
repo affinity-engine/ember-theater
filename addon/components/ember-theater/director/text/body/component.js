@@ -27,7 +27,7 @@ const { computed: { or } } = Ember;
 
 export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
-  classNames: ['et-dialogue-body-container'],
+  classNames: ['et-text-body-container'],
   layout: layout,
 
   isInstant: or('instantWritePage', 'instantWriteText'),
@@ -145,7 +145,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
         pageLoaded: true
       });
 
-      // stop if past the last word in whole dialogue or the last word on the current page
+      // stop if past the last word in whole text or the last word on the current page
       return;
     }
 

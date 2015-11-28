@@ -1,28 +1,44 @@
 export default {
   globals: {
-    classNames: ['et-full-width', 'et-paper'],
+    classNames: ['et-block', 'et-paper'],
     speed: 300,
     transitionDuration: 200,
     keys: {
       accept: [' ', 'Enter'],
       cancel: ['Escape'],
-      loadMenu: ['ctrl+l'],
       moveDown: ['ArrowDown', 's'],
-      moveUp: ['ArrowUp', 'w'],
-      resetMenu: ['ctrl+r'],
-      rewindMenu: ['ctrl+b'],
-      saveMenu: ['ctrl+s']
+      moveUp: ['ArrowUp', 'w']
     }
   },
-  menu: {
+  menuBar: {
     transitionIn: ['blur(0px)', 'blur(10px)'],
     transitionInDuration: 500,
     transitionOut: ['blur(10px)', 'blur(0px)'],
     transitionOutDuration: 500,
     innerEffect: ['blur(10px)', 'blur(7px)', 'blur(10px)'],
-    innerEffectDuration: 5000
+    innerEffectDuration: 5000,
+    load: {
+      keys: {
+        open: ['ctrl+l']
+      }
+    },
+    reset: {
+      keys: {
+        open: ['ctrl+r']
+      }
+    },
+    rewind: {
+      keys: {
+        open: ['ctrl+b']
+      }
+    },
+    save: {
+      keys: {
+        open: ['ctrl+s']
+      }
+    }
   },
-  speed: {
-    sceneTransition: 750
+  director: {
+    transitionDuration: 750
   }
 };

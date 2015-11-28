@@ -12,7 +12,7 @@ const configurableGet = function configurableGet(context, category, keys) {
   const configCategory = keys.find((key) => get(context, `config.${category}.${key}`));
   const configGlobal = keys.find((key) => get(context, `config.globals.${key}`));
 
-  return directableOption ||
+  return  get(context, `directable.options.${directableOption}`) ||
     config.getProperty(category, configCategory) ||
     config.getProperty(category, configGlobal);
 }

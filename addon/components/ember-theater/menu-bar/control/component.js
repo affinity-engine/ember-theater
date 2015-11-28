@@ -22,8 +22,8 @@ export default Component.extend(EKOnInsertMixin, {
   config: service('ember-theater/config'),
 
   setupFocusKeystroke: on('init', function() {
-    const keysPath = get(this, 'keys');
-    const keys = get(this, 'config').getProperty('menuBar', keysPath);
+    const type = get(this, 'type');
+    const keys = get(this, `config.menuBar.${type}.keys.open`);
 
     keys.forEach((key) => this.on(keyDown(key), (event) => {
       this.toggleOpen();
@@ -38,7 +38,7 @@ export default Component.extend(EKOnInsertMixin, {
   }),
 
   toggleOpen: on('click', 'touchEnd', function() {
-    const config = get(this, 'config.menu');
+    const config = get(this, 'config.menuBar');
 
     this.toggleProperty('isOpen');
 
@@ -64,7 +64,7 @@ export default Component.extend(EKOnInsertMixin, {
 
   actions: {
     closeMenu() {
-      const config = get(this, 'config.menu');
+      const config = get(this, 'config.menuBar');
 
       set(this, 'isOpen', false);
       get(this, 'filter').perform(K, get(config, 'transitionOut'), {

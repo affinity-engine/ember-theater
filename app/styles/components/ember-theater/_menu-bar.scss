@@ -1,10 +1,11 @@
 .et-menu-bar-container, .et-menu-bar {
-  z-index: 1000;
-  position: absolute;
   top: $et-menu-bar-top;
   left: $et-menu-bar-left;
   right: $et-menu-bar-right;
   transition: transform $et-menu-bar-transition-speed ease, height $et-menu-bar-transition-speed ease;
+
+  z-index: 1000;
+  position: absolute;
 }
 
 .et-menu-bar-container {
@@ -20,59 +21,32 @@
 }
 
 .et-menu-bar {
-  @extend .et-coastal;
+  padding: $et-menu-bar-padding;
+  font-size: $et-menu-bar-font-size;
+  transform: translateY(-$et-menu-bar-height);
+
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
   border-left: 0;
   border-right: 0;
   border-top: 0;
-  opacity: $et-menu-bar-opacity;
-  padding: $et-menu-bar-padding;
-  font-size: $et-menu-bar-font-size;
-  transform: translateY(-$et-menu-bar-height);
 
   .et-menu-bar-control-icon {
     @extend .et-button;
-    margin-left: $et-coastal-border-width;
+
+    margin-left: $et-menu-bar-icon-margin-left;
   }
 
-  .et-menu-bar-dropdown {
-    position: absolute;
-    border-top: 0;
-    border-right: 0;
-    background-color: $et-menu-bar-dropdown-background-color;
-    top: $et-menu-bar-dropdown-height;
-    right: $et-menu-bar-dropdown-right;
-    padding: $et-menu-bar-dropdown-padding;
+  &.et-coastal {
+    @extend .et-coastal;
   }
 
-  .et-menu-bar-save-menu-button {
-    @extend .et-button;
-    width: 100%;
-    padding: $et-menu-bar-save-menu-button-padding;
-  }
-}
-
-.et-confirm-box {
-  position: absolute;
-  top: 31vh;
-  left: 31vw;
-  right: 31vw;
-  font-size: $et-confirm-box-font-size;
-  padding: $et-confirm-box-padding;
-  background-color: $et-confirm-box-background-color;
-  color: $et-confirm-box-color;
-
-  .et-confirm-box-buttons {
-    text-align: center;
-    margin: $et-confirm-box-buttons-margin;
+  &.et-ember {
+    @extend .et-ember;
   }
 
-  .et-confirm-box-button {
-    @extend .et-button;
-    padding: $et-confirm-box-padding;
-    border: none;
-    cursor: pointer;
+  &.et-paper {
+    @extend .et-paper;
   }
 }

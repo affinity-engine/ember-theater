@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
+import configurable from 'ember-theater/macros/configurable';
 
 const {
   Component,
@@ -24,12 +25,13 @@ export default Component.extend({
   stageManager: service('ember-theater/stage-manager'),
 
   directables: alias('stageManager.directables'),
+  transitionDuration: configurable('director', 'transitionDuration'),
 
   _sceneChanged: observer('sceneManager.scene', function() {
     const scene = get(this, 'sceneManager.scene');
 
     if (isPresent(scene)) {
-      const duration = get(this, 'config.speed.sceneTransition');
+      const duration = get(this, 'transitionDuration');
 
       animate(this.element, { opacity: 0 }, { duration }).then(() => {
         get(this, 'stageManager').clearDirectables();

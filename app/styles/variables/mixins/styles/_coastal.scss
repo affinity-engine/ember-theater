@@ -3,14 +3,18 @@ $et-coastal-secondary-color: #00585F !default;
 $et-coastal-highlight-color: #FF3800 !default;
 $et-coastal-neutral-color: #FFFCC4 !default;
 
-$et-coastal-border-width: $et-default-border-width !default;
+$et-coastal-border-style: $et-default-border-style !default;
 $et-coastal-border-color: $et-coastal-secondary-color !default;
 $et-coastal-background: $et-coastal-primary-color !default;
 $et-coastal-color: $et-coastal-neutral-color !default;
 
+$et-button-coastal-border-style: $et-default-border-style !default;
+
 $et-button-coastal-hover-background-color: $et-coastal-highlight-color !default;
 
-$et-input-coastal-focus-border-color: $et-coastal-highlight-color !default;
 $et-input-coastal-background-color: $et-coastal-neutral-color !default;
 $et-input-coastal-color: $et-coastal-primary-color !default;
 $et-input-coastal-border-color: $et-coastal-secondary-color !default;
+$et-input-coastal-border-style: $et-button-coastal-border-style !default;
+
+$et-input-coastal-focus-border-color: $et-coastal-highlight-color !default;

@@ -1,5 +1,6 @@
 @mixin et-paper-base {
-  border: $et-paper-border-width solid $et-paper-border-color;
+  border-style: $et-paper-border-style;
+  border-color: $et-paper-border-color;
   background: $et-paper-background;
   color: $et-paper-color;
 }
@@ -8,16 +9,21 @@
   @include et-paper-base;
 
   .et-button {
-    @include et-paper-base;
+    border-style: $et-button-paper-border-style;
+    border-color: $et-button-paper-border-color;
+    background: $et-button-paper-background-color;
+    color: $et-button-paper-color;
 
     &:hover, &:focus {
       background-color: $et-button-paper-hover-background-color;
       color: $et-button-paper-hover-color;
+      border-color: $et-button-paper-hover-border-color;
     }
   }
 
   .et-input {
     border-color: $et-input-paper-border-color;
+    border-style: $et-input-ember-border-style;
     background: $et-input-paper-background-color;
     color: $et-input-paper-color;
 

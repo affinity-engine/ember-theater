@@ -1,8 +1,9 @@
 .et-input {
   border-width: $et-input-border-width;
-  border-style: solid;
   border-radius: $et-input-border-radius;
   font-size: $et-input-font-size;
   transition: border $et-input-transition-speed ease;
+  
+  outline: none;
   box-sizing: border-box;
 }

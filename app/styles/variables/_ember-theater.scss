@@ -1,29 +1,21 @@
-$et-primary-serif: "Andada" !default;
-$et-primary-sans-serif: "Comfortaa" !default;
-$et-primary-font-family: $et-primary-serif !default;
-
 $et-blank-screen-background-color: #121212 !default;
-
-$et-default-border-radius: 0.5vw !default;
-$et-default-border-width: 0.5vh !default;
-
-$et-default-font-size: 6vh !default;
-$et-tiny-font-size: $et-default-font-size * 0.7 !default;
-$et-small-font-size: $et-default-font-size * 0.85 !default;
-$et-large-font-size: $et-default-font-size * 1.15 !default;
 
 $et-default-line-height: 8vh !default;
 
-$et-semi-transparency: 0.9;
+$et-semi-transparency: 0.95;
 $et-default-transition-speed: 500ms;
+
+@import "./borders";
+@import "./structure-styles";
+@import "./typography";
 
 @import "mixins/button";
 @import "mixins/input";
 
-@import "mixins/coastal";
-@import "mixins/ember";
-@import "mixins/paper";
+@import "mixins/styles/coastal";
+@import "mixins/styles/ember";
+@import "mixins/styles/paper";
 
 @import "components/choice";
-@import "components/dialogue";
+@import "components/text";
 @import "components/menu-bar";

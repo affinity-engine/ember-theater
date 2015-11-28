@@ -1,17 +1,19 @@
 .et-character {
+  z-index: 10;
+
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 10;
 
   .et-character-expression-container {
     position: absolute;
-    transform: translateX(-50%);
     height: 100%;
+    transform: translateX(-50%);
   }
 
   .et-character-expression {
     @extend .et-hidden;
+
     position: relative;
     height: 100%;
   }

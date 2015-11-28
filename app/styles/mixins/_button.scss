@@ -1,8 +1,9 @@
 .et-button {
-  cursor: pointer;
   border-radius: $et-button-border-radius;
   font-size: $et-button-font-size;
   transition: all $et-button-transition-speed ease;
+
+  cursor: pointer;
 
   &:hover, &:focus {
     outline: 0;

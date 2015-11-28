@@ -1,9 +1,10 @@
 @import "director/backdrop";
 @import "director/character";
 @import "director/choice";
-@import "director/dialogue";
+@import "director/text";
 
 .et-director {
   @extend .et-full-screen;
+  
   perspective: 30vh;
 }

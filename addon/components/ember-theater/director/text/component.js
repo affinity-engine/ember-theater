@@ -15,10 +15,10 @@ const {
 const { alias } = computed;
 
 export default Component.extend(DirectableComponentMixin, {
-  layout, 
+  layout,
 
+  classNames: ['et-text'],
   classNameBindings: ['configurableClassNames'],
-  classNames: ['et-dialogue'],
 
   translator: inject.service('ember-theater/translator'),
   config: inject.service('ember-theater/config'),

@@ -1,25 +1,12 @@
 .et-choice {
   z-index: 1000;
-  position: absolute;
-  box-sizing: border-box;
-  transform: translateY(-$et-choice-top);
-  top: $et-choice-top;
-  right: $et-choice-right;
-  left: $et-choice-left;
-  max-height: 100vh;
-  padding: $et-choice-padding;
 
-  .et-choice-header {
-    font-size: $et-choice-header-font-size;
-    margin-bottom: $et-choice-header-margin-bottom;
-  }
+  position: absolute;
 
   .et-choice-option {
     @extend .et-button;
+
     display: block;
-    margin-bottom: $et-choice-option-margin-bottom;
-    width: 100%;
-    font-size: $et-choice-option-font-size;
 
     &:last-child {
       margin-bottom: 0;
@@ -33,18 +20,68 @@
 
   .et-choice-input {
     @extend .et-input;
-    width: 100%;
   }
 
   .et-choice-close {
     position: absolute;
+    width: inherit !important;
     top: $et-choice-padding;
     right: $et-choice-padding;
     padding: 0 $et-choice-padding;
-    width: inherit;
 
     .et-choice-option-text {
       @extend .sr-only;
+    }
+  }
+
+  &.et-block {
+    max-height: 100vh;
+    transform: translateY(-$et-choice-block-top);
+
+    top: $et-choice-block-top;
+    right: $et-choice-block-right;
+    left: $et-choice-block-left;
+    padding: $et-choice-block-padding;
+    border-width: $et-choice-block-border-width;
+
+    .et-choice-header {
+      font-size: $et-choice-header-block-font-size;
+      margin-bottom: $et-choice-header-block-margin-bottom;
+    }
+
+    .et-choice-option {
+      font-size: $et-choice-option-block-font-size;
+    }
+
+    .et-choice-option, .et-choice-input {
+      width: $et-choice-option-block-width;
+      margin-bottom: $et-choice-option-block-margin-bottom;
+      border-width: $et-choice-option-block-border-width;
+    }
+  }
+
+  &.et-wide, &.et-full {
+    padding: $et-choice-full-padding;
+    border-width: $et-choice-full-border-width;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    .et-choice-header {
+      font-size: $et-choice-header-full-font-size;
+      margin-bottom: $et-choice-header-full-margin-bottom;
+    }
+
+    .et-choice-option {
+      font-size: $et-choice-option-full-font-size;
+    }
+
+    .et-choice-option, .et-choice-input {
+      width: $et-choice-option-full-width;
+      margin-bottom: $et-choice-option-full-margin-bottom;
+      border-width: $et-choice-option-full-border-width;
     }
   }
 
@@ -82,7 +119,7 @@
 
   &.et-paper {
     @extend .et-paper;
-    
+
     background-color: $et-choice-paper-background-color;
     opacity: $et-choice-paper-opacity;
 

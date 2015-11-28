@@ -1,5 +1,6 @@
 @mixin et-coastal-base {
-  border: $et-coastal-border-width solid $et-coastal-border-color;
+  border-style: $et-coastal-border-style;
+  border-color: $et-coastal-border-color;
   background: $et-coastal-background;
   color: $et-coastal-color;
 }
@@ -10,6 +11,8 @@
   .et-button {
     @include et-coastal-base;
 
+    border-style: $et-button-coastal-border-style;
+
     &:hover, &:focus {
       background-color: $et-button-coastal-hover-background-color;
     }
@@ -17,6 +20,7 @@
 
   .et-input {
     border-color: $et-input-coastal-border-color;
+    border-style: $et-input-ember-border-style;
     background: $et-input-coastal-background-color;
     color: $et-input-coastal-color;
 
