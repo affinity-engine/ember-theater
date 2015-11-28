@@ -12,8 +12,6 @@ const {
   on
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Component.extend(EKOnFocusMixin, {
   layout,
 

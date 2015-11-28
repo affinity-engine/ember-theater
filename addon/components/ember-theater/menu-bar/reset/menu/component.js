@@ -1,10 +1,7 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
 
-const {
-  get,
-  isPresent
-} = Ember;
+const { get } = Ember;
 
 const { computed: { reads } } = Ember;
 const { inject: { service } } = Ember;
@@ -16,7 +13,7 @@ export default Menu.extend({
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/scene-manager'),
 
-  populateChoices: async function() {
+  populateChoices() {
     const choices = get(this, 'choices');
 
     choices.pushObject({
