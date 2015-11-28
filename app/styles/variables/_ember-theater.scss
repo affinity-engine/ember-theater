@@ -16,6 +16,7 @@ $et-default-transition-speed: 500ms;
 @import "mixins/styles/ember";
 @import "mixins/styles/paper";
 
+@import "components/curtain";
 @import "components/choice";
 @import "components/text";
 @import "components/menu-bar";

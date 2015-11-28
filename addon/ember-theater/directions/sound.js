@@ -18,11 +18,11 @@ export default Direction.extend({
     const effect = effectIsPresent ?
       effectOrOptions :
       isPresent(get(options, 'fadeWith')) ? 'fadeWith' : 'play';
-    const audio = this.store.peekRecord('ember-theater/sound', id).audio;
+    const audio = this.store.peekRecord('ember-theater/sound', id).pathAudio;
 
     const fadeWithId = get(options, 'fadeWith');
     const fadeWithAudio = isPresent(fadeWithAudio) ?
-      this.store.peekRecord('ember-theater/sound', fadeWithId).audio :
+      this.store.peekRecord('ember-theater/sound', fadeWithId).pathAudio :
       undefined;
 
     const properties = {

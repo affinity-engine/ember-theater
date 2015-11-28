@@ -9,7 +9,6 @@ const {
   Component,
   computed,
   get,
-  inject,
   on,
   run,
   set
@@ -20,78 +19,50 @@ const {
   union
 } = computed;
 
+const { inject: { service } } = Ember;
+
 export default Component.extend({
-  classNames: ['ember-theater__curtain'],
-  images: union('emberTheaterBackdrops', 'emberTheaterCharacterExpressions'),
-  layout: layout,
-  loadedImages: filterBy('images', 'fileLoaded', true),
-  loadedSounds: filterBy('sounds', 'audio'),
-  store: inject.service('store'),
+  layout,
+
+  classNames: ['et-curtain'],
+  images: computed(() => Ember.A()),
+  sounds: computed(() => Ember.A()),
+
+  config: service('ember-theater/config'),
+  store: service('store'),
+
+  message: computed('imagesLoaded', 'soundsLoaded', {
+    get() {
+      if (!get(this, 'imagesLoaded')) {
+        return 'Loading images';
+      } else if (!get(this, 'soundsLoaded')) {
+        return 'Loading sounds';
+      } else {
+        return 'Complete!!!';
+      }
+    }
+  }).readOnly(),
+
+  loadModels: on('didInsertElement', function() {
+    const store = get(this, 'store');
+
+    get(this, '_modelNames').forEach((modelName) => {
+      const singularModelName = singularize(modelName);
+      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
+      const data = store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
+    });
+
+    this._loadImages();
+    this._loadSounds();
+  }),
 
   checkForMediaLoadCompletion: on('didRender', function() {
-    if (this.get('imagesLoaded') && this.get('soundsLoaded')) {
+    if (get(this, 'imagesLoaded') && get(this, 'soundsLoaded')) {
       this.attrs.complete();
     }
   }),
 
-  imagesLoaded: computed('loadedImages.length', 'images.length', {
-    get() {
-      return this.get('loadedImages.length') >= this.get('images.length');
-    }
-  }),
-
-  loadImages() {
-    const images = this.get('images');
-
-    if (!images) { return this.set('images', Ember.A()); }
-
-    images.forEach((item) => {
-      const image = new Image();
-
-      image.src = get(item, 'src');
-
-      image.onload = run.bind(this, () => {
-        set(item, 'fileLoaded', true);
-        this.rerender();
-      });
-    });
-  },
-
-  loadSounds() {
-    const sounds = this.get('sounds');
-
-    if (!sounds) { return this.set('sounds', Ember.A()); }
-
-    sounds.forEach((item) => {
-      const audio = new window.buzz.sound(get(item, 'path'), {
-        formats: get(item, 'formats'),
-        preload: true,
-        webAudioApi: true
-      });
-
-      audio.bindOnce('canplaythrough', () => {
-        set(item, 'audio', audio);
-        this.rerender();
-      });
-    });
-  },
-
-  loadResources: on('didInsertElement', function() {
-    const store = this.get('store');
-
-    this.get('modelNames').forEach((modelName) => {
-      const singularModelName = singularize(modelName);
-      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
-      const data = store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
-
-      this.set(Ember.String.camelize(modelName), Ember.A(data));
-    });
-
-    this.loadImages();
-    this.loadSounds();
-  }),
-
-  modelNames: computed({
+  _modelNames: computed({
     get() {
       const paths = Object.keys(requirejs.entries);
       const regex = new RegExp(`${modulePrefix}\/ember-theater/fixtures\/(.*)`);
@@ -104,9 +75,88 @@ export default Component.extend({
     }
   }),
 
-  soundsLoaded: computed('loadedSounds.length', 'sounds.length', {
+  loadedImages: computed('images.@each.imagesCount', 'images.@each.imagesLoaded', {
     get() {
-      return this.get('loadedSounds.length') >= this.get('sounds.length');
+      return get(this, 'images').filter((image) => {
+        return get(image, 'imagesCount') === get(image, 'imagesLoaded');
+      });
     }
-  })
+  }).readOnly(),
+
+  loadedSounds: computed('sounds.@each.soundsCount', 'sounds.@each.soundsLoaded', {
+    get() {
+      return get(this, 'sounds').filter((sound) => {
+        return get(sound, 'soundsCount') === get(sound, 'soundsLoaded');
+      });
+    }
+  }).readOnly(),
+
+  imagesLoaded: computed('loadedImages.[]', 'images.[]', {
+    get() {
+      return get(this, 'loadedImages.length') >= get(this, 'images.length');
+    }
+  }),
+
+  soundsLoaded: computed('loadedSounds.[]', 'sounds.[]', {
+    get() {
+      return get(this, 'loadedSounds.length') >= get(this, 'sounds.length');
+    }
+  }),
+
+  _loadImages() {
+    const group = get(this, 'images');
+    const paths = get(this, 'config.mediaLoader.images');
+
+    this._loadMedia(group, paths, (model, attribute) => {
+      model.incrementProperty('imagesCount');
+
+      const image = new Image();
+
+      image.src = get(model, attribute);
+
+      image.onload = run.bind(this, () => {
+        model.incrementProperty('imagesLoaded');
+      });
+    });
+  },
+
+  _loadSounds() {
+    const group = get(this, 'sounds');
+    const paths = get(this, 'config.mediaLoader.sounds');
+
+    this._loadMedia(group, paths, (model, attribute) => {
+      model.incrementProperty('soundsCount');
+
+      const audio = new window.buzz.sound(get(model, attribute), {
+        formats: get(model, `${attribute}Formats`),
+        preload: true,
+        webAudioApi: true
+      });
+
+      audio.bindOnce('canplaythrough', () => {
+        model.incrementProperty('soundsLoaded');
+
+        set(model, `${attribute}Audio`, audio);
+      });
+    });
+  },
+
+  _loadMedia(group, paths, callback) {
+    const store = get(this, 'store');
+    const modelAttributePairs = paths.map((path) => {
+      const [ model, attribute ] = path.split(':');
+
+      return { model, attribute };
+    });
+
+    modelAttributePairs.forEach((pair) => {
+      const models = store.peekAll(pair.model);
+      const attribute = pair.attribute;
+
+      models.forEach((model) => {
+        group.pushObject(model);
+        callback(model, attribute);
+      });
+    });
+  }
 });

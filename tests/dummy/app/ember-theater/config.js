@@ -14,5 +14,10 @@ export default {
       'ember-theater/menu-bar/save',
       'ember-theater/menu-bar/reset'
     ]
+  },
+  mediaLoader: {
+    type: 'ember-theater/curtain',
+    images: ['ember-theater/backdrop:src', 'ember-theater/character-expression:src'],
+    sounds: ['ember-theater/sound:path']
   }
 };

@@ -1,0 +1,12 @@
+.et-curtain {
+  @extend .et-full-screen;
+
+  background: $et-curtain-background-color;
+  padding: $et-curtain-padding-top $et-curtain-padding-sides;
+  text-align: center;
+
+  .et-curtain-message {
+    margin-top: $et-curtain-message-margin-top;
+    font-size: $et-curtain-message-font-size;
+  }
+}
