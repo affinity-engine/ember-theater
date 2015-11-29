@@ -13,6 +13,10 @@
     }
   }
 
+  .et-choice-header {
+    margin: $et-choice-header-margin;
+  }
+
   .et-choice-option, .et-choice-header, .et-choice-input {
     line-height: $et-choice-child-line-height;
     text-align: $et-choice-child-text-align;

@@ -45,7 +45,7 @@ export default Component.extend(EKOnInsertMixin, {
       return Ember.A([{
         class: 'et-choice-close',
         icon: 'arrow-right',
-        text: 'ember-theater.menu.done'
+        text: 'ember-theater.menu.cancel'
       }]);
     }
   }),

@@ -30,15 +30,18 @@ export default Component.extend({
 
   config: service('ember-theater/config'),
   store: service('store'),
+  translator: service('ember-theater/translator'),
 
   message: computed('imagesLoaded', 'soundsLoaded', {
     get() {
+      const translator = get(this, 'translator');
+
       if (!get(this, 'imagesLoaded')) {
-        return 'Loading images';
+        return translator.translate('ember-theater.curtain.loadingImages');
       } else if (!get(this, 'soundsLoaded')) {
-        return 'Loading sounds';
+        return translator.translate('ember-theater.curtain.loadingSounds');
       } else {
-        return 'Complete!!!';
+        return translator.translate('ember-theater.curtain.complete');
       }
     }
   }).readOnly(),

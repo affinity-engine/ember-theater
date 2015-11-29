@@ -1,5 +1,10 @@
 export default {
   'ember-theater': {
+    curtain: {
+      loadingImages: 'Loading images',
+      loadingSounds: 'Loading sounds',
+      complete: 'Complete!'
+    },
     menu: {
       cancel: 'cancel',
       load: {

@@ -6,7 +6,7 @@ const { get } = Ember;
 const { computed: { reads } } = Ember;
 
 export default Menu.extend({
-  header: 'ember-theater.save.header',
+  header: 'ember-theater.menu.save.header',
   menuClassNames: reads('config.menuBar.save.classNames'),
 
   populateChoices: async function() {
@@ -18,7 +18,7 @@ export default Menu.extend({
     choices.pushObject({
       icon: 'save',
       inputable: true,
-      text: 'ember-theater.save.newGame'
+      text: 'ember-theater.menu.save.new'
     });
 
     saves.forEach((save) => {

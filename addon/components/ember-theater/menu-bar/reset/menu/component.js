@@ -7,7 +7,7 @@ const { computed: { reads } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Menu.extend({
-  header: 'ember-theater.reset.header',
+  header: 'ember-theater.menu.reset.header',
   menuClassNames: reads('config.menuBar.reset.classNames'),
 
   saveStateManager: service('ember-theater/save-state-manager'),
@@ -17,7 +17,7 @@ export default Menu.extend({
     const choices = get(this, 'choices');
 
     choices.pushObject({
-      text: 'ember-theater.reset.confirm'
+      text: 'ember-theater.menu.reset.confirm'
     });
   },
 
