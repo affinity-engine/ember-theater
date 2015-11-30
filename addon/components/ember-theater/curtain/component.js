@@ -14,11 +14,6 @@ const {
   set
 } = Ember;
 
-const {
-  filterBy,
-  union
-} = computed;
-
 const { inject: { service } } = Ember;
 
 export default Component.extend({
@@ -34,15 +29,18 @@ export default Component.extend({
 
   message: computed('imagesLoaded', 'soundsLoaded', {
     get() {
+      let message;
       const translator = get(this, 'translator');
 
       if (!get(this, 'imagesLoaded')) {
-        return translator.translate('ember-theater.curtain.loadingImages');
+        message = translator.translate('ember-theater.curtain.loadingImages');
       } else if (!get(this, 'soundsLoaded')) {
-        return translator.translate('ember-theater.curtain.loadingSounds');
+        message = translator.translate('ember-theater.curtain.loadingSounds');
       } else {
-        return translator.translate('ember-theater.curtain.complete');
+        message = translator.translate('ember-theater.curtain.complete');
       }
+
+      return message;
     }
   }).readOnly(),
 
@@ -52,7 +50,8 @@ export default Component.extend({
     get(this, '_modelNames').forEach((modelName) => {
       const singularModelName = singularize(modelName);
       const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
-      const data = store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
+
+      store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
     });
 
     this._loadImages();
@@ -147,7 +146,7 @@ export default Component.extend({
   _loadMedia(group, paths, callback) {
     const store = get(this, 'store');
     const modelAttributePairs = paths.map((path) => {
-      const [ model, attribute ] = path.split(':');
+      const [model, attribute] = path.split(':');
 
       return { model, attribute };
     });
