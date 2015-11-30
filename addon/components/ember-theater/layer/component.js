@@ -13,7 +13,9 @@ const {
   on,
   set
 } = Ember;
+
 const { alias } = computed;
+const { Handlebars: { SafeString } } = Ember;
 
 export default Component.extend({
   attributeBindings: ['animationName:animation-name', 'style'],
@@ -35,12 +37,12 @@ export default Component.extend({
         filter
       } = getProperties(this, 'animation', 'animationName', 'filter');
 
-      return `
+      return new SafeString(`
       animation: ${animation};
       animation-name: ${animationName};
       filter: ${filter};
       -webkit-filter: ${filter};
-      `.replace(/\n|\s{2}/g, '');
+      `.replace(/\n|\s{2}/g, ''));
     }
   }).readOnly(),
 

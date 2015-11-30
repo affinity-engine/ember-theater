@@ -1,7 +1,7 @@
 import gatherModules from 'ember-theater/utils/gather-modules';
 import injectSceneProxy from 'ember-theater/utils/inject-scene-proxy';
 
-export function initialize(container, application) {
+export function initialize(application) {
   const directions = gatherModules('ember-theater\/directions');
 
   directions.forEach((direction, directionName) => {

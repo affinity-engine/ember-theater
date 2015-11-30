@@ -17,6 +17,7 @@ const {
 
 const { alias } = computed;
 const { run: { later } } = Ember;
+const { Handlebars: { SafeString } } = Ember;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   attributeBindings: ['style'],
@@ -36,7 +37,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
     get() {
       const height = get(this, 'character.height');
 
-      return `height: ${height}vh;`;
+      return new SafeString(`height: ${height}vh;`);
     }
   }).readOnly(),
 

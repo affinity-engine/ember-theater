@@ -3,7 +3,7 @@ import gatherModules from 'ember-theater/utils/gather-modules';
 
 const { String: { camelize } } = Ember;
 
-export function initialize(container, application) {
+export function initialize(application) {
   const textTags = gatherModules('ember-theater\/text-tags');
 
   textTags.forEach((textTag, textTagName) => {

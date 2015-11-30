@@ -10,6 +10,7 @@ const {
 
 const { alias } = computed;
 const { inject: { service } } = Ember;
+const { Handlebars: { SafeString } } = Ember;
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],
@@ -31,7 +32,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
 
   style: computed('backdrop.src', {
     get() {
-      return `background-image: url(${get(this, 'backdrop.src')});`;
+      return new SafeString(`background-image: url(${get(this, 'backdrop.src')});`);
     }
   }).readOnly()
 });

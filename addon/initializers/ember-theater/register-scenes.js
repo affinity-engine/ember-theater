@@ -1,6 +1,6 @@
 import gatherModules from 'ember-theater/utils/gather-modules';
 
-export function initialize(container, application) {
+export function initialize(application) {
   const scenes = gatherModules('ember-theater\/scenes');
 
   scenes.forEach((scene, sceneName) => {
