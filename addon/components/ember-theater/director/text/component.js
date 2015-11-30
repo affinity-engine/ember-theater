@@ -35,11 +35,6 @@ export default Component.extend(DirectableComponentMixin, {
     }
   }),
 
-  resolve() {
-    get(this, 'directable.resolve')();
-    get(this, 'directable').destroy();
-  },
-
   displayName: computed('directable.options.displayName', {
     get() {
       const displayName = get(this, 'directable.options.displayName');

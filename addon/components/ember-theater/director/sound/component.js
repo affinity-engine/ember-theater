@@ -29,7 +29,7 @@ export default Component.extend(DirectableComponentMixin, {
     audio[effect](...this._buzzOptionsAdapter(options));
 
     audio.bindOnce(`ended.${this.id}`, () => {
-      get(this, 'resolve')();
+      this.resolveAndDestroy();
     });
   }),
 

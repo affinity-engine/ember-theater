@@ -20,7 +20,6 @@ export default Component.extend({
   layout: layout,
 
   config: service('ember-theater/config'),
-  layerManager: service('ember-theater/layer-manager'),
   sceneManager: service('ember-theater/scene-manager'),
   stageManager: service('ember-theater/stage-manager'),
 
@@ -34,8 +33,6 @@ export default Component.extend({
       const duration = get(this, 'transitionDuration');
 
       animate(this.element, { opacity: 0 }, { duration }).then(() => {
-        get(this, 'stageManager').clearDirectables();
-        get(this, 'layerManager').clearFilters();
         animate(this.element, { opacity: 1 }, { duration: 0 });
         scene.script();
       });

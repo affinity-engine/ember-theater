@@ -12,6 +12,7 @@ export default Service.extend({
   layerManager: service('ember-theater/layer-manager'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/scene-manager'),
+  stageManager: service('ember-theater/stage-manager'),
 
   toScene(id, options) {
     this._abortPreviousScene();
@@ -21,6 +22,9 @@ export default Service.extend({
 
     sceneManager.setIsLoading(get(options, 'isLoading'));
     sceneManager.resetSceneRecord();
+
+    get(this, 'stageManager').clearDirectables();
+    get(this, 'layerManager').clearFilters();
 
     this._updateAutosave(scene, options);
 

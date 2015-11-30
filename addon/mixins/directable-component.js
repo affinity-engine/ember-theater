@@ -25,7 +25,7 @@ export default Mixin.create({
 
   resolveAndDestroy(...args) {
     this.resolve(...args);
-    get(this, 'directable').destroy();
+    this.destroy();
   },
 
   destroyDirectable: on('willDestroyElement', function() {
