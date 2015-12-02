@@ -8,6 +8,18 @@ A modular, extensible game engine build on top of Ember.js.
 
 `ember install ember-theater`
 
+## Setup
+
+After installing Ember Theater, there's a bit of setup before you can get to the meat of coding your game.
+
+### Fixtures
+
+Fixtures can be found in the `ember-theater/fixtures` directory. These JSON objects store the default values for you characters, backdrops, and sound effects. For instance, this lets you specify that the character `steven` has a `height` of `60`, meaning that by default, he'll always take up about 60% of the screen height. More details can be found in the fixtures themselves.
+
+### Configuration
+
+Ember Theater is highly configurable, and much of its initial configuration can be set in the `ember-theater/config` file. Throughout this guide, we'll discuss the individual configuration options in greater detail.
+
 ## Producer-Level Components
 
 The producer is responsible for coordinating the high-level components of your game. You can specify what these components are in your `ember-theater/config.js` file:
