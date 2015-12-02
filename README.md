@@ -153,11 +153,13 @@ The `director` commands a scene through its use of directions. These directions 
 
 ##### `backdrop`
 
+```
 @param id {String} An id corresponding to an `ember-theater/backdrop` model.
 @param effect {Object} |optional| |default: { opacity: 1 }| CSS attributes and values.
 @param [options] {Object} |optional|
 @param [options.duration] {Number} |default: <set in config>| How long the effect takes to resolve.
 @return {Promise} Resolves when the effect has completed.
+```
 
 A backdrop is a full-screen image that occupies the lowest-most z-index. It's an excellent place to put pictures of beaches, bedrooms, and other locations your adventure might visit. The `backdrop` method creates a backdrop, by default fading it in. If a backdrop with the provided id is already present, it will alter the backdrop instead.
 
@@ -170,11 +172,13 @@ this.backdrop('shower', { opacity: 0 }); // fades out the shower backdrop
 
 ##### `character`
 
+```
 @param id {String,Object} An id corresponding to an `ember-theater/character` or an object containing both a character id and an expression id.
 @param effect {Object} |optional| |default: { opacity: 1 }| CSS attributes and values.
 @param [options] {Object} |optional|
 @param [options.duration] {Number} |default: <set in config>| How long the effect takes to resolve.
 @return {Promise} Resolves when the effect has completed.
+```
 
 A character is an on-screen representation of an `ember-theater/character` model. It can move about the screen and change its expression. The `character` method creates a character, by default fading it in to the bottom left corner. If a character with the provided id is already present, it will alter the character instead.
 
@@ -196,6 +200,7 @@ this.character({ id: 'amethyst', expression: 'annoyed' });
 
 ##### `expression`
 
+```
 @param characterId {String} An id corresponding to an `ember-theater/character`.
 @param expressionId {String} An id corresponding to an `ember-theater/character-expression`.
 @param [transitionIn] {Object} |optional| Instructs the transition-in effect.
@@ -205,6 +210,7 @@ this.character({ id: 'amethyst', expression: 'annoyed' });
 @param [transitionOut.effect] {Object} |default: { opacity: 0 }| The transition-out effect.
 @param [transitionOut.duration] {Number} |default: <set in config>| How long the transition-out effect takes to resolve.
 @return {Promise} Resolves when the transition-in effect has completed.
+```
 
 Characters might have many different expressions, ranging from neutral to happy to jumping to wounded. They have a `defaultExpression`, but you can also manually specify an expression with the `character` method. Once the character is on stage, you can also change her expression with the `expression` method. By default, the old expression will fade out while the new one fades in over it. You can change this effect by passing in custom `transitionIn` and `transitionOut` options.
 
@@ -221,6 +227,7 @@ this.expression('steven', 'happy', { effect: { opacity: 1 } }, { effect: { trans
 
 ##### `text`
 
+```
 @param characterId {String} |optional| An id corresponding to an `ember-theater/character`.
 @param text {String} The text that will appear in the text box.
 @param [options] {Object} |optional|
@@ -230,6 +237,7 @@ this.expression('steven', 'happy', { effect: { opacity: 1 } }, { effect: { trans
 @param [options.classNames] {Array} |optional| Class names to change the style of the text.
 @param [options.keys.accept] {Array} |optional| Keys that, when pressed, will advance the text.
 @return {Promise} Resolves when the text has been displayed in full and a key is pressed.
+```
 
 Characters speak and narrators narrate. In either case, words need to be written out for the player. The `text` method does this, writing text to the screen. By default, the text fades in letter-by-letter, and if the text overflows the text window, it will stop writing until a key is pressed, then proceed from that point. The name of the character appears in the window alongside her text.
 
@@ -252,6 +260,7 @@ this.text('Sometimes, you have to #{speed 1000} speak real slow.');
 
 ##### `choice`
 
+```
 @param header {String} |optional| A prompt for the choices.
 @param choices {Array} The options available to the user to choose from.
 @param [options] {Object} |optional|
@@ -259,6 +268,7 @@ this.text('Sometimes, you have to #{speed 1000} speak real slow.');
 @param [options.keys.moveDown] {Array} |optional| Keys that move the focus down.
 @param [options.keys.cancel] {Array} |optional| Keys that cancel an inputable choice.
 @return {Promise} Resolves when a choice has been selected, passing an object with format { key, text, input }
+```
 
 Through the game, you might want to present the player with menu-style choices. These choices could range from responses in conversation to which item they want to purchase at a store. The `choice` method presents them with a list of choices and returns a promise containing the value of their choice. The list of choices can be navigated with `moveUp` and `moveDown` keys, and some choices can be made inputable, so that when they are clicked, they transform into input fields.
 
@@ -285,16 +295,20 @@ const choice = await this.choice([{ text: 'A', someKey: choiceA }, { text: 'B', 
 
 ##### `sound`
 
+```
 @param id {String} An id associated with an `ember-theater/sound`.
 @param effect {String} |optional| An effect, including play, pause, stop, fadeIn, and fadeOut.
 @param options {Object} |optional| Arguments you might want to pass to the effect.
 @return {Promise} Resolves when the sound finishes playing.
+```
 
 Sounds can range from music to sound effects to voice overs.
 
 ##### `pause`
 
+```
 @return {Promise} Resolves when the duration has elapsed or one of the provided keys is pressed.
+```
 
 A pause momentarily disrupts the flow of the scene, preventing future directions from carrying out. Note that if a previous direction is in the process of playing out (such as a backdrop in the process of fading in), it will continue doing so.
 
@@ -309,9 +323,11 @@ await this.pause('Enter', 'ctrl+shift+a', 1000);
 
 ##### `transitionToScene`
 
+```
 @param sceneId {String} An id associated with an `ember-theater/scene`.
 @param [options] {Object} |optional|
 @param [options.autosave] {Boolean} |optional| |default: true| When true, overwrites the autosave upon the start of the scene.
+```
 
 A scene could be anything from a conversation on the beach to a visit the store to a random battle. Scenes can be reusable or one-shots. To move from one scene to another, use the `transitionToScene` method. Note that as soon as the scene transitions, all subsequent directions in the current scene will be aborted.
 
@@ -327,8 +343,10 @@ if (goingToTheBeach) {
 
 ##### `setData`
 
+```
 @param key {String} The key by which you'll look up the data.
 @param value {} The value to assign to the key.
+```
 
 You'll often want to remember what choices the player made. You can commit data to the game's memory, which will persist between scenes and reloads. You can pass in any arbitrary information you consider valuable, from player stats to meta-data about the play session.
 
@@ -342,7 +360,9 @@ this.setData('playerName', newName);
 
 ##### `getData`
 
+```
 @param key {String} The key of the data you're looking up.
+```
 
 After saving data, you can look it up again with `getData`:
 
@@ -352,7 +372,9 @@ const playerName = this.getData('playerName');
 
 ##### `deleteData`
 
+```
 @param key {String} The key of the data you want to delete.
+```
 
 After saving data, you can optionally remove it with `deleteData`:
 
