@@ -25,6 +25,74 @@ export default {
 
 Any components you specify in the config will be concurrently rendered by Ember Theater. The Ember Theater team maintains several of these, but you can also create your own producer-level components and specify them here. The Ember Theater supported components include `ember-theater/director` and `ember-theater/menu-bar`.
 
+### `ember-theater/menu-bar`
+
+The `menu-bar` is an interface for meta-game activities, such as saving, loading, changing settings, or looking at achievements and scores. You can create your own menu-bar interfaces, as well as use the ones that come baked into Ember Theater. These include `save`, `load`, `reset`, and `rewind`.
+
+#### Configuration
+
+You can configure your menu bar layout in the `ember-theater/config.js` file:
+
+```js
+export default {
+  initial: {
+    emberTheaterMenuBar: [
+      'ember-theater/menu-bar/rewind',
+      'ember-theater/menu-bar/load',
+      'ember-theater/menu-bar/save',
+      'ember-theater/menu-bar/reset'
+    ]
+  }
+};
+```
+
+You can further configure the key bindings that activate the various buttons:
+
+```js
+export default {
+  menuBar: {
+    load: {
+      keys: {
+        open: ['ctrl+l']
+      }
+    },
+    reset: {
+      keys: {
+        open: ['ctrl+r']
+      }
+    },
+    rewind: {
+      keys: {
+        open: ['ctrl+b']
+      }
+    },
+    save: {
+      keys: {
+        open: ['ctrl+s']
+      }
+    }
+  }
+};
+```
+
+#### Baked-in Buttons
+
+##### `ember-theater/menu-bar/save`
+
+The save button opens a menu from which the player can save their progress, either overwriting existing games or creating new ones.
+
+##### `ember-theater/menu-bar/load`
+
+The load button open a menu from which the player can load a previous save.
+
+##### `ember-theater/menu-bar/reset`
+
+The reset button returns the player to the very beginning of the game.
+
+##### `ember-theater/menu-bar/rewind`
+
+The rewind button lets the player rewind to a previous scene, regardless of whether or not they had saved there.
+
 ### `ember-theater/director`
 
 The `director` is responsible for reading scene scripts and coordinating components both on-stage and off-stage with its directions.
@@ -55,6 +123,29 @@ script: async function() {
 ```
 
 Note that [async functions](https://jakearchibald.com/2014/es7-async-functions/) can make the scripts easier to read than plain promises.
+
+#### Configuration
+
+You can configure many of the Ember Theater default values in `ember-theater/config` file:
+
+```js
+export default {
+  globals: {
+    classNames: ['et-block', 'et-paper'], // the default class names applied to dialogue and choice
+    speed: 300, // the speed at which text is written
+    transitionDuration: 200, // the speed at which dialogue, characters, backdrops, and other fade in and out
+    keys: {
+      accept: [' ', 'Enter'],
+      cancel: ['Escape'],
+      moveDown: ['ArrowDown', 's'],
+      moveUp: ['ArrowUp', 'w']
+    }
+  },
+  director: {
+    transitionDuration: 750 // the speed at which scenes transition
+  }
+};
+```
 
 #### `ember-theater/direction`
 
