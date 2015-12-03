@@ -18,11 +18,17 @@ const configurableGet = function configurableGet(context, category, keys) {
 };
 
 export function configurableClassNames(category) {
-  return computed('directable.options.classNames',
-    `config.${category}.classNames`,
-    'config.globals.classNames', {
+  return computed('directable.options.decorativeClassNames',
+    `config.${category}.decorativeClassNames`,
+    'config.globals.decorativeClassNames', 
+    'directable.options.structuralClassNames',
+    `config.${category}.structuralClassNames`,
+    'config.globals.structuralClassNames', {
       get() {
-        return configurableGet(this, category, ['classNames']).join(' ');
+        const decorativeClassNames = configurableGet(this, category, ['decorativeClassNames']);
+        const structuralClassNames = configurableGet(this, category, ['structuralClassNames']);
+
+        return decorativeClassNames.concat(structuralClassNames).join(' ');
       }
     }).readOnly();
 }

@@ -1,6 +1,7 @@
 export default {
   globals: {
-    classNames: ['et-block', 'et-paper'],
+    decorativeClassNames: ['et-paper'],
+    structuralClassNames: ['et-block'],
     speed: 300,
     transitionDuration: 200,
     keys: {
