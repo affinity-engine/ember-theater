@@ -2,7 +2,7 @@
 
 # ember-theater
 
-A modular, extensible game engine build on top of Ember.js.
+A modular, extensible game engine built on top of Ember.js.
 
 ## Installation
 
@@ -43,7 +43,7 @@ The `menu-bar` is an interface for meta-game activities, such as saving, loading
 
 #### Configuration
 
-You can configure your menu bar layout in the `ember-theater/config.js` file:
+You can configure your menu-bar layout in the `ember-theater/config.js` file:
 
 ```js
 export default {
@@ -95,7 +95,7 @@ The save button opens a menu from which the player can save their progress, eith
 
 ##### `ember-theater/menu-bar/load`
 
-The load button open a menu from which the player can load a previous save.
+The load button opens a menu from which the player can load a previous save.
 
 ##### `ember-theater/menu-bar/reset`
 
@@ -121,11 +121,11 @@ Scenes have two properties:
 
 ##### `name`
 
-If present, the scene `name` will appear in user-facing descriptions of a scene, such as a save game. If not present, the scene's id will be used instead.
+If present, the scene `name` will appear in user-facing descriptions of a scene, such as a saved game. If not present, the scene's id will be used instead.
 
 ##### `script`
 
-The `director`'s primary responsibility is to read scene `script`s. Scripts contain lines of directions, which effect actions both on and off stage. For example, the following script will fade in a backdrop (over the course of one second) and then present a line of text:
+The `director`'s primary responsibility is to read the scene `script`s. Scripts contain lines of directions, which effect actions both on and off stage. For example, the following script will fade in a backdrop (over the course of one second) and then present a line of text:
 
 ```js
 script: async function() {
@@ -138,7 +138,7 @@ Note that [async functions](https://jakearchibald.com/2014/es7-async-functions/)
 
 #### Configuration
 
-You can configure many of the Ember Theater default values in `ember-theater/config` file:
+You can configure many of the Ember Theater default values in the `ember-theater/config` file:
 
 ```js
 export default {
@@ -227,7 +227,7 @@ this.character({ id: 'amethyst', expression: 'annoyed' });
 Characters might have many different expressions, ranging from neutral to happy to jumping to wounded. They have a `defaultExpression`, but you can also manually specify an expression with the `character` method. Once the character is on stage, you can also change her expression with the `expression` method. By default, the old expression will fade out while the new one fades in over it. You can change this effect by passing in custom `transitionIn` and `transitionOut` options.
 
 ```js
-// first, bring the character in with his defaultExpression
+// first, bring the character in with her defaultExpression
 await this.character('steven');
 // change steven's expression from the defaultExpression to `happy`, using the default transitionIn and transitionOut
 await this.expression('steven', 'happy');
@@ -267,7 +267,7 @@ await this.text('steven', 'Or am I . . . Tiger Millionaire!!!', { displayName: '
 There are also many special text commands documented here. You can insert them into your text with a `#{}`:
 
 ```js
-this.text('Sometimes, you have to #{speed 1000} speak real slow.');
+this.text('Sometimes, you have to #{speed 1000} speak really slow.');
 ```
 
 ##### `choice`
@@ -282,7 +282,7 @@ this.text('Sometimes, you have to #{speed 1000} speak real slow.');
 @return {Promise} Resolves when a choice has been selected, passing an object with format { key, text, input }
 ```
 
-Through the game, you might want to present the player with menu-style choices. These choices could range from responses in conversation to which item they want to purchase at a store. The `choice` method presents them with a list of choices and returns a promise containing the value of their choice. The list of choices can be navigated with `moveUp` and `moveDown` keys, and some choices can be made inputable, so that when they are clicked, they transform into input fields.
+Throughout the game, you might want to present the player with menu-style choices. These choices could range from responses in conversation to which item they want to purchase at a store. The `choice` method presents them with a list of choices and returns a promise containing the value of their choice. The list of choices can be navigated with `moveUp` and `moveDown` keys, and some choices can be made inputable, so that when they are clicked, they transform into input fields.
 
 ```js
 // presents three choices; if the user selects 'B', then the promise will return { key: 1, text: 'B' }
@@ -314,7 +314,7 @@ const choice = await this.choice([{ text: 'A', someKey: choiceA }, { text: 'B', 
 @return {Promise} Resolves when the sound finishes playing.
 ```
 
-Sounds can range from music to sound effects to voice overs.
+Sounds can range from music to sound effects to voice-overs.
 
 ##### `pause`
 
@@ -341,7 +341,7 @@ await this.pause('Enter', 'ctrl+shift+a', 1000);
 @param [options.autosave] {Boolean} |optional| |default: true| When true, overwrites the autosave upon the start of the scene.
 ```
 
-A scene could be anything from a conversation on the beach to a visit the store to a random battle. Scenes can be reusable or one-shots. To move from one scene to another, use the `transitionToScene` method. Note that as soon as the scene transitions, all subsequent directions in the current scene will be aborted.
+A scene could be anything from a conversation on the beach to visiting the store to a random battle. Scenes can be reusable or one-shots. To move from one scene to another, use the `transitionToScene` method. Note that as soon as the scene transitions, all subsequent directions in the current scene will be aborted.
 
 ```js
 if (goingToTheBeach) {
