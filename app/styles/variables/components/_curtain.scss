@@ -1,6 +1,9 @@
-$et-curtain-background-color: #ddd !default;
-$et-curtain-padding-top: 31vh !default;
+$et-curtain-color: #EEE !default;
+$et-curtain-padding-top: 7vh !default;
 $et-curtain-padding-sides: 31vw !default;
 
-$et-curtain-message-margin-top: 2vh !default;
-$et-curtain-message-font-size: $et-large-font-size !default;
+$et-curtain-game-title-font-size: $et-huge-font-size !default;
+$et-curtain-game-title-margin-bottom: 8vh !default;
+
+$et-curtain-progress-bar-dimensions: 16vw !default;
+$et-curtain-progress-bar-font-size: $et-default-font-size !default;

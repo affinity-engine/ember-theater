@@ -15,36 +15,48 @@ const {
 } = Ember;
 
 const { inject: { service } } = Ember;
+const { run: { later } } = Ember;
+
+const { alias } = computed;
 
 export default Component.extend({
   layout,
 
   classNames: ['et-curtain'],
-  images: computed(() => Ember.A()),
-  sounds: computed(() => Ember.A()),
 
   config: service('ember-theater/config'),
+  preloader: service('preloader'),
   store: service('store'),
   translator: service('ember-theater/translator'),
 
-  message: computed('imagesLoaded', 'soundsLoaded', {
+  title: alias('config.title'),
+
+  progressBarShape: computed('config.mediaLoader.progressBarStyle.shape', {
     get() {
-      let message;
-      const translator = get(this, 'translator');
-
-      if (!get(this, 'imagesLoaded')) {
-        message = translator.translate('ember-theater.curtain.loadingImages');
-      } else if (!get(this, 'soundsLoaded')) {
-        message = translator.translate('ember-theater.curtain.loadingSounds');
-      } else {
-        message = translator.translate('ember-theater.curtain.complete');
-      }
-
-      return message;
+      return get(this, 'config.mediaLoader.progressBarStyle.shape') || 'Circle';
     }
   }).readOnly(),
 
-  loadModels: on('didInsertElement', function() {
+  _styleProgressBar: on('didInsertElement', function() {
+    const config = get(this, 'config');
+
+    const color = get(config, 'mediaLoader.progressBarStyle.color') || this.$().css('color');
+    const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') || 
+      `rgba(${color.match(/(\d+)/g).slice(0, 3).join(', ')}, 0.62)`;
+    const strokeWidth = get(config, 'mediaLoader.progressBarStyle.strokeWidth') || 4;
+    const trailWidth = get(config, 'mediaLoader.progressBarStyle.trailWidth') || strokeWidth * 0.62;
+
+    const options = {
+      color,
+      trailColor,
+      strokeWidth,
+      trailWidth
+    }
+
+    set(this, 'progressBarOptions', options);
+  }),
+
+  _loadModels: on('didInsertElement', function() {
     const store = get(this, 'store');
 
     get(this, '_modelNames').forEach((modelName) => {
@@ -54,14 +66,7 @@ export default Component.extend({
       store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
     });
 
-    this._loadImages();
-    this._loadSounds();
-  }),
-
-  checkForMediaLoadCompletion: on('didRender', function() {
-    if (get(this, 'imagesLoaded') && get(this, 'soundsLoaded')) {
-      this.attrs.complete();
-    }
+    this._loadMedia();
   }),
 
   _modelNames: computed({
@@ -77,74 +82,10 @@ export default Component.extend({
     }
   }),
 
-  loadedImages: computed('images.@each.imagesCount', 'images.@each.imagesLoaded', {
-    get() {
-      return get(this, 'images').filter((image) => {
-        return get(image, 'imagesCount') === get(image, 'imagesLoaded');
-      });
-    }
-  }).readOnly(),
-
-  loadedSounds: computed('sounds.@each.soundsCount', 'sounds.@each.soundsLoaded', {
-    get() {
-      return get(this, 'sounds').filter((sound) => {
-        return get(sound, 'soundsCount') === get(sound, 'soundsLoaded');
-      });
-    }
-  }).readOnly(),
-
-  imagesLoaded: computed('loadedImages.[]', 'images.[]', {
-    get() {
-      return get(this, 'loadedImages.length') >= get(this, 'images.length');
-    }
-  }),
-
-  soundsLoaded: computed('loadedSounds.[]', 'sounds.[]', {
-    get() {
-      return get(this, 'loadedSounds.length') >= get(this, 'sounds.length');
-    }
-  }),
-
-  _loadImages() {
-    const group = get(this, 'images');
-    const paths = get(this, 'config.mediaLoader.images');
-
-    this._loadMedia(group, paths, (model, attribute) => {
-      model.incrementProperty('imagesCount');
-
-      const image = new Image();
-
-      image.src = get(model, attribute);
-
-      image.onload = run.bind(this, () => {
-        model.incrementProperty('imagesLoaded');
-      });
-    });
-  },
-
-  _loadSounds() {
-    const group = get(this, 'sounds');
-    const paths = get(this, 'config.mediaLoader.sounds');
-
-    this._loadMedia(group, paths, (model, attribute) => {
-      model.incrementProperty('soundsCount');
-
-      const audio = new window.buzz.sound(get(model, attribute), {
-        formats: get(model, `${attribute}Formats`),
-        preload: true,
-        webAudioApi: true
-      });
-
-      audio.bindOnce('canplaythrough', () => {
-        model.incrementProperty('soundsLoaded');
-
-        set(model, `${attribute}Audio`, audio);
-      });
-    });
-  },
-
-  _loadMedia(group, paths, callback) {
+  _loadMedia() {
     const store = get(this, 'store');
+    const preloader = get(this, 'preloader');
+    const paths = get(this, 'config.mediaLoader.mediaAttributes');
     const modelAttributePairs = paths.map((path) => {
       const [model, attribute] = path.split(':');
 
@@ -156,9 +97,18 @@ export default Component.extend({
       const attribute = pair.attribute;
 
       models.forEach((model) => {
-        group.pushObject(model);
-        callback(model, attribute);
+        const src = get(model, attribute);
+
+        preloader.loadFile(src);
       });
+    });
+
+    preloader.onProgress(({ progress }) => set(this, 'progress', progress));
+
+    preloader.onComplete(() => {
+      later(() => {
+        this.attrs.complete();
+      }, 1000);
     });
   }
 });

@@ -20,7 +20,6 @@ module.exports = {
     }
 
     return mergeTrees([
-      treeify('node-buzz'),
       treeify('perfect-scrollbar'),
       treeify('velocity-animate')
     ]);
@@ -29,7 +28,9 @@ module.exports = {
   included: function(app) {
     this._super.included(app);
     app.import(path.join(app.bowerDirectory, 'lokijs/src/lokijs.js'));
-    app.import('vendor/node-buzz/buzz.js');
+    app.import(path.join(app.bowerDirectory, 'PreloadJS/lib/preloadjs-NEXT.combined.js'));
+    app.import(path.join(app.bowerDirectory, 'SoundJS/lib/soundjs-NEXT.combined.js'));
+    app.import(path.join(app.bowerDirectory, 'progressbar.js/dist/progressbar.min.js'));
     app.import('vendor/perfect-scrollbar/dist/js/min/perfect-scrollbar.min.js');
     app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
     app.import('vendor/velocity-animate/velocity.js');

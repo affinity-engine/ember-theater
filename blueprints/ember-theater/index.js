@@ -10,6 +10,15 @@ module.exports = {
     var packages = [{
       name: 'lokijs',
       target: '~1.3.9'
+    }, {
+      name: 'PreloadJS',
+      target: '0.6.1'
+    }, {
+      name: 'SoundJS',
+      target: '0.6.1'
+    }, {
+      name: 'progressbar.js',
+      target: '~0.9.0'
     }]; 
     
     return this.addBowerPackagesToProject(packages).then(function() {

@@ -1,4 +1,8 @@
-{{fa-icon 'spinner' pulse=true size=5}}
-<div class='et-curtain-message'>
-  {{message}}
-</div>
+<h1 class='et-game-title'>{{title}}</h1>
+{{#if progressBarOptions}}
+  {{progress-bar
+    progress=progress
+    shape=progressBarShape
+    options=progressBarOptions
+  }}
+{{/if}}

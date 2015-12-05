@@ -1,12 +1,19 @@
 .et-curtain {
   @extend .et-full-screen;
 
-  background: $et-curtain-background-color;
+  color: $et-curtain-color;
   padding: $et-curtain-padding-top $et-curtain-padding-sides;
   text-align: center;
 
-  .et-curtain-message {
-    margin-top: $et-curtain-message-margin-top;
-    font-size: $et-curtain-message-font-size;
+  .et-game-title {
+    font-size: $et-curtain-game-title-font-size;
+    margin-bottom: $et-curtain-game-title-margin-bottom;
+  }
+
+  .progress-bar {
+    height: $et-curtain-progress-bar-dimensions;
+    width: $et-curtain-progress-bar-dimensions;
+    font-size: $et-curtain-progress-bar-font-size;
+    margin: 0 auto;
   }
 }

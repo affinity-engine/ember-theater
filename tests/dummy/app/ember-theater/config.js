@@ -1,4 +1,5 @@
 export default {
+  title: 'Steven Universe',
   keys: {
     accept: [' ', 'Enter', 'a']
   },
@@ -17,7 +18,10 @@ export default {
   },
   mediaLoader: {
     type: 'ember-theater/curtain',
-    images: ['ember-theater/backdrop:src', 'ember-theater/character-expression:src'],
-    sounds: ['ember-theater/sound:path']
+    mediaAttributes: [
+      'ember-theater/backdrop:src',
+      'ember-theater/character-expression:src',
+      'ember-theater/sound:path'
+    ]
   }
 };
