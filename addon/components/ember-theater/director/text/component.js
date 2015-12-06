@@ -27,8 +27,10 @@ export default Component.extend(DirectableComponentMixin, TransitionInMixin, {
   character: alias('directable.character'),
   instantWriteText: alias('directable.options.instant'),
   keys: configurable('text', 'keys.accept'),
-  transitionInDuration: configurable('text', 'transitionInDuration', 'transitionDuration'),
-  transitionOutDuration: configurable('text', 'transitionOutDuration', 'transitionDuration'),
+  transitionIn: configurable('text', 'transitionIn.effect'),
+  transitionInDuration: configurable('text', 'transitionIn.duration', 'transitionDuration'),
+  transitionOut: configurable('text', 'transitionOut.effect'),
+  transitionOutDuration: configurable('text', 'transitionOut.duration', 'transitionDuration'),
   configurableClassNames: configurableClassNames('text'),
 
   handleAutoResolve: on('didInitAttrs', function() {
@@ -70,9 +72,10 @@ export default Component.extend(DirectableComponentMixin, TransitionInMixin, {
 
   actions: {
     completeText() {
+      const effect = get(this, 'transitionOut');
       const duration = get(this, 'transitionOutDuration');
 
-      animate(this.element, { opacity: 0 }, { duration }).then(() => {
+      animate(this.element, effect, { duration }).then(() => {
         this.resolveAndDestroy();
       });
     }

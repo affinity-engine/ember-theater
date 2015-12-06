@@ -4,7 +4,12 @@ export default {
     structuralClassNames: ['et-block'],
     speed: 300,
     transitionDuration: 200,
-    transitionInDuration: 150,
+    transitionIn: {
+      effect: { opacity: 0 }
+    },
+    transitionOut: {
+      effect: { opacity: 0 }
+    },
     keys: {
       accept: [' ', 'Enter'],
       cancel: ['Escape'],

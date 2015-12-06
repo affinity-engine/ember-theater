@@ -32,17 +32,11 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
   moveUpKeys: configurable('choice', 'keys.moveUp'),
   moveDownKeys: configurable('choice', 'keys.moveDown'),
   cancelKeys: configurable('choice', 'keys.cancel'),
-  transitionInDuration: configurable('choice', 'transitionInDuration', 'transitionDuration'),
-  transitionOutDuration: configurable('choice', 'transitionOutDuration', 'transitionDuration'),
+  transitionIn: configurable('choice', 'transitionIn.effect'),
+  transitionInDuration: configurable('choice', 'transitionIn.duration', 'transitionDuration'),
+  transitionOut: configurable('choice', 'transitionOut.effect'),
+  transitionOutDuration: configurable('choice', 'transitionOut.duration', 'transitionDuration'),
   configurableClassNames: configurableClassNames('choice'),
-
-  setOpacityAndFadeIn: on('didInsertElement', function() {
-    const opacity = this.$().css('opacity');
-
-    this.$().css('opacity', 0);
-
-    animate(this.element, { opacity }, { duration: 500 });
-  }),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
@@ -88,9 +82,10 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
 
   actions: {
     choose(choice) {
+      const effect = get(this, 'transitionOut');
       const duration = get(this, 'transitionOutDuration');
 
-      animate(this.element, { opacity: 0 }, { duration }).then(() => {
+      animate(this.element, effect, { duration }).then(() => {
         this.resolveAndDestroy(choice);
       });
     },

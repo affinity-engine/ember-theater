@@ -5,16 +5,16 @@ import animate from 'ember-theater/utils/animate';
 const {
   Mixin,
   get,
-  on
+  on,
+  set
 } = Ember;
 
 export default Mixin.create({
-  setOpacityAndFadeIn: on('didInsertElement', function() {
+  executeTransitionIn: on('didInsertElement', function() {
+    const effect = get(this, 'transitionIn');
     const duration = get(this, 'transitionInDuration');
-    const opacity = this.$().css('opacity');
 
-    this.$().css('opacity', 0);
-
-    animate(this.element, { opacity }, { duration });
+    animate(this.element, effect, { duration: 0 });
+    animate(this.element, 'reverse', { duration });
   })
 });
