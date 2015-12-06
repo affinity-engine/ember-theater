@@ -9,6 +9,7 @@ const {
   Component,
   K,
   get,
+  isPresent,
   on,
   set
 } = Ember;
@@ -55,11 +56,15 @@ export default Component.extend(EKOnInsertMixin, {
   }),
 
   startHovering: on('focusIn', 'mouseEnter', function() {
-    this.startHoverEffect();
+    if (isPresent(this.startHoverEffect)) {
+      this.startHoverEffect();
+    }
   }),
 
   stopHovering: on('focusOut', 'mouseLeave', function() {
-    this.stopHoverEffect();
+    if (isPresent(this.stopHoverEffect)) {
+      this.stopHoverEffect();
+    }
   }),
 
   actions: {

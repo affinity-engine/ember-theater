@@ -28,7 +28,7 @@ module.exports = {
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-keyboard', target: '0.0.7' });
     }).then(function() {
-      return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '0.1.1' });
+      return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '1.4.0-beta.1' });
     }).then(function() {
       return _this.insertIntoFile('ember-cli-build.js',
         '    babel: { includePolyfill: true, stage: 2 },',

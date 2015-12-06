@@ -6,11 +6,11 @@ export default MenuBarControl.extend({
   type: 'rewind',
 
   startHoverEffect() {
-    this.$('i').velocity({ translateY: '-0.15vw' }, { easing: 'easeInOut', duration: 500, delay: 150, loop: true });
+    this.$('i').velocity({ translateX: '-0.15vw' }, { easing: 'easeInOut', duration: 500, delay: 150, loop: true });
   },
 
   stopHoverEffect() {
     this.$('i').velocity('stop');
-    this.$('i').velocity({ translateY: 0 }, { duration: 0 });
+    this.$('i').velocity({ translateX: 0 }, { duration: 0 });
   }
 });
