@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import configurable from 'ember-theater/macros/configurable';
+import configurable from 'ember-theater/macros/director/configurable';
 
 import {
   keyUp,
@@ -25,7 +25,7 @@ export default Component.extend(EKOnInsertMixin, {
 
   config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/scene-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
   cancelKeys: configurable('menuBar', 'keys.cancel'),
   menuBarClassNames: configurable('menuBar', 'classNames'),
 

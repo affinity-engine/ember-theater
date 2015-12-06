@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
-import configurable from 'ember-theater/macros/configurable';
+import configurable from 'ember-theater/macros/director/configurable';
 
 const {
   Component,
@@ -20,8 +20,8 @@ export default Component.extend({
   layout: layout,
 
   config: service('ember-theater/config'),
-  sceneManager: service('ember-theater/scene-manager'),
-  stageManager: service('ember-theater/stage-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
+  stageManager: service('ember-theater/director/stage-manager'),
 
   directables: alias('stageManager.directables'),
   transitionDuration: configurable('director', 'transitionDuration'),

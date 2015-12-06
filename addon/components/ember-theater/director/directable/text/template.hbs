@@ -1,0 +1,11 @@
+{{#if name}}
+  <div class='et-text-caption'>{{name}}</div>
+{{/if}}
+{{ember-theater/director/directable/text/body
+  instantWriteText=instantWriteText
+  keys=keys
+  text=text
+  textEffect=textEffect
+  textSpeed=textSpeed
+  resolve=(action 'completeText')
+}}

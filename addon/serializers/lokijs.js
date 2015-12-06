@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
-import NormalizePatchMixin from 'ember-theater/mixins/json-serializer-normalize-patch';
+import NormalizePatchMixin from 'ember-theater/mixins/ember-theater/json-serializer-normalize-patch';
 import nativeCopy from 'ember-theater/utils/native-copy';
 
 const { JSONSerializer } = DS;

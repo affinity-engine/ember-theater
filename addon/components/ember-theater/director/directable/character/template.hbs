@@ -1,0 +1,8 @@
+{{#each expressionContainers as |expressionContainer|}}
+  <div class='et-character-expression-container'>
+    {{ember-theater/director/directable/character/expression
+      expression=expressionContainer.expression
+      directable=expressionContainer.directable
+    }}
+  </div>
+{{/each}}

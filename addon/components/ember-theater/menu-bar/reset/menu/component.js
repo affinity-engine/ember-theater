@@ -11,7 +11,7 @@ export default Menu.extend({
   menuClassNames: reads('config.menuBar.reset.classNames'),
 
   saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/scene-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
 
   populateChoices() {
     const choices = get(this, 'choices');

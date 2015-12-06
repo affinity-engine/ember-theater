@@ -1,0 +1,10 @@
+{{#each layerDirectables as |directable|}}
+  {{component directable.componentType directable=directable}}
+{{/each}}
+
+{{#each-in childLayers as |name directables|}}
+  {{ember-theater/director/layer
+    directables=directables
+    name=name
+  }}
+{{/each-in}}

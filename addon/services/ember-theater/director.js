@@ -10,7 +10,7 @@ const { inject: { service } } = Ember;
 const { RSVP: { Promise } } = Ember;
 
 export default Service.extend({
-  sceneManager: service('ember-theater/scene-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
 
   direct(factory, type, args) {
     const promise = this._handleDirection(factory, type, ...args);
