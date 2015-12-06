@@ -4,6 +4,7 @@ export default {
     structuralClassNames: ['et-block'],
     speed: 300,
     transitionDuration: 200,
+    transitionInDuration: 150,
     keys: {
       accept: [' ', 'Enter'],
       cancel: ['Escape'],
@@ -40,6 +41,6 @@ export default {
     }
   },
   director: {
-    transitionDuration: 750
+    transitionDuration: 500
   }
 };

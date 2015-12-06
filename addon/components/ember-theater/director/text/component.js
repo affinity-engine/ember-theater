@@ -3,6 +3,7 @@ import layout from './template';
 import animate from 'ember-theater/utils/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/configurable';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
+import TransitionInMixin from 'ember-theater/mixins/transition-in';
 
 const {
   Component,
@@ -14,7 +15,7 @@ const {
 
 const { alias } = computed;
 
-export default Component.extend(DirectableComponentMixin, {
+export default Component.extend(DirectableComponentMixin, TransitionInMixin, {
   layout,
 
   classNames: ['et-text'],
@@ -26,6 +27,7 @@ export default Component.extend(DirectableComponentMixin, {
   character: alias('directable.character'),
   instantWriteText: alias('directable.options.instant'),
   keys: configurable('text', 'keys.accept'),
+  transitionInDuration: configurable('text', 'transitionInDuration', 'transitionDuration'),
   transitionOutDuration: configurable('text', 'transitionOutDuration', 'transitionDuration'),
   configurableClassNames: configurableClassNames('text'),
 

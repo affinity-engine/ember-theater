@@ -14,12 +14,13 @@ export default Direction.extend({
     @param {*} exampleParam
   */
 
-  perform(resolve, characterId, expressionId, ...args) {
+  perform(resolve, characterId, expressionId, options = {}) {
     const stageManager = get(this, 'stageManager');
-    const directable = stageManager.findDirectableWithId(characterId, 'character');
+    const instanceId = get(options, 'instance') || 0;
+    const directable = stageManager.findDirectableWithId(characterId, 'character', instanceId);
     const character = get(directable, 'component');
     const expression = this.store.peekRecord('ember-theater/character-expression', expressionId);
 
-    character.changeExpression(resolve, expression, ...args);
+    character.changeExpression(resolve, expression, options);
   }
 });

@@ -215,12 +215,13 @@ this.character({ id: 'amethyst', expression: 'annoyed' });
 ```
 @param characterId {String} An id corresponding to an `ember-theater/character`.
 @param expressionId {String} An id corresponding to an `ember-theater/character-expression`.
-@param [transitionIn] {Object} |optional| Instructs the transition-in effect.
-@param [transitionIn.effect] {Object} |default: { opacity: 1 }| The transition-in effect.
-@param [transitionIn.duration] {Number} |default: <set in config>| How long the transition-in effect takes to resolve.
-@param [transitionOut] {Object} |optional| Instructs the transition-out effect.
-@param [transitionOut.effect] {Object} |default: { opacity: 0 }| The transition-out effect.
-@param [transitionOut.duration] {Number} |default: <set in config>| How long the transition-out effect takes to resolve.
+@param [options] {Object} |optional|
+@param [options.transitionIn] {Object} |optional| Instructs the transition-in effect.
+@param [options.transitionIn.effect] {Object} |default: { opacity: 1 }| The transition-in effect.
+@param [options.transitionIn.duration] {Number} |default: <set in config>| How long the transition-in effect takes to resolve.
+@param [options.transitionOut] {Object} |optional| Instructs the transition-out effect.
+@param [options.transitionOut.effect] {Object} |default: { opacity: 0 }| The transition-out effect.
+@param [options.transitionOut.duration] {Number} |default: <set in config>| How long the transition-out effect takes to resolve.
 @return {Promise} Resolves when the transition-in effect has completed.
 ```
 
@@ -232,9 +233,9 @@ await this.character('steven');
 // change steven's expression from the defaultExpression to `happy`, using the default transitionIn and transitionOut
 await this.expression('steven', 'happy');
 // change steven's expression from `happy` to `sad`, using the default transitionOut but a custom transitionIn that drops the new expression in from the top of the screen to the current location
-await this.expression('steven', 'sad', { effect: { transitionY: ['100vh', '0vh' }, duration: 1000 });
+await this.expression('steven', 'sad', { transitionIn: { effect: { transitionY: ['100vh', '0vh' }, duration: 1000 } });
 // change steven's expression from `sad` to `happy`, using both a custom transitionIn and transitionOut
-this.expression('steven', 'happy', { effect: { opacity: 1 } }, { effect: { transitionY: '-100vh' } });
+this.expression('steven', 'happy', { transitionIn: { effect: { opacity: 1 } }, transitionOut: { effect: { transitionY: '-100vh' } } });
 ```
 
 ##### `text`

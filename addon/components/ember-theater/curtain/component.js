@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import { singularize } from 'ember-inflector';
 import config from 'ember-get-config';
+import animate from 'ember-theater/utils/animate';
 
 const modulePrefix = config.modulePrefix;
 
@@ -108,8 +109,12 @@ export default Component.extend({
 
     preloader.onComplete(() => {
       later(() => {
-        this.attrs.complete();
-      }, 1000);
+        const duration = get(this, 'config.mediaLoader.fadeOutDuration') || 500;
+
+        animate(this.element, { opacity: 0 }, { duration }).then(() => {
+          this.attrs.complete();
+        });
+      }, 750);
     });
   }
 });

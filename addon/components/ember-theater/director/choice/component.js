@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
+import TransitionInMixin from 'ember-theater/mixins/transition-in';
 import animate from 'ember-theater/utils/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/configurable';
 import {
@@ -18,7 +19,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, {
+export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, TransitionInMixin, {
   layout,
 
   activeIndex: 0,
@@ -31,8 +32,17 @@ export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, Perfe
   moveUpKeys: configurable('choice', 'keys.moveUp'),
   moveDownKeys: configurable('choice', 'keys.moveDown'),
   cancelKeys: configurable('choice', 'keys.cancel'),
+  transitionInDuration: configurable('choice', 'transitionInDuration', 'transitionDuration'),
   transitionOutDuration: configurable('choice', 'transitionOutDuration', 'transitionDuration'),
   configurableClassNames: configurableClassNames('choice'),
+
+  setOpacityAndFadeIn: on('didInsertElement', function() {
+    const opacity = this.$().css('opacity');
+
+    this.$().css('opacity', 0);
+
+    animate(this.element, { opacity }, { duration: 500 });
+  }),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {

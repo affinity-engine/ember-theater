@@ -28,7 +28,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
   character: alias('directable.character'),
 
-  changeExpression(resolve, expression, transitionIn = {}, transitionOut = {}) {
+  changeExpression(resolve, expression, { transitionIn = {}, transitionOut = {} }) {
     this._transitionOutExpressions(transitionOut);
     this._transitionInExpression(resolve, expression, transitionIn);
   },
