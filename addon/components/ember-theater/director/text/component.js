@@ -62,11 +62,19 @@ export default Component.extend(DirectableComponentMixin, TransitionInMixin, {
     }
   }).readOnly(),
 
-  textSpeed: computed('directable.options.speed', 'character.textSpeed', {
+  textEffect: computed('directable.options.textEffect', 'character.textEffect', {
     get() {
-      return get(this, 'directable.options.speed') ||
+      return get(this, 'directable.options.textEffect') ||
+        get(this, 'character.textEffect') ||
+        get(this, 'config').getProperty('text', 'textEffect');
+    }
+  }),
+
+  textSpeed: computed('directable.options.textSpeed', 'character.textSpeed', {
+    get() {
+      return get(this, 'directable.options.textSpeed') ||
         get(this, 'character.textSpeed') ||
-        get(this, 'config').getProperty('text', 'speed');
+        get(this, 'config').getProperty('text', 'textSpeed');
     }
   }),
 

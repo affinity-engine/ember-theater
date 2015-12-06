@@ -246,7 +246,7 @@ this.expression('steven', 'happy', { transitionIn: { effect: { opacity: 1 } }, t
 @param [options] {Object} |optional|
 @param [options.instant] {Boolean} |optional| If true, text will appear immediately rather than written out letter by letter
 @param [options.displayName] {String} |optional| Overrides the character's name, if present.
-@param [options.speed] {Number} |optional| The speed (in milliseconds) at which the letters are written.
+@param [options.textSpeed] {Number} |optional| The number of characters written each second.
 @param [options.classNames] {Array} |optional| Class names to change the style of the text.
 @param [options.keys.accept] {Array} |optional| Keys that, when pressed, will advance the text.
 @return {Promise} Resolves when the text has been displayed in full and a key is pressed.
@@ -260,15 +260,15 @@ await this.text('Hello world');
 // displays text along with the name of the character model (note, this is not necessarily 'Steven')
 await this.text('steven', 'Hello, my name is Steven.');
 // displays text with no name at a really slow rate of 2 characters a second
-await this.text('Hello again, world', { speed: 500 });
+await this.text('Hello again, world', { textSpeed: 50 });
 // displays text along with the name Tiger Millionaire
 await this.text('steven', 'Or am I . . . Tiger Millionaire!!!', { displayName: 'Tiger Millionaire' });
 ```
 
-There are also many special text commands documented here. You can insert them into your text with a `#{}`:
+There are also many special text commands documented here. You can insert them into your text with a `#(())`:
 
 ```js
-this.text('Sometimes, you have to #{speed 1000} speak really slow.');
+this.text('Sometimes, you have to #((speed 1)) speak really slow.');
 ```
 
 ##### `choice`

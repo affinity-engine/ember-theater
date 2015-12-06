@@ -21,7 +21,7 @@ export default {
     mediaAttributes: [
       'ember-theater/backdrop:src',
       'ember-theater/character-expression:src',
-      'ember-theater/sound:src'
+      // 'ember-theater/sound:src'
     ]
   }
 };

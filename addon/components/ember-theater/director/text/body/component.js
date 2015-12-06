@@ -9,7 +9,7 @@ const wordClass = 'et-text-word';
 const letterClass = 'et-text-letter';
 
 const htmlTagRegex = '<.*?>';
-const customTagRegex = '[#\/]{.*?}';
+const customTagRegex = '[#\\/]\\(\\(.*?\\)\\)';
 
 const {
   Component,
@@ -23,7 +23,7 @@ const {
 
 const { String: { htmlSafe } } = Ember;
 const { run: { later } } = Ember;
-const { computed: { or } } = Ember;
+const { or }  = computed;
 
 export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
@@ -170,14 +170,13 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
       $word.html(text);
     }
 
-    const duration = get(this, 'textSpeed');
+    const duration = 1000 / get(this, 'textSpeed');
+    const effect = get(this, 'textEffect');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
-    animate($letter, {
-      opacity: [1, 0],
-      translateY: [0, '-0.3vh'],
-      translateX: [0, '-0.2vh']
-    }, { duration });
+    $letter.css({ opacity: 1 });
+    animate($letter, effect, { duration: 0 });
+    animate($letter, 'reverse', { duration: duration * 4 });
 
     later(() => {
       if (characterIndex + 1 < wordLength) {
@@ -185,11 +184,11 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
       } else {
         this.writeWord(wordIndex + 1);
       }
-    }, duration / 10);
+    }, duration);
   },
 
   executeCustomTag(text, index) {
-    const [, openingOrClosing, content] = text.match(/(#|\/){(.*?)}/);
+    const [, openingOrClosing, content] = text.match(/(#|\/)\(\((.*?)\)\)/);
     const args = content.split(' ');
     const tagName = args.shift();
     const tag = this[tagName].create();

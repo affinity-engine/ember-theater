@@ -2,7 +2,12 @@ export default {
   globals: {
     decorativeClassNames: ['et-paper'],
     structuralClassNames: ['et-block'],
-    speed: 300,
+    textSpeed: 25,
+    textEffect: {
+      opacity: 0,
+      translateX: '0.4vw',
+      translateY: '-0.1vw'
+    },
     transitionDuration: 200,
     transitionIn: {
       effect: { opacity: 0 }

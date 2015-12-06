@@ -1,13 +1,15 @@
-.et-text-tag {
-  display: none;
-}
-
 .et-text-word {
+  display: inline-block;
   opacity: 0;
 }
 
 .et-text-letter {
+  display: inline-block;
   opacity: 0;
+}
+
+.et-text-tag {
+  display: none;
 }
 
 .et-text {
