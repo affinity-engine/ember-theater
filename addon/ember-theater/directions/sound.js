@@ -10,25 +10,19 @@ const {
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
+  preloader: service('preloader'),
   stageManager: service('ember-theater/stage-manager'),
 
-  perform(resolve, id, effectOrOptions, optionsOnly) {
+  perform(resolve, id, effectOrOptions = {}, optionsOnly = {}) {
     const effectIsPresent = typeOf(effectOrOptions) === 'string';
-    const options = Ember.Object.create(effectIsPresent ? optionsOnly : effectOrOptions);
-    const effect = effectIsPresent ?
-      effectOrOptions :
-      isPresent(get(options, 'fadeWith')) ? 'fadeWith' : 'play';
-    const audio = this.store.peekRecord('ember-theater/sound', id).pathAudio;
-
-    const fadeWithId = get(options, 'fadeWith');
-    const fadeWithAudio = isPresent(fadeWithAudio) ?
-      this.store.peekRecord('ember-theater/sound', fadeWithId).pathAudio :
-      undefined;
+    const options = effectIsPresent ? optionsOnly : effectOrOptions;
+    const effect = effectIsPresent ? effectOrOptions : 'play';
+    const sound = this.store.peekRecord('ember-theater/sound', id);
+    const audioId = get(this, 'preloader').idFor(sound, 'path');
 
     const properties = {
-      audio,
+      audioId,
       effect,
-      fadeWithAudio,
       options,
       layer: get(options, 'layer') || 'theater.backstage.sound'
     };

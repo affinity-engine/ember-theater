@@ -21,17 +21,20 @@ export default Service.extend({
     directable.destroy();
   },
 
-  findDirectableWithId(id, type) {
+  findDirectableWithId(id, type, instanceId) {
     return get(this, 'directables').find((directable) => {
-      return get(directable, 'id') === id && get(directable, 'type') === type;
+      return get(directable, 'id') === id &&
+        get(directable, 'type') === type &&
+        get(directable, 'instanceId') === instanceId;
     });
   },
 
   handleDirectable(id, type, properties, resolve) {
-    const directable = this.findDirectableWithId(id, type);
+    const instanceId = get(properties, 'options.instance') || 0;
+    const directable = this.findDirectableWithId(id, type, instanceId);
 
     if (isBlank(directable)) {
-      this._addNewDirectable(merge(properties, { id, type, resolve }));
+      this._addNewDirectable(merge(properties, { id, type, resolve, instanceId }));
     } else {
       this._updateDirectable(directable, properties, resolve);
     }

@@ -98,8 +98,9 @@ export default Component.extend({
 
       models.forEach((model) => {
         const src = get(model, attribute);
+        const id = preloader.idFor(model, attribute);
 
-        preloader.loadFile(src);
+        preloader.loadFile({ src, id });
       });
     });
 

@@ -11,72 +11,45 @@ const {
   set
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, {
-  store: inject.service(),
+const { inject: { service } } = Ember;
 
-  setup: on('didInsertElement', function() {
-    const directable = get(this, 'directable');
+export default Component.extend(DirectableComponentMixin, {
+  soundManager: service('ember-theater/sound-manager'),
+  store: service('store'),
+
+  instantiateSound: on('didInsertElement', function() {
+    const soundManager = get(this, 'soundManager');
+    const audioId = get(this, 'directable.audioId');
+    const instance = soundManager.createInstance(audioId);
+
+    set(this, 'instance', instance);
+  }),
+
+  executeEffect: on('didRender', function() {
+    const {
+      directable,
+      instance,
+      soundManager
+    } = getProperties(this, 'directable', 'instance', 'soundManager');
 
     const {
-      audio,
       effect,
       options
-    } = getProperties(directable, 'audio', 'effect', 'options');
+    } = getProperties(directable, 'effect', 'options');
 
-    this._bindLoop(audio, options);
-    this._bindFadeWith(effect, options);
+    soundManager[effect](instance, options);
 
-    audio[effect](...this._buzzOptionsAdapter(options));
-
-    audio.bindOnce(`ended.${this.id}`, () => {
+    soundManager.on(instance, 'complete', () => {
       this.resolveAndDestroy();
     });
   }),
 
   teardown: on('willDestroyElement', function() {
-    const audio = this.get('directable.audio');
-    const volume = audio.volume;
+    const {
+      instance,
+      soundManager
+    } = getProperties(this, 'instance', 'soundManager');
 
-    audio.unbind(`ended.${this.id}`);
-    audio.fadeOut(1000, () => {
-      // it's necessary to manually return to the previous volume, or else subsequent
-      // `play`s of the audio file will start at volume 0;
-
-      audio.fadeTo(volume, 0);
-      audio.stop();
-    });
-  }),
-
-  _bindLoop(audio, options) {
-    if (isPresent(options) && get(options, 'loop')) {
-      audio.loop();
-    }
-  },
-
-  _bindFadeWith(effect, options) {
-    if (effect === 'fadeWith') {
-      const audio = get(this, 'directable.fadeWithAudio');
-
-      set(options, 'sound', audio);
-    }
-  },
-
-  _buzzOptionsAdapter(options) {
-    return [
-      'sound',
-      'volume',
-      'duration',
-      'seconds',
-      'percent',
-      'speed',
-      'property',
-      'value',
-      'event',
-      'callback'
-    ].filter((key) => {
-      return isPresent(get(options, key));
-    }).map((key) => {
-      return get(options, key);
-    });
-  }
+    soundManager.fadeOut(instance);
+  })
 });

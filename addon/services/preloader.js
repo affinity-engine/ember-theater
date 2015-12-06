@@ -15,12 +15,20 @@ export default Service.extend({
     set(this, 'queue', queue);
   }),
 
+  idFor(model, attribute) {
+    return `${model.constructor.modelName}:${model.id}:${attribute}`;
+  },
+
   loadFile(file) {
     get(this, 'queue').loadFile(file);
   },
 
   onComplete(callback) {
     get(this, 'queue').on('complete', callback);
+  },
+
+  onFileLoad(callback) {
+    get(this, 'queue').on('fileload', callback);
   },
 
   onProgress(callback) {
