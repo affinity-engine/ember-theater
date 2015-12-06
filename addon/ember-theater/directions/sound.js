@@ -18,7 +18,7 @@ export default Direction.extend({
     const options = effectIsPresent ? optionsOnly : effectOrOptions;
     const effect = effectIsPresent ? effectOrOptions : 'play';
     const sound = this.store.peekRecord('ember-theater/sound', id);
-    const audioId = get(this, 'preloader').idFor(sound, 'path');
+    const audioId = get(this, 'preloader').idFor(sound, 'src');
 
     const properties = {
       audioId,

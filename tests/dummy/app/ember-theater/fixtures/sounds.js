@@ -1,7 +1,7 @@
 export default [{
   id: 'song__bolero',
-  path: 'sounds/songs/bolero.mp3'
+  src: 'sounds/songs/bolero.mp3'
 }, {
   id: 'se__blaster',
-  path: 'sounds/se/blaster.wav'
+  src: 'sounds/se/blaster.wav'
 }];
