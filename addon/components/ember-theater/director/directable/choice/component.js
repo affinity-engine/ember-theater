@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
+import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
 import animate from 'ember-theater/utils/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/director/configurable';
@@ -19,7 +20,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, TransitionInMixin, {
+export default Component.extend(DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, StyleableMixin, TransitionInMixin, {
   layout,
 
   activeIndex: 0,
