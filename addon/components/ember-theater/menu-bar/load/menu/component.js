@@ -30,6 +30,7 @@ export default Menu.extend({
 
     if (isPresent(save)) {
       get(this, 'saveStateManager').loadRecord(save);
+      get(this, 'config').resetConfig();
       get(this, 'sceneManager').toScene(get(save, 'activeState.sceneId'), {
         autosave: false,
         isLoading: true
