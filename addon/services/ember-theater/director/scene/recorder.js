@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
 const {
+  Service,
+  computed,
   get,
   inject,
-  Service,
+  isBlank,
   set
 } = Ember;
 
@@ -11,11 +13,13 @@ export default Service.extend({
   saveStateManager: inject.service('ember-theater/save-state-manager'),
   sceneManager: inject.service('ember-theater/director/scene-manager'),
 
+  sceneRecord: computed(() => Ember.Object.create()),
+
   reset(isLoading) {
     set(this, 'sceneRecordIndex', -1);
 
     if (!isLoading) {
-      get(this, 'saveStateManager').clearSceneRecord();
+      set(this, 'sceneRecord', Ember.Object.create());
     }
   },
 
@@ -36,7 +40,7 @@ export default Service.extend({
 
     if (!get(sceneManager, 'isLoading')) { return {}; }
 
-    const sceneRecord = get(this, 'saveStateManager.sceneRecord');
+    const sceneRecord = get(this, 'sceneRecord');
     const autoResolveResult = get(sceneRecord, sceneRecordIndex.toString());
 
     if (autoResolveResult !== undefined) {
@@ -49,7 +53,7 @@ export default Service.extend({
   },
 
   _update(key, value) {
-    get(this, 'saveStateManager').updateSceneRecord(key, value);
+    set(this, `sceneRecord.${key}`, isBlank(value) ? null : value);
   },
 
   _ensureValue(key) {
@@ -59,6 +63,6 @@ export default Service.extend({
   },
 
   _getRecord(key) {
-    return get(this, 'saveStateManager').getSceneRecordValue(key);
+    return get(this, `sceneRecord.${key}`);
   }
 });

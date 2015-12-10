@@ -21,6 +21,7 @@ export default Direction.extend({
     const audioId = get(this, 'preloader').idFor(sound, 'src');
 
     const properties = {
+      autoResolve: get(this, 'autoResolve'),
       audioId,
       effect,
       options,

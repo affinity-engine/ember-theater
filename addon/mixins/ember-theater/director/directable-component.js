@@ -1,12 +1,13 @@
 import Ember from 'ember';
 
 const {
+  Mixin,
   get,
   isPresent,
-  Mixin,
   on,
   set
 } = Ember;
+
 const { computed: { alias } } = Ember;
 
 export default Mixin.create({
@@ -24,8 +25,10 @@ export default Mixin.create({
   },
 
   resolveAndDestroy(...args) {
+    const directable = get(this, 'directable');
+
     this.resolve(...args);
-    this.destroy();
+    directable.destroy();
   },
 
   destroyDirectable: on('willDestroyElement', function() {

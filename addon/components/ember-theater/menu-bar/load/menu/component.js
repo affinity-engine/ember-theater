@@ -3,7 +3,9 @@ import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component
 
 const {
   get,
-  isPresent
+  getProperties,
+  isPresent,
+  set
 } = Ember;
 
 const { computed: { reads } } = Ember;
@@ -29,7 +31,13 @@ export default Menu.extend({
     const save = get(choice, 'object');
 
     if (isPresent(save)) {
-      get(this, 'saveStateManager').loadRecord(save);
+      const {
+       saveStateManager,
+       sceneManager
+      } = getProperties(this, 'saveStateManager', 'sceneManager');
+
+      saveStateManager.loadRecord(save);
+      set(sceneManager, 'sceneRecord', saveStateManager.getStateValue('_sceneRecord'));
       get(this, 'config').resetConfig();
       get(this, 'sceneManager').toScene(get(save, 'activeState.sceneId'), {
         autosave: false,

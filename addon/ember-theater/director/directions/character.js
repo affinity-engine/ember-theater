@@ -27,6 +27,7 @@ export default Direction.extend({
     const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
 
     const properties = {
+      autoResolve: get(this, 'autoResolve'),
       id,
       character,
       initialExpression,

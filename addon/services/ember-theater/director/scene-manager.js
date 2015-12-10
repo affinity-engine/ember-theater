@@ -6,6 +6,7 @@ const {
   set
 } = Ember;
 
+const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Service.extend({
@@ -13,6 +14,8 @@ export default Service.extend({
   curtainPulley: service('ember-theater/director/scene/curtain-pulley'),
   recorder: service('ember-theater/director/scene/recorder'),
   transitionManager: service('ember-theater/director/scene/transition-manager'),
+
+  sceneRecord: alias('recorder.sceneRecord'),
 
   liftCurtains: async function() {
     const { id, options } = await get(this, 'curtainPulley').liftCurtains();

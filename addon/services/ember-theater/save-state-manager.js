@@ -17,7 +17,6 @@ export default Service.extend({
   store: service(),
 
   activeState: computed(() => Ember.Object.create()),
-  sceneRecord: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
   mostRecentSave: computed('saves.@each.updated', {
@@ -58,7 +57,6 @@ export default Service.extend({
     const autosave = await this.get('autosave');
 
     this.set('activeState', Ember.Object.create());
-    this.set('sceneRecord', Ember.Object.create());
     this.get('statePoints').clear();
 
     this.updateRecord(autosave);
@@ -66,11 +64,9 @@ export default Service.extend({
 
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
-    const sceneRecord = nativeCopy(this.get('sceneRecord'));
     const statePoints = nativeCopy(this.get('statePoints'));
     const record = this.get('store').createRecord('ember-theater/local-save', {
       name,
-      sceneRecord,
       statePoints
     });
 
@@ -86,40 +82,23 @@ export default Service.extend({
 
     const {
       activeState,
-      sceneRecord,
       statePoints
-    } = record.getProperties('activeState', 'sceneRecord', 'statePoints');
+    } = record.getProperties('activeState', 'statePoints');
 
     this.setProperties({
       activeState: nativeCopy(activeState),
-      sceneRecord: nativeCopy(sceneRecord),
       statePoints: Ember.A(nativeCopy(statePoints))
     });
   },
 
   updateRecord: async function(record) {
-    const sceneRecord = nativeCopy(this.get('sceneRecord'));
     const statePoints = nativeCopy(this.get('statePoints'));
 
     record.setProperties({
-      sceneRecord,
       statePoints
     });
 
     return await record.save();
-  },
-
-  // SCENE RECORD MANAGEMENT //
-  getSceneRecordValue(key) {
-    return get(this, `sceneRecord.${key}`);
-  },
-
-  updateSceneRecord(key, value) {
-    this.set(`sceneRecord.${key}`, isBlank(value) ? null : value);
-  },
-
-  clearSceneRecord() {
-    this.set('sceneRecord', Ember.Object.create());
   },
 
   // STATE MANAGEMENT //

@@ -23,6 +23,7 @@ export default Direction.extend({
     });
 
     const properties = {
+      autoResolve: get(this, 'autoResolve'),
       keys,
       duration: get(this, 'duration'),
       layer: 'backstage.pause'

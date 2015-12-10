@@ -24,6 +24,7 @@ export default Direction.extend({
     const options = characterIsPresent ? optionsOnly : textOrOptions;
 
     const properties = {
+      autoResolve: get(this, 'autoResolve'),
       character,
       options,
       text: characterIsPresent ? textOrOptions : characterOrText,

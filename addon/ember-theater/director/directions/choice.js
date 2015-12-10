@@ -16,6 +16,8 @@ export default Direction.extend({
     const options = headerIsPresent ? optionsOnly || {} : choicesOrOptions || {};
 
     const properties = {
+      autoResolve: get(this, 'autoResolve'),
+      autoResolveResult: get(this, 'autoResolveResult'),
       options,
       header: headerIsPresent ? headerOrChoices : null,
       choices: headerIsPresent ? choicesOrOptions : headerOrChoices,
