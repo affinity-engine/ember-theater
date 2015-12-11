@@ -12,10 +12,12 @@ const {
   computed,
   get,
   inject,
+  isPresent,
   on
 } = Ember;
 
 const { alias } = computed;
+const { run: { later } } = Ember;
 
 export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
   layout,
@@ -38,6 +40,16 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
       this.resolveAndDestroy();
+    }
+  }),
+
+  setTimeout: on('didInsertElement', function() {
+    const duration = get(this, 'directable.options.duration');
+
+    if (isPresent(duration)) {
+      later(() => {
+        this.send('completeText');
+      }, duration);
     }
   }),
 
