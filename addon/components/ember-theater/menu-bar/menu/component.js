@@ -52,6 +52,7 @@ export default Component.extend(EKOnInsertMixin, {
 
   renderDirectable() {
     const classNames = get(this, 'menuClassNames') || get(this, 'menuBarClassNames');
+    const keyboardPriority = 1000000;
     const {
       choices,
       header
@@ -62,7 +63,10 @@ export default Component.extend(EKOnInsertMixin, {
         choices,
         header,
         resolve,
-        options: { classNames }
+        options: {
+          classNames,
+          keyboardPriority
+        }
       });
 
       set(this, 'directable', directable);

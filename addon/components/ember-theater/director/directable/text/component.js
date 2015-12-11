@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/director/configurable';
+import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director/adjustable-keyboard';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
@@ -16,7 +17,7 @@ const {
 
 const { alias } = computed;
 
-export default Component.extend(DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
+export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
   layout,
 
   classNames: ['et-text'],
