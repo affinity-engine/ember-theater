@@ -16,9 +16,8 @@ export default Scene.extend({
     // await this.text({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
     this.backdrop('beach');
     // this.sound('song__bolero', 'fadeIn', { duration: 1000 });
-    await this.text('steven', 'I was <strong>so happy</strong> #((speed *1.5)) when Garnet said she was gonna come on this trip with me and Dad! #((speed *0.67)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?');
+    // await this.text('steven', 'I was <strong>so happy</strong> #((speed *1.5)) when Garnet said she was gonna come on this trip with me and Dad! #((speed *0.67)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?');
     // this.filter('theater.text', 'blur(0)', { duration: 500 });
-    this.get('config').setProperty('globals.decorativeClassNames', ['et-coastal']);
     this.backdrop('beach--night', { duration: 5000 });
     await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });
 

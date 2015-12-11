@@ -1,0 +1,32 @@
+@mixin et-transparent-base {
+  border-style: $et-transparent-border-style;
+  border-color: $et-transparent-border-color;
+  background: $et-transparent-background-color;
+  color: $et-transparent-color;
+}
+
+.et-transparent {
+  @include et-transparent-base;
+
+  .et-button {
+    @include et-transparent-base;
+
+    border-style: $et-button-transparent-border-style;
+    background-color: $et-button-transparent-background-color;
+
+    &:hover, &:focus {
+      background-color: $et-button-transparent-hover-background-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-transparent-border-color;
+    border-style: $et-input-ember-border-style;
+    background: $et-input-transparent-background-color;
+    color: $et-input-transparent-color;
+
+    &:focus {
+      border-color: $et-input-transparent-focus-border-color;
+    }
+  }
+}

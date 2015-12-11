@@ -1,0 +1,21 @@
+$et-transparent-primary-color: transparent !default;
+$et-transparent-secondary-color: transparent !default;
+$et-transparent-highlight-color: transparent !default;
+$et-transparent-neutral-color: #FFFCC4 !default;
+
+$et-transparent-border-style: $et-default-border-style !default;
+$et-transparent-border-color: $et-transparent-secondary-color !default;
+$et-transparent-color: $et-transparent-neutral-color !default;
+$et-transparent-background-color: $et-transparent-primary-color !default;
+
+$et-button-transparent-border-style: $et-default-border-style !default;
+$et-button-transparent-background-color: $et-transparent-primary-color !default;
+
+$et-button-transparent-hover-background-color: rgba(255, 255, 255, 0.15) !default;
+
+$et-input-transparent-background-color: $et-transparent-neutral-color !default;
+$et-input-transparent-color: $et-transparent-primary-color !default;
+$et-input-transparent-border-color: $et-transparent-secondary-color !default;
+$et-input-transparent-border-style: $et-button-transparent-border-style !default;
+
+$et-input-transparent-focus-border-color: $et-transparent-highlight-color !default;

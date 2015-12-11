@@ -49,4 +49,8 @@
   &.et-paper {
     @extend .et-paper;
   }
+
+  &.et-transparent {
+    @extend .et-transparent;
+  }
 }

@@ -137,4 +137,21 @@
       font-family: $et-choice-option-paper-font-family;
     }
   }
+
+  &.et-transparent {
+    @extend .et-transparent;
+
+    background-color: $et-choice-transparent-background-color;
+    opacity: $et-choice-transparent-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-transparent-font-family;
+      color: $et-choice-header-transparent-color;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-transparent-font-weight;
+      font-family: $et-choice-option-transparent-font-family;
+    }
+  }
 }

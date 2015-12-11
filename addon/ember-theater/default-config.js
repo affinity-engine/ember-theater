@@ -1,6 +1,6 @@
 export default {
   globals: {
-    decorativeClassNames: ['et-paper'],
+    decorativeClassNames: ['et-transparent'],
     structuralClassNames: ['et-block'],
     textSpeed: 25,
     textEffect: {

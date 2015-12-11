@@ -127,4 +127,15 @@
       font-family: $et-text-caption-paper-font-family;
     }
   }
+
+  &.et-transparent {
+    opacity: $et-text-transparent-opacity;
+    font-family: $et-text-transparent-font-family;
+
+    .et-text-caption {
+      @extend .et-transparent;
+
+      font-family: $et-text-caption-transparent-font-family;
+    }
+  }
 }
