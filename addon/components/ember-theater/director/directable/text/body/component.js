@@ -23,7 +23,7 @@ const {
 
 const { String: { htmlSafe } } = Ember;
 const { run: { later } } = Ember;
-const { or }  = computed;
+const { or } = computed;
 
 export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,

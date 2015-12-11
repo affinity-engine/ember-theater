@@ -3,7 +3,9 @@ import Ember from 'ember';
 const {
   Service,
   get,
-  isEmpty
+  getProperties,
+  isEmpty,
+  isPresent
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -11,11 +13,20 @@ const { inject: { service } } = Ember;
 export default Service.extend({
   config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
+
+  resetScene: async function() {
+    const saveStateManager = get(this, 'saveStateManager');
+
+    await saveStateManager.resetAutosave();
+
+    this.liftCurtains();
+  },
 
   liftCurtains: async function() {
     const saveStateManager = get(this, 'saveStateManager');
     const options = { autosave: false, isLoading: true };
-    const save = await get(saveStateManager, 'mostRecentSave');
+    const save = await saveStateManager.getMostRecentSave();
     let id = get(save, 'activeState.sceneId');
 
     if (isEmpty(id)) {
@@ -23,8 +34,21 @@ export default Service.extend({
       options.autosave = true;
     }
 
-    saveStateManager.loadRecord(save);
+    this.loadScene(save, options, id);
+  },
 
-    return { id, options };
+  loadScene(save, options, id) {
+    const {
+      config,
+      saveStateManager,
+      sceneManager
+    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager');
+
+    id = isPresent(id) ? id : get(save, 'activeState.sceneId');
+
+    saveStateManager.loadRecord(save);
+    config.resetConfig();
+    sceneManager.setSceneRecord(saveStateManager.getStateValue('_sceneRecord'));
+    sceneManager.toScene(id, options);
   }
 });

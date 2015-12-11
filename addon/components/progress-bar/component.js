@@ -7,7 +7,7 @@ const {
   set
 } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: ['progress-bar'],
 
   initializeProgressBar: on('didInsertElement', function() {

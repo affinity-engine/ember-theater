@@ -17,16 +17,16 @@ export default Service.extend({
 
   sceneRecord: alias('recorder.sceneRecord'),
 
-  liftCurtains: async function() {
-    const { id, options } = await get(this, 'curtainPulley').liftCurtains();
+  liftCurtains() {
+    get(this, 'curtainPulley').liftCurtains();
+  },
 
-    this.toScene(id, options);
+  loadScene(save, options) {
+    get(this, 'curtainPulley').loadScene(save, options);
   },
 
   resetScene() {
-    const id = get(this, 'config.initial.sceneId');
-
-    this.toScene(id);
+    get(this, 'curtainPulley').resetScene();
   },
 
   toScene(id, options = {}) {
@@ -45,6 +45,10 @@ export default Service.extend({
 
   recordSceneRecordEvent(promise) {
     get(this, 'recorder').record(promise);
+  },
+
+  setSceneRecord(value = Ember.Object.create()) {
+    set(this, 'sceneRecord', value);
   },
 
   resetSceneRecord() {

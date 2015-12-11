@@ -78,7 +78,7 @@ export default Service.extend({
       if (instance.volume >= 1) {
         this.stopFade(instance);
 
-        callback();
+        return callback();
       }
     }, 10);
   },

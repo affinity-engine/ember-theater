@@ -20,7 +20,7 @@ const configurableGet = function configurableGet(context, category, keys) {
 export function configurableClassNames(category) {
   return computed('directable.options.decorativeClassNames',
     `config.${category}.decorativeClassNames`,
-    'config.globals.decorativeClassNames', 
+    'config.globals.decorativeClassNames',
     'directable.options.structuralClassNames',
     `config.${category}.structuralClassNames`,
     'config.globals.structuralClassNames', {

@@ -2,8 +2,10 @@
   "extends": "ember",
   "parser": "babel-eslint",
   "globals": {
+    "createjs": true,
     "loki": true,
     "PerfectScrollbar": true,
+    "ProgressBar": true,
     "requirejs": true
   },
   "rules": {

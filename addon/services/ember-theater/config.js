@@ -44,13 +44,13 @@ export default Service.extend({
     const _config = get(saveStateManager, '_config') || {};
 
     const segments = key.split('.');
-    
+
     // ensure full path to the config exists
     segments.forEach((segment, index) => {
       const path = segments.slice(0, index + 1).join('.');
 
       if (isEmpty(get(_config, path))) {
-        set(_config, path, {}); 
+        set(_config, path, {});
       }
     });
 

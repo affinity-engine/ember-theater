@@ -1,12 +1,10 @@
 import Ember from 'ember';
-import configurable, { configurableClassNames } from 'ember-theater/macros/director/configurable';
 import animate from 'ember-theater/utils/animate';
 
 const {
   Mixin,
   get,
-  on,
-  set
+  on
 } = Ember;
 
 export default Mixin.create({

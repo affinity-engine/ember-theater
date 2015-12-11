@@ -1,17 +1,16 @@
 import Ember from 'ember';
 import layout from './template';
 import { singularize } from 'ember-inflector';
-import config from 'ember-get-config';
 import animate from 'ember-theater/utils/animate';
+import appConfig from 'ember-get-config';
 
-const modulePrefix = config.modulePrefix;
+const { modulePrefix } = appConfig;
 
 const {
   Component,
   computed,
   get,
   on,
-  run,
   set
 } = Ember;
 
@@ -42,7 +41,7 @@ export default Component.extend({
     const config = get(this, 'config');
 
     const color = get(config, 'mediaLoader.progressBarStyle.color') || this.$().css('color');
-    const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') || 
+    const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') ||
       `rgba(${color.match(/(\d+)/g).slice(0, 3).join(', ')}, 0.62)`;
     const strokeWidth = get(config, 'mediaLoader.progressBarStyle.strokeWidth') || 4;
     const trailWidth = get(config, 'mediaLoader.progressBarStyle.trailWidth') || strokeWidth * 0.62;
@@ -52,7 +51,7 @@ export default Component.extend({
       trailColor,
       strokeWidth,
       trailWidth
-    }
+    };
 
     set(this, 'progressBarOptions', options);
   }),

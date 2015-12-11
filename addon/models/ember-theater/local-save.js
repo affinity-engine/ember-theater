@@ -15,7 +15,6 @@ const {
 export default Model.extend(LokiJSModelMixin, {
   isAutosave: attr('boolean'),
   name: attr('string'),
-  sceneRecord: attr('object'),
   statePoints: attr('array'),
 
   activeState: computed('statePoints', {

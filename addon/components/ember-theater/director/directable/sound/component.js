@@ -5,8 +5,6 @@ const {
   Component,
   get,
   getProperties,
-  inject,
-  isPresent,
   on,
   set
 } = Ember;

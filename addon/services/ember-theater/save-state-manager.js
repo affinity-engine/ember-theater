@@ -4,7 +4,6 @@ import nativeCopy from 'ember-theater/utils/native-copy';
 const {
   computed,
   get,
-  isBlank,
   isPresent,
   merge,
   Service,
@@ -19,15 +18,13 @@ export default Service.extend({
   activeState: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
-  mostRecentSave: computed('saves.@each.updated', {
-    get: async function() {
-      await this._ensureAutosave();
+  getMostRecentSave: async function() {
+    await this._ensureAutosave();
 
-      const saves = await get(this, 'saves');
+    const saves = await get(this, 'saves');
 
-      return saves.sortBy('updated').reverseObjects().get('firstObject');
-    }
-  }).readOnly(),
+    return saves.sortBy('updated').reverseObjects().get('firstObject');
+  },
 
   autosave: computed({
     get() {

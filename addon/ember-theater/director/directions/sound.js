@@ -3,7 +3,6 @@ import { Direction } from 'ember-theater/ember-theater/director';
 
 const {
   get,
-  isPresent,
   typeOf
 } = Ember;
 
