@@ -9,7 +9,7 @@ const wordClass = 'et-text-word';
 const letterClass = 'et-text-letter';
 
 const htmlTagRegex = '<.*?>';
-const customTagRegex = '[#\\/]\\(\\(.*?\\)\\)';
+const customTagRegex = '\\(\\([#\\/].*?\\)\\)';
 
 const {
   Component,
@@ -198,7 +198,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
   },
 
   executeCustomTag(text, index) {
-    const [, openingOrClosing, content] = text.match(/(#|\/)\(\((.*?)\)\)/);
+    const [, openingOrClosing, content] = text.match(/\(\((#|\/)(.*?)\)\)/);
     const args = content.split(' ');
     const tagName = args.shift();
     const tag = this[tagName].create();
