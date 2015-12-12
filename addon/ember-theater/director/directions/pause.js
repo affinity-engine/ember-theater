@@ -10,6 +10,8 @@ const {
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
+  layer: 'meta.pause',
+
   stageManager: service('ember-theater/director/stage-manager'),
 
   perform(resolve, ...args) {
@@ -22,11 +24,15 @@ export default Direction.extend({
       }
     });
 
+    const duration = get(this, 'duration');
+    const layer = get(options, 'layer') || get(this, 'layer');
+    const autoResolve = get(this, 'autoResolve');
+
     const properties = {
-      autoResolve: get(this, 'autoResolve'),
+      autoResolve,
       keys,
-      duration: get(this, 'duration'),
-      layer: 'backstage.pause'
+      duration,
+      layer
     };
 
     get(this, 'stageManager').handleDirectable(null, 'pause', properties, resolve);

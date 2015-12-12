@@ -9,6 +9,8 @@ const {
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
+  layer: 'meta.sound',
+
   preloader: service('preloader'),
   stageManager: service('ember-theater/director/stage-manager'),
 
@@ -18,13 +20,15 @@ export default Direction.extend({
     const effect = effectIsPresent ? effectOrOptions : 'play';
     const sound = this.store.peekRecord('ember-theater/sound', id);
     const audioId = get(this, 'preloader').idFor(sound, 'src');
+    const layer = get(options, 'layer') || get(this, 'layer');
+    const autoResolve = get(this, 'autoResolve');
 
     const properties = {
-      autoResolve: get(this, 'autoResolve'),
+      autoResolve,
       audioId,
       effect,
       options,
-      layer: get(options, 'layer') || 'theater.backstage.sound'
+      layer
     };
 
     get(this, 'stageManager').handleDirectable(id, 'sound', properties, resolve);

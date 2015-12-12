@@ -10,6 +10,8 @@ const {
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
+  layer: 'theater.stage.foreground.character',
+
   stageManager: service('ember-theater/director/stage-manager'),
 
   perform(resolve, expressionOrId, effectOrOptions, optionsOnly) {
@@ -18,6 +20,7 @@ export default Direction.extend({
 
     const id = expressionIsPresent ? get(expressionOrId, 'id') : expressionOrId;
     const character = this.store.peekRecord('ember-theater/character', id);
+    const effect = effectIsPresent ? effectOrOptions : 'transition.fadeIn';
 
     const expressionId = get(expressionOrId, 'expression');
     const initialExpression = isPresent(expressionId) ?
@@ -25,15 +28,17 @@ export default Direction.extend({
       get(character, 'defaultExpression');
 
     const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
+    const layer = get(options, 'layer') || get(this, 'layer');
+    const autoResolve = get(this, 'autoResolve');
 
     const properties = {
-      autoResolve: get(this, 'autoResolve'),
-      id,
+      autoResolve,
       character,
+      effect,
+      id,
       initialExpression,
-      options,
-      effect: effectIsPresent ? effectOrOptions : 'transition.fadeIn',
-      layer: get(options, 'layer') || 'theater.stage.foreground.character'
+      layer,
+      options
     };
 
     get(this, 'stageManager').handleDirectable(id, 'character', properties, resolve);
