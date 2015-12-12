@@ -48,6 +48,8 @@ export default Service.extend({
   },
 
   _updateDirectable(directable, properties, resolve) {
-    setProperties(directable, merge(properties, { resolve }));
+    const options = merge(get(directable, 'options'), get(properties, 'options'));
+
+    setProperties(directable, merge(properties, { resolve, options }));
   }
 });

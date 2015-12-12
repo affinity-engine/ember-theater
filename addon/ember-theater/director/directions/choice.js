@@ -3,7 +3,6 @@ import { Direction } from 'ember-theater/ember-theater/director';
 
 const {
   get,
-  guidFor,
   typeOf
 } = Ember;
 
@@ -25,6 +24,6 @@ export default Direction.extend({
       layer: get(options, 'layer') || 'theater.prompt.choice'
     };
 
-    get(this, 'stageManager').handleDirectable(guidFor(this), 'choice', properties, resolve);
+    get(this, 'stageManager').handleDirectable(null, 'choice', properties, resolve);
   }
 });

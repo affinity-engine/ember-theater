@@ -103,7 +103,7 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     });
   }),
 
-  scrollToFirstWord: on('didInsertElement', function() {
+  scrollToFirstWord: on('didRender', function() {
     const $words = get(this, '$words');
     const firstWord = $words.first();
 
