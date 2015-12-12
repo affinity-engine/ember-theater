@@ -27,9 +27,11 @@ export default Direction.extend({
     const options = characterIsPresent ? optionsOnly : textOrOptions;
     const layer = get(options, 'layer') || get(this, 'layer');
     const autoResolve = get(this, 'autoResolve');
+    const autoResolveResult = get(this, 'autoResolveResult');
 
     const properties = {
       autoResolve,
+      autoResolveResult,
       character,
       layer,
       options,
