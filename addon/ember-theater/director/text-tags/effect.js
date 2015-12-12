@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import { TextTag } from 'ember-theater/ember-theater/director';
+import animate from 'ember-theater/utils/animate';
 
-const { set } = Ember;
+const { get } = Ember;
 
 export default TextTag.extend({
   /**
@@ -10,14 +11,17 @@ export default TextTag.extend({
     @method start
     @param {Object} context
     @param {Number} index
-    @param {String} effectString
+    @param {String,Object} effectString
+    @param {Object} optionsString
   */
 
-  start(context, index, ...args) {
-    const effectString = `(${args.join('')})`;
-    const effect = eval(effectString);
+  start(context, index, effectString, optionsString) {
+    const effect = eval(`(${effectString})`);
+    const options = eval(`(${optionsString})`);
+    const element = get(context, 'parentElement');
 
-    set(context, 'textEffect', effect);
+    animate(element, effect, options);
+
     context.writeWord(index + 1);
 
     this.destroy();

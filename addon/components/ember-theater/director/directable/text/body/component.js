@@ -32,6 +32,12 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
 
   isInstant: or('instantWritePage', 'instantWriteText'),
 
+  parentElement: computed({
+    get() {
+      return this.$().parent();
+    }
+  }).readOnly(),
+
   words: computed('text', {
     get() {
       // the first part of the regex matches html tags (eg, `<strong>`), the second part et-text-tags,
@@ -175,11 +181,11 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     }
 
     const duration = 1000 / get(this, 'textSpeed');
-    const effect = get(this, 'textEffect');
+    const style = get(this, 'textStyle');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     $letter.css({ opacity: 1 });
-    animate($letter, effect, { duration: 0 });
+    animate($letter, style, { duration: 0 });
     animate($letter, 'reverse', { duration: duration * 4 });
 
     later(() => {
@@ -198,6 +204,6 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
     const tag = this[tagName].create();
     const method = openingOrClosing === '#' ? 'start' : 'stop';
 
-    tag[method](this, index, ...args);
+    tag[method](this, index, ...args.join(' ').split('|'));
   }
 });

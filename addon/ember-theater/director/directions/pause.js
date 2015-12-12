@@ -30,8 +30,8 @@ export default Direction.extend({
 
     const properties = {
       autoResolve,
-      keys,
       duration,
+      keys,
       layer
     };
 

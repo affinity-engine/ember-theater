@@ -90,11 +90,11 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
     }
   }).readOnly(),
 
-  textEffect: computed('directable.options.textEffect', 'character.textEffect', {
+  textStyle: computed('directable.options.textStyle', 'character.textStyle', {
     get() {
-      return get(this, 'directable.options.textEffect') ||
-        get(this, 'character.textEffect') ||
-        get(this, 'config').getProperty('text', 'textEffect');
+      return get(this, 'directable.options.textStyle') ||
+        get(this, 'character.textStyle') ||
+        get(this, 'config').getProperty('text', 'textStyle');
     }
   }),
 

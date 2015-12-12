@@ -17,7 +17,7 @@ export default Scene.extend({
     this.backdrop('beach');
     // this.sound('song__bolero', 'fadeIn', { duration: 1000 });
     this.text('text 1', { instance: 1, keys: { accept: [] }, decorativeClassNames: ['et-transparent'], style: { position: 'absolute', top: 0, left: 0 } });
-    await this.text('steven', 'I was <strong>so happy</strong> #((speed *1.5)) when Garnet said she was gonna come on this trip with me and Dad! #((speed *0.67)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?', { scrollable: true });
+    await this.text('steven', 'I was <strong>so happy</strong> #((effect { opacity: 0.1 } | { duration: 1000, loop: 5 })) when Garnet said she was gonna come on this trip with me and Dad! #((speed *0.67)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?');
     // this.filter('theater.text', 'blur(0)', { duration: 500 });
     this.backdrop('beach--night', { duration: 5000 });
     await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });
