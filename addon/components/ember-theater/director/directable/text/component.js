@@ -16,21 +16,27 @@ const {
   on
 } = Ember;
 
-const { alias } = computed;
+const {
+  alias,
+  or
+} = computed;
+
 const { run: { later } } = Ember;
 
 export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
   layout,
 
   classNames: ['et-text'],
-  classNameBindings: ['configurableClassNames'],
+  classNameBindings: ['configurableClassNames', 'scrollable:et-scrollable'],
 
   translator: inject.service('ember-theater/translator'),
   config: inject.service('ember-theater/config'),
 
   character: alias('directable.character'),
-  instantWriteText: alias('directable.options.instant'),
   keys: configurable('text', 'keys.accept'),
+  instant: configurable('text', 'instant'),
+  scrollable: configurable('text', 'scrollable'),
+  instantWriteText: or('instant', 'scrollable'),
   transitionIn: configurable('text', 'transitionIn.effect'),
   transitionInDuration: configurable('text', 'transitionIn.duration', 'transitionDuration'),
   transitionOut: configurable('text', 'transitionOut.effect'),
@@ -50,6 +56,14 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
       later(() => {
         this.send('completeText');
       }, duration);
+    }
+  }),
+
+  initializePerfectScrollbar: on('didRender', function() {
+    if (get(this, 'scrollable')) {
+      PerfectScrollbar.initialize(this.$().find('.et-text-body-container')[0], {
+        suppressScrollX: true
+      });
     }
   }),
 

@@ -32,6 +32,12 @@
     }
   }
 
+  &.et-scrollable {
+    .et-text-body {
+      padding-bottom: 0;
+    }
+  }
+
   &.et-block {
     left: $et-text-block-left;
     right: $et-text-block-right;

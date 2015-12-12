@@ -139,13 +139,17 @@ export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
 
     if ((isBlank(nextPageFirstWord) && index < $words.length) || index < $words.index(nextPageFirstWord)) {
       set(this, 'pageLoaded', false);
-    } else {
+    } else if (!get(this, 'instantWriteText')) {
       setProperties(this, {
         instantWritePage: false,
         pageLoaded: true
       });
 
       // stop if past the last word in whole text or the last word on the current page
+      return;
+    } else if (index >= $words.length) {
+      set(this, 'pageLoaded', true);
+
       return;
     }
 
