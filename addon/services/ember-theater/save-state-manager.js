@@ -62,6 +62,10 @@ export default Service.extend({
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
     const statePoints = nativeCopy(this.get('statePoints'));
+    const activeState = nativeCopy(this.get('activeState'));
+
+    merge(statePoints[statePoints.length - 1], activeState);
+
     const record = this.get('store').createRecord('ember-theater/local-save', {
       name,
       statePoints
@@ -90,6 +94,9 @@ export default Service.extend({
 
   updateRecord: async function(record) {
     const statePoints = nativeCopy(this.get('statePoints'));
+    const activeState = nativeCopy(this.get('activeState'));
+
+    merge(statePoints[statePoints.length - 1], activeState);
 
     record.setProperties({
       statePoints

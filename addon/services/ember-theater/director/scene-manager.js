@@ -12,10 +12,11 @@ const { inject: { service } } = Ember;
 export default Service.extend({
   config: service('ember-theater/config'),
   curtainPulley: service('ember-theater/director/scene/curtain-pulley'),
+  saveStateManager: service('ember-theater/save-state-manager'),
   recorder: service('ember-theater/director/scene/recorder'),
   transitionManager: service('ember-theater/director/scene/transition-manager'),
 
-  sceneRecord: alias('recorder.sceneRecord'),
+  sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 
   liftCurtains() {
     get(this, 'curtainPulley').liftCurtains();
@@ -45,10 +46,6 @@ export default Service.extend({
 
   recordSceneRecordEvent(promise) {
     get(this, 'recorder').record(promise);
-  },
-
-  setSceneRecord(value = Ember.Object.create()) {
-    set(this, 'sceneRecord', value);
   },
 
   resetSceneRecord() {

@@ -5,7 +5,8 @@ const {
   get,
   getProperties,
   isEmpty,
-  isPresent
+  isPresent,
+  set
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -14,6 +15,8 @@ export default Service.extend({
   config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/director/scene-manager'),
+
+  sceneRecord: Ember.computed.alias('sceneManager.sceneRecord'),
 
   resetScene: async function() {
     const saveStateManager = get(this, 'saveStateManager');
@@ -48,7 +51,12 @@ export default Service.extend({
 
     saveStateManager.loadRecord(save);
     config.resetConfig();
-    sceneManager.setSceneRecord(saveStateManager.getStateValue('_sceneRecord'));
+
+    const sceneRecord = get(this, 'sceneRecord');
+    if (isEmpty(sceneRecord)) {
+      set(this, 'sceneRecord', {});
+    }
+
     sceneManager.toScene(id, options);
   }
 });

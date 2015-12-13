@@ -20,15 +20,13 @@ export default Service.extend({
     const sceneManager = get(this, 'sceneManager');
     const scene = this._buildScene(id, options);
 
-    sceneManager.setIsLoading(get(options, 'isLoading'));
-    sceneManager.resetSceneRecord();
-
     get(this, 'stageManager').clearDirectables();
     get(this, 'layerManager').clearFilters();
 
-    this._updateAutosave(scene, options);
+    sceneManager.setIsLoading(get(options, 'isLoading'));
+    sceneManager.resetSceneRecord();
 
-    get(this, 'layerManager').clearFilters();
+    this._updateAutosave(scene, options);
 
     return scene;
   },

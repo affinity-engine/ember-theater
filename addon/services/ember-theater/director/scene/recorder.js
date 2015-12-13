@@ -13,7 +13,7 @@ export default Service.extend({
   saveStateManager: inject.service('ember-theater/save-state-manager'),
   sceneManager: inject.service('ember-theater/director/scene-manager'),
 
-  sceneRecord: computed(() => Ember.Object.create()),
+  sceneRecord: Ember.computed.alias('sceneManager.sceneRecord'),
 
   reset(isLoading) {
     set(this, 'sceneRecordIndex', -1);
@@ -27,6 +27,8 @@ export default Service.extend({
     const key = get(this, 'sceneRecordIndex');
 
     promise.then((value) => {
+      if (this._getRecord(key) !== null) { return; }
+      
       this._update(key, value);
     });
   },
