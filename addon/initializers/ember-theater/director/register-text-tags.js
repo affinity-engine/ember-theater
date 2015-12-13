@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import gatherModules from 'ember-theater/utils/gather-modules';
+import gatherModules from 'ember-theater/utils/ember-theater/director/gather-modules';
 
 const { String: { camelize } } = Ember;
 

@@ -5,7 +5,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
-import animate from 'ember-theater/utils/animate';
+import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/ember-theater/director/configurable';
 import {
   keyUp,

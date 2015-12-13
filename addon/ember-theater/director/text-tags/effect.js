@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { TextTag } from 'ember-theater/ember-theater/director';
-import animate from 'ember-theater/utils/animate';
+import animate from 'ember-theater/utils/ember-theater/animate';
 
 const { get } = Ember;
 

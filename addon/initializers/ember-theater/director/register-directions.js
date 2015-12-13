@@ -1,5 +1,5 @@
-import gatherModules from 'ember-theater/utils/gather-modules';
-import injectSceneProxy from 'ember-theater/utils/inject-scene-proxy';
+import gatherModules from 'ember-theater/utils/ember-theater/director/gather-modules';
+import injectSceneProxy from 'ember-theater/utils/ember-theater/director/inject-scene-proxy';
 
 export function initialize(application) {
   const directions = gatherModules('ember-theater\/director\/directions');

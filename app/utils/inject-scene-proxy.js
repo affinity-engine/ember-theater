@@ -1,1 +1,0 @@
-export { default } from 'ember-theater/utils/inject-scene-proxy';

@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import { singularize } from 'ember-inflector';
-import animate from 'ember-theater/utils/animate';
+import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
 
 const { modulePrefix } = appConfig;

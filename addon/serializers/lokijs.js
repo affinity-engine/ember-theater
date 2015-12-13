@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import NormalizePatchMixin from 'ember-theater/mixins/ember-theater/json-serializer-normalize-patch';
-import nativeCopy from 'ember-theater/utils/native-copy';
+import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const { JSONSerializer } = DS;
 const { isPresent } = Ember;

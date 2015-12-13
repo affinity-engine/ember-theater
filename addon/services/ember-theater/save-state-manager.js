@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import nativeCopy from 'ember-theater/utils/native-copy';
+import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
   computed,

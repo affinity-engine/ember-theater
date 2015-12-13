@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import animate from 'ember-theater/utils/animate';
+import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable from 'ember-theater/macros/ember-theater/director/configurable';
 
 const {

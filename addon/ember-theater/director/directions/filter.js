@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import layerName from 'ember-theater/utils/layer-name';
+import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
 const {
   get,
