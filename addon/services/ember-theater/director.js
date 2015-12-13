@@ -6,16 +6,24 @@ const {
   merge
 } = Ember;
 
+const {
+  RSVP: {
+    Promise,
+    resolve
+  }
+} = Ember;
+
 const { inject: { service } } = Ember;
-const { RSVP: { Promise } } = Ember;
 
 export default Service.extend({
   sceneManager: service('ember-theater/director/scene-manager'),
 
-  direct(factory, type, args) {
+  direct(scene, factory, type, args) {
+    if (get(scene, 'isAborted')) { return resolve(); }
+
     const promise = this._handleDirection(factory, type, ...args);
 
-    return this._handlePromiseResolution(promise);
+    return this._handlePromiseResolution(promise, scene);
   },
 
   _handleDirection(factory, type, ...args) {
@@ -27,8 +35,8 @@ export default Service.extend({
     });
   },
 
-  _handlePromiseResolution(promise) {
-    get(this, 'sceneManager').recordSceneRecordEvent(promise);
+  _handlePromiseResolution(promise, scene) {
+    get(this, 'sceneManager').recordSceneRecordEvent(promise, scene);
 
     return promise;
   }

@@ -2,18 +2,20 @@ import Ember from 'ember';
 
 const {
   Service,
-  computed,
   get,
   inject,
   isBlank,
   set
 } = Ember;
 
-export default Service.extend({
-  saveStateManager: inject.service('ember-theater/save-state-manager'),
-  sceneManager: inject.service('ember-theater/director/scene-manager'),
+const { computed: { alias } } = Ember;
+const { inject: { service } } = Ember;
 
-  sceneRecord: Ember.computed.alias('sceneManager.sceneRecord'),
+export default Service.extend({
+  saveStateManager: service('ember-theater/save-state-manager'),
+  sceneManager: service('ember-theater/director/scene-manager'),
+
+  sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 
   reset(isLoading) {
     set(this, 'sceneRecordIndex', -1);
@@ -23,12 +25,12 @@ export default Service.extend({
     }
   },
 
-  record(promise) {
+  record(promise, scene) {
     const key = get(this, 'sceneRecordIndex');
 
     promise.then((value) => {
-      if (this._getRecord(key) !== null) { return; }
-      
+      if (get(scene, 'isAborted')) { return; }
+
       this._update(key, value);
     });
   },
@@ -36,6 +38,7 @@ export default Service.extend({
   advance() {
     const sceneManager = get(this, 'sceneManager');
 
+    this._ensureSceneRecord();
     this._ensureValue(get(this, 'sceneRecordIndex'));
 
     const sceneRecordIndex = this.incrementProperty('sceneRecordIndex');
@@ -56,6 +59,12 @@ export default Service.extend({
 
   _update(key, value) {
     set(this, `sceneRecord.${key}`, isBlank(value) ? null : value);
+  },
+
+  _ensureSceneRecord() {
+    if (isBlank(get(this, 'sceneRecord'))) {
+      this.reset();
+    }
   },
 
   _ensureValue(key) {

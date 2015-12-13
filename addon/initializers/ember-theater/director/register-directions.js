@@ -1,12 +1,28 @@
+import Ember from 'ember';
 import gatherModules from 'ember-theater/utils/ember-theater/director/gather-modules';
-import injectSceneProxy from 'ember-theater/utils/ember-theater/director/inject-scene-proxy';
+
+const { get } = Ember;
+const { String: { camelize } } = Ember;
+
+const injectDirectionProxy = function injectDirectionProxy(application, name) {
+  const proxy = function proxy(...args) {
+    // the scene is the context here
+    const factory = get(this, 'container').lookupFactory(`direction:${name}`);
+
+    return get(this, 'director').direct(this, factory, name, args);
+  };
+
+  application.inject('direction', 'store', 'service:store');
+  application.register(`direction:${name}-proxy`, proxy, { instantiate: false });
+  application.inject('scene', camelize(name), `direction:${name}-proxy`);
+};
 
 export function initialize(application) {
   const directions = gatherModules('ember-theater\/director\/directions');
 
   directions.forEach((direction, directionName) => {
     application.register(`direction:${directionName}`, direction, { singleton: false });
-    injectSceneProxy(application, 'direction', directionName);
+    injectDirectionProxy(application, directionName);
   });
 }
 
