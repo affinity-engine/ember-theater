@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import configurable from 'ember-theater/macros/director/configurable';
+import configurable from 'ember-theater/macros/ember-theater/director/configurable';
 
 import {
   keyUp,

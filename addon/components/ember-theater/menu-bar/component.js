@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import { configurableClassNames } from 'ember-theater/macros/director/configurable';
+import { configurableClassNames } from 'ember-theater/macros/ember-theater/director/configurable';
 
 const { Component } = Ember;
 const { inject: { service } } = Ember;
