@@ -40,16 +40,22 @@ export default Service.extend({
   },
 
   advanceSceneRecord() {
-    return get(this, 'recorder').advance();
+    const isLoading = get(this, 'isLoading');
+
+    return get(this, 'recorder').advance(isLoading);
   },
 
   recordSceneRecordEvent(promise, scene) {
     get(this, 'recorder').record(promise, scene);
   },
 
-  resetSceneRecord() {
-    const isLoading = get(this, 'isLoading');
+  resetSceneRecord(isLoading) {
+    const recorder = get(this, 'recorder');
 
-    get(this, 'recorder').reset(isLoading);
+    if (isLoading) {
+      recorder.resetIndex();
+    } else {
+      recorder.resetRecord();
+    }
   }
 });

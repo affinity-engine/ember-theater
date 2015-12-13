@@ -9,7 +9,7 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
     // the scene is the context here
     const factory = get(this, 'container').lookupFactory(`direction:${name}`);
 
-    return get(this, 'director').direct(this, factory, name, args);
+    return get(this, 'director').direct(this, factory, args);
   };
 
   application.inject('direction', 'store', 'service:store');
@@ -21,6 +21,7 @@ export function initialize(application) {
   const directions = gatherModules('ember-theater\/director\/directions');
 
   directions.forEach((direction, directionName) => {
+    direction.type = directionName;
     application.register(`direction:${directionName}`, direction, { singleton: false });
     injectDirectionProxy(application, directionName);
   });

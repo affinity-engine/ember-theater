@@ -44,7 +44,7 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   configurableClassNames: configurableClassNames('text'),
 
   handleAutoResolve: on('didInitAttrs', function() {
-    if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === true) {
+    if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
       this.resolveAndDestroy(true);
     }
   }),
@@ -112,7 +112,7 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
       const duration = get(this, 'transitionOutDuration');
 
       animate(this.element, effect, { duration }).then(() => {
-        this.resolveAndDestroy(true);
+        this.resolveAndDestroy();
       });
     }
   }

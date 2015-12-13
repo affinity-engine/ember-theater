@@ -5,6 +5,7 @@ const {
   get,
   inject,
   isBlank,
+  isPresent,
   set
 } = Ember;
 
@@ -17,12 +18,14 @@ export default Service.extend({
 
   sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 
-  reset(isLoading) {
-    set(this, 'sceneRecordIndex', -1);
+  resetRecord() {
+    this.resetIndex();
 
-    if (!isLoading) {
-      set(this, 'sceneRecord', Ember.Object.create());
-    }
+    set(this, 'sceneRecord', Ember.Object.create());
+  },
+
+  resetIndex() {
+    set(this, 'sceneRecordIndex', 0);
   },
 
   record(promise, scene) {
@@ -35,45 +38,36 @@ export default Service.extend({
     });
   },
 
-  advance() {
-    const sceneManager = get(this, 'sceneManager');
-
+  advance(isLoading) {
     this._ensureSceneRecord();
-    this._ensureValue(get(this, 'sceneRecordIndex'));
 
-    const sceneRecordIndex = this.incrementProperty('sceneRecordIndex');
+    const index = this.incrementProperty('sceneRecordIndex');
+    const result = isLoading ? this._autoAdvance(index) : this._advance(index);
 
-    if (!get(sceneManager, 'isLoading')) { return {}; }
-
-    const sceneRecord = get(this, 'sceneRecord');
-    const autoResolveResult = get(sceneRecord, sceneRecordIndex.toString());
-
-    if (autoResolveResult !== undefined) {
-      return { autoResolve: true, autoResolveResult };
-    }
-
-    set(sceneManager, 'isLoading', false);
-
-    return {};
+    return result || {};
   },
 
-  _update(key, value) {
-    set(this, `sceneRecord.${key}`, isBlank(value) ? null : value);
+  _autoAdvance(index) {
+    const autoResolveResult = get(this, `sceneRecord.${index}`);
+
+    if (isPresent(autoResolveResult)) {
+      return { autoResolve: true, autoResolveResult };
+    } else {
+      get(this, 'sceneManager').setIsLoading(false);
+    }
+  },
+
+  _advance(index) {
+    this._update(index, '_UNRESOLVED');
   },
 
   _ensureSceneRecord() {
     if (isBlank(get(this, 'sceneRecord'))) {
-      this.reset();
+      this.resetRecord();
     }
   },
 
-  _ensureValue(key) {
-    if (key >= 0 && this._getRecord(key) === undefined) {
-      this._update(key, null);
-    }
-  },
-
-  _getRecord(key) {
-    return get(this, `sceneRecord.${key}`);
+  _update(key, value) {
+    set(this, `sceneRecord.${key}`, isPresent(value) ? value : '_RESOLVED');
   }
 });
