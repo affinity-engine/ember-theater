@@ -29,11 +29,21 @@ export default Adapter.extend({
     return this._promiseWrap(record);
   },
 
-  deleteRecord(store, type, snapshot) {
-    this._findOrAddCollection(type).remove(snapshot.id);
+  updateRecord(store, type, snapshot) {
+    const serializedData = store.serializerFor(type.modelName).serialize(snapshot);
+    const record = this._findOrAddCollection(type).update(serializedData);
+
     this._saveDatabase();
 
-    return store.unloadRecord(snapshot);
+    return this._promiseWrap(record);
+  },
+
+  deleteRecord(store, type, snapshot) {
+    const serializedData = store.serializerFor(type.modelName).serialize(snapshot);
+    this._findOrAddCollection(type).remove(serializedData);
+    this._saveDatabase();
+
+    return resolve(null);
   },
 
   findAll(store, type) {
@@ -56,15 +66,6 @@ export default Adapter.extend({
 
   queryRecord(store, type, query) {
     const record = this._findOrAddCollection(type).findOne(query);
-
-    return this._promiseWrap(record);
-  },
-
-  updateRecord(store, type, snapshot) {
-    const serializedData = store.serializerFor(type.modelName).serialize(snapshot);
-    const record = this._findOrAddCollection(type).update(serializedData);
-
-    this._saveDatabase();
 
     return this._promiseWrap(record);
   },

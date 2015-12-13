@@ -8,6 +8,8 @@ const { computed: { and } } = Ember;
 export default Component.extend({
   layout: layout,
 
+  classNameBindings: ['choice.classNames'],
+
   isInput: and('choice.inputable', 'inputOpen'),
 
   actions: {

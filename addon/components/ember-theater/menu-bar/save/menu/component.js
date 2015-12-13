@@ -26,9 +26,16 @@ export default Menu.extend({
     saves.forEach((save) => {
       if (!get(save, 'isAutosave')) {
         choices.pushObject({
-          key: get(save, 'id'),
+          key: 'save',
           object: save,
-          text: get(save, 'name')
+          text: get(save, 'name'),
+          classNames: ['et-choice-option-pair-major']
+        });
+        choices.pushObject({
+          key: 'delete',
+          object: save,
+          icon: 'remove',
+          classNames: ['et-choice-option-pair-minor']
         });
       }
     });
@@ -43,7 +50,8 @@ export default Menu.extend({
     switch (get(choice, 'key')) {
       case 0: return this.attrs.closeMenu();
       case 1: saveStateManager.createRecord(get(choice, 'input')); break;
-      default: saveStateManager.updateRecord(get(choice, 'object'));
+      case 'save': saveStateManager.updateRecord(get(choice, 'object')); break;
+      case 'delete': saveStateManager.deleteRecord(get(choice, 'object')); break;
     }
 
     this.attrs.closeMenu();

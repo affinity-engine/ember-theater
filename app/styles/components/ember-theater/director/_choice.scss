@@ -3,6 +3,18 @@
 
   position: absolute;
 
+  .et-choice-option-pair-major {
+    display: inline-block;
+    float: $et-choice-option-pair-major-float;
+    width: $et-choice-option-pair-major-width;
+  }
+
+  .et-choice-option-pair-minor {
+    display: inline-block;
+    float: $et-choice-option-pair-minor-float;
+    width: $et-choice-option-pair-minor-width;
+  }
+
   .et-choice-option {
     @extend .et-button;
 
