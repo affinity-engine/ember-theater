@@ -39,7 +39,7 @@ export default Component.extend({
     }
   }),
 
-  _liftCurtains: on('didInsertElement', function() {
-    get(this, 'sceneManager').liftCurtains();
+  _loadLatestScene: on('didInsertElement', function() {
+    get(this, 'sceneManager').loadLatestScene();
   })
 });

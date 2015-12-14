@@ -47,6 +47,12 @@ export default Service.extend({
     return result || {};
   },
 
+  _ensureSceneRecord() {
+    if (isBlank(get(this, 'sceneRecord'))) {
+      this.resetRecord();
+    }
+  },
+
   _autoAdvance(index) {
     const autoResolveResult = get(this, `sceneRecord.${index}`);
 
@@ -59,12 +65,6 @@ export default Service.extend({
 
   _advance(index) {
     this._update(index, '_UNRESOLVED');
-  },
-
-  _ensureSceneRecord() {
-    if (isBlank(get(this, 'sceneRecord'))) {
-      this.resetRecord();
-    }
   },
 
   _update(key, value) {

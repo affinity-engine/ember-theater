@@ -25,7 +25,7 @@ export default Menu.extend({
     switch (get(choice, 'key')) {
       case 1:
         get(this, 'saveStateManager').resetAutosave();
-        get(this, 'sceneManager').resetScene();
+        get(this, 'sceneManager').resetGame();
         break;
     }
 

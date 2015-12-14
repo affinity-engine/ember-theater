@@ -17,16 +17,16 @@ export default Service.extend({
 
   sceneRecord: alias('recorder.sceneRecord'),
 
-  liftCurtains() {
-    get(this, 'curtainPulley').liftCurtains();
+  loadLatestScene() {
+    get(this, 'curtainPulley').loadLatestScene();
   },
 
-  loadScene(save, options) {
-    get(this, 'curtainPulley').loadScene(save, options);
+  loadScene(save, sceneId, options) {
+    get(this, 'curtainPulley').loadScene(save, sceneId, options);
   },
 
-  resetScene() {
-    get(this, 'curtainPulley').resetScene();
+  resetGame() {
+    get(this, 'curtainPulley').resetGame();
   },
 
   toScene(id, options = {}) {

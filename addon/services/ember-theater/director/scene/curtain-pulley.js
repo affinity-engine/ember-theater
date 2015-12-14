@@ -16,40 +16,37 @@ export default Service.extend({
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/director/scene-manager'),
 
-  resetScene: async function() {
-    const saveStateManager = get(this, 'saveStateManager');
+  resetGame: async function() {
+    await get(this, 'saveStateManager').resetAutosave();
 
-    await saveStateManager.resetAutosave();
-
-    this.liftCurtains();
+    this.loadLatestScene();
   },
 
-  liftCurtains: async function() {
+  loadLatestScene: async function() {
     const saveStateManager = get(this, 'saveStateManager');
     const options = { autosave: false, isLoading: true };
     const save = await saveStateManager.getMostRecentSave();
-    let id = get(save, 'activeState.sceneId');
 
-    if (isEmpty(id)) {
-      id = get(this, 'config.initial.sceneId');
+    let sceneId = get(save, 'activeState.sceneId');
+
+    if (isEmpty(sceneId)) {
+      sceneId = get(this, 'config.initial.sceneId');
       options.autosave = true;
     }
 
-    this.loadScene(save, options, id);
+    this.loadScene(save, sceneId, options);
   },
 
-  loadScene(save, options, id) {
+  loadScene(save, sceneId, options) {
     const {
       config,
       saveStateManager,
       sceneManager
     } = getProperties(this, 'config', 'saveStateManager', 'sceneManager');
 
-    id = isPresent(id) ? id : get(save, 'activeState.sceneId');
-
     saveStateManager.loadRecord(save);
     config.resetConfig();
 
-    sceneManager.toScene(id, options);
+    sceneManager.toScene(sceneId, options);
   }
 });
