@@ -1,14 +1,18 @@
 import Ember from 'ember';
+import animate from 'ember-theater/utils/ember-theater/animate';
 
 const {
   Service,
   get,
-  isPresent
+  isPresent,
+  set
 } = Ember;
 
 const { inject: { service } } = Ember;
+const { run: { later } } = Ember;
 
 export default Service.extend({
+  config: service('ember-theater/config'),
   layerManager: service('ember-theater/director/layer-manager'),
   saveStateManager: service('ember-theater/save-state-manager'),
   sceneManager: service('ember-theater/director/scene-manager'),
@@ -21,15 +25,23 @@ export default Service.extend({
     const scene = this._buildScene(id, options);
     const isLoading = get(options, 'isLoading');
 
-    get(this, 'stageManager').clearDirectables();
-    get(this, 'layerManager').clearFilters();
+    const $director = Ember.$('.et-director');
+    const duration = get(options, 'transitionOutDuration') || get(this, 'config.director.scene.transitionOutDuration');
+    const effect = get(options, 'transitionOut') || get(this, 'config.director.scene.transitionOut');
 
-    sceneManager.setIsLoading(isLoading);
-    sceneManager.resetSceneRecord(isLoading);
+    animate($director, effect, { duration }).then(() => {
+      get(this, 'stageManager').clearDirectables();
+      get(this, 'layerManager').clearFilters();
 
-    this._updateAutosave(scene, options);
+      sceneManager.setIsLoading(isLoading);
+      sceneManager.resetSceneRecord(isLoading);
 
-    return scene;
+      this._updateAutosave(scene, options);
+
+      set(sceneManager, 'scene', scene);
+
+      later(() => $director.removeAttr('style'));
+    });
   },
 
   _abortPreviousScene() {

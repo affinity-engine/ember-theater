@@ -51,6 +51,9 @@ export default {
     }
   },
   director: {
-    transitionDuration: 500
+    scene: {
+      transitionOut: { opacity: 0 },
+      transitionOutDuration: 500
+    }
   }
 };

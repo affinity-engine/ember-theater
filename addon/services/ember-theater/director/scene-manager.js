@@ -30,9 +30,7 @@ export default Service.extend({
   },
 
   toScene(id, options = {}) {
-    const scene = get(this, 'transitionManager').toScene(id, options);
-
-    set(this, 'scene', scene);
+    get(this, 'transitionManager').toScene(id, options);
   },
 
   setIsLoading(isLoading) {
