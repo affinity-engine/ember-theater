@@ -2,17 +2,21 @@ import Ember from 'ember';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
+  Service,
   computed,
   get,
+  getProperties,
   isPresent,
   merge,
-  Service,
-  set
+  set,
+  setProperties
 } = Ember;
 
 const { inject: { service } } = Ember;
 
 export default Service.extend({
+  version: '1.0.0',
+
   store: service(),
 
   activeState: computed(() => Ember.Object.create()),
@@ -28,7 +32,7 @@ export default Service.extend({
 
   autosave: computed({
     get() {
-      return this.get('store').queryRecord('ember-theater/local-save', {
+      return get(this, 'store').queryRecord('ember-theater/local-save', {
         isAutosave: true
       });
     }
@@ -46,32 +50,52 @@ export default Service.extend({
 
   saves: computed({
     get: async function() {
-      return await this.get('store').findAll('ember-theater/local-save');
+      return await get(this, 'store').findAll('ember-theater/local-save');
     }
   }).readOnly(),
 
   resetAutosave: async function() {
-    const autosave = await this.get('autosave');
+    const autosave = await get(this, 'autosave');
 
-    this.set('activeState', Ember.Object.create());
-    this.get('statePoints').clear();
+    set(this, 'activeState', Ember.Object.create());
+    get(this, 'statePoints').clear();
 
     this.updateRecord(autosave);
   },
 
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
-    const statePoints = nativeCopy(this.get('statePoints'));
-    const activeState = nativeCopy(this.get('activeState'));
+    const version = get(this, 'version');
+    const statePoints = this._getCurrentStatePoints();
 
-    merge(statePoints[statePoints.length - 1], activeState);
-
-    const record = this.get('store').createRecord('ember-theater/local-save', {
+    const record = get(this, 'store').createRecord('ember-theater/local-save', {
       name,
-      statePoints
+      statePoints,
+      version
     });
 
     return await record.save();
+  },
+
+  updateRecord: async function(record) {
+    const version = get(this, 'version');
+    const statePoints = this._getCurrentStatePoints();
+
+    setProperties(record, {
+      statePoints,
+      version
+    });
+
+    return await record.save();
+  },
+
+  _getCurrentStatePoints() {
+    const statePoints = nativeCopy(get(this, 'statePoints'));
+    const activeState = nativeCopy(get(this, 'activeState'));
+
+    merge(statePoints[statePoints.length - 1], activeState);
+
+    return statePoints;
   },
 
   deleteRecord: async function(record) {
@@ -84,40 +108,27 @@ export default Service.extend({
     const {
       activeState,
       statePoints
-    } = record.getProperties('activeState', 'statePoints');
+    } = getProperties(record, 'activeState', 'statePoints');
 
-    this.setProperties({
+    setProperties(this, {
       activeState: nativeCopy(activeState),
       statePoints: Ember.A(nativeCopy(statePoints))
     });
   },
 
-  updateRecord: async function(record) {
-    const statePoints = nativeCopy(this.get('statePoints'));
-    const activeState = nativeCopy(this.get('activeState'));
-
-    merge(statePoints[statePoints.length - 1], activeState);
-
-    record.setProperties({
-      statePoints
-    });
-
-    return await record.save();
-  },
-
   // STATE MANAGEMENT //
   appendActiveState(optionalValues) {
-    const activeState = nativeCopy(this.get('activeState'));
+    const activeState = nativeCopy(get(this, 'activeState'));
     const mergedState = merge(activeState, optionalValues);
 
-    this.get('statePoints').pushObject(mergedState);
-    this.set('activeState', activeState);
+    get(this, 'statePoints').pushObject(mergedState);
+    set(this, 'activeState', activeState);
   },
 
   loadStatePoint(statePoints) {
-    const activeState = statePoints.get('lastObject');
+    const activeState = get(statePoints, 'lastObject');
 
-    this.setProperties({ activeState, statePoints });
+    setProperties(this, { activeState, statePoints });
     this.clearSceneRecord();
   },
 
@@ -126,10 +137,10 @@ export default Service.extend({
   },
 
   getStateValue(key) {
-    return this.get(`activeState.${key}`);
+    return get(this, `activeState.${key}`);
   },
 
   setStateValue(key, value) {
-    return this.set(`activeState.${key}`, value);
+    return set(this, `activeState.${key}`, value);
   }
 });
