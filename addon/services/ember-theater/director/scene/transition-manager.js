@@ -71,7 +71,7 @@ export default Service.extend({
   },
 
   _updateAutosave: async function(scene, options) {
-    if (get(options, 'autosave') === false) { return; }
+    if (get(options, 'autosave') === false || get(this, 'config.director.scene.autosave') === false) { return; }
 
     const saveStateManager = get(this, 'saveStateManager');
     const autosave = await get(saveStateManager, 'autosave');
