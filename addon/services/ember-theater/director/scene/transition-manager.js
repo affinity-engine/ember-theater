@@ -4,8 +4,7 @@ import animate from 'ember-theater/utils/ember-theater/animate';
 const {
   Service,
   get,
-  isPresent,
-  set
+  isPresent
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -21,24 +20,12 @@ export default Service.extend({
   toScene(id, options) {
     this._abortPreviousScene();
 
-    const sceneManager = get(this, 'sceneManager');
-    const scene = this._buildScene(id, options);
-    const isLoading = get(options, 'isLoading');
-
     const $director = Ember.$('.et-director');
     const duration = get(options, 'transitionOutDuration') || get(this, 'config.director.scene.transitionOutDuration');
     const effect = get(options, 'transitionOut') || get(this, 'config.director.scene.transitionOut');
 
     animate($director, effect, { duration }).then(() => {
-      get(this, 'stageManager').clearDirectables();
-      get(this, 'layerManager').clearFilters();
-
-      sceneManager.setIsLoading(isLoading);
-      sceneManager.resetSceneRecord(isLoading);
-
-      this._updateAutosave(scene, options);
-
-      set(sceneManager, 'scene', scene);
+      this._transitionScene(id, options);
 
       later(() => $director.removeAttr('style'));
     });
@@ -50,13 +37,37 @@ export default Service.extend({
     if (isPresent(scene)) { scene.abort(); }
   },
 
+  _transitionScene(id, options) {
+    const scene = this._buildScene(id, options);
+
+    this._clearStage();
+    this._setSceneManager(scene, options);
+    this._updateAutosave(scene, options);
+
+    scene.script();
+  },
+
   _buildScene(id, options) {
-    const factory = this.get('container').lookupFactory(`scene:${id}`);
+    const factory = get(this, 'container').lookupFactory(`scene:${id}`);
 
     return factory.create({
       id,
       options
     });
+  },
+
+  _clearStage() {
+    get(this, 'stageManager').clearDirectables();
+    get(this, 'layerManager').clearFilters();
+  },
+
+  _setSceneManager(scene, options) {
+    const sceneManager = get(this, 'sceneManager');
+    const isLoading = get(options, 'isLoading');
+
+    sceneManager.setScene(scene);
+    sceneManager.setIsLoading(isLoading);
+    sceneManager.resetSceneRecord(isLoading);
   },
 
   _updateAutosave: async function(scene, options) {

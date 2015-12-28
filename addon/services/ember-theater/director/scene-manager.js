@@ -10,7 +10,6 @@ const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Service.extend({
-  config: service('ember-theater/config'),
   curtainPulley: service('ember-theater/director/scene/curtain-pulley'),
   recorder: service('ember-theater/director/scene/recorder'),
   transitionManager: service('ember-theater/director/scene/transition-manager'),
@@ -31,6 +30,10 @@ export default Service.extend({
 
   toScene(id, options = {}) {
     get(this, 'transitionManager').toScene(id, options);
+  },
+
+  setScene(scene) {
+    set(this, 'scene', scene);
   },
 
   setIsLoading(isLoading) {
