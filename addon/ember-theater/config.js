@@ -24,12 +24,18 @@ export default {
     }
   },
   menuBar: {
-    transitionIn: ['blur(0px)', 'blur(10px)'],
-    transitionInDuration: 500,
-    transitionOut: ['blur(10px)', 'blur(0px)'],
-    transitionOutDuration: 500,
-    innerEffect: ['blur(10px)', 'blur(7px)', 'blur(10px)'],
-    innerEffectDuration: 5000,
+    transitionIn: {
+      effect: ['blur(0px)', 'blur(10px)'],
+      duration: 500
+    },
+    transitionOut: {
+      effect: ['blur(10px)', 'blur(0px)'],
+      duration: 500
+    },
+    innerEffect: {
+      effect: ['blur(10px)', 'blur(7px)', 'blur(10px)'],
+      duration: 5000
+    },
     load: {
       keys: {
         open: ['ctrl+l']
@@ -53,8 +59,10 @@ export default {
   },
   director: {
     scene: {
-      transitionOut: { opacity: 0 },
-      transitionOutDuration: 500
+      transitionOut: {
+        effect: { opacity: 0 },
+        duration: 500
+      }
     }
   }
 };

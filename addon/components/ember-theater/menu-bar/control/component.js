@@ -44,14 +44,14 @@ export default Component.extend(EKOnInsertMixin, {
     this.toggleProperty('isOpen');
 
     const resolve = () => {
-      get(this, 'filter').perform(K, get(config, 'innerEffect'), {
-        duration: get(config, 'innerEffectDuration'),
+      get(this, 'filter').perform(K, get(config, 'innerEffect.effect'), {
+        duration: get(config, 'innerEffect.duration'),
         iterations: 'infinite'
       });
     };
 
-    get(this, 'filter').perform(resolve, get(config, 'transitionIn'), {
-      duration: get(config, 'transitionInDuration')
+    get(this, 'filter').perform(resolve, get(config, 'transitionIn.effect'), {
+      duration: get(config, 'transitionIn.duration')
     });
   }),
 
@@ -72,8 +72,8 @@ export default Component.extend(EKOnInsertMixin, {
       const config = get(this, 'config.menuBar');
 
       set(this, 'isOpen', false);
-      get(this, 'filter').perform(K, get(config, 'transitionOut'), {
-        duration: get(config, 'transitionOutDuration'),
+      get(this, 'filter').perform(K, get(config, 'transitionOut.effect'), {
+        duration: get(config, 'transitionOut.duration'),
         destroy: true
       });
     }

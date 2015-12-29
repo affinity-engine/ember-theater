@@ -21,8 +21,8 @@ export default Service.extend({
     this._abortPreviousScene();
 
     const $director = Ember.$('.et-director');
-    const duration = get(options, 'transitionOutDuration') || get(this, 'config.director.scene.transitionOutDuration');
-    const effect = get(options, 'transitionOut') || get(this, 'config.director.scene.transitionOut');
+    const duration = get(options, 'transitionOut.duration') || get(this, 'config.director.scene.transitionOut.duration');
+    const effect = get(options, 'transitionOut.effect') || get(this, 'config.director.scene.transitionOut.effect');
 
     animate($director, effect, { duration }).then(() => {
       this._transitionScene(id, options);
