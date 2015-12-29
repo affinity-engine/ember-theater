@@ -1,7 +1,11 @@
 export default {
+  priority: 0,
   title: 'Steven Universe',
-  keys: {
-    accept: [' ', 'Enter', 'a']
+  globals: {
+    decorativeClassNames: ['et-coastal'],
+    keys: {
+      accept: ['a']
+    }
   },
   initial: {
     sceneId: 1,
