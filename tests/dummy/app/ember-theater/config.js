@@ -7,13 +7,17 @@ export default {
       accept: ['a']
     }
   },
-  initial: {
-    sceneId: 1,
+  producer: {
     components: [
       'ember-theater/director',
       'ember-theater/menu-bar'
-    ],
-    emberTheaterMenuBar: [
+    ]
+  },
+  director: {
+    initialScene: '1'
+  },
+  menuBar: {
+    components: [
       'ember-theater/menu-bar/rewind',
       'ember-theater/menu-bar/load',
       'ember-theater/menu-bar/save',

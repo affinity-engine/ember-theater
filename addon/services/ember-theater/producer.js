@@ -22,15 +22,9 @@ export default Service.extend({
      components,
      config
     } = getProperties(this, 'components', 'config');
-    const initialComponents = get(config, 'initial.components');
+
+    const initialComponents = get(config, 'producer.components');
 
     components.pushObjects(initialComponents);
-
-    initialComponents.forEach((component) => {
-      const camelizedName = camelize(component.replace('/', '-'));
-      const subComponents = get(config, `initial.${camelizedName}`);
-
-      set(this, camelizedName, Ember.A(subComponents));
-    });
   })
 });

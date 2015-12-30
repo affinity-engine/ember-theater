@@ -30,7 +30,7 @@ export default Service.extend({
     let sceneId = get(save, 'activeState.sceneId');
 
     if (isEmpty(sceneId)) {
-      sceneId = get(this, 'config.initial.sceneId');
+      sceneId = get(this, 'config.director.initialScene');
       options.autosave = true;
     }
 

@@ -129,7 +129,6 @@ export default Service.extend({
     const activeState = get(statePoints, 'lastObject');
 
     setProperties(this, { activeState, statePoints });
-    this.clearSceneRecord();
   },
 
   deleteStateValue(key) {

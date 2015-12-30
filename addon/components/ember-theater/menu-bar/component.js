@@ -12,9 +12,8 @@ export default Component.extend({
   classNames: ['et-menu-bar-container'],
 
   config: service('ember-theater/config'),
-  producer: service('ember-theater/producer'),
 
-  components: reads('producer.emberTheaterMenuBar'),
+  components: reads('config.menuBar.components'),
   configurableClassNames: configurableClassNames('menuBar'),
 
   actions: {
