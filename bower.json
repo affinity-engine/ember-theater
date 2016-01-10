@@ -16,7 +16,9 @@
     "font-awesome": "~4.4.0",
     "PreloadJS": "~0.6.1",
     "SoundJS": "~0.6.1",
-    "progressbar.js": "~0.9.0"
+    "progressbar.js": "~0.9.0",
+    "codemirror": "~4.8.0",
+    "ember-cli-codemirror-shim": "~0.0.1"
   },
   "resolutions": {
     "ember": "2.1.0"

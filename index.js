@@ -21,7 +21,8 @@ module.exports = {
 
     return mergeTrees([
       treeify('perfect-scrollbar'),
-      treeify('velocity-animate')
+      treeify('velocity-animate'),
+      treeify('babel-standalone')
     ]);
   },
 
@@ -35,5 +36,6 @@ module.exports = {
     app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
     app.import('vendor/velocity-animate/velocity.js');
     app.import('vendor/velocity-animate/velocity.ui.js');
+    app.import('vendor/babel-standalone/babel.js');
   }
 };

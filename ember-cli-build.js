@@ -21,6 +21,9 @@ module.exports = function(defaults) {
 
     eslint: {
       testGenerator: eslintTestGenerator
+    },
+    codemirror: {
+      modes: ['javascript']
     }
   });
 

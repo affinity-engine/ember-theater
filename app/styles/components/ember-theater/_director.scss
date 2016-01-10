@@ -2,9 +2,10 @@
 @import "director/character";
 @import "director/choice";
 @import "director/text";
+@import "director/code-challange";
 
 .et-director {
   @extend .et-full-screen;
-  
+
   perspective: 30vh;
 }

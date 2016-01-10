@@ -9,8 +9,11 @@ const {
 } = Ember;
 
 const { computed: { alias } } = Ember;
+const { inject: { service } } = Ember;
 
 export default Mixin.create({
+  stageManager: service('ember-theater/director/stage-manager'),
+
   autoResolve: alias('directable.autoResolve'),
   autoResolveResult: alias('directable.autoResolveResult'),
 
@@ -26,9 +29,12 @@ export default Mixin.create({
 
   resolveAndDestroy(...args) {
     const directable = get(this, 'directable');
+    const stageManager = get(this, 'stageManager');
 
     this.resolve(...args);
-    directable.destroy();
+    // directable.destroy();
+
+    get(stageManager, 'directables').removeObject(directable);
   },
 
   destroyDirectable: on('willDestroyElement', function() {

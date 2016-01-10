@@ -30,8 +30,11 @@ export default Scene.extend({
     //   case 'B': await this.character('steven', 'callout.bounce', { duration: 1000 }); break;
     //   case 2: this.sound('song__bolero'); break;
     // }
-    await this.text('steven', 'How was that?!');
-    this.setData('test', 0);
-    this.transitionToScene(1, { transitionOut: 'transition.whirlOut', transitionOutDuration: 1000 });
+    // await this.text('steven', 'How was that?!');
+    // this.setData('test', 0);
+    // this.transitionToScene(1, { transitionOut: 'transition.whirlOut', transitionOutDuration: 1000 });
+
+    await this.codeChallenge([{ code: "let two = 1 + 1;", readOnly: true }, { }, { code: "return two;", readOnly: true }]);
+    // await this.text('steven', 'How was that?!');
   }
 });

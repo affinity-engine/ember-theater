@@ -1,0 +1,20 @@
+{{#each snippets as |snippet index|}}
+  <div class={{snippet.classNames}}>
+    {{ivy-codemirror
+      value=snippet.code
+      readOnly=snippet.readOnly
+      autofocus=snippet.autofocus
+      mode="javascript"
+      fixedGutter=true
+      lineWrapping=true
+      tabSize=2
+      valueUpdated=(action "valueUpdated" snippet index)
+    }}
+  </div>
+{{/each}}
+
+{{#if exception}}
+  <div class="et-code-challenge-exception">{{exception}}</div>
+{{/if}}
+
+<button {{action "complete"}} class="et-code-challenge-button">Complete</button>
