@@ -4,6 +4,7 @@ import configurable from 'ember-theater/macros/ember-theater/director/configurab
 
 import {
   keyUp,
+  EKMixin,
   EKOnInsertMixin
 } from 'ember-keyboard';
 
@@ -19,9 +20,9 @@ const {
 const { RSVP: { Promise } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Component.extend(EKOnInsertMixin, {
+export default Component.extend(EKMixin, EKOnInsertMixin, {
   layout,
-  keyboardPriority: 10000,
+  keyboardFirstResponder: true,
 
   config: service('ember-theater/config'),
   saveStateManager: service('ember-theater/save-state-manager'),

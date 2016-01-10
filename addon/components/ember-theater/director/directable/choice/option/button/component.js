@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import {
   keyDown,
+  EKMixin,
   EKOnFocusMixin
 } from 'ember-keyboard';
 
@@ -12,7 +13,7 @@ const {
   on
 } = Ember;
 
-export default Component.extend(EKOnFocusMixin, {
+export default Component.extend(EKMixin, EKOnFocusMixin, {
   layout,
 
   classNameBindings: ['choice.class'],

@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import layout from './template';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
-import { keyDown, EKOnInsertMixin } from 'ember-keyboard';
+import {
+  keyDown,
+  EKMixin,
+  EKOnInsertMixin
+} from 'ember-keyboard';
 import animate from 'ember-theater/utils/ember-theater/animate';
 
 const customTagClass = 'et-text-tag';
@@ -25,7 +29,7 @@ const { String: { htmlSafe } } = Ember;
 const { run: { later } } = Ember;
 const { or } = computed;
 
-export default Component.extend(EKOnInsertMixin, WindowResizeMixin, {
+export default Component.extend(EKMixin, EKOnInsertMixin, WindowResizeMixin, {
   activeWordIndex: 0,
   classNames: ['et-text-body-container'],
   layout: layout,

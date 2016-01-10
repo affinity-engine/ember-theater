@@ -9,6 +9,7 @@ import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable, { configurableClassNames } from 'ember-theater/macros/ember-theater/director/configurable';
 import {
   keyUp,
+  EKMixin,
   EKOnInsertMixin
 } from 'ember-keyboard';
 
@@ -21,7 +22,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, EKOnInsertMixin, PerfectScrollbarMixin, StyleableMixin, TransitionInMixin, {
+export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, EKMixin, EKOnInsertMixin, PerfectScrollbarMixin, StyleableMixin, TransitionInMixin, {
   layout,
 
   activeIndex: 0,

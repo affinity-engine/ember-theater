@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 import {
   keyDown,
+  EKMixin,
   EKOnInsertMixin
 } from 'ember-keyboard';
 
@@ -16,7 +17,9 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Component.extend(EKOnInsertMixin, {
+export default Component.extend(EKMixin, EKOnInsertMixin, {
+  keyboardFirstResponder: true,
+  keyboardLaxPriority: true,
   classNames: ['et-menu-bar-control-icon'],
   tagName: 'button',
 
