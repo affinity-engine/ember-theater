@@ -1,5 +1,4 @@
 export default {
-  priority: 0,
   title: 'Steven Universe',
   globals: {
     decorativeClassNames: ['et-coastal'],

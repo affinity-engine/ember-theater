@@ -1,5 +1,5 @@
 export default {
-  priority: 100,
+  priority: 0,
   globals: {
     decorativeClassNames: ['et-paper'],
     structuralClassNames: ['et-block'],

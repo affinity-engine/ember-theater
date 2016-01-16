@@ -1,5 +1,3 @@
-import Config from 'ember-theater/config';
+export default {
 
-export default Config.extend({
-
-});
+};

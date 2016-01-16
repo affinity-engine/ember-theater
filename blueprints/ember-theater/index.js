@@ -19,20 +19,16 @@ module.exports = {
     }, {
       name: 'progressbar.js',
       target: '~0.9.0'
-    }]; 
-    
+    }];
+
     return this.addBowerPackagesToProject(packages).then(function() {
-      return _this.addAddonToProject({ name: 'ember-intl', target: '2.0.0-beta.22' });
+      return _this.addAddonToProject({ name: 'ember-i18n', target: '4.1.3' });
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-inflector', target: '1.9.3' });
     }).then(function() {
-      return _this.addAddonToProject({ name: 'ember-keyboard', target: '0.0.7' });
+      return _this.addAddonToProject({ name: 'ember-keyboard', target: '0.2.4' });
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '1.4.0-beta.1' });
-    }).then(function() {
-      return _this.insertIntoFile('ember-cli-build.js',
-        '    babel: { includePolyfill: true, stage: 2 },',
-        { after: 'var app = new EmberApp(defaults, {' + EOL });
     });
   }
 };

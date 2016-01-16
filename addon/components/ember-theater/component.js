@@ -4,6 +4,7 @@ import layout from './template';
 const {
   Component,
   get,
+  getProperties,
   isBlank,
   on,
   set
@@ -19,11 +20,21 @@ export default Component.extend({
   classNames: ['ember-theater'],
   layout: layout,
 
-  config: service('ember-theater/config'),
+  configService: service('ember-theater/config'),
   producer: service('ember-theater/producer'),
 
   components: reads('producer.components'),
-  mediaLoader: reads('config.mediaLoader.type'),
+  mediaLoader: reads('configService.mediaLoader.type'),
+
+  initializeConfig: on('didReceiveAttrs', function() {
+    const {
+      config,
+      configService
+    } = getProperties(this, 'config', 'configService');
+
+    configService.setGameConfig(config);
+    configService.resetConfig();
+  }),
 
   setMediaIsLoaded: on('init', function() {
     const mediaLoader = get(this, 'mediaLoader');

@@ -6,6 +6,7 @@ const {
   computed,
   get,
   isEmpty,
+  isPresent,
   on,
   set,
   setProperties
@@ -16,15 +17,20 @@ const { inject: { service } } = Ember;
 export default Service.extend({
   saveStateManager: service('ember-theater/save-state-manager'),
 
-  resetConfig: on('init', function() {
-    const configs = get(this, '_configs').sort((a, b) => get(b, 'priority') - get(a, 'priority'));
+  setGameConfig(gameConfig = {}) {
+    set(this, 'gameConfig', gameConfig);
+  },
+
+  resetConfig() {
+    const gameConfig = get(this, 'gameConfig');
+    const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
     const saveStateManager = get(this, 'saveStateManager');
     const savedConfig = saveStateManager.getStateValue('_config') || {};
-    const mergedConfig = deepMerge({}, ...configs, savedConfig);
+    const mergedConfig = deepMerge({}, ...configs, gameConfig, savedConfig);
 
     setProperties(this, mergedConfig);
-  }),
-  
+  },
+
   _configs: computed({
     get() {
       const paths = Object.keys(requirejs.entries);
@@ -36,6 +42,8 @@ export default Service.extend({
         return isConfig.test(path) && !isTest.test(path) && !isThisService.test(path);
       }).map((path) => {
         return requirejs(path).default;
+      }).filter((config) => {
+        return isPresent(config.priority);
       });
     }
   }),
