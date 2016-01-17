@@ -90,11 +90,11 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
     }
   }).readOnly(),
 
-  textStyle: computed('directable.options.textStyle', 'character.textStyle', {
+  textAnimation: computed('directable.options.textAnimation', 'character.textAnimation', {
     get() {
-      return get(this, 'directable.options.textStyle') ||
-        get(this, 'character.textStyle') ||
-        get(this, 'config').getProperty('text', 'textStyle');
+      return get(this, 'directable.options.textAnimation') ||
+        get(this, 'character.textAnimation') ||
+        get(this, 'config').getProperty('text', 'textAnimation');
     }
   }),
 

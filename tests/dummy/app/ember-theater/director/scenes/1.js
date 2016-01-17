@@ -22,6 +22,7 @@ export default Scene.extend({
     // this.backdrop('beach--night', { duration: 5000 });
     // await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });
     // this.text('text 2 ((#effect { rotateZ: 2.5 } | { duration: 100, loop: true }))', { instance: 1 });
+    this.text('text 2 ((#animate { translateX: "-100vw" })) is animated in a funny, funny way. Would you not agree???', { instance: 1 });
 
     // const choiceOne = await this.choice('What should I do?', ['Whirl!', { key: 'B', text: 'Jump!' }, 'Play Bolero!', 'Something', 'Filler', 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', 'Here is another short statement.', 'Okay, that last one was still kind of long.', 'Really actually totally short.', 'Okay, really really short.', 'Truly short.', 'Short and sweet.', 'Shorter.', 'S']);
 

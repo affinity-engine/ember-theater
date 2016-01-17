@@ -4,7 +4,7 @@ export default {
     decorativeClassNames: ['et-paper'],
     structuralClassNames: ['et-block'],
     textSpeed: 25,
-    textStyle: {
+    textAnimation: {
       opacity: 0,
       translateX: '0.4vw',
       translateY: '-0.1vw'

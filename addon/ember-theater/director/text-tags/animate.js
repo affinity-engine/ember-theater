@@ -5,18 +5,18 @@ const { set } = Ember;
 
 export default TextTag.extend({
   /**
-    Changes to style to object provided.
+    Changes to animate to object provided.
 
     @method start
     @param {Object} context
     @param {Number} index
-    @param {String} styleString
+    @param {String} animateString
   */
 
-  start(context, index, styleString) {
-    const style = eval(`(${styleString})`);
+  start(context, index, animateString) {
+    const animate = eval(`(${animateString})`);
 
-    set(context, 'textStyle', style);
+    set(context, 'textAnimation', animate);
     context.writeWord(index + 1);
 
     this.destroy();

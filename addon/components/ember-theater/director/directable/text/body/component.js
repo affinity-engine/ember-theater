@@ -185,7 +185,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, WindowResizeMixin, {
     }
 
     const duration = 1000 / get(this, 'textSpeed');
-    const style = get(this, 'textStyle');
+    const style = get(this, 'textAnimation');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     $letter.css({ opacity: 1 });
