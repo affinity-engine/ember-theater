@@ -22,7 +22,7 @@ module.exports = {
     }];
 
     return this.addBowerPackagesToProject(packages).then(function() {
-      return _this.addAddonToProject({ name: 'ember-i18n', target: '4.1.3' });
+      return _this.addAddonToProject({ name: 'ember-i18n', target: '4.2.0' });
     }).then(function() {
       return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '1.4.0-beta.1' });
     });
