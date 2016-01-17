@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from './template';
-import { singularize } from 'ember-inflector';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
 
@@ -16,6 +15,7 @@ const {
 
 const { inject: { service } } = Ember;
 const { run: { later } } = Ember;
+const { Inflector: { inflector } } = Ember;
 
 const { alias } = computed;
 
@@ -60,7 +60,7 @@ export default Component.extend({
     const store = get(this, 'store');
 
     get(this, '_modelNames').forEach((modelName) => {
-      const singularModelName = singularize(modelName);
+      const singularModelName = inflector.singularize(modelName);
       const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
 
       store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
