@@ -24,10 +24,6 @@ module.exports = {
     return this.addBowerPackagesToProject(packages).then(function() {
       return _this.addAddonToProject({ name: 'ember-i18n', target: '4.1.3' });
     }).then(function() {
-      return _this.addAddonToProject({ name: 'ember-inflector', target: '1.9.3' });
-    }).then(function() {
-      return _this.addAddonToProject({ name: 'ember-keyboard', target: '0.2.4' });
-    }).then(function() {
       return _this.addAddonToProject({ name: 'ember-cli-font-awesome', target: '1.4.0-beta.1' });
     });
   }
