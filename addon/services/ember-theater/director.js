@@ -2,8 +2,7 @@ import Ember from 'ember';
 
 const {
   Service,
-  get,
-  merge
+  get
 } = Ember;
 
 const {
@@ -33,8 +32,8 @@ export default Service.extend({
 
     const direction = factory.create(autoResolveProperties);
 
-    return new Promise((resolve) => {
-      direction.perform(resolve, ...args);
+    return new Promise((resolution) => {
+      direction.perform(resolution, ...args);
     });
   }
 });

@@ -22,7 +22,18 @@ const {
   set
 } = Ember;
 
-export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, EKMixin, EKOnInsertMixin, PerfectScrollbarMixin, StyleableMixin, TransitionInMixin, {
+const mixins = [
+  AdjustableKeyboardMixin,
+  DirectableComponentMixin,
+  EKMixin,
+  EKOnInsertMixin,
+  PerfectScrollbarMixin,
+  StyleableMixin,
+  TransitionInMixin
+];
+
+export default Component.extend(...mixins, {
+
   layout,
 
   activeIndex: 0,

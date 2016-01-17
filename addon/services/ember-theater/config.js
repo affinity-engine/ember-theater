@@ -7,7 +7,6 @@ const {
   get,
   isEmpty,
   isPresent,
-  on,
   set,
   setProperties
 } = Ember;

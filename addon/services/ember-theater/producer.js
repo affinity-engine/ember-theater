@@ -5,12 +5,10 @@ const {
   computed,
   get,
   getProperties,
-  on,
-  set
+  on
 } = Ember;
 
 const { inject: { service } } = Ember;
-const { String: { camelize } } = Ember;
 
 export default Service.extend({
   components: computed(() => Ember.A()),

@@ -4,9 +4,7 @@ const {
   Service,
   get,
   getProperties,
-  isEmpty,
-  isPresent,
-  set
+  isEmpty
 } = Ember;
 
 const { inject: { service } } = Ember;

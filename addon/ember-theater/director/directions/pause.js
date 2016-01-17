@@ -25,14 +25,12 @@ export default Direction.extend({
     });
 
     const duration = get(this, 'duration');
-    const layer = get(options, 'layer') || get(this, 'layer');
     const autoResolve = get(this, 'autoResolve');
 
     const properties = {
       autoResolve,
       duration,
-      keys,
-      layer
+      keys
     };
 
     get(this, 'stageManager').handleDirectable(null, 'pause', properties, resolve);

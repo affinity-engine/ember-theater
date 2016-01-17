@@ -27,7 +27,7 @@ export default {
     type: 'ember-theater/curtain',
     mediaAttributes: [
       'ember-theater/backdrop:src',
-      'ember-theater/character-expression:src',
+      'ember-theater/character-expression:src'
       // 'ember-theater/sound:src'
     ]
   }

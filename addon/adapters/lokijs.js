@@ -40,6 +40,7 @@ export default Adapter.extend({
 
   deleteRecord(store, type, snapshot) {
     const serializedData = store.serializerFor(type.modelName).serialize(snapshot);
+
     this._findOrAddCollection(type).remove(serializedData);
     this._saveDatabase();
 

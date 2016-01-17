@@ -14,7 +14,7 @@ export default Scene.extend({
     // this.filter('theater.prompt', ['blur(10px)', 'blur(0px)'], { duration: 1000, destroy: true });
     // await this.text('steven', '1.noId');
     // await this.text({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
-    this.backdrop('beach');
+    await this.backdrop('beach');
     // this.sound('song__bolero', 'fadeIn', { duration: 1000 });
     // this.text('text 1', { instance: 1, keys: { accept: [] }, decorativeClassNames: ['et-transparent'], style: { position: 'absolute', top: 0, left: 0 } });
     // await this.text('steven', 'I was <strong>so happy</strong> when ((#instant)) Garnet said she was gonna come on this trip with me and Dad! ((/instant)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?');
@@ -22,7 +22,7 @@ export default Scene.extend({
     // this.backdrop('beach--night', { duration: 5000 });
     // await this.character('steven', { translateX: '50vw', opacity: 1 }, { duration: 500 });
     // this.text('text 2 ((#effect { rotateZ: 2.5 } | { duration: 100, loop: true }))', { instance: 1 });
-    this.text('text 2 ((#animate { translateX: "-100vw" })) is animated in a funny, funny way. Would you not agree???', { instance: 1 });
+    // this.text('text 2 ((#animate { translateX: "-100vw" })) is animated in a funny, funny way. Would you not agree???', { instance: 1 });
 
     // const choiceOne = await this.choice('What should I do?', ['Whirl!', { key: 'B', text: 'Jump!' }, 'Play Bolero!', 'Something', 'Filler', 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', 'Here is another short statement.', 'Okay, that last one was still kind of long.', 'Really actually totally short.', 'Okay, really really short.', 'Truly short.', 'Short and sweet.', 'Shorter.', 'S']);
 
@@ -35,7 +35,7 @@ export default Scene.extend({
     // this.setData('test', 0);
     // this.transitionToScene(1, { transitionOut: 'transition.whirlOut', transitionOutDuration: 1000 });
 
-    await this.codeChallenge([{ code: "let two = 1 + 1;", readOnly: true }, { }, { code: "return two;", readOnly: true }]);
+    // await this.codeChallenge([{ code: "let two = 1 + 1;", readOnly: true }, { }, { code: "return two;", readOnly: true }]);
     // await this.text('steven', 'How was that?!');
   }
 });

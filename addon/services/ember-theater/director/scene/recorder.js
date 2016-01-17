@@ -3,7 +3,6 @@ import Ember from 'ember';
 const {
   Service,
   get,
-  inject,
   isBlank,
   isPresent,
   set

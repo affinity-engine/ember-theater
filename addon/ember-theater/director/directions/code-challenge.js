@@ -2,8 +2,7 @@ import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 
 const {
-  get,
-  typeOf
+  get
 } = Ember;
 
 const { inject: { service } } = Ember;
