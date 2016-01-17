@@ -7,7 +7,5 @@ const {
 
 export default Model.extend({
   caption: attr('string'),
-  intl: attr('boolean'),
-  position: attr('string'),
   src: attr('string')
 });
