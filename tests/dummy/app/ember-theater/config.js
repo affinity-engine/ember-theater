@@ -1,7 +1,6 @@
 export default {
   title: 'Steven Universe',
   globals: {
-    decorativeClassNames: ['et-coastal'],
     keys: {
       accept: ['a']
     }

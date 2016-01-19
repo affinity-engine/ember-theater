@@ -2,7 +2,7 @@
 
 # ember-theater
 
-A modular game engine build with Ember.js.
+A modular game engine built with Ember.js.
 
 ## Alpha Warning
 

@@ -3,6 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import { Directable } from 'ember-theater/ember-theater/director';
 
 const {
@@ -19,6 +20,8 @@ const { alias } = computed;
 const { run: { later } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
 
+const configurablePriority = ['directable.options', 'character.character', 'character', 'config.director.character', 'config.globals'];
+
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   attributeBindings: ['style'],
   classNames: ['et-character'],
@@ -27,15 +30,16 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   expressionContainers: computed(() => Ember.A([])),
 
   character: alias('directable.character'),
+  height: configurable(configurablePriority, 'height'),
 
   changeExpression(resolve, expression, { transitionIn = {}, transitionOut = {} }) {
     this._transitionOutExpressions(transitionOut);
     this._transitionInExpression(resolve, expression, transitionIn);
   },
 
-  style: computed('character.height', {
+  style: computed('height', {
     get() {
-      const height = get(this, 'character.height');
+      const height = get(this, 'height');
 
       return new SafeString(`height: ${height}vh;`);
     }

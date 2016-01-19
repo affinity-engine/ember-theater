@@ -6,7 +6,7 @@ import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
 import animate from 'ember-theater/utils/ember-theater/animate';
-import configurable, { configurableClassNames } from 'ember-theater/macros/ember-theater/director/configurable';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import {
   keyUp,
   EKMixin,
@@ -32,25 +32,28 @@ const mixins = [
   TransitionInMixin
 ];
 
+const configurablePriority = ['directable.options', 'config.director.choice', 'config.globals'];
+
 export default Component.extend(...mixins, {
 
   layout,
 
   activeIndex: 0,
-  classNameBindings: ['configurableClassNames'],
   classNames: ['et-choice'],
+  classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
 
   config: inject.service('ember-theater/config'),
   translator: inject.service('ember-theater/translator'),
 
-  moveUpKeys: configurable('choice', 'keys.moveUp'),
-  moveDownKeys: configurable('choice', 'keys.moveDown'),
-  cancelKeys: configurable('choice', 'keys.cancel'),
-  transitionIn: configurable('choice', 'transitionIn.effect'),
-  transitionInDuration: configurable('choice', 'transitionIn.duration', 'transitionDuration'),
-  transitionOut: configurable('choice', 'transitionOut.effect'),
-  transitionOutDuration: configurable('choice', 'transitionOut.duration', 'transitionDuration'),
-  configurableClassNames: configurableClassNames('choice'),
+  moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),
+  moveDownKeys: configurable(configurablePriority, 'keys.moveDown'),
+  cancelKeys: configurable(configurablePriority, 'keys.cancel'),
+  transitionIn: configurable(configurablePriority, 'transitionIn.effect'),
+  transitionInDuration: configurable(configurablePriority, 'transitionIn.duration', 'transitionDuration'),
+  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
+  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
+  decorativeClassNames: configurable(configurablePriority, 'decorativeClassNames'),
+  structuralClassNames: configurable(configurablePriority, 'structuralClassNames'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {

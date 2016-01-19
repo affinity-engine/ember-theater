@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
-import configurable, { configurableClassNames } from 'ember-theater/macros/ember-theater/director/configurable';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director/adjustable-keyboard';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
@@ -23,25 +23,31 @@ const {
 
 const { run: { later } } = Ember;
 
+const configurablePriority = ['directable.options', 'character.text', 'character', 'config.director.text', 'config.globals'];
+
 export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
   layout,
 
   classNames: ['et-text'],
-  classNameBindings: ['configurableClassNames', 'scrollable:et-scrollable'],
+  classNameBindings: ['decorativeClassNames', 'structuralClassNames', 'scrollable:et-scrollable'],
 
   translator: inject.service('ember-theater/translator'),
   config: inject.service('ember-theater/config'),
 
   character: alias('directable.character'),
-  keys: configurable('text', 'keys.accept'),
-  instant: configurable('text', 'instant'),
-  scrollable: configurable('text', 'scrollable'),
   instantWriteText: or('instant', 'scrollable'),
-  transitionIn: configurable('text', 'transitionIn.effect'),
-  transitionInDuration: configurable('text', 'transitionIn.duration', 'transitionDuration'),
-  transitionOut: configurable('text', 'transitionOut.effect'),
-  transitionOutDuration: configurable('text', 'transitionOut.duration', 'transitionDuration'),
-  configurableClassNames: configurableClassNames('text'),
+
+  keys: configurable(configurablePriority, 'keys.accept'),
+  instant: configurable(configurablePriority, 'instant'),
+  scrollable: configurable(configurablePriority, 'scrollable'),
+  transitionIn: configurable(configurablePriority, 'transitionIn.effect'),
+  transitionInDuration: configurable(configurablePriority, 'transitionIn.duration', 'transitionDuration'),
+  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
+  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
+  decorativeClassNames: configurable(configurablePriority, 'decorativeClassNames'),
+  structuralClassNames: configurable(configurablePriority, 'structuralClassNames'),
+  textAnimation: configurable(configurablePriority, 'textAnimation'),
+  textSpeed: configurable(configurablePriority, 'textSpeed'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
@@ -89,22 +95,6 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
       return get(this, 'translator').translate(text);
     }
   }).readOnly(),
-
-  textAnimation: computed('directable.options.textAnimation', 'character.textAnimation', {
-    get() {
-      return get(this, 'directable.options.textAnimation') ||
-        get(this, 'character.textAnimation') ||
-        get(this, 'config').getProperty('text', 'textAnimation');
-    }
-  }),
-
-  textSpeed: computed('directable.options.textSpeed', 'character.textSpeed', {
-    get() {
-      return get(this, 'directable.options.textSpeed') ||
-        get(this, 'character.textSpeed') ||
-        get(this, 'config').getProperty('text', 'textSpeed');
-    }
-  }),
 
   actions: {
     completeText() {
