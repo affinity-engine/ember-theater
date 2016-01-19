@@ -15,7 +15,7 @@ const {
 
 const { inject: { service } } = Ember;
 const { run: { later } } = Ember;
-const { Inflector: { inflector } } = Ember;
+const { String: { camelize } } = Ember;
 
 const { alias } = computed;
 
@@ -26,7 +26,7 @@ export default Component.extend({
 
   config: service('ember-theater/config'),
   preloader: service('preloader'),
-  store: service('store'),
+  fixtureStore: service('ember-theater/fixture-store'),
   translator: service('ember-theater/translator'),
 
   title: alias('config.title'),
@@ -56,20 +56,19 @@ export default Component.extend({
     set(this, 'progressBarOptions', options);
   }),
 
-  _loadModels: on('didInsertElement', function() {
-    const store = get(this, 'store');
+  _loadfixtures: on('didInsertElement', function() {
+    const fixtureStore = get(this, 'fixtureStore');
 
-    get(this, '_modelNames').forEach((modelName) => {
-      const singularModelName = inflector.singularize(modelName);
-      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${modelName}`).default;
+    get(this, '_fixtureNames').forEach((fixtureName) => {
+      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${fixtureName}`).default;
 
-      store.push(store.normalize(`ember-theater/${singularModelName}`, fixtures));
+      set(fixtureStore, this._standardizeFixtureName(fixtureName), Ember.A(fixtures));
     });
 
     this._loadMedia();
   }),
 
-  _modelNames: computed({
+  _fixtureNames: computed({
     get() {
       const paths = Object.keys(requirejs.entries);
       const regex = new RegExp(`${modulePrefix}\/ember-theater/fixtures\/(.*)`);
@@ -83,22 +82,22 @@ export default Component.extend({
   }),
 
   _loadMedia() {
-    const store = get(this, 'store');
+    const fixtureStore = get(this, 'fixtureStore');
     const preloader = get(this, 'preloader');
-    const paths = get(this, 'config.mediaLoader.mediaAttributes');
-    const modelAttributePairs = paths.map((path) => {
-      const [model, attribute] = path.split(':');
+    const paths = get(this, 'config.mediaLoader.filesToPreload');
+    const fixtureAttributePairs = paths.map((path) => {
+      const [fixture, attribute] = path.split(':');
 
-      return { model, attribute };
+      return { fixture, attribute };
     });
 
-    modelAttributePairs.forEach((pair) => {
-      const models = store.peekAll(pair.model);
+    fixtureAttributePairs.forEach((pair) => {
+      const fixtures = get(fixtureStore, this._standardizeFixtureName(pair.fixture));
       const attribute = pair.attribute;
 
-      models.forEach((model) => {
-        const src = get(model, attribute);
-        const id = preloader.idFor(model, attribute);
+      fixtures.forEach((fixture) => {
+        const src = get(fixture, attribute);
+        const id = preloader.idFor(fixture, attribute);
 
         preloader.loadFile({ src, id });
       });
@@ -115,5 +114,9 @@ export default Component.extend({
         });
       }, 750);
     });
+  },
+
+  _standardizeFixtureName(name) {
+    return camelize(name);
   }
 });

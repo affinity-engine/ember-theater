@@ -11,12 +11,13 @@ const { inject: { service } } = Ember;
 export default Direction.extend({
   layer: 'theater.stage.background.backdrop',
 
+  fixtureStore: service('ember-theater/fixture-store'),
   stageManager: service('ember-theater/director/stage-manager'),
 
   perform(resolve, id, effectOrOptions, optionsOnly) {
     const effectIsPresent = isPresent(optionsOnly);
 
-    const backdrop = this.store.peekRecord('ember-theater/backdrop', id);
+    const backdrop = get(this, 'fixtureStore').find('backdrops', id);
     const effect = effectIsPresent ? effectOrOptions : 'transition.fadeIn';
     const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
     const layer = get(options, 'layer') || get(this, 'layer');

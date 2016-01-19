@@ -5,7 +5,9 @@ const { get } = Ember;
 const { inject: { service } } = Ember;
 
 export default Direction.extend({
+  fixtureStore: service('ember-theater/fixture-store'),
   stageManager: service('ember-theater/director/stage-manager'),
+
   /**
     Provide a description of what your direction does.
 
@@ -19,7 +21,7 @@ export default Direction.extend({
     const instanceId = get(options, 'instance') || 0;
     const directable = stageManager.findDirectableWithId(characterId, 'character', instanceId);
     const character = get(directable, 'component');
-    const expression = this.store.peekRecord('ember-theater/character-expression', expressionId);
+    const expression = get(this, 'fixtureStore').find('characterExpressions', expressionId);
 
     character.changeExpression(resolve, expression, options);
   }

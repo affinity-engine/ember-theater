@@ -7,7 +7,6 @@ const {
 } = Ember;
 
 const configurableGet = function configurableGet(context, properties) {
-  const config = get(context, 'config');
   const priorityProperty = properties.find((property) => get(context, property));
 
   return isPresent(priorityProperty) ? get(context, priorityProperty) : undefined;

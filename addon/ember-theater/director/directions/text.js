@@ -12,6 +12,7 @@ const { inject: { service } } = Ember;
 export default Direction.extend({
   layer: 'theater.prompt.text',
 
+  fixtureStore: service('ember-theater/fixture-store'),
   stageManager: service('ember-theater/director/stage-manager'),
 
   perform(resolve, characterOrText, textOrOptions = {}, optionsOnly = {}) {
@@ -21,7 +22,7 @@ export default Direction.extend({
 
     const text = characterIsPresent ? textOrOptions : characterOrText;
     const character = characterIsPresent ?
-      this.store.peekRecord('ember-theater/character', characterOrText) :
+      get(this, 'fixtureStore').find('characters', characterOrText) :
       null;
 
     const options = characterIsPresent ? optionsOnly : textOrOptions;

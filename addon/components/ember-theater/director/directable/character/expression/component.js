@@ -10,8 +10,6 @@ const {
   inject
 } = Ember;
 
-const { alias } = computed;
-
 const configurablePriority = ['directable.options', 'expression.expression', 'expression', 'config.director.expression', 'config.globals'];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {

@@ -12,7 +12,6 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
     return get(this, 'director').direct(this, factory, args);
   };
 
-  application.inject('direction', 'store', 'service:store');
   application.register(`direction:${name}-proxy`, proxy, { instantiate: false });
   application.inject('scene', camelize(name), `direction:${name}-proxy`);
 };
