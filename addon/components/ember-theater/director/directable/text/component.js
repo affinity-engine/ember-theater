@@ -48,6 +48,7 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   structuralClassNames: configurable(configurablePriority, 'structuralClassNames'),
   textAnimation: configurable(configurablePriority, 'textAnimation'),
   textSpeed: configurable(configurablePriority, 'textSpeed'),
+  displayName: configurable(configurablePriority, 'name'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
@@ -73,18 +74,9 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
     }
   }),
 
-  displayName: computed('directable.options.displayName', {
+  name: computed('displayName', {
     get() {
-      const displayName = get(this, 'directable.options.displayName');
-
-      return get(this, 'translator').translate(displayName);
-    }
-  }).readOnly(),
-
-  name: computed('character.name', 'displayName', {
-    get() {
-      return get(this, 'displayName') ||
-        get(this, 'translator').translate(get(this, 'character.name'));
+      return get(this, 'translator').translate(get(this, 'displayName'));
     }
   }).readOnly(),
 
