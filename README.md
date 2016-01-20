@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/ember-theater.svg)](https://badge.fury.io/js/ember-theater)
 [![Build Status](https://travis-ci.org/ember-theater/ember-theater.svg?branch=master)](https://travis-ci.org/ember-theater/ember-theater)
 
 # ember-theater
@@ -10,4 +11,4 @@ Just a fair warning. This project is still in early alpha and you should expect 
 
 ## Documentation
 
-You'll find it [here](http://ember-theater.github.io/ember-theater/#/guides).
+You'll find it [here](http://ember-theater.github.io/ember-theater/#/learn).

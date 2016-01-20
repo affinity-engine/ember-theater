@@ -1,6 +1,6 @@
 {
   "name": "ember-theater",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A modular game engine build with Ember.js",
   "directories": {
     "doc": "doc",
@@ -64,6 +64,6 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "demoURL": "http://ember-theater.github.io/ember-theater/#/guides"
+    "demoURL": "http://ember-theater.github.io/ember-theater/#/learn"
   }
 }
