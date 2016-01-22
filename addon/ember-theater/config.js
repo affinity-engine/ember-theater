@@ -1,8 +1,10 @@
 export default {
   priority: 0,
   globals: {
-    decorativeClassNames: ['et-paper'],
-    structuralClassNames: ['et-block'],
+    classNames: {
+      decorative: ['et-paper'],
+      structural: ['et-block']
+    },
     textSpeed: 25,
     textAnimation: {
       opacity: 0,

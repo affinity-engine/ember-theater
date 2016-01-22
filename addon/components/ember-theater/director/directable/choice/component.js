@@ -52,8 +52,8 @@ export default Component.extend(...mixins, {
   transitionInDuration: configurable(configurablePriority, 'transitionIn.duration', 'transitionDuration'),
   transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
   transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
-  decorativeClassNames: configurable(configurablePriority, 'decorativeClassNames'),
-  structuralClassNames: configurable(configurablePriority, 'structuralClassNames'),
+  decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
+  structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {

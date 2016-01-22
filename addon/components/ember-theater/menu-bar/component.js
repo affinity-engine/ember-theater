@@ -17,7 +17,7 @@ export default Component.extend({
   config: service('ember-theater/config'),
 
   components: reads('config.menuBar.components'),
-  decorativeClassNames: configurable(configurablePriority, 'decorativeClassNames'),
+  decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
 
   actions: {
     toggleControlProperty(property) {
