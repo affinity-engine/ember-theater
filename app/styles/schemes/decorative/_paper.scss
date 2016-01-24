@@ -1,0 +1,76 @@
+@mixin et-paper-base {
+  border-style: $et-paper-border-style;
+  border-color: $et-paper-border-color;
+  background: $et-paper-background;
+  color: $et-paper-color;
+}
+
+.et-paper {
+  @include et-paper-base;
+
+  .et-button {
+    border-style: $et-button-paper-border-style;
+    border-color: $et-button-paper-border-color;
+    background: $et-button-paper-background-color;
+    color: $et-button-paper-color;
+
+    &:hover, &:focus {
+      background-color: $et-button-paper-hover-background-color;
+      color: $et-button-paper-hover-color;
+      border-color: $et-button-paper-hover-border-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-paper-border-color;
+    border-style: $et-input-ember-border-style;
+    background: $et-input-paper-background-color;
+    color: $et-input-paper-color;
+
+    &:focus {
+      border-color: $et-input-paper-focus-border-color;
+    }
+  }
+}
+
+$et-choice-included: false !default;
+$et-menu-bar-included: false !default;
+$et-text-included: false !default;
+
+@if ($et-choice-included == true) {
+  .et-choice.et-paper {
+    @extend .et-paper;
+
+    background-color: $et-choice-paper-background-color;
+    opacity: $et-choice-paper-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-paper-font-family;
+      color: $et-choice-header-paper-color;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-paper-font-weight;
+      font-family: $et-choice-option-paper-font-family;
+    }
+  }
+}
+
+@if ($et-menu-bar-included == true) {
+  .et-menu-bar.et-paper {
+    @extend .et-paper;
+  }
+}
+
+@if ($et-text-included == true) {
+  .et-text.et-paper {
+    opacity: $et-text-paper-opacity;
+    font-family: $et-text-paper-font-family;
+
+    .et-text-caption {
+      @extend .et-paper;
+
+      font-family: $et-text-caption-paper-font-family;
+    }
+  }
+}

@@ -1,0 +1,73 @@
+@mixin et-ember-base {
+  border-style: $et-ember-border-style;
+  border-color: $et-ember-border-color;
+  background: $et-ember-background;
+  color: $et-ember-color;
+}
+
+.et-ember {
+  @include et-ember-base;
+
+  .et-button {
+    @include et-ember-base;
+
+    border-style: $et-button-ember-border-style;
+
+    &:hover, &:focus {
+      background-color: $et-button-ember-hover-background-color;
+      color: $et-button-ember-hover-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-ember-border-color;
+    border-style: $et-input-ember-border-style;
+    background: $et-input-ember-background-color;
+    color: $et-input-ember-color;
+
+    &:focus {
+      border-color: $et-input-ember-focus-border-color;
+    }
+  }
+}
+
+$et-choice-included: false !default;
+$et-menu-bar-included: false !default;
+$et-text-included: false !default;
+
+@if ($et-choice-included == true) {
+  .et-choice.et-ember {
+    @extend .et-ember;
+
+    background-color: $et-choice-ember-background-color;
+    opacity: $et-choice-ember-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-ember-font-family;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-ember-font-weight;
+      font-family: $et-choice-option-ember-font-family;
+    }
+  }
+}
+
+@if ($et-menu-bar-included == true) {
+  .et-menu-bar.et-ember {
+    @extend .et-ember;
+  }
+}
+
+@if ($et-text-included == true) {
+  .et-text.et-ember {
+    opacity: $et-text-ember-opacity;
+    font-family: $et-text-ember-font-family;
+
+    .et-text-caption {
+      @extend .et-ember;
+
+      font-family: $et-text-caption-ember-font-family;
+    }
+  }
+}

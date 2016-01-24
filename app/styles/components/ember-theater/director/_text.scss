@@ -1,3 +1,5 @@
+$et-text-included: true;
+
 .et-text-word {
   display: inline-block;
   opacity: 0;
@@ -35,113 +37,6 @@
   &.et-scrollable {
     .et-text-body {
       padding-bottom: 0;
-    }
-  }
-
-  &.et-block {
-    left: $et-text-block-left;
-    right: $et-text-block-right;
-    bottom: $et-text-block-bottom;
-    height: $et-text-block-height;
-    line-height: $et-text-block-line-height;
-    font-size: $et-text-block-font-size;
-    padding: $et-text-block-padding;
-    margin: $et-text-block-margin;
-    border-width: $et-text-block-border-width;
-
-    .et-text-caption {
-      position: absolute;
-      top: $et-text-caption-block-top;
-      left: $et-text-caption-block-left;
-      padding: $et-text-caption-block-padding;
-      font-size: $et-text-caption-block-font-size;
-      border-width: $et-text-block-border-width;
-    }
-  }
-
-  &.et-full {
-    font-size: $et-text-full-font-size;
-    padding: $et-text-full-padding;
-    border-width: $et-text-full-border-width;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: 0;
-
-    .et-text-caption {
-      font-size: $et-text-caption-full-font-size;
-      border-width: $et-text-full-border-width;
-
-      display: block;
-      border: 0;
-    }
-  }
-
-  &.et-wide {
-    bottom: $et-text-wide-bottom;
-    height: $et-text-wide-height;
-    line-height: $et-text-wide-line-height;
-    font-size: $et-text-wide-font-size;
-    padding: $et-text-wide-padding;
-    margin: $et-text-wide-margin;
-    border-width: $et-text-wide-border-width;
-
-    left: 0;
-    right: 0;
-
-    .et-text-caption {
-      top: $et-text-caption-wide-top;
-      left: $et-text-caption-wide-left;
-      padding: $et-text-caption-wide-padding;
-      font-size: $et-text-caption-wide-font-size;
-
-      position: absolute;
-    }
-  }
-
-  &.et-coastal {
-    opacity: $et-text-coastal-opacity;
-    font-family: $et-text-coastal-font-family;
-
-    .et-text-caption {
-      @extend .et-coastal;
-
-      font-family: $et-text-caption-coastal-font-family;
-    }
-  }
-
-  &.et-ember {
-    opacity: $et-text-ember-opacity;
-    font-family: $et-text-ember-font-family;
-
-    .et-text-caption {
-      @extend .et-ember;
-
-      font-family: $et-text-caption-ember-font-family;
-    }
-  }
-
-  &.et-paper {
-    opacity: $et-text-paper-opacity;
-    font-family: $et-text-paper-font-family;
-
-    .et-text-caption {
-      @extend .et-paper;
-
-      font-family: $et-text-caption-paper-font-family;
-    }
-  }
-
-  &.et-transparent {
-    opacity: $et-text-transparent-opacity;
-    font-family: $et-text-transparent-font-family;
-
-    .et-text-caption {
-      @extend .et-transparent;
-
-      font-family: $et-text-caption-transparent-font-family;
     }
   }
 }

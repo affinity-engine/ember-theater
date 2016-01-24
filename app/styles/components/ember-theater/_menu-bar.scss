@@ -1,3 +1,5 @@
+$et-menu-bar-included: true;
+
 .et-menu-bar-container, .et-menu-bar {
   top: $et-menu-bar-top;
   left: $et-menu-bar-left;
@@ -36,21 +38,5 @@
     @extend .et-button;
 
     margin-left: $et-menu-bar-icon-margin-left;
-  }
-
-  &.et-coastal {
-    @extend .et-coastal;
-  }
-
-  &.et-ember {
-    @extend .et-ember;
-  }
-
-  &.et-paper {
-    @extend .et-paper;
-  }
-
-  &.et-transparent {
-    @extend .et-transparent;
   }
 }

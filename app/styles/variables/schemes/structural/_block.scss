@@ -1,0 +1,38 @@
+$et-block-left: 15vw;
+$et-block-right: 15vw;
+$et-block-bottom: 10vh;
+
+// choice
+$et-choice-block-width: 62vw !default;
+$et-choice-block-top: 20% !default;
+$et-choice-block-right: (100 - $et-choice-block-width) / 2 !default;
+$et-choice-block-left: (100 - $et-choice-block-width) / 2 !default;
+$et-choice-block-padding: $et-choice-padding !default;
+$et-choice-block-border-width: $et-choice-border-width !default;
+
+$et-choice-header-block-font-size: $et-choice-header-font-size !default;
+$et-choice-header-block-margin-bottom: $et-choice-header-margin-bottom !default;
+
+$et-choice-option-block-font-size: $et-choice-option-font-size !default;
+$et-choice-option-block-margin-bottom: $et-choice-option-margin-bottom !default;
+$et-choice-option-block-width: $et-choice-option-width !default;
+$et-choice-option-block-border-width: $et-choice-border-width !default;
+
+// text
+$et-text-block-padding-base: $et-text-padding-base !default;
+$et-text-block-padding: $et-text-block-padding-base $et-text-block-padding-base * 2 !default;
+$et-text-block-margin: 0 !default;
+$et-text-block-border-width: $et-text-border-width !default;
+$et-text-block-font-size: $et-text-font-size !default;
+$et-text-block-left: $et-block-left !default;
+$et-text-block-right: $et-block-right !default;
+$et-text-block-bottom: $et-block-bottom !default;
+$et-text-block-line-height: $et-default-line-height !default;
+$et-text-block-height: ($et-text-block-line-height * 3) +
+                     ($et-text-block-border-width * 2) +
+                     ($et-text-block-padding-base * 2) !default;
+
+$et-text-caption-block-font-size: $et-text-caption-font-size !default;
+$et-text-caption-block-top: $et-text-caption-block-font-size * -1.5 !default;
+$et-text-caption-block-left: $et-text-block-padding-base !default;
+$et-text-caption-block-padding: 0 $et-text-block-padding-base !default;

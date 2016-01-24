@@ -1,0 +1,53 @@
+$et-choice-included: false !default;
+$et-text-included: false !default;
+
+@if ($et-choice-included == true) {
+  .et-choice.et-wide {
+    padding: $et-choice-full-padding;
+    border-width: $et-choice-full-border-width;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    .et-choice-header {
+      font-size: $et-choice-header-full-font-size;
+      margin-bottom: $et-choice-header-full-margin-bottom;
+    }
+
+    .et-choice-option {
+      font-size: $et-choice-option-full-font-size;
+    }
+
+    .et-choice-option, .et-choice-input {
+      width: $et-choice-option-full-width;
+      margin-bottom: $et-choice-option-full-margin-bottom;
+      border-width: $et-choice-option-full-border-width;
+    }
+  }
+}
+
+@if ($et-text-included == true) {
+  .et-text.et-wide {
+    bottom: $et-text-wide-bottom;
+    height: $et-text-wide-height;
+    line-height: $et-text-wide-line-height;
+    font-size: $et-text-wide-font-size;
+    padding: $et-text-wide-padding;
+    margin: $et-text-wide-margin;
+    border-width: $et-text-wide-border-width;
+
+    left: 0;
+    right: 0;
+
+    .et-text-caption {
+      top: $et-text-caption-wide-top;
+      left: $et-text-caption-wide-left;
+      padding: $et-text-caption-wide-padding;
+      font-size: $et-text-caption-wide-font-size;
+
+      position: absolute;
+    }
+  }
+}

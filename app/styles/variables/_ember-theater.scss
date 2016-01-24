@@ -1,23 +1,9 @@
 $et-blank-screen-background-color: #121212 !default;
 
-$et-default-line-height: 8vh !default;
-
 $et-semi-transparency: 0.95;
 $et-default-transition-speed: 500ms;
 
-@import "./borders";
-@import "./structure-styles";
-@import "./typography";
-
-@import "mixins/button";
-@import "mixins/input";
-
-@import "mixins/styles/coastal";
-@import "mixins/styles/ember";
-@import "mixins/styles/paper";
-@import "mixins/styles/transparent";
-
-@import "components/curtain";
-@import "components/choice";
-@import "components/text";
-@import "components/menu-bar";
+@import "base";
+@import "mixins";
+@import "components";
+@import "schemes";

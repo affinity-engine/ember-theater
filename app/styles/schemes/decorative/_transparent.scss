@@ -1,0 +1,74 @@
+@mixin et-transparent-base {
+  border-style: $et-transparent-border-style;
+  border-color: $et-transparent-border-color;
+  background: $et-transparent-background-color;
+  color: $et-transparent-color;
+}
+
+.et-transparent {
+  @include et-transparent-base;
+
+  .et-button {
+    @include et-transparent-base;
+
+    border-style: $et-button-transparent-border-style;
+    background-color: $et-button-transparent-background-color;
+
+    &:hover, &:focus {
+      background-color: $et-button-transparent-hover-background-color;
+    }
+  }
+
+  .et-input {
+    border-color: $et-input-transparent-border-color;
+    border-style: $et-input-ember-border-style;
+    background: $et-input-transparent-background-color;
+    color: $et-input-transparent-color;
+
+    &:focus {
+      border-color: $et-input-transparent-focus-border-color;
+    }
+  }
+}
+
+$et-choice-included: false !default;
+$et-menu-bar-included: false !default;
+$et-text-included: false !default;
+
+@if ($et-choice-included == true) {
+  .et-choice.et-transparent {
+    @extend .et-transparent;
+
+    background-color: $et-choice-transparent-background-color;
+    opacity: $et-choice-transparent-opacity;
+
+    .et-choice-header {
+      font-family: $et-choice-header-transparent-font-family;
+      color: $et-choice-header-transparent-color;
+    }
+
+    .et-choice-option {
+      font-weight: $et-choice-option-transparent-font-weight;
+      font-family: $et-choice-option-transparent-font-family;
+    }
+  }
+}
+
+@if ($et-menu-bar-included == true) {
+  .et-menu-bar.et-transparent {
+    @extend .et-transparent;
+  }
+}
+
+@if ($et-text-included == true) {
+  .et-text.et-transparent {
+    opacity: $et-text-transparent-opacity;
+    font-family: $et-text-transparent-font-family;
+
+    .et-text-caption {
+      @extend .et-transparent;
+
+      font-family: $et-text-caption-transparent-font-family;
+    }
+  }
+}
