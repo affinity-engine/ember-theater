@@ -1,28 +1,21 @@
 import Ember from 'ember';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
   computed,
   get,
   getProperties,
-  on
+  on,
+  set
 } = Ember;
 
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  components: computed(() => Ember.A()),
+const Producer = Ember.Object.extend({
+  components: computed(() => Ember.A())
+});
 
-  config: service('ember-theater/config'),
-
-  initializeComponents: on('init', function() {
-    const {
-     components,
-     config
-    } = getProperties(this, 'components', 'config');
-
-    const initialComponents = get(config, 'producer.components');
-
-    components.pushObjects(initialComponents);
-  })
+export default Service.extend(MultiServiceMixin, {
+  factory: Producer
 });

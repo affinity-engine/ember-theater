@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   Component,
@@ -15,8 +16,11 @@ export default Component.extend({
   classNames: ['et-director'],
   layout: layout,
 
-  sceneManager: service('ember-theater/director/scene-manager'),
-  stageManager: service('ember-theater/director/stage-manager'),
+  sceneManagers: service('ember-theater/director/scene-manager'),
+  stageManagers: service('ember-theater/director/stage-manager'),
+
+  sceneManager: multiService('sceneManagers', 'theaterId'),
+  stageManager: multiService('stageManagers', 'theaterId'),
 
   directables: alias('stageManager.directables'),
 

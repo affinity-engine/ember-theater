@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -13,7 +14,7 @@ const {
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Service.extend({
+const LayerManager = Ember.Object.extend({
   dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),
@@ -77,4 +78,8 @@ export default Service.extend({
       this.destroyFilter(filter);
     });
   }
+})
+
+export default Service.extend(MultiServiceMixin, {
+  factory: LayerManager
 });

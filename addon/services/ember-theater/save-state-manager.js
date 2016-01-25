@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -14,7 +15,7 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Service.extend({
+const SaveStateManager = Ember.Object.extend({
   version: '1.0.0',
 
   store: service(),
@@ -142,4 +143,8 @@ export default Service.extend({
   setStateValue(key, value) {
     return set(this, `activeState.${key}`, value);
   }
+});
+
+export default Service.extend(MultiServiceMixin, {
+  factory: SaveStateManager
 });

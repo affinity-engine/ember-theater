@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import animate from 'ember-theater/utils/ember-theater/animate';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -10,12 +12,18 @@ const {
 const { inject: { service } } = Ember;
 const { run: { later } } = Ember;
 
-export default Service.extend({
-  config: service('ember-theater/config'),
-  layerManager: service('ember-theater/director/layer-manager'),
-  saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/director/scene-manager'),
-  stageManager: service('ember-theater/director/stage-manager'),
+const TransitionManager = Ember.Object.extend({
+  configs: service('ember-theater/config'),
+  layerManagers: service('ember-theater/director/layer-manager'),
+  saveStateManagers: service('ember-theater/save-state-manager'),
+  sceneManagers: service('ember-theater/director/scene-manager'),
+  stageManagers: service('ember-theater/director/stage-manager'),
+
+  config: multiService('configs', 'theaterId'),
+  layerManager: multiService('layerManagers', 'theaterId'),
+  saveStateManager: multiService('saveStateManagers', 'theaterId'),
+  sceneManager: multiService('sceneManagers', 'theaterId'),
+  stageManager: multiService('stageManagers', 'theaterId'),
 
   toScene(id, options) {
     this._abortPreviousScene();
@@ -49,10 +57,12 @@ export default Service.extend({
 
   _buildScene(id, options) {
     const factory = get(this, 'container').lookupFactory(`scene:${id}`);
+    const theaterId = get(this, 'theaterId');
 
     return factory.create({
       id,
-      options
+      options,
+      theaterId
     });
   },
 
@@ -83,4 +93,8 @@ export default Service.extend({
 
     saveStateManager.updateRecord(autosave);
   }
+});
+
+export default Service.extend(MultiServiceMixin, {
+  factory: TransitionManager
 });

@@ -1,7 +1,12 @@
 {{#if mediaIsLoaded}}
   {{#each components as |componentName|}}
-    {{component componentName}}
+    {{component componentName
+      theaterId=theaterId
+    }}
   {{/each}}
 {{else}}
-  {{component mediaLoader complete=(action 'startGame')}}
+  {{component mediaLoader
+    theaterId=theaterId
+    complete=(action 'startGame')
+  }}
 {{/if}}

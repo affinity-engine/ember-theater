@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -9,10 +11,14 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  config: service('ember-theater/config'),
-  saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/director/scene-manager'),
+const CurtainPulley = Ember.Object.extend({
+  configs: service('ember-theater/config'),
+  saveStateManagers: service('ember-theater/save-state-manager'),
+  sceneManagers: service('ember-theater/director/scene-manager'),
+
+  config: multiService('configs', 'theaterId'),
+  saveStateManager: multiService('saveStateManagers', 'theaterId'),
+  sceneManager: multiService('sceneManagers', 'theaterId'),
 
   resetGame: async function() {
     await get(this, 'saveStateManager').resetAutosave();
@@ -37,14 +43,18 @@ export default Service.extend({
 
   loadScene(save, sceneId, options) {
     const {
-      config,
+      configs,
       saveStateManager,
       sceneManager
-    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager');
+    } = getProperties(this, 'configs', 'saveStateManager', 'sceneManager');
 
     saveStateManager.loadRecord(save);
-    config.resetConfig();
+    // configs.resetConfig();
 
     sceneManager.toScene(sceneId, options);
   }
+});
+
+export default Service.extend(MultiServiceMixin, {
+  factory: CurtainPulley
 });

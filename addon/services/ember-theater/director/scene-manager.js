@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -9,10 +11,14 @@ const {
 const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  curtainPulley: service('ember-theater/director/scene/curtain-pulley'),
-  recorder: service('ember-theater/director/scene/recorder'),
-  transitionManager: service('ember-theater/director/scene/transition-manager'),
+const SceneManager = Ember.Object.extend({
+  curtainPulleys: service('ember-theater/director/scene/curtain-pulley'),
+  recorders: service('ember-theater/director/scene/recorder'),
+  transitionManagers: service('ember-theater/director/scene/transition-manager'),
+
+  curtainPulley: multiService('curtainPulleys', 'theaterId'),
+  recorder: multiService('recorders', 'theaterId'),
+  transitionManager: multiService('transitionManagers', 'theaterId'),
 
   sceneRecord: alias('recorder.sceneRecord'),
 
@@ -59,4 +65,9 @@ export default Service.extend({
       recorder.resetRecord();
     }
   }
+
+})
+
+export default Service.extend(MultiServiceMixin, {
+  factory: SceneManager
 });

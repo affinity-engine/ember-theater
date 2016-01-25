@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   get,
@@ -9,7 +10,9 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  layerManager: inject.service('ember-theater/director/layer-manager'),
+  layerManagers: inject.service('ember-theater/director/layer-manager'),
+  
+  layerManager: multiService('layerManager', 'theaterId'),
 
   perform(resolve, layerOrEffect, effectOrOptions = {}, optionsOnly = {}) {
     const layerIsPresent = typeOf(effectOrOptions) === 'string' || typeOf(effectOrOptions) === 'array';

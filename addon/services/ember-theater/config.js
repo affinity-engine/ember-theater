@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import deepMerge from 'ember-theater/utils/ember-theater/deep-merge';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -13,40 +15,10 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  saveStateManager: service('ember-theater/save-state-manager'),
+const Config = Ember.Object.extend({
+  saveStateManagers: service('ember-theater/save-state-manager'),
 
-  setGameConfig(gameConfig = {}) {
-    set(this, 'gameConfig', gameConfig);
-  },
-
-  resetConfig() {
-    const gameConfig = get(this, 'gameConfig');
-    const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
-    const saveStateManager = get(this, 'saveStateManager');
-    const savedConfig = saveStateManager.getStateValue('_config') || {};
-    const mergedConfig = deepMerge({}, ...configs, gameConfig, savedConfig);
-
-    setProperties(this, mergedConfig);
-  },
-
-  _configs: computed({
-    get() {
-      const paths = Object.keys(requirejs.entries);
-      const isConfig = new RegExp(`\/ember-theater\/config`);
-      const isTest = new RegExp(`\/tests\/`);
-      const isThisService = new RegExp(`\/services\/ember-theater\/config`);
-
-      return paths.filter((path) => {
-        return isConfig.test(path) && !isTest.test(path) && !isThisService.test(path);
-      }).map((path) => {
-        return requirejs(path).default;
-      }).filter((config) => {
-        return isPresent(config.priority);
-      });
-    }
-  }),
-
+  saveStateManager: multiService('saveStateManagers', 'theaterId'),
 
   getProperty(section, key) {
     return get(this, `${section}.${key}`) || get(this, `globals.${key}`);
@@ -79,4 +51,38 @@ export default Service.extend({
 
     return _config;
   }
+});
+
+export default Service.extend(MultiServiceMixin, {
+  factory: Config,
+
+  saveStateManagers: service('ember-theater/save-state-manager'),
+
+  resetConfig(theaterConfig) {
+    const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
+    const mergedConfig = deepMerge({}, ...configs, theaterConfig);
+    const theaterId = get(mergedConfig, 'theaterId');
+    const saveStateManager = get(this, 'saveStateManagers').findOrCreateInstance(theaterId);
+    const savedConfig = saveStateManager.getStateValue('_config') || {};
+    const finalConfig = deepMerge({}, mergedConfig, savedConfig);
+
+    return this.createInstance(theaterId, finalConfig);
+  },
+
+  _configs: computed({
+    get() {
+      const paths = Object.keys(requirejs.entries);
+      const isConfig = new RegExp(`\/ember-theater\/config`);
+      const isTest = new RegExp(`\/tests\/`);
+      const isThisService = new RegExp(`\/services\/ember-theater\/config`);
+
+      return paths.filter((path) => {
+        return isConfig.test(path) && !isTest.test(path) && !isThisService.test(path);
+      }).map((path) => {
+        return requirejs(path).default;
+      }).filter((config) => {
+        return isPresent(config.priority);
+      });
+    }
+  })
 });

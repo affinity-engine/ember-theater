@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -9,7 +10,7 @@ const {
   setProperties
 } = Ember;
 
-export default Service.extend({
+const StageManager = Ember.Object.extend({
   directables: computed(() => Ember.A()),
 
   clearDirectables() {
@@ -52,4 +53,8 @@ export default Service.extend({
 
     setProperties(directable, merge(properties, { resolve, options }));
   }
+});
+
+export default Service.extend(MultiServiceMixin, {
+  factory: StageManager
 });

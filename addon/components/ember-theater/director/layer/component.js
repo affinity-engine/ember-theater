@@ -1,13 +1,13 @@
 import Ember from 'ember';
 import layout from './template';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   Component,
   computed,
   get,
   getProperties,
-  inject,
   isPresent,
   observer,
   on,
@@ -16,6 +16,7 @@ const {
 
 const { alias } = computed;
 const { Handlebars: { SafeString } } = Ember;
+const { inject: { service } } = Ember;
 
 export default Component.extend({
   attributeBindings: ['animationName:animation-name', 'style'],
@@ -23,8 +24,11 @@ export default Component.extend({
   classNameBindings: ['layerName'],
   layout: layout,
 
-  layerManager: inject.service('ember-theater/director/layer-manager'),
-  stageManager: inject.service('ember-theater/director/stage-manager'),
+  layerManagers: service('ember-theater/director/layer-manager'),
+  stageManagers: service('ember-theater/director/stage-manager'),
+
+  layerManager: multiService('layerManagers', 'theaterId'),
+  stageManager: multiService('stageManagers', 'theaterId'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),

@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
+import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
 
 const { modulePrefix } = appConfig;
 
@@ -19,12 +20,11 @@ const { String: { camelize } } = Ember;
 
 const { alias } = computed;
 
-export default Component.extend({
+export default Component.extend(ConfigurableMixin, {
   layout,
 
   classNames: ['et-curtain'],
 
-  config: service('ember-theater/config'),
   preloader: service('preloader'),
   fixtureStore: service('ember-theater/fixture-store'),
   translator: service('ember-theater/translator'),

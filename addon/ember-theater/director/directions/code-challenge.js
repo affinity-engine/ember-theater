@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   get
@@ -10,7 +11,9 @@ const { inject: { service } } = Ember;
 export default Direction.extend({
   layer: 'theater.prompt.code-challenge',
 
-  stageManager: service('ember-theater/director/stage-manager'),
+  stageManagers: service('ember-theater/director/stage-manager'),
+
+  stageManager: multiService('stageManagers', 'theaterId'),
 
   perform(resolve, snippets, options = {}) {
     const layer = get(options, 'layer') || get(this, 'layer');

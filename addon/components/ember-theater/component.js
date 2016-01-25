@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   Component,
@@ -21,10 +22,12 @@ export default Component.extend({
   layout: layout,
 
   configService: service('ember-theater/config'),
-  producer: service('ember-theater/producer'),
+  producers: service('ember-theater/producer'),
 
+  producer: multiService('producers', 'theaterId'),
   components: reads('producer.components'),
-  mediaLoader: reads('configService.mediaLoader.type'),
+  configInstance: multiService('configService', 'theaterId'),
+  mediaLoader: reads('configInstance.mediaLoader.type'),
 
   initializeConfig: on('didReceiveAttrs', function() {
     const {
@@ -32,8 +35,14 @@ export default Component.extend({
       configService
     } = getProperties(this, 'config', 'configService');
 
-    configService.setGameConfig(config);
-    configService.resetConfig();
+    const mergedConfig = configService.resetConfig(config);
+    const initialComponents = get(mergedConfig, 'producer.components');
+    const theaterId = get(mergedConfig, 'theaterId');
+
+    set(this, 'theaterId', theaterId);
+    get(this, 'producers').createInstance(theaterId, {
+      components: Ember.A(initialComponents)
+    });
   }),
 
   setMediaIsLoaded: on('init', function() {

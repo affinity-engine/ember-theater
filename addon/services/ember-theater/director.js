@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -14,8 +16,10 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  sceneManager: service('ember-theater/director/scene-manager'),
+const Director = Ember.Object.extend(MultiServiceMixin, {
+  sceneManagers: service('ember-theater/director/scene-manager'),
+  
+  sceneManager: multiService('sceneManagers', 'theaterId'),
 
   direct(scene, factory, args) {
     if (get(scene, 'isAborted')) { return resolve(); }
@@ -36,4 +40,8 @@ export default Service.extend({
       direction.perform(resolution, ...args);
     });
   }
+})
+
+export default Service.extend({
+  factory: Director
 });

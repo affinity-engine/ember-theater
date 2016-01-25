@@ -9,7 +9,7 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
     // the scene is the context here
     const factory = get(this, 'container').lookupFactory(`direction:${name}`);
 
-    return get(this, 'director').direct(this, factory, args);
+    return get(this, 'directors').direct(this, factory, args);
   };
 
   application.register(`direction:${name}-proxy`, proxy, { instantiate: false });

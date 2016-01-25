@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service';
 
 const {
   Service,
@@ -11,9 +13,12 @@ const {
 const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Service.extend({
-  saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/director/scene-manager'),
+const Recorder = Ember.Object.extend({
+  saveStateManagers: service('ember-theater/save-state-manager'),
+  sceneManagers: service('ember-theater/director/scene-manager'),
+  
+  saveStateManager: multiService('saveStateManagers', 'theaterId'),
+  sceneManager: multiService('sceneManagers', 'theaterId'),
 
   sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 
@@ -69,4 +74,8 @@ export default Service.extend({
   _update(key, value) {
     set(this, `sceneRecord.${key}`, isPresent(value) ? value : '_RESOLVED');
   }
+})
+
+export default Service.extend(MultiServiceMixin, {
+  factory: Recorder
 });
