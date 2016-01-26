@@ -12,7 +12,7 @@ const {
 export default Direction.extend({
   layerManagers: inject.service('ember-theater/director/layer-manager'),
   
-  layerManager: multiService('layerManager', 'theaterId'),
+  layerManager: multiService('layerManagers'),
 
   perform(resolve, layerOrEffect, effectOrOptions = {}, optionsOnly = {}) {
     const layerIsPresent = typeOf(effectOrOptions) === 'string' || typeOf(effectOrOptions) === 'array';

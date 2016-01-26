@@ -3,6 +3,7 @@ import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
 import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const { modulePrefix } = appConfig;
 
@@ -26,8 +27,10 @@ export default Component.extend(ConfigurableMixin, {
   classNames: ['et-curtain'],
 
   preloader: service('preloader'),
-  fixtureStore: service('ember-theater/fixture-store'),
   translator: service('ember-theater/translator'),
+  fixtureStores: service('ember-theater/fixture-store'),
+
+  fixtureStore: multiService('fixtureStores'),
 
   title: alias('config.title'),
 

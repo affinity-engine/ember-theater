@@ -16,9 +16,9 @@ const CurtainPulley = Ember.Object.extend({
   saveStateManagers: service('ember-theater/save-state-manager'),
   sceneManagers: service('ember-theater/director/scene-manager'),
 
-  config: multiService('configs', 'theaterId'),
-  saveStateManager: multiService('saveStateManagers', 'theaterId'),
-  sceneManager: multiService('sceneManagers', 'theaterId'),
+  config: multiService('configs'),
+  saveStateManager: multiService('saveStateManagers'),
+  sceneManager: multiService('sceneManagers'),
 
   resetGame: async function() {
     await get(this, 'saveStateManager').resetAutosave();

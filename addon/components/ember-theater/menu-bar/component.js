@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const { Component } = Ember;
 const { inject: { service } } = Ember;
@@ -14,7 +15,9 @@ export default Component.extend({
   classNames: ['et-menu-bar-container'],
   classNameBindings: ['decorativeClassNames'],
 
-  config: service('ember-theater/config'),
+  configs: service('ember-theater/config'),
+
+  config: multiService('configs'),
 
   components: reads('config.menuBar.components'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),

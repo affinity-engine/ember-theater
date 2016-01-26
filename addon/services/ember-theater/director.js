@@ -4,7 +4,8 @@ import MultiServiceMixin from 'ember-theater/mixins/ember-theater/multi-service'
 
 const {
   Service,
-  get
+  get,
+  set
 } = Ember;
 
 const {
@@ -16,25 +17,27 @@ const {
 
 const { inject: { service } } = Ember;
 
-const Director = Ember.Object.extend(MultiServiceMixin, {
+const Director = Ember.Object.extend({
   sceneManagers: service('ember-theater/director/scene-manager'),
-  
-  sceneManager: multiService('sceneManagers', 'theaterId'),
 
-  direct(scene, factory, args) {
+  sceneManager: multiService('sceneManagers'),
+
+  direct(scene, theaterId, factory, args) {
     if (get(scene, 'isAborted')) { return resolve(); }
 
-    const promise = this._direct(factory, args);
+    const promise = this._direct(factory, theaterId, args);
 
     get(this, 'sceneManager').recordSceneRecordEvent(promise, scene);
 
     return promise;
   },
 
-  _direct(factory, args) {
+  _direct(factory, theaterId, args) {
     const autoResolveProperties = get(this, 'sceneManager').advanceSceneRecord();
 
     const direction = factory.create(autoResolveProperties);
+
+    set(direction, 'theaterId', theaterId);
 
     return new Promise((resolution) => {
       direction.perform(resolution, ...args);
@@ -42,6 +45,13 @@ const Director = Ember.Object.extend(MultiServiceMixin, {
   }
 })
 
-export default Service.extend({
-  factory: Director
+export default Service.extend(MultiServiceMixin, {
+  factory: Director,
+
+  direct(scene, factory, args) {
+    const theaterId = get(scene, 'theaterId');
+    const director = this.findOrCreateInstance(theaterId);
+
+    return director.direct(scene, theaterId, factory, args);
+  }
 });

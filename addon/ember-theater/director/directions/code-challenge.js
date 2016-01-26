@@ -13,7 +13,7 @@ export default Direction.extend({
 
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  stageManager: multiService('stageManagers', 'theaterId'),
+  stageManager: multiService('stageManagers'),
 
   perform(resolve, snippets, options = {}) {
     const layer = get(options, 'layer') || get(this, 'layer');

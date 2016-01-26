@@ -10,6 +10,7 @@ const { computed: { reads } } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.menu.rewind.header',
+
   menuClassNames: reads('config.menuBar.rewind.classNames'),
 
   populateChoices: async function() {

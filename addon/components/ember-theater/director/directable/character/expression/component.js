@@ -6,9 +6,10 @@ import configurable from 'ember-theater/macros/ember-theater/configurable';
 const {
   Component,
   computed,
-  get,
-  inject
+  get
 } = Ember;
+
+const { inject: { service } } = Ember;
 
 const configurablePriority = ['directable.options', 'expression.expression', 'expression', 'config.director.expression', 'config.globals'];
 
@@ -17,7 +18,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   classNames: ['et-character-expression'],
   tagName: 'img',
 
-  translator: inject.service('ember-theater/translator'),
+  translator: service('ember-theater/translator'),
 
   src: configurable(configurablePriority, 'src'),
 

@@ -6,6 +6,7 @@ import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const {
   Component,
@@ -22,6 +23,7 @@ const {
 } = computed;
 
 const { run: { later } } = Ember;
+const { inject: { service } } = Ember;
 
 const configurablePriority = ['directable.options', 'character.text', 'character', 'config.director.text', 'config.globals'];
 
@@ -31,8 +33,10 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   classNames: ['et-text'],
   classNameBindings: ['decorativeClassNames', 'structuralClassNames', 'scrollable:et-scrollable'],
 
-  translator: inject.service('ember-theater/translator'),
-  config: inject.service('ember-theater/config'),
+  translator: service('ember-theater/translator'),
+  configs: service('ember-theater/config'),
+
+  config: multiService('configs'),
 
   character: alias('directable.character'),
   instantWriteText: or('instant', 'scrollable'),

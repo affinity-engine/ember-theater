@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 import {
   keyDown,
@@ -23,7 +24,9 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
   classNames: ['et-menu-bar-control-icon'],
   tagName: 'button',
 
-  config: service('ember-theater/config'),
+  configs: service('ember-theater/config'),
+
+  config: multiService('configs'),
 
   setupFocusKeystroke: on('init', function() {
     const type = get(this, 'type');

@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 
 const { get } = Ember;
 
@@ -8,7 +9,7 @@ const { inject: { service } } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.menu.save.header',
-  sceneManager: service('ember-theater/director/scene-manager'),
+
   menuClassNames: reads('config.menuBar.save.classNames'),
 
   populateChoices: async function() {

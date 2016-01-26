@@ -7,6 +7,7 @@ import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleabl
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
+import multiService from 'ember-theater/macros/ember-theater/multi-service';
 import {
   keyUp,
   EKMixin,
@@ -17,10 +18,11 @@ const {
   Component,
   computed,
   get,
-  inject,
   on,
   set
 } = Ember;
+
+const { inject: { service } } = Ember;
 
 const mixins = [
   AdjustableKeyboardMixin,
@@ -35,15 +37,16 @@ const mixins = [
 const configurablePriority = ['directable.options', 'config.director.choice', 'config.globals'];
 
 export default Component.extend(...mixins, {
-
   layout,
 
   activeIndex: 0,
   classNames: ['et-choice'],
   classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
 
-  config: inject.service('ember-theater/config'),
-  translator: inject.service('ember-theater/translator'),
+  configs: service('ember-theater/config'),
+  translator: service('ember-theater/translator'),
+
+  config: multiService('configs'),
 
   moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),
   moveDownKeys: configurable(configurablePriority, 'keys.moveDown'),

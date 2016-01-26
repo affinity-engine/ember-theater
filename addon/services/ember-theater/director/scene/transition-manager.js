@@ -19,11 +19,11 @@ const TransitionManager = Ember.Object.extend({
   sceneManagers: service('ember-theater/director/scene-manager'),
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  config: multiService('configs', 'theaterId'),
-  layerManager: multiService('layerManagers', 'theaterId'),
-  saveStateManager: multiService('saveStateManagers', 'theaterId'),
-  sceneManager: multiService('sceneManagers', 'theaterId'),
-  stageManager: multiService('stageManagers', 'theaterId'),
+  config: multiService('configs'),
+  layerManager: multiService('layerManagers'),
+  saveStateManager: multiService('saveStateManagers'),
+  sceneManager: multiService('sceneManagers'),
+  stageManager: multiService('stageManagers'),
 
   toScene(id, options) {
     this._abortPreviousScene();

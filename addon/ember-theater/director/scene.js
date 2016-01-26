@@ -7,7 +7,7 @@ const { inject: { service } } = Ember;
 export default Ember.Object.extend({
   directors: service('ember-theater/director'),
 
-  director: multiService('directors', 'theaterId'),
+  director: multiService('directors'),
 
   abort() {
     set(this, 'isAborted', true);

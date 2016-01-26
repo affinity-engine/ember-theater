@@ -16,7 +16,7 @@ const {
 const { inject: { service } } = Ember;
 
 const SaveStateManager = Ember.Object.extend({
-  version: '1.0.0',
+  version: '1.1.0',
 
   store: service(),
 
@@ -33,8 +33,11 @@ const SaveStateManager = Ember.Object.extend({
 
   autosave: computed({
     get() {
+      const theaterId = get(this, 'theaterId');
+
       return get(this, 'store').queryRecord('ember-theater/local-save', {
-        isAutosave: true
+        isAutosave: true,
+        theaterId
       });
     }
   }).readOnly(),
@@ -50,8 +53,12 @@ const SaveStateManager = Ember.Object.extend({
   },
 
   saves: computed({
-    get: async function() {
-      return await get(this, 'store').findAll('ember-theater/local-save');
+    get() {
+      const theaterId = get(this, 'theaterId');
+
+      return get(this, 'store').query('ember-theater/local-save', {
+        theaterId
+      });
     }
   }).readOnly(),
 
@@ -66,12 +73,14 @@ const SaveStateManager = Ember.Object.extend({
 
   // RECORD MANAGEMENT //
   createRecord: async function(name) {
+    const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
 
     const record = get(this, 'store').createRecord('ember-theater/local-save', {
       name,
       statePoints,
+      theaterId,
       version
     });
 
@@ -79,11 +88,13 @@ const SaveStateManager = Ember.Object.extend({
   },
 
   updateRecord: async function(record) {
+    const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
 
     setProperties(record, {
       statePoints,
+      theaterId,
       version
     });
 

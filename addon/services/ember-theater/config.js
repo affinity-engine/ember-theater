@@ -18,7 +18,7 @@ const { inject: { service } } = Ember;
 const Config = Ember.Object.extend({
   saveStateManagers: service('ember-theater/save-state-manager'),
 
-  saveStateManager: multiService('saveStateManagers', 'theaterId'),
+  saveStateManager: multiService('saveStateManagers'),
 
   getProperty(section, key) {
     return get(this, `${section}.${key}`) || get(this, `globals.${key}`);

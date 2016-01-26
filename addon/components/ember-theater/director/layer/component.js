@@ -27,8 +27,8 @@ export default Component.extend({
   layerManagers: service('ember-theater/director/layer-manager'),
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  layerManager: multiService('layerManagers', 'theaterId'),
-  stageManager: multiService('stageManagers', 'theaterId'),
+  layerManager: multiService('layerManagers'),
+  stageManager: multiService('stageManagers'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),

@@ -9,5 +9,5 @@ const { inject: { service } } = Ember;
 
 export default Mixin.create({
   configs: service('ember-theater/config'),
-  config: multiService('configs', 'theaterId')
+  config: multiService('configs')
 });

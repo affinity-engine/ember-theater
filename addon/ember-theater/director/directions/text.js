@@ -16,8 +16,8 @@ export default Direction.extend({
   fixtureStores: service('ember-theater/fixture-store'),
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  fixtureStore: multiService('fixtureStores', 'theaterId'),
-  stageManager: multiService('stageManagers', 'theaterId'),
+  fixtureStore: multiService('fixtureStores'),
+  stageManager: multiService('stageManagers'),
 
   perform(resolve, characterOrText, textOrOptions = {}, optionsOnly = {}) {
     const characterIsPresent = typeOf(textOrOptions) === 'string' ||

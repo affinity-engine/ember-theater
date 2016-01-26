@@ -17,8 +17,8 @@ const Recorder = Ember.Object.extend({
   saveStateManagers: service('ember-theater/save-state-manager'),
   sceneManagers: service('ember-theater/director/scene-manager'),
   
-  saveStateManager: multiService('saveStateManagers', 'theaterId'),
-  sceneManager: multiService('sceneManagers', 'theaterId'),
+  saveStateManager: multiService('saveStateManagers'),
+  sceneManager: multiService('sceneManagers'),
 
   sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 

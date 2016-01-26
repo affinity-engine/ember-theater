@@ -19,8 +19,8 @@ export default Component.extend({
   sceneManagers: service('ember-theater/director/scene-manager'),
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  sceneManager: multiService('sceneManagers', 'theaterId'),
-  stageManager: multiService('stageManagers', 'theaterId'),
+  sceneManager: multiService('sceneManagers'),
+  stageManager: multiService('stageManagers'),
 
   directables: alias('stageManager.directables'),
 

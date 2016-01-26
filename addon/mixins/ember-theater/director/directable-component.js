@@ -15,7 +15,7 @@ const { inject: { service } } = Ember;
 export default Mixin.create({
   stageManagers: service('ember-theater/director/stage-manager'),
 
-  stageManager: multiService('stageManagers', 'theaterId'),
+  stageManager: multiService('stageManagers'),
 
   autoResolve: alias('directable.autoResolve'),
   autoResolveResult: alias('directable.autoResolveResult'),

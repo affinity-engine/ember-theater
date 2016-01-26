@@ -16,9 +16,9 @@ const SceneManager = Ember.Object.extend({
   recorders: service('ember-theater/director/scene/recorder'),
   transitionManagers: service('ember-theater/director/scene/transition-manager'),
 
-  curtainPulley: multiService('curtainPulleys', 'theaterId'),
-  recorder: multiService('recorders', 'theaterId'),
-  transitionManager: multiService('transitionManagers', 'theaterId'),
+  curtainPulley: multiService('curtainPulleys'),
+  recorder: multiService('recorders'),
+  transitionManager: multiService('transitionManagers'),
 
   sceneRecord: alias('recorder.sceneRecord'),
 

@@ -24,9 +24,9 @@ export default Component.extend({
   configService: service('ember-theater/config'),
   producers: service('ember-theater/producer'),
 
-  producer: multiService('producers', 'theaterId'),
+  producer: multiService('producers'),
   components: reads('producer.components'),
-  configInstance: multiService('configService', 'theaterId'),
+  configInstance: multiService('configService'),
   mediaLoader: reads('configInstance.mediaLoader.type'),
 
   initializeConfig: on('didReceiveAttrs', function() {
