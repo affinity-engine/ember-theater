@@ -35,8 +35,8 @@ export default Ember.Object.extend(TheaterIdMixin, {
       const theaterId = get(this, 'theaterId');
 
       return get(this, 'store').queryRecord('ember-theater/local-save', {
-        isAutosave: true,
-        theaterId
+        theaterId,
+        isAutosave: true
       });
     }
   }).readOnly(),

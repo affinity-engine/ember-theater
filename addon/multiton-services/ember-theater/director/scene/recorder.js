@@ -9,9 +9,13 @@ const {
   set
 } = Ember;
 
+const { computed: { alias } } = Ember;
+
 export default Ember.Object.extend(TheaterIdMixin, {
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
+
+  sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
 
   resetRecord() {
     this.resetIndex();
