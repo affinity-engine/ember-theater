@@ -10,30 +10,30 @@ const {
 } = Ember;
 
 export default Service.extend({
-  services: computed(() => Ember.Object.create()),
+  serviceMap: computed(() => Ember.Object.create()),
 
   addService(path, key) {
     const multitonService = getOwner(this).lookup(`multiton-service:${path}`);
-    const services = get(this, 'services');
+    const serviceMap = get(this, 'serviceMap');
 
-    if (isBlank(get(services, key))) {
-      set(services, key, Ember.Object.create());
+    if (isBlank(get(serviceMap, key))) {
+      set(serviceMap, key, Ember.Object.create());
     }
 
     set(multitonService, '_multitonServiceKey', key);
 
-    return set(services, `${key}.${path}`, multitonService);
+    return set(serviceMap, `${key}.${path}`, multitonService);
   },
 
   removeServices(key) {
-    const services = get(this, 'services');
-    const service = services[key];
+    const serviceMap = get(this, 'serviceMap');
+    const service = get(serviceMap, key);
     const multitonKeys = Object.keys(service);
 
     multitonKeys.forEach((key) => {
-      service[key].destroy();
+      get(service, key).destroy();
     });
 
-    delete services[key];
+    delete serviceMap[key];
   }
 });

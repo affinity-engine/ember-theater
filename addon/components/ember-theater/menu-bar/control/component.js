@@ -37,7 +37,10 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
   }),
 
   initializeFilter: on('init', function() {
-    const filter = get(this, 'container').lookupFactory('direction:filter').create();
+    const theaterId = get(this, 'theaterId');
+    const filter = get(this, 'container').lookupFactory('direction:filter').create({
+      theaterId
+    });
 
     set(this, 'filter', filter);
   }),

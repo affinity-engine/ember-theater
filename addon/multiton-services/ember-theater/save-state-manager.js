@@ -60,7 +60,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
         theaterId
       });
     }
-  }).readOnly(),
+  }).readOnly().volatile(),
 
   resetAutosave: async function() {
     const autosave = await get(this, 'autosave');
