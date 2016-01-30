@@ -59,11 +59,11 @@ export default Component.extend(ConfigurableMixin, {
 
   _loadfixtures: on('didInsertElement', function() {
     const fixtureStore = get(this, 'fixtureStore');
+    const fixtureMap = get(this, 'config.attrs.fixtures');
+    const fixtureKeys = Object.keys(fixtureMap);
 
-    get(this, '_fixtureNames').forEach((fixtureName) => {
-      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${fixtureName}`).default;
-
-      set(fixtureStore, this._standardizeFixtureName(fixtureName), Ember.A(fixtures));
+    fixtureKeys.forEach((key) => {
+      fixtureStore.add(key, fixtureMap[key]);
     });
 
     this._loadMedia();
@@ -93,7 +93,7 @@ export default Component.extend(ConfigurableMixin, {
     });
 
     fixtureAttributePairs.forEach((pair) => {
-      const fixtures = get(fixtureStore, this._standardizeFixtureName(pair.fixture));
+      const fixtures = fixtureStore.findAll(this._standardizeFixtureName(pair.fixture));
       const attribute = pair.attribute;
 
       fixtures.forEach((fixture) => {
