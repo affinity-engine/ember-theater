@@ -1,16 +1,15 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   get
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Direction.extend({
   layer: 'theater.prompt.code-challenge',
 
-  stageManager: service('ember-theater/director/stage-manager'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   perform(resolve, snippets, options = {}) {
     const layer = get(options, 'layer') || get(this, 'layer');

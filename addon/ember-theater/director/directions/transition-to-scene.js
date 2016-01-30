@@ -1,10 +1,8 @@
-import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-
-const { inject } = Ember;
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 export default Direction.extend({
-  sceneManager: inject.service('ember-theater/director/scene-manager'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theareId'),
 
   perform(resolve, sceneId, options) {
     resolve();

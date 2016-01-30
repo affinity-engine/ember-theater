@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
@@ -9,14 +10,14 @@ const {
 } = Ember;
 
 const { alias } = computed;
-const { inject: { service } } = Ember;
 
 export default Component.extend({
-  classNames: ['et-director'],
-  layout: layout,
+  layout,
 
-  sceneManager: service('ember-theater/director/scene-manager'),
-  stageManager: service('ember-theater/director/stage-manager'),
+  classNames: ['et-director'],
+
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   directables: alias('stageManager.directables'),
 

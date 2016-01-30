@@ -1,6 +1,9 @@
 {{fa-icon 'cloud-upload'}}
 {{#if isOpen}}
   {{#modal-dialog}}
-    {{ember-theater/menu-bar/save/menu closeMenu=(action 'closeMenu')}}
+    {{ember-theater/menu-bar/save/menu
+      theaterId=theaterId
+      closeMenu=(action 'closeMenu')
+    }}
   {{/modal-dialog}}
 {{/if}}

@@ -2,6 +2,8 @@ import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
+import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { modulePrefix } = appConfig;
 
@@ -19,26 +21,25 @@ const { String: { camelize } } = Ember;
 
 const { alias } = computed;
 
-export default Component.extend({
+export default Component.extend(ConfigurableMixin, {
   layout,
 
   classNames: ['et-curtain'],
 
-  config: service('ember-theater/config'),
   preloader: service('preloader'),
-  fixtureStore: service('ember-theater/fixture-store'),
   translator: service('ember-theater/translator'),
+  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  title: alias('config.title'),
+  title: alias('config.attrs.title'),
 
-  progressBarShape: computed('config.mediaLoader.progressBarStyle.shape', {
+  progressBarShape: computed('config.attrs.mediaLoader.progressBarStyle.shape', {
     get() {
-      return get(this, 'config.mediaLoader.progressBarStyle.shape') || 'Circle';
+      return get(this, 'config.attrs,mediaLoader.progressBarStyle.shape') || 'Circle';
     }
   }).readOnly(),
 
   _styleProgressBar: on('didInsertElement', function() {
-    const config = get(this, 'config');
+    const config = get(this, 'config.attrs');
 
     const color = get(config, 'mediaLoader.progressBarStyle.color') || this.$().css('color');
     const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') ||
@@ -58,11 +59,11 @@ export default Component.extend({
 
   _loadfixtures: on('didInsertElement', function() {
     const fixtureStore = get(this, 'fixtureStore');
+    const fixtureMap = get(this, 'config.attrs.fixtures');
+    const fixtureKeys = Object.keys(fixtureMap);
 
-    get(this, '_fixtureNames').forEach((fixtureName) => {
-      const fixtures = requirejs(`${modulePrefix}/ember-theater/fixtures/${fixtureName}`).default;
-
-      set(fixtureStore, this._standardizeFixtureName(fixtureName), Ember.A(fixtures));
+    fixtureKeys.forEach((key) => {
+      fixtureStore.add(key, fixtureMap[key]);
     });
 
     this._loadMedia();
@@ -84,7 +85,7 @@ export default Component.extend({
   _loadMedia() {
     const fixtureStore = get(this, 'fixtureStore');
     const preloader = get(this, 'preloader');
-    const paths = get(this, 'config.mediaLoader.filesToPreload');
+    const paths = get(this, 'config.attrs.mediaLoader.filesToPreload');
     const fixtureAttributePairs = paths.map((path) => {
       const [fixture, attribute] = path.split(':');
 
@@ -92,7 +93,7 @@ export default Component.extend({
     });
 
     fixtureAttributePairs.forEach((pair) => {
-      const fixtures = get(fixtureStore, this._standardizeFixtureName(pair.fixture));
+      const fixtures = fixtureStore.findAll(this._standardizeFixtureName(pair.fixture));
       const attribute = pair.attribute;
 
       fixtures.forEach((fixture) => {
@@ -107,7 +108,7 @@ export default Component.extend({
 
     preloader.onComplete(() => {
       later(() => {
-        const duration = get(this, 'config.mediaLoader.fadeOutDuration') || 500;
+        const duration = get(this, 'config.attrs.mediaLoader.fadeOutDuration') || 500;
 
         animate(this.element, { opacity: 0 }, { duration }).then(() => {
           this.attrs.complete();

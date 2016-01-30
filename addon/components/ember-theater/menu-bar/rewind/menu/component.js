@@ -10,7 +10,8 @@ const { computed: { reads } } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.menu.rewind.header',
-  menuClassNames: reads('config.menuBar.rewind.classNames'),
+
+  menuClassNames: reads('config.attrs.menuBar.rewind.classNames'),
 
   populateChoices: async function() {
     const points = await get(this, 'saveStateManager.statePoints');

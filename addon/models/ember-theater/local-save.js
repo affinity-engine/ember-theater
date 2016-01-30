@@ -16,6 +16,7 @@ export default Model.extend(LokiJSModelMixin, {
   isAutosave: attr('boolean'),
   name: attr('string'),
   statePoints: attr('array'),
+  theaterId: attr('string'),
 
   activeState: computed('statePoints', {
     get() {

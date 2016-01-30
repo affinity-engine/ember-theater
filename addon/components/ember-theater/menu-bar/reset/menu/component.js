@@ -4,14 +4,11 @@ import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component
 const { get } = Ember;
 
 const { computed: { reads } } = Ember;
-const { inject: { service } } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.menu.reset.header',
-  menuClassNames: reads('config.menuBar.reset.classNames'),
 
-  saveStateManager: service('ember-theater/save-state-manager'),
-  sceneManager: service('ember-theater/director/scene-manager'),
+  menuClassNames: reads('config.attrs.menuBar.reset.classNames'),
 
   populateChoices() {
     const choices = get(this, 'choices');

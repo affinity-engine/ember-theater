@@ -1,17 +1,16 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   get,
   typeOf
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Direction.extend({
   layer: 'theater.prompt.choice',
 
-  stageManager: service('ember-theater/director/stage-manager'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   perform(resolve, headerOrChoices, choicesOrOptions, optionsOnly) {
     const headerIsPresent = typeOf(headerOrChoices) === 'string';

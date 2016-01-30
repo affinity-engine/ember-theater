@@ -4,6 +4,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
 
 const {
@@ -20,12 +21,20 @@ const { alias } = computed;
 const { run: { later } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
 
-const configurablePriority = ['directable.options', 'character.character', 'character', 'config.director.character', 'config.globals'];
+const configurablePriority = [
+  'directable.options',
+  'character.character',
+  'character',
+  'config.attrs.director.character',
+  'config.attrs.globals'
+];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   attributeBindings: ['style'],
   classNames: ['et-character'],
   layout: layout,
+
+  config: multitonService('ember-theater/config', 'theaterId'),
 
   expressionContainers: computed(() => Ember.A([])),
 
