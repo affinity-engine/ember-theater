@@ -11,7 +11,12 @@ const {
   set
 } = Ember;
 
-const { computed: { reads } } = Ember;
+const {
+  computed: {
+    alias,
+    reads
+  }
+} = Ember;
 
 const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 
@@ -24,6 +29,7 @@ export default Component.extend({
 
   components: reads('config.attrs.menuBar.components'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
+  keyboardActivated: alias('isFocused'),
 
   initializeFilter: on('init', function() {
     const theaterId = get(this, 'theaterId');

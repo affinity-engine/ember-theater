@@ -3,6 +3,7 @@
     {{#each components as |componentName|}}
       {{component componentName
         theaterId=theaterId
+        keyboardActivated=keyboardActivated
         openMenu=(action "openMenu" componentName)
       }}
     {{/each}}
@@ -12,6 +13,7 @@
 {{#if currentMenu}}
   {{component currentMenu
     theaterId=theaterId
+    keyboardActivated=keyboardActivated
     closeMenu=(action "closeMenu")
   }}
 {{/if}}

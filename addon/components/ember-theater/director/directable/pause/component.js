@@ -2,7 +2,6 @@ import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import {
   EKMixin,
-  EKOnInsertMixin,
   keyUp
 } from 'ember-keyboard';
 
@@ -15,7 +14,7 @@ const {
   run
 } = Ember;
 
-export default Component.extend(DirectableComponentMixin, EKMixin, EKOnInsertMixin, {
+export default Component.extend(DirectableComponentMixin, EKMixin, {
   handleautoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
       this._resolve();

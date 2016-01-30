@@ -1,11 +1,13 @@
 {{#if mediaIsLoaded}}
   {{#each components as |componentName|}}
     {{component componentName
+      isFocused=isFocused
       theaterId=theaterId
     }}
   {{/each}}
 {{else}}
   {{component mediaLoader
+    isFocused=isFocused
     theaterId=theaterId
     complete=(action 'startGame')
   }}

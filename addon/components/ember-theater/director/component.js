@@ -20,6 +20,7 @@ export default Component.extend({
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   directables: alias('stageManager.directables'),
+  keyboardActivated: alias('isFocused'),
 
   _loadLatestScene: on('didInsertElement', function() {
     get(this, 'sceneManager').loadLatestScene();

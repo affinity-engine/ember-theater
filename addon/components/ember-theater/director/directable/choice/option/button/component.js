@@ -2,8 +2,8 @@ import Ember from 'ember';
 import layout from './template';
 import {
   keyDown,
-  EKMixin,
-  EKOnFocusMixin
+  EKOnFocusMixin,
+  EKMixin
 } from 'ember-keyboard';
 
 const {

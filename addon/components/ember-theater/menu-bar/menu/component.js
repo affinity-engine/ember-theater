@@ -5,8 +5,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 import {
   keyUp,
-  EKMixin,
-  EKOnInsertMixin
+  EKMixin
 } from 'ember-keyboard';
 
 const {
@@ -22,7 +21,7 @@ const { RSVP: { Promise } } = Ember;
 
 const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 
-export default Component.extend(EKMixin, EKOnInsertMixin, {
+export default Component.extend(EKMixin, {
   layout,
 
   keyboardFirstResponder: true,

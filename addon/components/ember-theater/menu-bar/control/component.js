@@ -3,8 +3,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 import {
   keyDown,
-  EKMixin,
-  EKOnInsertMixin
+  EKMixin
 } from 'ember-keyboard';
 
 const {
@@ -15,7 +14,7 @@ const {
   set
 } = Ember;
 
-export default Component.extend(EKMixin, EKOnInsertMixin, {
+export default Component.extend(EKMixin, {
   keyboardFirstResponder: true,
   keyboardLaxPriority: true,
   classNames: ['et-menu-bar-control-icon'],

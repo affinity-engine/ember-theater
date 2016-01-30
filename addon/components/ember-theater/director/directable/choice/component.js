@@ -10,8 +10,7 @@ import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import {
   keyUp,
-  EKMixin,
-  EKOnInsertMixin
+  EKMixin
 } from 'ember-keyboard';
 
 const {
@@ -28,7 +27,6 @@ const mixins = [
   AdjustableKeyboardMixin,
   DirectableComponentMixin,
   EKMixin,
-  EKOnInsertMixin,
   PerfectScrollbarMixin,
   StyleableMixin,
   TransitionInMixin

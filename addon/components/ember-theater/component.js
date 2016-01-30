@@ -18,8 +18,9 @@ export default Component.extend({
 
   'aria-live': 'polite',
   ariaRole: 'region',
-  attributeBindings: ['aria-live'],
+  attributeBindings: ['aria-live', 'tabIndex'],
   classNames: ['ember-theater'],
+  tabIndex: 0,
 
   multitonServiceManager: service('multiton-service-manager'),
   configService: multitonService('ember-theater/config', 'theaterId'),
@@ -50,6 +51,14 @@ export default Component.extend({
     const theaterId = get(this, 'theaterId');
 
     get(this, 'multitonServiceManager').destroyServices(theaterId);
+  }),
+
+  claimFocus: on('focusIn', function() {
+    set(this, 'isFocused', true);
+  }),
+
+  relinquishFocus: on('focusOut', function() {
+    set(this, 'isFocused', false);
   }),
 
   actions: {

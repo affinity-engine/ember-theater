@@ -3,8 +3,7 @@ import layout from './template';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
 import {
   keyDown,
-  EKMixin,
-  EKOnInsertMixin
+  EKMixin
 } from 'ember-keyboard';
 import animate from 'ember-theater/utils/ember-theater/animate';
 
@@ -29,7 +28,7 @@ const { String: { htmlSafe } } = Ember;
 const { run: { later } } = Ember;
 const { or } = computed;
 
-export default Component.extend(EKMixin, EKOnInsertMixin, WindowResizeMixin, {
+export default Component.extend(EKMixin, WindowResizeMixin, {
   activeWordIndex: 0,
   classNames: ['et-text-body-container'],
   layout: layout,
