@@ -20,7 +20,7 @@ export function initialize(application) {
   const multitonServices = gatherModules('multiton-services');
 
   multitonServices.forEach((multitonService, multitonServiceName) => {
-    application.register(`multiton-service:${multitonServiceName}`, multitonService, { singleton: false });
+    application.register(`multiton-service:${multitonServiceName}`);
   });
 }
 

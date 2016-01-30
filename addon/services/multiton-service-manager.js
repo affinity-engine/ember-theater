@@ -12,15 +12,21 @@ const {
 export default Service.extend({
   serviceMap: computed(() => Ember.Object.create()),
 
+  getService(path, key) {
+    return get(this, `serviceMap.${key}.${path}`);
+  },
+
   addService(path, key) {
-    const multitonService = getOwner(this).lookup(`multiton-service:${path}`);
+    const multitonService = getOwner(this).lookup(`multiton-service:${path}`, { singleton: false });
     const serviceMap = get(this, 'serviceMap');
 
     if (isBlank(get(serviceMap, key))) {
       set(serviceMap, key, Ember.Object.create());
     }
 
+    console.log(path + ' ' + key + ' ' + multitonService.get('theaterId'))
     set(multitonService, '_multitonServiceKey', key);
+    console.log(path + ' ' + key + ' ' + multitonService.get('theaterId'))
 
     return set(serviceMap, `${key}.${path}`, multitonService);
   },
