@@ -1,9 +1,1 @@
 {{fa-icon 'cloud-download'}}
-{{#if isOpen}}
-  {{#modal-dialog}}
-    {{ember-theater/menu-bar/load/menu
-      theaterId=theaterId
-      closeMenu=(action 'closeMenu')
-    }}
-  {{/modal-dialog}}
-{{/if}}

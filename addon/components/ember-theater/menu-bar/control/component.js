@@ -9,7 +9,6 @@ import {
 
 const {
   Component,
-  K,
   get,
   isPresent,
   on,
@@ -34,30 +33,8 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
     }));
   }),
 
-  initializeFilter: on('init', function() {
-    const theaterId = get(this, 'theaterId');
-    const filter = get(this, 'container').lookupFactory('direction:filter').create({
-      theaterId
-    });
-
-    set(this, 'filter', filter);
-  }),
-
   toggleOpen: on('click', 'touchEnd', function() {
-    const config = get(this, 'config.attrs.menuBar');
-
-    this.toggleProperty('isOpen');
-
-    const resolve = () => {
-      get(this, 'filter').perform(K, get(config, 'innerEffect.effect'), {
-        duration: get(config, 'innerEffect.duration'),
-        iterations: 'infinite'
-      });
-    };
-
-    get(this, 'filter').perform(resolve, get(config, 'transitionIn.effect'), {
-      duration: get(config, 'transitionIn.duration')
-    });
+    this.attrs.openMenu();
   }),
 
   startHovering: on('focusIn', 'mouseEnter', function() {
@@ -70,17 +47,5 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
     if (isPresent(this.stopHoverEffect)) {
       this.stopHoverEffect();
     }
-  }),
-
-  actions: {
-    closeMenu() {
-      const config = get(this, 'config.attrs.menuBar');
-
-      set(this, 'isOpen', false);
-      get(this, 'filter').perform(K, get(config, 'transitionOut.effect'), {
-        duration: get(config, 'transitionOut.duration'),
-        destroy: true
-      });
-    }
-  }
+  })
 });

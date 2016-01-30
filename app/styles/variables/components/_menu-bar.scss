@@ -1,11 +1,12 @@
-$et-menu-bar-vertical-rhythm: 1vh !default;
+$et-menu-bar-vertical-rhythm: $et-default-line-height !default;
+$et-menu-bar-base-padding: $et-menu-bar-vertical-rhythm * 0.16 !default;
 
 $et-menu-bar-font-size: $et-default-font-size !default;
 $et-menu-bar-top: 0 !default;
 $et-menu-bar-left: 0 !default;
 $et-menu-bar-right: 0 !default;
-$et-menu-bar-height: 10.5vh !default;
-$et-menu-bar-padding: $et-menu-bar-vertical-rhythm 4vh !default;
+$et-menu-bar-height: $et-default-line-height + ($et-menu-bar-base-padding * 2) + $et-default-border-width !default;
+$et-menu-bar-padding: $et-menu-bar-base-padding $et-menu-bar-base-padding * 2 !default;
 $et-menu-bar-transition-speed: $et-default-transition-speed !default;
 
-$et-menu-bar-icon-margin-left: $et-menu-bar-vertical-rhythm !default;
+$et-menu-bar-icon-margin-left: $et-menu-bar-vertical-rhythm * 0.16 !default;

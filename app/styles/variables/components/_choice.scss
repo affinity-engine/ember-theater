@@ -1,11 +1,11 @@
-$et-choice-rhythm: 0.1vw !default;
+$et-choice-rhythm: $et-default-line-height / 10 !default;
 
 $et-choice-padding: $et-choice-rhythm * 5 !default;
 $et-choice-border-width: $et-default-border-width !default;
 $et-choice-opacity: $et-semi-transparency !default;
 
 $et-choice-header-font-size: $et-large-font-size !default;
-$et-choice-header-margin: 0 3vw !default;
+$et-choice-header-margin: 0 $et-choice-rhythm !default;
 $et-choice-header-margin-bottom: $et-choice-rhythm * 10 !default;
 $et-choice-header-font-family: $et-primary-serif !default;
 

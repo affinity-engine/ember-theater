@@ -1,9 +1,9 @@
-$et-block-left: 15vw;
-$et-block-right: 15vw;
-$et-block-bottom: 10vh;
+$et-block-left: 15%;
+$et-block-right: 15%;
+$et-block-bottom: 10%;
 
 // choice
-$et-choice-block-width: 62vw !default;
+$et-choice-block-width: 62% !default;
 $et-choice-block-top: 20% !default;
 $et-choice-block-right: (100 - $et-choice-block-width) / 2 !default;
 $et-choice-block-left: (100 - $et-choice-block-width) / 2 !default;
@@ -20,7 +20,7 @@ $et-choice-option-block-border-width: $et-choice-border-width !default;
 
 // text
 $et-text-block-padding-base: $et-text-padding-base !default;
-$et-text-block-padding: $et-text-block-padding-base $et-text-block-padding-base * 2 !default;
+$et-text-block-padding: $et-text-block-padding-base $et-text-block-padding-base * 1.61 !default;
 $et-text-block-margin: 0 !default;
 $et-text-block-border-width: $et-text-border-width !default;
 $et-text-block-font-size: $et-text-font-size !default;

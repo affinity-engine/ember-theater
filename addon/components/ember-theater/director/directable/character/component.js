@@ -50,7 +50,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
     get() {
       const height = get(this, 'height');
 
-      return new SafeString(`height: ${height}vh;`);
+      return new SafeString(`height: ${height}%;`);
     }
   }).readOnly(),
 

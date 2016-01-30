@@ -3,7 +3,7 @@ $et-text-included: false !default;
 
 @if ($et-choice-included == true) {
   .et-choice.et-block {
-    max-height: 100vh;
+    max-height: 100%;
     transform: translateY(-$et-choice-block-top);
 
     top: $et-choice-block-top;

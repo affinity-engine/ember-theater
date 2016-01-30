@@ -1,9 +1,1 @@
 {{fa-icon 'refresh' spin=hovering}}
-{{#if isOpen}}
-  {{#modal-dialog}}
-    {{ember-theater/menu-bar/reset/menu
-      theaterId=theaterId
-      closeMenu=(action 'closeMenu')
-    }}
-  {{/modal-dialog}}
-{{/if}}
