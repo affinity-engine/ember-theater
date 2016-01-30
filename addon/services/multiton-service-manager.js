@@ -24,9 +24,7 @@ export default Service.extend({
       set(serviceMap, key, Ember.Object.create());
     }
 
-    console.log(path + ' ' + key + ' ' + multitonService.get('theaterId'))
     set(multitonService, '_multitonServiceKey', key);
-    console.log(path + ' ' + key + ' ' + multitonService.get('theaterId'))
 
     return set(serviceMap, `${key}.${path}`, multitonService);
   },

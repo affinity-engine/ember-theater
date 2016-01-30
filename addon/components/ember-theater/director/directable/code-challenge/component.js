@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
-import configurable from 'ember-theater/macros/ember-theater/director/configurable';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
@@ -13,13 +13,15 @@ const {
   set
 } = Ember;
 
+const configurablePriority = ['directable.options', 'config.attrs.director.codeChallenge', 'config.attrs.globals'];
+
 export default Component.extend(DirectableComponentMixin, {
   layout,
 
   config: multitonService('ember-theater/config', 'theaterId'),
 
-  transitionOut: configurable('codeChallenge', 'transitionOut.effect'),
-  transitionOutDuration: configurable('codeChallenge', 'transitionOut.duration', 'transitionDuration'),
+  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
+  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
