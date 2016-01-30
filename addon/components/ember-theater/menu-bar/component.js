@@ -63,7 +63,7 @@ export default Component.extend({
     },
 
     closeMenu() {
-      delete this.currentMenu;
+      set(this, 'currentMenu', false);
 
       const config = get(this, 'config.attrs.menuBar');
 

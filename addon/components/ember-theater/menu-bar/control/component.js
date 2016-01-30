@@ -10,8 +10,7 @@ const {
   Component,
   get,
   isPresent,
-  on,
-  set
+  on
 } = Ember;
 
 export default Component.extend(EKMixin, {
