@@ -3,9 +3,7 @@ import Ember from 'ember';
 const {
   computed,
   get,
-  getOwner,
-  isBlank,
-  set
+  getOwner
 } = Ember;
 
 export default function multiService(path, keyAttribute) {

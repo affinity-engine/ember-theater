@@ -3,7 +3,6 @@ import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   computed,
   get,
   getProperties,

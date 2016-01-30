@@ -20,9 +20,14 @@ const {
 const { alias } = computed;
 const { run: { later } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
-const { inject: { service } } = Ember;
 
-const configurablePriority = ['directable.options', 'character.character', 'character', 'config.attrs.director.character', 'config.attrs.globals'];
+const configurablePriority = [
+  'directable.options',
+  'character.character',
+  'character',
+  'config.attrs.director.character',
+  'config.attrs.globals'
+];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
   attributeBindings: ['style'],

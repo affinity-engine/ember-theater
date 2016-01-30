@@ -4,12 +4,10 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   get,
   isPresent
 } = Ember;
 
-const { inject: { service } } = Ember;
 const { run: { later } } = Ember;
 
 export default Ember.Object.extend(TheaterIdMixin, {

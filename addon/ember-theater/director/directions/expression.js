@@ -3,7 +3,6 @@ import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { get } = Ember;
-const { inject: { service } } = Ember;
 
 export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),

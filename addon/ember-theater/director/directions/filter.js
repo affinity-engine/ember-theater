@@ -5,7 +5,6 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
-  inject,
   typeOf
 } = Ember;
 

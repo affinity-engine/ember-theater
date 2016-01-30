@@ -13,7 +13,13 @@ const { alias } = computed;
 const { inject: { service } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
 
-const configurablePriority = ['directable.options', 'backdrop.backdrop', 'backdrop', 'config.attrs.director.backdrop', 'config.attrs.globals'];
+const configurablePriority = [
+  'directable.options',
+  'backdrop.backdrop',
+  'backdrop',
+  'config.attrs.director.backdrop',
+  'config.attrs.globals'
+];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'style'],

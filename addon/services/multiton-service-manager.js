@@ -30,10 +30,10 @@ export default Service.extend({
     const service = get(serviceMap, key);
     const multitonKeys = Object.keys(service);
 
-    multitonKeys.forEach((key) => {
-      get(service, key).destroy();
+    multitonKeys.forEach((multitonKey) => {
+      get(service, multitonKey).destroy();
     });
 
-    delete serviceMap[key];
+    Reflect.deleteProperty(serviceMap[key]);
   }
 });

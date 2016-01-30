@@ -12,7 +12,6 @@ const {
   Component,
   computed,
   get,
-  inject,
   isPresent,
   on
 } = Ember;

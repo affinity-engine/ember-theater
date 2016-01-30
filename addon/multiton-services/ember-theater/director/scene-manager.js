@@ -3,13 +3,11 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   get,
   set
 } = Ember;
 
 const { computed: { alias } } = Ember;
-const { inject: { service } } = Ember;
 
 export default Ember.Object.extend(TheaterIdMixin, {
   curtainPulley: multitonService('ember-theater/director/scene/curtain-pulley', 'theaterId'),

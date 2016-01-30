@@ -4,7 +4,6 @@ import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { Component } = Ember;
-const { inject: { service } } = Ember;
 const { computed: { reads } } = Ember;
 
 const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];

@@ -10,7 +10,6 @@ const {
 } = Ember;
 
 const { computed: { alias } } = Ember;
-const { inject: { service } } = Ember;
 
 export default Mixin.create({
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),

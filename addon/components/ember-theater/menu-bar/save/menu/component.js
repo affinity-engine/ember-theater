@@ -4,7 +4,6 @@ import Menu from 'ember-theater/components/ember-theater/menu-bar/menu/component
 const { get } = Ember;
 
 const { computed: { reads } } = Ember;
-const { inject: { service } } = Ember;
 
 export default Menu.extend({
   header: 'ember-theater.menu.save.header',

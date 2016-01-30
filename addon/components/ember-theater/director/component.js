@@ -10,7 +10,6 @@ const {
 } = Ember;
 
 const { alias } = computed;
-const { inject: { service } } = Ember;
 
 export default Component.extend({
   layout,

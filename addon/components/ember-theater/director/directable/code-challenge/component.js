@@ -13,8 +13,6 @@ const {
   set
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Component.extend(DirectableComponentMixin, {
   layout,
 

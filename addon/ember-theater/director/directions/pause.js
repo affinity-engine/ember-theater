@@ -8,8 +8,6 @@ const {
   typeOf
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Direction.extend({
   layer: 'meta.pause',
 

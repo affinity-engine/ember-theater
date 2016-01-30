@@ -19,7 +19,6 @@ const {
 } = Ember;
 
 const { RSVP: { Promise } } = Ember;
-const { inject: { service } } = Ember;
 
 const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 

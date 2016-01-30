@@ -3,13 +3,10 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   get,
   getProperties,
   isEmpty
 } = Ember;
-
-const { inject: { service } } = Ember;
 
 export default Ember.Object.extend(TheaterIdMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
@@ -39,13 +36,13 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   loadScene(save, sceneId, options) {
     const {
-      configs,
+      config,
       saveStateManager,
       sceneManager
-    } = getProperties(this, 'configs', 'saveStateManager', 'sceneManager');
+    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager');
 
     saveStateManager.loadRecord(save);
-    // configs.resetConfig();
+    config.resetConfig();
 
     sceneManager.toScene(sceneId, options);
   }

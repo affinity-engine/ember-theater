@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 

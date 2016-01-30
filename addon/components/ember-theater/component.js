@@ -5,14 +5,13 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 const {
   Component,
   get,
-  getProperties,
   isBlank,
   on,
   set
 } = Ember;
 
-const { inject: { service } } = Ember;
 const { computed: { reads } } = Ember;
+const { inject: { service } } = Ember;
 
 export default Component.extend({
   layout,
@@ -35,7 +34,7 @@ export default Component.extend({
 
     set(this, 'theaterId', theaterId);
 
-    const mergedConfig = get(this, 'configService').resetConfig(config);
+    const mergedConfig = get(this, 'configService').initializeConfig(config);
     const initialComponents = get(mergedConfig, 'producer.components');
 
     get(this, 'producer.components').addObjects(initialComponents);

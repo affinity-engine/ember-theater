@@ -11,7 +11,13 @@ const {
 
 const { inject: { service } } = Ember;
 
-const configurablePriority = ['directable.options', 'expression.expression', 'expression', 'config.attrs.director.expression', 'config.attrs.globals'];
+const configurablePriority = [
+  'directable.options',
+  'expression.expression',
+  'expression',
+  'config.attrs.director.expression',
+  'config.attrs.globals'
+];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
   attributeBindings: ['caption:alt', 'src'],

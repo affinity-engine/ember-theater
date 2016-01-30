@@ -16,7 +16,6 @@ const {
 
 const { alias } = computed;
 const { Handlebars: { SafeString } } = Ember;
-const { inject: { service } } = Ember;
 
 export default Component.extend({
   layout,

@@ -4,7 +4,6 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   computed,
   get,
   isEmpty,
@@ -18,7 +17,14 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
 
-  resetConfig(theaterConfig) {
+  initializeConfig(theaterConfig) {
+    set(this, 'theaterConfig', theaterConfig);
+
+    return this.resetConfig();
+  },
+
+  resetConfig() {
+    const theaterConfig = get(this, 'theaterConfig');
     const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
     const saveStateManager = get(this, 'saveStateManager');
     const savedConfig = saveStateManager.getStateValue('_config') || {};

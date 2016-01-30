@@ -16,8 +16,6 @@ const {
   set
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Component.extend(EKMixin, EKOnInsertMixin, {
   keyboardFirstResponder: true,
   keyboardLaxPriority: true,

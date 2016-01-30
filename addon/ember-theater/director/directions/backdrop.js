@@ -7,8 +7,6 @@ const {
   isPresent
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Direction.extend({
   layer: 'theater.stage.background.backdrop',
 
