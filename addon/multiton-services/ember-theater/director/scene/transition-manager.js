@@ -5,6 +5,7 @@ import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
   get,
+  getOwner,
   isPresent
 } = Ember;
 
@@ -48,7 +49,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _buildScene(id, options) {
-    const factory = get(this, 'container').lookupFactory(`scene:${id}`);
+    const factory = getOwner(this).lookup(`scene:${id}`);
     const theaterId = get(this, 'theaterId');
 
     return factory.create({

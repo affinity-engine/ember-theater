@@ -4,6 +4,7 @@ import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 const {
   computed,
   get,
+  getOwner,
   isBlank,
   merge,
   setProperties
@@ -41,7 +42,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _addNewDirectable(properties) {
-    const Directable = this.container.lookup('directable:main');
+    const Directable = getOwner(this).lookup('directable:main');
     const directable = Directable.create(properties);
 
     get(this, 'directables').pushObject(directable);

@@ -7,6 +7,7 @@ const {
   Component,
   K,
   get,
+  getOwner,
   on,
   set
 } = Ember;
@@ -33,7 +34,7 @@ export default Component.extend({
 
   initializeFilter: on('init', function() {
     const theaterId = get(this, 'theaterId');
-    const filter = get(this, 'container').lookupFactory('direction:filter').create({
+    const filter = getOwner(this).lookup('direction:filter').create({
       theaterId
     });
 

@@ -1,13 +1,17 @@
 import Ember from 'ember';
 import gatherModules from 'ember-theater/utils/gather-modules';
 
-const { get } = Ember;
+const {
+  get,
+  getOwner
+} = Ember;
+
 const { String: { camelize } } = Ember;
 
 const injectDirectionProxy = function injectDirectionProxy(application, name) {
   const proxy = function proxy(...args) {
     // the scene is the context here
-    const factory = get(this, 'container').lookupFactory(`direction:${name}`);
+    const factory = getOwner(this).lookup(`direction:${name}`);
 
     return get(this, 'director').direct(this, factory, args);
   };
@@ -21,7 +25,7 @@ export function initialize(application) {
 
   directions.forEach((direction, directionName) => {
     direction.type = directionName;
-    application.register(`direction:${directionName}`, direction, { singleton: false });
+    application.register(`direction:${directionName}`, direction, { instantiate: false, singleton: false });
     injectDirectionProxy(application, directionName);
   });
 }
