@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
@@ -9,11 +10,8 @@ const {
   set
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Component.extend(DirectableComponentMixin, {
-  soundManager: service('ember-theater/sound-manager'),
-  store: service('store'),
+  soundManager: multitonService('ember-theater/sound-manager', 'theaterId'),
 
   instantiateSound: on('didInsertElement', function() {
     const soundManager = get(this, 'soundManager');

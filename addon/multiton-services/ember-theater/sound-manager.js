@@ -1,15 +1,14 @@
 import Ember from 'ember';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   get,
   merge
 } = Ember;
 
-const { inject: { service } } = Ember;
-
-export default Service.extend({
-  config: service('ember-theater/config'),
+export default Ember.Object.extend(TheaterIdMixin, {
+  config: multitonService('ember-theater/config', 'theaterId'),
 
   createInstance(id) {
     return createjs.Sound.createInstance(id);
