@@ -7,7 +7,7 @@ import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleabl
 import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import {
   keyUp,
   EKMixin,
@@ -34,7 +34,7 @@ const mixins = [
   TransitionInMixin
 ];
 
-const configurablePriority = ['directable.options', 'config.director.choice', 'config.globals'];
+const configurablePriority = ['directable.options', 'config.attrs.director.choice', 'config.attrs.globals'];
 
 export default Component.extend(...mixins, {
   layout,
@@ -43,10 +43,8 @@ export default Component.extend(...mixins, {
   classNames: ['et-choice'],
   classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
 
-  configs: service('ember-theater/config'),
+  config: multitonService('ember-theater/config', 'theaterId'),
   translator: service('ember-theater/translator'),
-
-  config: multiService('configs'),
 
   moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),
   moveDownKeys: configurable(configurablePriority, 'keys.moveDown'),

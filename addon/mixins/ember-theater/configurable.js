@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Mixin
@@ -8,6 +8,5 @@ const {
 const { inject: { service } } = Ember;
 
 export default Mixin.create({
-  configs: service('ember-theater/config'),
-  config: multiService('configs')
+  config: multitonService('ember-theater/config', 'theaterId')
 });

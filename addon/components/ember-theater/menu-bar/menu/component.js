@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 import {
   keyUp,
@@ -21,19 +21,16 @@ const {
 const { RSVP: { Promise } } = Ember;
 const { inject: { service } } = Ember;
 
-const configurablePriority = ['config.menuBar', 'config.globals'];
+const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 
 export default Component.extend(EKMixin, EKOnInsertMixin, {
   layout,
+
   keyboardFirstResponder: true,
 
-  configs: service('ember-theater/config'),
-  saveStateManagers: service('ember-theater/save-state-manager'),
-  sceneManagers: service('ember-theater/director/scene-manager'),
-
-  config: multiService('configs'),
-  saveStateManager: multiService('saveStateManagers'),
-  sceneManager: multiService('sceneManagers'),
+  config: multitonService('ember-theater/config', 'theaterId'),
+  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
   cancelKeys: configurable(configurablePriority, 'keys.cancel'),
   menuBarClassNames: configurable(configurablePriority, 'classNames'),

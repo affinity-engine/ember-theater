@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
@@ -15,40 +15,42 @@ const { inject: { service } } = Ember;
 const { computed: { reads } } = Ember;
 
 export default Component.extend({
+  layout,
+
   'aria-live': 'polite',
   ariaRole: 'region',
   attributeBindings: ['aria-live'],
   classNames: ['ember-theater'],
-  layout: layout,
 
-  configService: service('ember-theater/config'),
-  producers: service('ember-theater/producer'),
+  multitonServiceManager: service('multiton-service-manager'),
+  configService: multitonService('ember-theater/config', 'theaterId'),
+  producer: multitonService('ember-theater/producer', 'theaterId'),
 
-  producer: multiService('producers'),
   components: reads('producer.components'),
-  configInstance: multiService('configService'),
-  mediaLoader: reads('configInstance.mediaLoader.type'),
+  mediaLoader: reads('configService.attrs.mediaLoader.type'),
 
   initializeConfig: on('didReceiveAttrs', function() {
-    const {
-      config,
-      configService
-    } = getProperties(this, 'config', 'configService');
-
-    const mergedConfig = configService.resetConfig(config);
-    const initialComponents = get(mergedConfig, 'producer.components');
-    const theaterId = get(mergedConfig, 'theaterId');
+    const config = get(this, 'config');
+    const theaterId = get(config, 'theaterId') || 'ember-theater-default';
 
     set(this, 'theaterId', theaterId);
-    get(this, 'producers').createInstance(theaterId, {
-      components: Ember.A(initialComponents)
-    });
+
+    const mergedConfig = get(this, 'configService').resetConfig(config);
+    const initialComponents = get(mergedConfig, 'producer.components');
+
+    get(this, 'producer.components').addObjects(initialComponents);
   }),
 
   setMediaIsLoaded: on('init', function() {
     const mediaLoader = get(this, 'mediaLoader');
 
     set(this, 'mediaIsLoaded', isBlank(mediaLoader));
+  }),
+
+  destroyMultitons: on('willDestroyElement', function() {
+    const theaterId = get(this, 'theaterId');
+
+    get(this, 'multitonServiceManager').destroyServices(theaterId);
   }),
 
   actions: {

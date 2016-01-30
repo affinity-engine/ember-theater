@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import gatherModules from 'ember-theater/utils/ember-theater/director/gather-modules';
+import gatherModules from 'ember-theater/utils/gather-modules';
 
 const { get } = Ember;
 const { String: { camelize } } = Ember;
@@ -9,7 +9,7 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
     // the scene is the context here
     const factory = get(this, 'container').lookupFactory(`direction:${name}`);
 
-    return get(this, 'directors').direct(this, factory, args);
+    return get(this, 'director').direct(this, factory, args);
   };
 
   application.register(`direction:${name}-proxy`, proxy, { instantiate: false });

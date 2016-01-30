@@ -3,7 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import configurable from 'ember-theater/macros/ember-theater/director/configurable';
 import animate from 'ember-theater/utils/ember-theater/animate';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
@@ -18,9 +18,7 @@ const { inject: { service } } = Ember;
 export default Component.extend(DirectableComponentMixin, {
   layout,
 
-  configs: service('ember-theater/config'),
-
-  config: multiService('configs'),
+  config: multitonService('ember-theater/config', 'theaterId'),
 
   transitionOut: configurable('codeChallenge', 'transitionOut.effect'),
   transitionOutDuration: configurable('codeChallenge', 'transitionOut.duration', 'transitionDuration'),

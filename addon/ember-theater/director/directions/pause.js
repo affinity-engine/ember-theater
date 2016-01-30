@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   get,
@@ -13,9 +13,7 @@ const { inject: { service } } = Ember;
 export default Direction.extend({
   layer: 'meta.pause',
 
-  stageManagers: service('ember-theater/director/stage-manager'),
-
-  stageManager: multiService('stageManagers'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   perform(resolve, ...args) {
     const keys = Ember.A();

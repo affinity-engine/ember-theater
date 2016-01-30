@@ -1,13 +1,11 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { inject } = Ember;
 
 export default Direction.extend({
-  saveStateManagers: inject.service('ember-theater/save-state-manager'),
-
-  saveStateManager: multiService('saveStateManagers', 'theareId'),
+  saveStateManager: multitonService('ember-theater/save-state-manager', 'theareId'),
 
   perform(resolve, key) {
     this.get('saveStateManager').deleteStateValue(key);

@@ -1,5 +1,4 @@
 export default {
-  theaterId: 'ember-theater-default',
   priority: 0,
   globals: {
     classNames: {

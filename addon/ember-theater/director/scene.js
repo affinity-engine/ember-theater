@@ -1,13 +1,11 @@
 import Ember from 'ember';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { set } = Ember;
 const { inject: { service } } = Ember;
 
 export default Ember.Object.extend({
-  directors: service('ember-theater/director'),
-
-  director: multiService('directors'),
+  director: multitonService('ember-theater/director/director', 'theaterId'),
 
   abort() {
     set(this, 'isAborted', true);

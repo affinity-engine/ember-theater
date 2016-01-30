@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Mixin,
@@ -13,9 +13,7 @@ const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Mixin.create({
-  stageManagers: service('ember-theater/director/stage-manager'),
-
-  stageManager: multiService('stageManagers'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   autoResolve: alias('directable.autoResolve'),
   autoResolveResult: alias('directable.autoResolveResult'),

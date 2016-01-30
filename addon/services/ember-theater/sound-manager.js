@@ -69,7 +69,7 @@ export default Service.extend({
     const toVolume = get(options, 'volume');
     const volumeDistance = toVolume - fromVolume;
 
-    const duration = get(options, 'duration') || get(this, 'config.sound.duration') || 1000;
+    const duration = get(options, 'duration') || get(this, 'config.attrs.sound.duration') || 1000;
     const stepSize = volumeDistance / (duration / 10);
 
     instance.currentFade = setInterval(() => {

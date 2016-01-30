@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 import {
   keyDown,
@@ -24,13 +24,11 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
   classNames: ['et-menu-bar-control-icon'],
   tagName: 'button',
 
-  configs: service('ember-theater/config'),
-
-  config: multiService('configs'),
+  config: multitonService('ember-theater/config', 'theaterId'),
 
   setupFocusKeystroke: on('init', function() {
     const type = get(this, 'type');
-    const keys = get(this, `config.menuBar.${type}.keys.open`);
+    const keys = get(this, `config.attrs.menuBar.${type}.keys.open`);
 
     keys.forEach((key) => this.on(keyDown(key), (event) => {
       this.toggleOpen();
@@ -45,7 +43,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
   }),
 
   toggleOpen: on('click', 'touchEnd', function() {
-    const config = get(this, 'config.menuBar');
+    const config = get(this, 'config.attrs.menuBar');
 
     this.toggleProperty('isOpen');
 
@@ -75,7 +73,7 @@ export default Component.extend(EKMixin, EKOnInsertMixin, {
 
   actions: {
     closeMenu() {
-      const config = get(this, 'config.menuBar');
+      const config = get(this, 'config.attrs.menuBar');
 
       set(this, 'isOpen', false);
       get(this, 'filter').perform(K, get(config, 'transitionOut.effect'), {

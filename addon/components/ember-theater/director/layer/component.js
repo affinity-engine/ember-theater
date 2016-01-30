@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
@@ -19,16 +19,14 @@ const { Handlebars: { SafeString } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Component.extend({
+  layout,
+
   attributeBindings: ['animationName:animation-name', 'style'],
   classNames: ['et-layer'],
   classNameBindings: ['layerName'],
-  layout: layout,
 
-  layerManagers: service('ember-theater/director/layer-manager'),
-  stageManagers: service('ember-theater/director/stage-manager'),
-
-  layerManager: multiService('layerManagers'),
-  stageManager: multiService('stageManagers'),
+  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),

@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   get,
@@ -8,16 +8,11 @@ const {
   typeOf
 } = Ember;
 
-const { inject: { service } } = Ember;
-
 export default Direction.extend({
   layer: 'theater.prompt.text',
 
-  fixtureStores: service('ember-theater/fixture-store'),
-  stageManagers: service('ember-theater/director/stage-manager'),
-
-  fixtureStore: multiService('fixtureStores'),
-  stageManager: multiService('stageManagers'),
+  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   perform(resolve, characterOrText, textOrOptions = {}, optionsOnly = {}) {
     const characterIsPresent = typeOf(textOrOptions) === 'string' ||

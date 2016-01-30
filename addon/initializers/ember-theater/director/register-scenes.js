@@ -1,4 +1,4 @@
-import gatherModules from 'ember-theater/utils/ember-theater/director/gather-modules';
+import gatherModules from 'ember-theater/utils/gather-modules';
 
 export function initialize(application) {
   const scenes = gatherModules('ember-theater\/director\/scenes');

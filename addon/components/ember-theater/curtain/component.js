@@ -3,7 +3,7 @@ import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import appConfig from 'ember-get-config';
 import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
-import multiService from 'ember-theater/macros/ember-theater/multi-service';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const { modulePrefix } = appConfig;
 
@@ -28,20 +28,18 @@ export default Component.extend(ConfigurableMixin, {
 
   preloader: service('preloader'),
   translator: service('ember-theater/translator'),
-  fixtureStores: service('ember-theater/fixture-store'),
+  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  fixtureStore: multiService('fixtureStores'),
+  title: alias('config.attrs.title'),
 
-  title: alias('config.title'),
-
-  progressBarShape: computed('config.mediaLoader.progressBarStyle.shape', {
+  progressBarShape: computed('config.attrs.mediaLoader.progressBarStyle.shape', {
     get() {
-      return get(this, 'config.mediaLoader.progressBarStyle.shape') || 'Circle';
+      return get(this, 'config.attrs,mediaLoader.progressBarStyle.shape') || 'Circle';
     }
   }).readOnly(),
 
   _styleProgressBar: on('didInsertElement', function() {
-    const config = get(this, 'config');
+    const config = get(this, 'config.attrs');
 
     const color = get(config, 'mediaLoader.progressBarStyle.color') || this.$().css('color');
     const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') ||
@@ -87,7 +85,7 @@ export default Component.extend(ConfigurableMixin, {
   _loadMedia() {
     const fixtureStore = get(this, 'fixtureStore');
     const preloader = get(this, 'preloader');
-    const paths = get(this, 'config.mediaLoader.filesToPreload');
+    const paths = get(this, 'config.attrs.mediaLoader.filesToPreload');
     const fixtureAttributePairs = paths.map((path) => {
       const [fixture, attribute] = path.split(':');
 
@@ -110,7 +108,7 @@ export default Component.extend(ConfigurableMixin, {
 
     preloader.onComplete(() => {
       later(() => {
-        const duration = get(this, 'config.mediaLoader.fadeOutDuration') || 500;
+        const duration = get(this, 'config.attrs.mediaLoader.fadeOutDuration') || 500;
 
         animate(this.element, { opacity: 0 }, { duration }).then(() => {
           this.attrs.complete();
