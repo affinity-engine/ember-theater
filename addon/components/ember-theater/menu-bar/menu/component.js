@@ -56,7 +56,6 @@ export default Component.extend(EKMixin, {
 
   renderDirectable() {
     const classNames = get(this, 'menuClassNames') || get(this, 'menuBarClassNames');
-    const keyboardPriority = 1000000;
     const {
       choices,
       header
@@ -68,8 +67,7 @@ export default Component.extend(EKMixin, {
         header,
         resolve,
         options: {
-          classNames,
-          keyboardPriority
+          classNames
         }
       });
 

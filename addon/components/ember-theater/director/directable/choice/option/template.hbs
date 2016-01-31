@@ -8,14 +8,7 @@
   }}
 {{else}}
   {{ember-theater/director/directable/choice/option/button
-    activeIndex=activeIndex
-    index=index
     choice=choice
-    keyboardPriority=keyboardPriority
-    moveDownKeys=moveDownKeys
-    moveUpKeys=moveUpKeys
-    focusDown=focusDown
-    focusUp=focusUp
     choose=(action 'choose' choice)
     toggleInput=(action 'toggleInput')
   }}

@@ -9,6 +9,7 @@ import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import {
+  keyDown,
   keyUp,
   EKMixin
 } from 'ember-keyboard';
@@ -17,6 +18,7 @@ const {
   Component,
   computed,
   get,
+  getProperties,
   on,
   set
 } = Ember;
@@ -37,7 +39,6 @@ const configurablePriority = ['directable.options', 'config.attrs.director.choic
 export default Component.extend(...mixins, {
   layout,
 
-  activeIndex: 0,
   classNames: ['et-choice'],
   classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
 
@@ -96,28 +97,47 @@ export default Component.extend(...mixins, {
     });
   }),
 
+  setupKeys: on('init', function() {
+    const { moveDownKeys, moveUpKeys } = getProperties(this, 'moveDownKeys', 'moveUpKeys');
+
+    moveDownKeys.forEach((key) => this.on(keyDown(key), (event) => this.focusDown(event)));
+    moveUpKeys.forEach((key) => this.on(keyDown(key), (event) => this.focusUp(event)));
+  }),
+
+  focusDown(event) {
+    event.preventDefault();
+
+    const choices = this.$('button');
+    const current = document.activeElement;
+    const index = choices.index(current);
+    const length = choices.length;
+    const newIndex = index + 1 === length ? 0 : index + 1;
+
+    choices.eq(newIndex).focus();
+  },
+
+  focusUp(event) {
+    event.preventDefault();
+
+    const choices = this.$('button');
+    const current = document.activeElement;
+    const index = choices.index(current);
+    const length = choices.length;
+    const newIndex = index - 1 < 0 ? length - 1 : index - 1;
+
+    choices.eq(newIndex).focus();
+  },
+
   actions: {
     choose(choice) {
       const effect = get(this, 'transitionOut');
       const duration = get(this, 'transitionOutDuration');
 
+      this.$().parents('.ember-theater').trigger('focus');
+
       animate(this.element, effect, { duration }).then(() => {
         this.resolveAndDestroy(choice);
       });
-    },
-
-    focusDown(index) {
-      const length = get(this, 'choices.length');
-      const activeIndex = index + 1 === length ? 0 : index + 1;
-
-      set(this, 'activeIndex', activeIndex);
-    },
-
-    focusUp(index) {
-      const length = get(this, 'choices.length');
-      const activeIndex = index - 1 < 0 ? length - 1 : index - 1;
-
-      set(this, 'activeIndex', activeIndex);
     }
   }
 });

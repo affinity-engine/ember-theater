@@ -1,18 +1,12 @@
 {{#if header}}
   <div class='et-choice-header'>{{header}}</div>
 {{/if}}
-{{#each choices as |choice index|}}
+{{#each choices as |choice|}}
   {{ember-theater/director/directable/choice/option
-    activeIndex=activeIndex
-    index=index
     keyboardActivated=keyboardActivated
     keyboardPriority=keyboardPriority
     choice=choice
-    moveUpKeys=moveUpKeys
-    moveDownKeys=moveDownKeys
     cancelKeys=cancelKeys
     choose=(action 'choose' choice)
-    focusDown=(action 'focusDown' index)
-    focusUp=(action 'focusUp' index)
   }}
 {{/each}}

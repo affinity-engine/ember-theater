@@ -53,7 +53,9 @@ export default Component.extend({
     get(this, 'multitonServiceManager').destroyServices(theaterId);
   }),
 
-  claimFocus: on('focusIn', function() {
+  claimFocus: on('focusIn', function(event) {
+    event.preventDefault();
+
     set(this, 'isFocused', true);
   }),
 

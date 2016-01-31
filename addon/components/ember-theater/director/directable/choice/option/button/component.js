@@ -1,37 +1,18 @@
 import Ember from 'ember';
 import layout from './template';
-import {
-  keyDown,
-  EKOnFocusMixin,
-  EKMixin
-} from 'ember-keyboard';
 
 const {
   Component,
   get,
-  getProperties,
   on
 } = Ember;
 
-export default Component.extend(EKMixin, EKOnFocusMixin, {
+export default Component.extend({
   layout,
 
   classNameBindings: ['choice.class'],
   classNames: ['et-choice-option'],
   tagName: 'button',
-
-  setupKeys: on('init', function() {
-    const { moveDownKeys, moveUpKeys } = getProperties(this, 'moveDownKeys', 'moveUpKeys');
-
-    moveDownKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusDown()));
-    moveUpKeys.forEach((key) => this.on(keyDown(key), () => this.attrs.focusUp()));
-  }),
-
-  setFocus: on('didRender', function() {
-    if (get(this, 'activeIndex') === get(this, 'index')) {
-      this.$().focus();
-    }
-  }),
 
   handleAction: on('click', 'submit', function() {
     if (get(this, 'choice.inputable')) {
