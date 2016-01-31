@@ -53,6 +53,11 @@ export default {
         open: ['ctrl+b']
       }
     },
+    resize: {
+      keys: {
+        open: ['F11']
+      }
+    },
     save: {
       keys: {
         open: ['ctrl+s']

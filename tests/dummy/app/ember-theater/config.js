@@ -24,7 +24,8 @@ export default {
       'ember-theater/menu-bar/rewind',
       'ember-theater/menu-bar/load',
       'ember-theater/menu-bar/save',
-      'ember-theater/menu-bar/reset'
+      'ember-theater/menu-bar/reset',
+      'ember-theater/menu-bar/resize'
     ]
   },
   mediaLoader: {
