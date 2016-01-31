@@ -105,25 +105,21 @@ export default Component.extend(...mixins, {
   }),
 
   focusDown(event) {
-    event.preventDefault();
-
-    const choices = this.$('button');
-    const current = document.activeElement;
-    const index = choices.index(current);
-    const length = choices.length;
-    const newIndex = index + 1 === length ? 0 : index + 1;
-
-    choices.eq(newIndex).focus();
+    this.keyboardEvent(event, (index, length) => index + 1 === length ? 0 : index + 1);
   },
 
   focusUp(event) {
+    this.keyboardEvent(event, (index, length) => index - 1 < 0 ? length - 1 : index - 1);
+  },
+
+  keyboardEvent(event, indexCallback) {
     event.preventDefault();
 
     const choices = this.$('button');
     const current = document.activeElement;
     const index = choices.index(current);
     const length = choices.length;
-    const newIndex = index - 1 < 0 ? length - 1 : index - 1;
+    const newIndex = indexCallback(index, length);
 
     choices.eq(newIndex).focus();
   },

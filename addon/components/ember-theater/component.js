@@ -54,8 +54,6 @@ export default Component.extend({
   }),
 
   claimFocus: on('focusIn', function(event) {
-    event.preventDefault();
-
     set(this, 'isFocused', true);
   }),
 
