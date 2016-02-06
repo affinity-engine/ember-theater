@@ -19,6 +19,7 @@ const {
   computed,
   get,
   isBlank,
+  isPresent,
   on,
   set,
   setProperties
@@ -69,7 +70,11 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
   }).readOnly(),
 
-  advanceText() {
+  advanceText(event) {
+    if (isPresent(event)) {
+      event.preventDefault();
+    }
+
     if (get(this, 'pageLoaded')) {
       this.turnPage();
     } else {

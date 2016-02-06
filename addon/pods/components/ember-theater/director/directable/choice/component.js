@@ -19,11 +19,13 @@ const {
   computed,
   get,
   getProperties,
+  isPresent,
   on,
   set
 } = Ember;
 
 const { inject: { service } } = Ember;
+const { run: { next } } = Ember;
 
 const mixins = [
   AdjustableKeyboardMixin,
@@ -104,6 +106,14 @@ export default Component.extend(...mixins, {
     moveUpKeys.forEach((key) => this.on(keyDown(key), (event) => this.focusUp(event)));
   }),
 
+  focusFirstChoice: on('didInsertElement', function() {
+    next(() => {
+      if (get(this, 'keyboardActivated')) {
+        this.focusDown();
+      }
+    });
+  }),
+
   focusDown(event) {
     this.keyboardEvent(event, (index, length) => index + 1 === length ? 0 : index + 1);
   },
@@ -113,7 +123,9 @@ export default Component.extend(...mixins, {
   },
 
   keyboardEvent(event, indexCallback) {
-    event.preventDefault();
+    if (isPresent(event)) {
+      event.preventDefault();
+    }
 
     const choices = this.$('button');
     const current = document.activeElement;

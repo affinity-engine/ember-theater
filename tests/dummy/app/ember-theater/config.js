@@ -1,10 +1,5 @@
 export default {
   title: 'Steven Universe',
-  globals: {
-    keys: {
-      accept: ['a']
-    }
-  },
   producer: {
     components: [
       'ember-theater/director',
