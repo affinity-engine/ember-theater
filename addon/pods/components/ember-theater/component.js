@@ -31,7 +31,7 @@ export default Component.extend({
 
   initializeConfig: on('didReceiveAttrs', function() {
     const config = get(this, 'config');
-    const theaterId = get(config, 'theaterId') || 'ember-theater-default';
+    const theaterId = get(this, 'theaterId') || 'ember-theater-default';
 
     set(this, 'theaterId', theaterId);
 
