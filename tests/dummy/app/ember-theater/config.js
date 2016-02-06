@@ -12,7 +12,7 @@ export default {
     ]
   },
   director: {
-    initialScene: '1'
+    initialSceneId: '1'
   },
   menuBar: {
     components: [
