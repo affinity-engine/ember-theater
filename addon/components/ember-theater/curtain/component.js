@@ -11,6 +11,7 @@ const {
   Component,
   computed,
   get,
+  isPresent,
   on,
   set
 } = Ember;
@@ -59,14 +60,19 @@ export default Component.extend(ConfigurableMixin, {
 
   _loadfixtures: on('didInsertElement', function() {
     const fixtureStore = get(this, 'fixtureStore');
-    const fixtureMap = get(this, 'config.attrs.fixtures');
-    const fixtureKeys = Object.keys(fixtureMap);
+    const fixtureMap = get(this, 'fixtures');
 
-    fixtureKeys.forEach((key) => {
-      fixtureStore.add(key, fixtureMap[key]);
-    });
+    if (isPresent(fixtureMap)) {
+      const fixtureKeys = Object.keys(fixtureMap);
 
-    this._loadMedia();
+      fixtureKeys.forEach((key) => {
+        fixtureStore.add(key, fixtureMap[key]);
+      });
+
+      this._loadMedia();
+    } else {
+      this._complete();
+    }
   }),
 
   _fixtureNames: computed({
@@ -107,14 +113,18 @@ export default Component.extend(ConfigurableMixin, {
     preloader.onProgress(({ progress }) => set(this, 'progress', progress));
 
     preloader.onComplete(() => {
-      later(() => {
-        const duration = get(this, 'config.attrs.mediaLoader.fadeOutDuration') || 500;
-
-        animate(this.element, { opacity: 0 }, { duration }).then(() => {
-          this.attrs.complete();
-        });
-      }, 750);
+      this._complete();
     });
+  },
+
+  _complete() {
+    later(() => {
+      const duration = get(this, 'config.attrs.mediaLoader.fadeOutDuration') || 500;
+
+      animate(this.element, { opacity: 0 }, { duration }).then(() => {
+        this.attrs.complete();
+      });
+    }, 750);
   },
 
   _standardizeFixtureName(name) {

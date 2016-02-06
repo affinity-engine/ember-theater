@@ -1,8 +1,3 @@
-import backdrops from './fixtures/backdrops';
-import characterExpressions from './fixtures/character-expressions';
-import characters from './fixtures/characters';
-import sounds from './fixtures/sounds';
-
 export default {
   theaterId: 'demo-2',
   title: 'Steven Universe',
@@ -36,11 +31,5 @@ export default {
       'character-expressions:src'
       // 'sounds:src'
     ]
-  },
-  fixtures: {
-    backdrops,
-    characterExpressions,
-    characters,
-    sounds
   }
 };
