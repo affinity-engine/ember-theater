@@ -50,7 +50,7 @@ export default Component.extend({
   destroyMultitons: on('willDestroyElement', function() {
     const theaterId = get(this, 'theaterId');
 
-    get(this, 'multitonServiceManager').destroyServices(theaterId);
+    get(this, 'multitonServiceManager').removeServices(theaterId);
   }),
 
   claimFocus: on('focusIn', function() {
