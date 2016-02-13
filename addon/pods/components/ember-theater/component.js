@@ -36,9 +36,9 @@ export default Component.extend({
     set(this, 'theaterId', theaterId);
 
     const mergedConfig = get(this, 'configService').initializeConfig(config);
-    const initialComponents = get(mergedConfig, 'producer.components');
+    const plugins = get(mergedConfig, 'plugins');
 
-    get(this, 'producer.components').addObjects(initialComponents);
+    get(this, 'producer.components').addObjects(plugins);
   }),
 
   setMediaIsLoaded: on('init', function() {

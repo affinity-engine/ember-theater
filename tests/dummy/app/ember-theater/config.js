@@ -1,16 +1,14 @@
 export default {
   title: 'Steven Universe',
-  producer: {
-    components: [
-      'ember-theater/director',
-      'ember-theater/menu-bar'
-    ]
-  },
+  plugins: [
+    'ember-theater/director',
+    'ember-theater/menu-bar'
+  ],
   director: {
     initialSceneId: '1'
   },
   menuBar: {
-    components: [
+    plugins: [
       'ember-theater/menu-bar/rewind',
       'ember-theater/menu-bar/load',
       'ember-theater/menu-bar/save',

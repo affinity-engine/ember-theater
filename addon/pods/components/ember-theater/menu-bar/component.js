@@ -28,7 +28,7 @@ export default Component.extend({
 
   config: multitonService('ember-theater/config', 'theaterId'),
 
-  components: reads('config.attrs.menuBar.components'),
+  plugins: reads('config.attrs.menuBar.plugins'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
   keyboardActivated: alias('isFocused'),
 
