@@ -21,7 +21,7 @@ export default Direction.extend({
     const instanceId = get(options, 'instance') || 0;
     const directable = stageManager.findDirectableWithId(characterId, 'character', instanceId);
     const character = get(directable, 'component');
-    const expression = get(this, 'fixtureStore').find('characterExpressions', expressionId);
+    const expression = get(this, 'fixtureStore').find('expressions', expressionId);
 
     character.changeExpression(resolve, expression, options);
   }

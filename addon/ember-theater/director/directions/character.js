@@ -25,8 +25,8 @@ export default Direction.extend({
 
     const expressionId = get(expressionOrId, 'expression');
     const initialExpression = isPresent(expressionId) ?
-      fixtureStore.find('characterExpressions', expressionId) :
-      fixtureStore.find('characterExpressions', get(character, 'defaultExpressionId'));
+      fixtureStore.find('expressions', expressionId) :
+      fixtureStore.find('expressions', get(character, 'defaultExpressionId'));
 
     const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
     const layer = get(options, 'layer') || get(this, 'layer');

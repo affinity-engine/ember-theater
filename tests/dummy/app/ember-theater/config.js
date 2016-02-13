@@ -20,7 +20,7 @@ export default {
     type: 'ember-theater/curtain',
     filesToPreload: [
       'backdrops:src',
-      'character-expressions:src'
+      'expressions:src'
       // 'sounds:src'
     ]
   }
