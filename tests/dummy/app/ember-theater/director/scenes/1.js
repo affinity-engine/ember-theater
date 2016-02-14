@@ -4,7 +4,7 @@ export default Scene.extend({
   name: 'The Beach',
 
   script: async function() {
-    // await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
+    await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
     // await this.text('steven', '1.noId');
     // await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
     // await this.text('steven', '1.noId');

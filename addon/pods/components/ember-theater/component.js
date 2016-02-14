@@ -5,12 +5,18 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 const {
   Component,
   get,
-  isBlank,
+  isPresent,
   on,
   set
 } = Ember;
 
-const { computed: { reads } } = Ember;
+const {
+  computed: {
+    not,
+    or,
+    reads
+  }
+} = Ember;
 const { inject: { service } } = Ember;
 
 export default Component.extend({
@@ -24,27 +30,19 @@ export default Component.extend({
 
   multitonServiceManager: service('multiton-service-manager'),
   configService: multitonService('ember-theater/config', 'theaterId'),
-  producer: multitonService('ember-theater/producer', 'theaterId'),
+  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  components: reads('producer.components'),
-  mediaLoader: reads('configService.attrs.mediaLoader.type'),
+  doNotPreload: not('preload'),
+  isLoaded: or('doNotPreload', 'mediaIsLoaded'),
 
   initializeConfig: on('didReceiveAttrs', function() {
     const config = get(this, 'config');
     const theaterId = get(this, 'theaterId') || 'ember-theater-default';
 
     set(this, 'theaterId', theaterId);
+    get(this, 'configService').initializeConfig(config);
 
-    const mergedConfig = get(this, 'configService').initializeConfig(config);
-    const plugins = get(mergedConfig, 'plugins');
-
-    get(this, 'producer.components').addObjects(plugins);
-  }),
-
-  setMediaIsLoaded: on('init', function() {
-    const mediaLoader = get(this, 'mediaLoader');
-
-    set(this, 'mediaIsLoaded', isBlank(mediaLoader));
+    this._loadfixtures();
   }),
 
   destroyMultitons: on('willDestroyElement', function() {
@@ -61,8 +59,21 @@ export default Component.extend({
     set(this, 'isFocused', false);
   }),
 
+  _loadfixtures() {
+    const fixtureStore = get(this, 'fixtureStore');
+    const fixtureMap = get(this, 'fixtures');
+
+    if (isPresent(fixtureMap)) {
+      const fixtureKeys = Object.keys(fixtureMap);
+
+      fixtureKeys.forEach((key) => {
+        fixtureStore.add(key, fixtureMap[key]);
+      });
+    }
+  },
+
   actions: {
-    startGame() {
+    completeMediaLoad() {
       set(this, 'mediaIsLoaded', true);
     }
   }

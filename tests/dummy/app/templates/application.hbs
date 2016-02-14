@@ -1,6 +1,13 @@
 <div class="theater-container">
-  {{ember-theater config=config fixtures=fixtures isFocused=true}}
+  {{#ember-theater config=config fixtures=fixtures isFocused=true preload=true as |theater|}}
+    {{theater.curtain filesToPreload="backdrops:src expressions:src"}}
+    {{theater.director}}
+    {{theater.menuBar}}
+  {{/ember-theater}}
 </div>
 <div class="theater-container">
-  {{ember-theater config=config fixtures=fixtures theaterId="theater2"}}
+  {{#ember-theater config=config fixtures=fixtures theaterId="theater2" as |theater|}}
+    {{theater.director}}
+    {{theater.menuBar}}
+  {{/ember-theater}}
 </div>

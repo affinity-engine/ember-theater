@@ -1,15 +1,5 @@
-{{#if mediaIsLoaded}}
-  {{#each components as |componentName|}}
-    {{component componentName
-      isFocused=isFocused
-      theaterId=theaterId
-    }}
-  {{/each}}
-{{else}}
-  {{component mediaLoader
-    fixtures=fixtures
-    isFocused=isFocused
-    theaterId=theaterId
-    complete=(action 'startGame')
-  }}
-{{/if}}
+{{yield (hash
+  curtain=(component "ember-theater/curtain" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
+  director=(component "ember-theater/director" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
+  menuBar=(component "ember-theater/menu-bar" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
+)}}
