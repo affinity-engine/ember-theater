@@ -1,3 +1,5 @@
 export default {
-  title: 'Steven Universe'
+  globals: {
+    title: 'Steven Universe'
+  }
 };

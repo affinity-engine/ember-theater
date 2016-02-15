@@ -3,6 +3,7 @@ import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
@@ -16,7 +17,7 @@ const { inject: { service } } = Ember;
 const { run: { later } } = Ember;
 const { String: { camelize } } = Ember;
 
-const { alias } = computed;
+const configurablePriority = ['config.attrs.curtain', 'config.attrs.globals'];
 
 export default Component.extend(ConfigurableMixin, {
   layout,
@@ -27,22 +28,24 @@ export default Component.extend(ConfigurableMixin, {
   translator: service('ember-theater/translator'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  title: alias('config.attrs.title'),
+  title: configurable(configurablePriority, 'title'),
+  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
+  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
 
-  progressBarShape: computed('config.attrs.mediaLoader.progressBarStyle.shape', {
+  progressBarShape: computed('config.attrs.curtain.progressBarStyle.shape', {
     get() {
-      return get(this, 'config.attrs,mediaLoader.progressBarStyle.shape') || 'Circle';
+      return get(this, 'config.attrs.curtain.progressBarStyle.shape') || 'Circle';
     }
   }).readOnly(),
 
   _styleProgressBar: on('didInsertElement', function() {
     const config = get(this, 'config.attrs');
 
-    const color = get(config, 'mediaLoader.progressBarStyle.color') || this.$().css('color');
-    const trailColor = get(config, 'mediaLoader.progressBarStyle.trailColor') ||
+    const color = get(config, 'curtain.progressBarStyle.color') || this.$().css('color');
+    const trailColor = get(config, 'curtain.progressBarStyle.trailColor') ||
       `rgba(${color.match(/(\d+)/g).slice(0, 3).join(', ')}, 0.62)`;
-    const strokeWidth = get(config, 'mediaLoader.progressBarStyle.strokeWidth') || 4;
-    const trailWidth = get(config, 'mediaLoader.progressBarStyle.trailWidth') || strokeWidth * 0.62;
+    const strokeWidth = get(config, 'curtain.progressBarStyle.strokeWidth') || 4;
+    const trailWidth = get(config, 'curtain.progressBarStyle.trailWidth') || strokeWidth * 0.62;
 
     const options = {
       color,
@@ -85,9 +88,10 @@ export default Component.extend(ConfigurableMixin, {
 
   _complete() {
     later(() => {
-      const duration = get(this, 'config.attrs.mediaLoader.fadeOutDuration') || 500;
+      const effect = get(this, 'transitionOut');
+      const duration = get(this, 'transitionOutDuration');
 
-      animate(this.element, { opacity: 0 }, { duration }).then(() => {
+      animate(this.element, effect, { duration }).then(() => {
         this.attrs.completePreload();
       });
     }, 750);
