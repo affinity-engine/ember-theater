@@ -27,7 +27,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     let sceneId = get(save, 'activeState.sceneId');
 
     if (isEmpty(sceneId)) {
-      sceneId = get(this, 'config.attrs.director.initialSceneId');
+      sceneId = get(this, 'sceneManager.initialSceneId');
       options.autosave = true;
     }
 

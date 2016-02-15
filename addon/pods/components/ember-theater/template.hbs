@@ -1,5 +1,7 @@
 {{yield (hash
-  curtain=(component "ember-theater/curtain" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
-  director=(component "ember-theater/director" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
-  menuBar=(component "ember-theater/menu-bar" isFocused=isFocused theaterId=theaterId isLoaded=isLoaded completeMediaLoad=(action "completeMediaLoad"))
+  curtain=(component "ember-theater/curtain" isFocused=isFocused theaterId=theaterId)
+  director=(component "ember-theater/director" isFocused=isFocused theaterId=theaterId)
+  menuBar=(component "ember-theater/menu-bar" isFocused=isFocused theaterId=theaterId)
+  isLoaded=isLoaded
+  completePreload=(action "completePreload")
 )}}

@@ -1,8 +1,8 @@
-{{#unless isLoaded}}
-  {{ember-theater/curtain/gateway
-    filesToPreload=filesToPreload
-    isFocused=isFocused
-    theaterId=theaterId
-    completeMediaLoad=completeMediaLoad
+<h1 class='et-game-title'>{{title}}</h1>
+{{#if progressBarOptions}}
+  {{progress-bar
+    progress=progress
+    shape=progressBarShape
+    options=progressBarOptions
   }}
-{{/unless}}
+{{/if}}

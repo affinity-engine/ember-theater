@@ -10,13 +10,6 @@ const {
   set
 } = Ember;
 
-const {
-  computed: {
-    not,
-    or,
-    reads
-  }
-} = Ember;
 const { inject: { service } } = Ember;
 
 export default Component.extend({
@@ -31,9 +24,6 @@ export default Component.extend({
   multitonServiceManager: service('multiton-service-manager'),
   configService: multitonService('ember-theater/config', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-
-  doNotPreload: not('preload'),
-  isLoaded: or('doNotPreload', 'mediaIsLoaded'),
 
   initializeConfig: on('didReceiveAttrs', function() {
     const config = get(this, 'config');
@@ -73,8 +63,8 @@ export default Component.extend({
   },
 
   actions: {
-    completeMediaLoad() {
-      set(this, 'mediaIsLoaded', true);
+    completePreload() {
+      set(this, 'isLoaded', true);
     }
   }
 });

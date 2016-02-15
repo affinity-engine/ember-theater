@@ -32,6 +32,10 @@ export default Ember.Object.extend(TheaterIdMixin, {
     get(this, 'transitionManager').toScene(id, options);
   },
 
+  setInitialSceneId(initialSceneId) {
+    set(this, 'initialSceneId', initialSceneId);
+  },
+
   setScene(scene) {
     set(this, 'scene', scene);
   },
