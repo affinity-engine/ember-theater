@@ -17,7 +17,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
 
-  initializeConfig(theaterConfig) {
+  initializeConfig(theaterConfig = {}) {
     set(this, 'theaterConfig', theaterConfig);
 
     return this.resetConfig();
