@@ -15,7 +15,9 @@ export default Scene.extend({
     // this.filter('theater.prompt', ['blur(10px)', 'blur(0px)'], { duration: 1000, destroy: true });
     // await this.text('steven', '1.noId');
     // await this.text({ id: 'steven', displayName: '1.noId' }, { id: '1.firstTest', options: { val1: 'my friend' } });
+    await this.pause(100);
     await this.backdrop('beach');
+    await this.pause(10);
     // this.sound('song__bolero', 'fadeIn', { duration: 1000 });
     // this.text('text 1', { instance: 1, keys: { accept: [] }, decorativeClassNames: ['et-transparent'], style: { position: 'absolute', top: 0, left: 0 } });
     // await this.text('steven', 'I was <strong>so happy</strong> when ((#instant)) Garnet said she was gonna come on this trip with me and Dad! ((/instant)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?');

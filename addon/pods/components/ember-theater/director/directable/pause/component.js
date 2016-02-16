@@ -15,9 +15,9 @@ const {
 } = Ember;
 
 export default Component.extend(DirectableComponentMixin, EKMixin, {
-  handleautoResolve: on('didInitAttrs', function() {
-    if (get(this, 'autoResolve')) {
-      this._resolve();
+  handleAutoResolve: on('didInitAttrs', function() {
+    if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
+      this.resolveAndDestroy(true);
     }
   }),
 
@@ -44,7 +44,7 @@ export default Component.extend(DirectableComponentMixin, EKMixin, {
   }),
 
   _resolve() {
-    get(this, 'directable.resolve')();
+    this.resolveAndDestroy();
   },
 
   _setupKeyPressWatcher(keys) {
