@@ -95,7 +95,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
   _transitionInExpression(resolve, expression, transition) {
     if (isBlank(get(transition, 'effect'))) {
-      set(transition, 'effect', 'transition.fadeIn');
+      set(transition, 'effect', { opacity: [1, 1] });
     }
 
     set(transition, 'resolve', resolve);

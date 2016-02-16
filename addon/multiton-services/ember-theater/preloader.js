@@ -1,13 +1,13 @@
 import Ember from 'ember';
+import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
-  Service,
   get,
   on,
   set
 } = Ember;
 
-export default Service.extend({
+export default Ember.Object.extend(TheaterIdMixin, {
   initializeQueue: on('init', function() {
     const queue = new createjs.LoadQueue(true);
 

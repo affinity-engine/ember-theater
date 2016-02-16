@@ -24,9 +24,9 @@ export default Component.extend(ConfigurableMixin, {
 
   classNames: ['et-curtain'],
 
-  preloader: service('preloader'),
   translator: service('ember-theater/translator'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
   title: configurable(configurablePriority, 'title'),
   transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
