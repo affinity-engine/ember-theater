@@ -28,15 +28,21 @@ export default Component.extend(ConfigurableMixin, {
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
   preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
-  title: configurable(configurablePriority, 'title'),
+  baseTitle: configurable(configurablePriority, 'title'),
   transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
   transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
+
+  title: computed('baseTitle', {
+    get() {
+      return get(this, 'translator').translate(get(this, 'baseTitle'));
+    }
+  }),
 
   progressBarShape: computed('config.attrs.curtain.progressBarStyle.shape', {
     get() {
       return get(this, 'config.attrs.curtain.progressBarStyle.shape') || 'Circle';
     }
-  }).readOnly(),
+  }),
 
   _styleProgressBar: on('didInsertElement', function() {
     const config = get(this, 'config.attrs');
