@@ -70,7 +70,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
   }).readOnly(),
 
-  advanceText(event) {
+  advanceText: on('mouseDown', 'touchStart', function (event) {
     if (isPresent(event)) {
       event.preventDefault();
     }
@@ -80,7 +80,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     } else {
       set(this, 'instantWritePage', true);
     }
-  },
+  }),
 
   turnPage() {
     const nextPageFirstWord = this.nextPageFirstWord();

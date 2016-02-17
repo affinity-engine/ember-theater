@@ -1,6 +1,6 @@
 {
   "name": "ember-theater",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "A modular game engine build with Ember.js",
   "directories": {
     "doc": "doc",
