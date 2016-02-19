@@ -70,7 +70,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
   }).readOnly(),
 
-  advanceText: on('mouseDown', 'touchStart', function (event) {
+  advanceText: on('mouseDown', 'touchStart', function(event) {
     if (isPresent(event)) {
       event.preventDefault();
     }
