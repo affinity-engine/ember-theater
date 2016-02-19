@@ -3,6 +3,7 @@ $et-blank-screen-background-color: #121212 !default;
 $et-semi-transparency: 0.95;
 $et-default-transition-speed: 500ms;
 
+@import "responsive";
 @import "base";
 @import "mixins";
 @import "components";

@@ -4,50 +4,115 @@ $et-text-included: false !default;
 @if ($et-choice-included == true) {
   .et-choice.et-block {
     max-height: 100%;
-    transform: translateY(-$et-choice-block-top);
-
-    top: $et-choice-block-top;
-    right: $et-choice-block-right;
-    left: $et-choice-block-left;
-    padding: $et-choice-block-padding;
     border-width: $et-choice-block-border-width;
-
-    .et-choice-header {
-      font-size: $et-choice-header-block-font-size;
-      margin-bottom: $et-choice-header-block-margin-bottom;
-    }
-
-    .et-choice-option {
-      font-size: $et-choice-option-block-font-size;
-    }
 
     .et-choice-option, .et-choice-input {
       width: $et-choice-option-block-width;
-      margin-bottom: $et-choice-option-block-margin-bottom;
       border-width: $et-choice-option-block-border-width;
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, small)) {
+    .et-choice.et-block {
+      top: $et-choice-block-top * map-get($breakpoint_factors, small) * 0.2;
+      right: $et-choice-block-right * map-get($breakpoint_factors, small);
+      left: $et-choice-block-left * map-get($breakpoint_factors, small);
+      padding: $et-choice-block-padding * map-get($breakpoint_factors, small);
+
+      .et-choice-header {
+        font-size: $et-choice-header-block-font-size * map-get($breakpoint_factors, small);
+        margin-bottom: $et-choice-header-block-margin-bottom * map-get($breakpoint_factors, small);
+        line-height: $et-choice-header-block-line-height * map-get($breakpoint_factors, small);
+      }
+
+      .et-choice-option {
+        font-size: $et-choice-option-block-font-size * map-get($breakpoint_factors, small);
+      }
+
+      .et-choice-option, .et-choice-input {
+        width: $et-choice-option-block-width;
+        margin-bottom: $et-choice-option-block-margin-bottom * map-get($breakpoint_factors, small);
+        border-width: $et-choice-option-block-border-width;
+        line-height: $et-choice-option-block-line-height * map-get($breakpoint_factors, small);
+      }
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, medium)) {
+    .et-choice.et-block {
+      transform: translateY(-$et-choice-block-top);
+
+      top: $et-choice-block-top;
+      right: $et-choice-block-right;
+      left: $et-choice-block-left;
+      padding: $et-choice-block-padding;
+
+      .et-choice-header {
+        font-size: $et-choice-header-block-font-size;
+        margin-bottom: $et-choice-header-block-margin-bottom;
+        line-height: $et-choice-header-block-line-height;
+      }
+
+      .et-choice-option {
+        font-size: $et-choice-option-block-font-size;
+      }
+
+      .et-choice-option, .et-choice-input {
+        margin-bottom: $et-choice-option-block-margin-bottom;
+        line-height: $et-choice-option-block-line-height;
+      }
     }
   }
 }
 
 @if ($et-text-included == true) {
   .et-text.et-block {
-    left: $et-text-block-left;
-    right: $et-text-block-right;
-    bottom: $et-text-block-bottom;
-    height: $et-text-block-height;
-    line-height: $et-text-block-line-height;
-    font-size: $et-text-block-font-size;
-    padding: $et-text-block-padding;
-    margin: $et-text-block-margin;
-    border-width: $et-text-block-border-width;
-
     .et-text-caption {
       position: absolute;
-      top: $et-text-caption-block-top;
-      left: $et-text-caption-block-left;
-      padding: $et-text-caption-block-padding;
-      font-size: $et-text-caption-block-font-size;
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, small)) {
+    .et-text.et-block {
+      left: $et-text-block-left * map-get($breakpoint_factors, small);
+      right: $et-text-block-right * map-get($breakpoint_factors, small);
+      bottom: $et-text-block-bottom * map-get($breakpoint_factors, small);
+      height: $et-text-block-height-responive-small * map-get($breakpoint_factors, small);
+      line-height: $et-text-block-line-height * map-get($breakpoint_factors, small);
+      font-size: $et-text-block-font-size * map-get($breakpoint_factors, small);
+      padding: $et-text-block-padding-ends * map-get($breakpoint_factors, small) $et-text-block-padding-sides * map-get($breakpoint_factors, small);
+      margin: $et-text-block-margin * map-get($breakpoint_factors, small);
+      border-width: $et-text-block-border-width * map-get($breakpoint_factors, small);
+
+      .et-text-caption {
+        top: $et-text-caption-block-top * map-get($breakpoint_factors, small);
+        left: $et-text-caption-block-left * map-get($breakpoint_factors, small);
+        padding: $et-text-caption-block-padding-ends * map-get($breakpoint_factors, small) $et-text-caption-block-padding-sides * map-get($breakpoint_factors, small);
+        font-size: $et-text-caption-block-font-size * map-get($breakpoint_factors, small);
+        border-width: $et-text-block-border-width * map-get($breakpoint_factors, small);
+      }
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, medium)) {
+    .et-text.et-block {
+      left: $et-text-block-left;
+      right: $et-text-block-right;
+      bottom: $et-text-block-bottom;
+      height: $et-text-block-height;
+      line-height: $et-text-block-line-height;
+      font-size: $et-text-block-font-size;
+      padding: $et-text-block-padding-ends $et-text-block-padding-sides;
+      margin: $et-text-block-margin;
       border-width: $et-text-block-border-width;
+
+      .et-text-caption {
+        top: $et-text-caption-block-top;
+        left: $et-text-caption-block-left;
+        padding: $et-text-caption-block-padding-ends $et-text-caption-block-padding-sides;
+        font-size: $et-text-caption-block-font-size;
+        border-width: $et-text-block-border-width;
+      }
     }
   }
 }

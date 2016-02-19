@@ -1,6 +1,6 @@
 // text
 $et-text-wide-padding-base: $et-text-padding-base !default;
-$et-text-wide-padding: $et-text-wide-padding-base $et-text-wide-padding-base * 2 !default;
+$et-text-wide-padding: $et-text-wide-padding-base !default;
 $et-text-wide-margin: 0 !default;
 $et-text-wide-border-width: $et-text-border-width !default;
 $et-text-wide-font-size: $et-text-font-size !default;
@@ -9,8 +9,10 @@ $et-text-wide-line-height: $et-default-line-height !default;
 $et-text-wide-height: ($et-text-wide-line-height * 3) +
                      ($et-text-wide-border-width * 2) +
                      ($et-text-wide-padding-base * 2) !default;
+$et-text-wide-height-responsive-small: $et-text-wide-height + $et-text-wide-line-height !default;
 
 $et-text-caption-wide-font-size: $et-text-caption-font-size !default;
 $et-text-caption-wide-top: $et-text-caption-wide-font-size * -1.5 !default;
 $et-text-caption-wide-left: $et-text-wide-padding-base !default;
-$et-text-caption-wide-padding: 0 $et-text-wide-padding-base !default;
+$et-text-caption-wide-padding-ends: 0 !default;
+$et-text-caption-wide-padding-sides: $et-text-wide-padding-base !default;

@@ -3,7 +3,7 @@ export default {
   globals: {
     classNames: {
       decorative: ['et-paper'],
-      structural: ['et-block']
+      structural: ['et-wide']
     },
     textSpeed: 25,
     textAnimation: {

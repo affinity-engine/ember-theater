@@ -2,7 +2,6 @@
   @extend .et-full-screen;
 
   color: $et-curtain-color;
-  padding: $et-curtain-padding-top $et-curtain-padding-sides;
   text-align: center;
 
   .et-game-title {
@@ -15,5 +14,17 @@
     width: $et-curtain-progress-bar-dimensions;
     font-size: $et-curtain-progress-bar-font-size;
     margin: 0 auto;
+  }
+
+  @media (min-width: map-get($breakpoints, small)) {
+    .et-curtain {
+      padding: 0;
+    }
+  }
+
+  @media (min-width: map-get($breakpoints, medium)) {
+    .et-curtain {
+      padding: $et-curtain-padding-top $et-curtain-padding-sides;
+    }
   }
 }

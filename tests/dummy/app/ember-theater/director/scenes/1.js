@@ -26,7 +26,7 @@ export default Scene.extend({
     await this.character('steven', { left: '50%', opacity: 1 }, { duration: 500 });
     // this.text('text 2 ((#effect { rotateZ: 2.5 } | { duration: 100, loop: true }))', { instance: 1 });
     //
-    // const choiceOne = await this.choice('What should I do?', ['Whirl!', { key: 'B', text: 'Jump!' }, 'Play Bolero!', 'Something', 'Filler', 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', 'Here is another short statement.', 'Okay, that last one was still kind of long.', 'Really actually totally short.', 'Okay, really really short.', 'Truly short.', 'Short and sweet.', 'Shorter.', 'S']);
+    const choiceOne = await this.choice('What should I do?', ['Whirl!', { key: 'B', text: 'Jump!' }, 'Play Bolero!', 'Something', 'Filler', 'A really long statement, just becuase you know there will be users who have these too. Hell, you will probably create a few of these yourself. You know?', 'Here is another short statement.', 'Okay, that last one was still kind of long.', 'Really actually totally short.', 'Okay, really really short.', 'Truly short.', 'Short and sweet.', 'Shorter.', 'S']);
     //
     // switch (choiceOne.key) {
     //   case 0: await this.expression('steven', 'steven--jumping', { transitionIn: { effect: 'transition.whirlIn', options: { duration: 1000 } }, transitionOut: { effect: 'transition.whirlOut', options: { duration: 1000 } } }); break;
