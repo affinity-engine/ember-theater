@@ -3,7 +3,7 @@ export default {
   globals: {
     classNames: {
       decorative: ['et-paper'],
-      structural: ['et-wide']
+      structural: ['et-block']
     },
     textSpeed: 25,
     textAnimation: {
@@ -70,6 +70,9 @@ export default {
         effect: { opacity: 0 },
         duration: 500
       }
+    },
+    text: {
+      namePosition: 'left'
     }
   }
 };

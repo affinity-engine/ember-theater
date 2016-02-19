@@ -50,6 +50,7 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   textAnimation: configurable(configurablePriority, 'textAnimation'),
   textSpeed: configurable(configurablePriority, 'textSpeed'),
   displayName: configurable(configurablePriority, 'name'),
+  namePosition: configurable(configurablePriority, 'namePosition'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
