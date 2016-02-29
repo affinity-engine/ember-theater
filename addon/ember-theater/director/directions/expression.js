@@ -1,28 +1,37 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
-const { get } = Ember;
+const {
+  get,
+  set
+} = Ember;
 
 export default Direction.extend({
-  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  setup(fixture, character) {
+    this._addToQueue();
 
-  /**
-    Provide a description of what your direction does.
+    set(this, 'attrs.expression', fixture);
+    set(this, 'attrs.character', character);
 
-    @method perform
-    @for Scene
-    @param {*} exampleParam
-  */
+    return this;
+  },
 
-  perform(resolve, characterId, expressionId, options = {}) {
+  Text(text) {
+    const direction = this._createDirection('text');
+    const attrs = get(this, 'attrs');
+
+    return direction.setup(text, attrs);
+  },
+
+  _perform(meta, resolve) {
     const stageManager = get(this, 'stageManager');
-    const instanceId = get(options, 'instance') || 0;
-    const directable = stageManager.findDirectableWithId(characterId, 'character', instanceId);
+    const instanceId = get(this, 'attrs.instance') || 0;
+    const characterId = get(this, 'attrs.character.fixture.id');
+    const directable = stageManager.findDirectableWithId(characterId, 'ember-theater/director/directable/character', instanceId);
     const character = get(directable, 'component');
-    const expression = get(this, 'fixtureStore').find('expressions', expressionId);
+    const expression = get(this, 'attrs.expression');
+    const attrs = get(this, 'attrs');
 
-    character.changeExpression(resolve, expression, options);
+    character.changeExpression(resolve, expression, attrs);
   }
 });

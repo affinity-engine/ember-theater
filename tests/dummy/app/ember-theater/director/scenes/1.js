@@ -4,6 +4,9 @@ export default Scene.extend({
   name: 'The Beach',
 
   script: async function() {
+    await this.Character('steven').initialExpression('steven--jumping').transition({ left: '50%'}, 5000, { loop: 3 }).name('Tiger').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw']}).keys(['a']).classNames({ name: 'et-right' });
+    // await this.Text('Bye!');
+    this.Character('steven').Expression('steven')
     // await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
     // await this.text('steven', '1.noId');
     // await this.choice('1.choice1.header', [{ text: { id: '1.choice1.A', options: { opt1: 'OOO' } } }, '1.choice1.B']);
@@ -20,10 +23,10 @@ export default Scene.extend({
     // await this.pause(10);
     // this.sound('song__bolero', 'fadeIn', { duration: 1000 });
     // this.text('text 1', { instance: 1, keys: { accept: [] }, decorativeClassNames: ['et-transparent'], style: { position: 'absolute', top: 0, left: 0 } });
-    await this.text('steven', 'I was <strong>so happy</strong> when ((#instant)) Garnet said she was gonna come on this trip with me and Dad! ((/instant)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?', { namePosition: 'left', classNames: { structural: 'et-wide'} });
+    // await this.text('steven', 'I was <strong>so happy</strong> when ((#instant)) Garnet said she was gonna come on this trip with me and Dad! ((/instant)) (Ruby and Sapphire look at each other and frown) Home\'s been awful! Here\'s been awful! I thought you wanted to have a fun time but, everyone\'s been acting awful too! It-It just came with us! I don\'t understand! (He looks at the ground) Is it- is it me?', { namePosition: 'left', classNames: { structural: 'et-wide'} });
     // this.filter('theater.text', 'blur(0)', { duration: 500 });
     // this.backdrop('beach--night', { duration: 5000 });
-    await this.character('steven', { left: '50%', opacity: 1 }, { duration: 500 });
+    // await this.character('steven', { left: '50%', opacity: 1 }, { duration: 500 });
     // await this.pause(500);
     // await this.expression('steven', 'steven--jumping');
     // this.script();

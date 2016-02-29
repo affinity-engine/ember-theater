@@ -80,11 +80,11 @@ $et-text-included: false !default;
         padding: $et-text-caption-wide-padding-ends * map-get($breakpoint_factors, small) $et-text-caption-wide-padding-sides * map-get($breakpoint_factors, small);
         font-size: $et-text-caption-wide-font-size * map-get($breakpoint_factors, small);
 
-        &.left {
+        &.et-left {
           left: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
         }
 
-        &.right {
+        &.et-right {
           right: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
         }
       }
@@ -105,11 +105,11 @@ $et-text-included: false !default;
         padding: $et-text-caption-wide-padding-ends $et-text-caption-wide-padding-sides;
         font-size: $et-text-caption-wide-font-size;
 
-        &.left {
+        &.et-left {
           left: $et-text-caption-wide-side;
         }
 
-        &.right {
+        &.et-right {
           right: $et-text-caption-wide-side;
         }
       }

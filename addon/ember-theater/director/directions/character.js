@@ -4,44 +4,72 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  getProperties,
   isPresent,
+  merge,
+  set,
   typeOf
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/character',
   layer: 'theater.stage.foreground.character',
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
-  perform(resolve, expressionOrId, effectOrOptions, optionsOnly) {
-    const expressionIsPresent = typeOf(expressionOrId) === 'object';
-    const effectIsPresent = isPresent(optionsOnly);
+  setup(fixtureOrId) {
     const fixtureStore = get(this, 'fixtureStore');
+    const fixture = typeOf(fixtureOrId) === 'object' ?  fixtureOrId : fixtureStore.find('characters', fixtureOrId);
+    const id = get(fixture, 'id');
+    const expressionId = get(fixture, 'defaultExpressionId');
 
-    const id = expressionIsPresent ? get(expressionOrId, 'id') : expressionOrId;
-    const character = fixtureStore.find('characters', id);
-    const effect = effectIsPresent ? effectOrOptions : 'transition.fadeIn';
+    this.initialExpression(expressionId);
 
-    const expressionId = get(expressionOrId, 'expression');
-    const initialExpression = isPresent(expressionId) ?
-      fixtureStore.find('expressions', expressionId) :
-      fixtureStore.find('expressions', get(character, 'defaultExpressionId'));
+    set(this, 'attrs.fixture', fixture);
+    set(this, 'id', id);
 
-    const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
-    const layer = get(options, 'layer') || get(this, 'layer');
-    const autoResolve = get(this, 'autoResolve');
+    return this;
+  },
 
-    const properties = {
-      autoResolve,
-      character,
-      effect,
-      id,
-      initialExpression,
-      layer,
-      options
-    };
+  initialExpression(fixtureOrId) {
+    const fixture = this._findExpression(fixtureOrId);
 
-    get(this, 'stageManager').handleDirectable(id, 'character', properties, resolve);
+    set(this, 'attrs.expression', fixture);
+
+    return this;
+  },
+
+  name(name) {
+    set(this, 'attrs.name', name);
+
+    return this;
+  },
+
+  transition(effect, duration, options = {}) {
+    this._addToQueue();
+
+    set(this, 'attrs.transition', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  Expression(fixtureOrId) {
+    const direction = this._createDirection('expression');
+    const fixture = this._findExpression(fixtureOrId);
+    const attrs = get(this, 'attrs');
+
+    return direction.setup(fixture, attrs);
+  },
+
+  Text(text) {
+    const direction = this._createDirection('text');
+    const attrs = get(this, 'attrs');
+
+    return direction.setup(text, attrs);
+  },
+
+  _findExpression(fixtureOrId) {
+    const fixtureStore = get(this, 'fixtureStore');
+    return typeOf(fixtureOrId) === 'object' ?  fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
   }
 });

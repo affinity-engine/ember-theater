@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
@@ -12,7 +12,7 @@ const {
 const { inject: { service } } = Ember;
 
 const configurablePriority = [
-  'directable.options',
+  'directable.attrs',
   'expression.expression',
   'expression',
   'config.attrs.director.expression',
@@ -20,21 +20,21 @@ const configurablePriority = [
 ];
 
 export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
-  attributeBindings: ['caption:alt', 'src'],
+  attributeBindings: ['captionTranslation:alt', 'src'],
   classNames: ['et-character-expression'],
   tagName: 'img',
 
   translator: service('ember-theater/translator'),
 
+  caption: configurable(configurablePriority, 'caption'),
   src: configurable(configurablePriority, 'src'),
+  transition: deepConfigurable(configurablePriority, 'transition'),
 
-  caption: computed('expression.caption', 'expression.id', 'directable.options.caption', {
+  captionTranslation: computed('expression.id', 'caption', {
     get() {
-      const optional = get(this, 'directable.options.caption');
-      const fallback = optional || get(this, 'expression.caption');
-      const translation = optional || `expressions.${get(this, 'expression.id')}`;
+      const translation = get(this, 'caption') || `expressions.${get(this, 'expression.id')}`;
 
-      return get(this, 'translator').translate(fallback, translation);
+      return get(this, 'translator').translate(translation);
     }
   })
 });

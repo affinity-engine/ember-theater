@@ -3,7 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
 
@@ -22,9 +22,8 @@ const { run: { later } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
 
 const configurablePriority = [
-  'directable.options',
-  'character.character',
-  'character',
+  'directable.attrs',
+  'directable.attrs.fixture',
   'config.attrs.director.character',
   'config.attrs.globals'
 ];
@@ -38,10 +37,11 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
   expressionContainers: computed(() => Ember.A([])),
 
-  character: alias('directable.character'),
+  expression: configurable(configurablePriority, 'expression'),
   height: configurable(configurablePriority, 'height'),
+  transition: deepConfigurable(configurablePriority, 'transition'),
 
-  changeExpression(resolve, expression, { transitionIn = {}, transitionOut = {} }) {
+  changeExpression(resolve, expression, { transitionIn = { attrs: { transition: {} } }, transitionOut = { attrs: { transition: {} } } }) {
     this._transitionOutExpressions(transitionOut);
     this._transitionInExpression(resolve, expression, transitionIn);
   },
@@ -65,13 +65,17 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   }),
 
   addInitialExpression: on('didInsertElement', function() {
-    const expression = get(this, 'directable.initialExpression');
+    const expression = get(this, 'expression');
 
     const expressionContainer = Ember.Object.create({
       expression,
       directable: Directable.create({
-        effect: { opacity: 1 },
-        options: { duration: 0 },
+        attrs: {
+          transition: {
+            effect: { opacity: 1 },
+            duration: 0
+          }
+        },
         resolve: K
       })
     });
@@ -82,8 +86,8 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   _transitionOutExpressions(transition) {
     const expression = get(this, 'expressionContainers.firstObject');
 
-    if (isBlank(get(transition, 'effect'))) {
-      set(transition, 'effect', 'transition.fadeOut');
+    if (isBlank(get(transition, 'attrs.transition.effect'))) {
+      set(transition, 'attrs.transition.effect', 'transition.fadeOut');
     }
 
     set(transition, 'resolve', () => {
@@ -94,8 +98,8 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   },
 
   _transitionInExpression(resolve, expression, transition) {
-    if (isBlank(get(transition, 'effect'))) {
-      set(transition, 'effect', { opacity: [1, 1] });
+    if (isBlank(get(transition, 'attrs.transition.effect'))) {
+      set(transition, 'attrs.transition.effect', { opacity: [1, 1] });
     }
 
     set(transition, 'resolve', resolve);

@@ -188,13 +188,13 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
       $word.html(text);
     }
 
-    const duration = 1000 / get(this, 'textSpeed');
-    const style = get(this, 'textAnimation');
+    const duration = 1000 / get(this, 'typeSpeed');
+    const style = get(this, 'typeAnimation');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     $letter.css({ opacity: 1 });
     animate($letter, style, { duration: 0 });
-    animate($letter, 'reverse', { duration: duration * 4 });
+    animate($letter, 'reverse', { duration });
 
     later(() => {
       if (characterIndex + 1 < wordLength) {
@@ -202,7 +202,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
       } else {
         this.writeWord(wordIndex + 1);
       }
-    }, duration);
+    }, duration * 0.25);
   },
 
   executeCustomTag(text, index) {

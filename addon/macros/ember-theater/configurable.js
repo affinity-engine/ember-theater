@@ -6,22 +6,38 @@ const {
   isPresent
 } = Ember;
 
-const configurableGet = function configurableGet(context, properties) {
-  const priorityProperty = properties.find((property) => get(context, property));
+const extend = Ember.$.extend;
 
-  return isPresent(priorityProperty) ? get(context, priorityProperty) : undefined;
-};
-
-export default function configurable(priorities, ...keys) {
-  const properties = keys.reduce((props, key) => {
+const createKeyPriorityPairs = function createKeyPriorityPairs(priorities, ...keys) {
+  return keys.reduce((props, key) => {
     priorities.forEach((priority) => props.push(`${priority}.${key}`));
 
     return props;
   }, []);
+};
+
+export default function configurable(priorities, keys) {
+  const properties = createKeyPriorityPairs(priorities, keys);
 
   return computed(...properties, {
     get() {
-      return configurableGet(this, properties);
+      const priorityProperty = properties.find((property) => get(this, property));
+
+      return isPresent(priorityProperty) ? get(this, priorityProperty) : undefined;
+    }
+  });
+}
+
+export function deepConfigurable(priorities, keys) {
+  const properties = createKeyPriorityPairs(priorities, keys);
+
+  return computed(...properties, {
+    get() {
+      const mergedProperty = properties.reduce((accumulator, property) => {
+        return extend({}, get(this, property) || {}, accumulator);
+      }, {});
+
+      return Ember.Object.create(mergedProperty);
     }
   });
 }

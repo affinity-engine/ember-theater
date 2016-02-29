@@ -30,11 +30,15 @@ export default Mixin.create({
   resolveAndDestroy(...args) {
     const directable = get(this, 'directable');
     const stageManager = get(this, 'stageManager');
+    const resolve = get(this, 'directable').resolve;
 
-    this.resolve(...args);
-    // directable.destroy();
+    directable.destroy();
 
     get(stageManager, 'directables').removeObject(directable);
+
+    Ember.run.next(() => {
+      resolve(...args);
+    })
   },
 
   destroyDirectable: on('willDestroyElement', function() {

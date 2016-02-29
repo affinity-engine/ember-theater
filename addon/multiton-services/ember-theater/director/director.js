@@ -2,17 +2,8 @@ import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
-const {
-  get,
-  set
-} = Ember;
-
-const {
-  RSVP: {
-    Promise,
-    resolve
-  }
-} = Ember;
+const { get } = Ember;
+const { RSVP: { resolve } } = Ember;
 
 export default Ember.Object.extend(TheaterIdMixin, {
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
@@ -21,22 +12,15 @@ export default Ember.Object.extend(TheaterIdMixin, {
     if (get(scene, 'isAborted')) { return resolve(); }
 
     const theaterId = get(scene, 'theaterId');
-    const promise = this._direct(factory, theaterId, args);
+    const { autoResolve, autoResolveResult } = get(this, 'sceneManager').advanceSceneRecord();
+    const direction = factory.create({ autoResolve, autoResolveResult, scene, theaterId });
 
-    get(this, 'sceneManager').recordSceneRecordEvent(promise, scene);
-
-    return promise;
+    return direction.setup(...args);
   },
 
-  _direct(factory, theaterId, args) {
-    const autoResolveProperties = get(this, 'sceneManager').advanceSceneRecord();
+  recordDirection(promise, scene) {
+    const sceneManager = get(this, 'sceneManager');
 
-    const direction = factory.create(autoResolveProperties);
-
-    set(direction, 'theaterId', theaterId);
-
-    return new Promise((resolution) => {
-      direction.perform(resolution, ...args);
-    });
+    sceneManager.recordSceneRecordEvent(promise, scene);
   }
 });
