@@ -1,8 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
-import animate from 'ember-theater/utils/ember-theater/animate';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
@@ -13,15 +13,16 @@ const {
   set
 } = Ember;
 
-const configurablePriority = ['directable.options', 'config.attrs.director.codeChallenge', 'config.attrs.globals'];
+const configurablePriority = ['directable.attrs', 'config.attrs.director.codeChallenge', 'config.attrs.globals'];
 
-export default Component.extend(DirectableComponentMixin, {
+export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   layout,
 
   config: multitonService('ember-theater/config', 'theaterId'),
 
-  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
-  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
+  rawSnippets: configurable(configurablePriority, 'snippets'),
+  transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
+  transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
@@ -31,9 +32,13 @@ export default Component.extend(DirectableComponentMixin, {
     }
   }),
 
-  snippets: computed('directable.snippets', {
+  transitionInCodeChallenge: on('didInsertElement', function() {
+    this.executeTransitionIn();
+  }),
+
+  snippets: computed('rawSnippets', {
     get() {
-      const snippets = get(this, 'directable.snippets');
+      const snippets = get(this, 'rawSnippets');
 
       set(snippets.find((snippet) => get(snippet, 'readOnly') !== true), 'autofocus', true);
 
@@ -70,10 +75,7 @@ export default Component.extend(DirectableComponentMixin, {
       }
 
       if (isValid) {
-        const effect = get(this, 'transitionOut');
-        const duration = get(this, 'transitionOutDuration');
-
-        animate(this.element, effect, { duration }).then(() => {
+        this.executeTransitionIn().then(() => {
           this.resolveAndDestroy(result);
         });
       }

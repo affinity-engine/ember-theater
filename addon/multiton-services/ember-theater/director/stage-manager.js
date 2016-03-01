@@ -22,20 +22,20 @@ export default Ember.Object.extend(TheaterIdMixin, {
     directable.destroy();
   },
 
-  findDirectableWithId(id, type, instanceId) {
+  findDirectableWithId(id, componentPath, instanceId) {
     return get(this, 'directables').find((directable) => {
       return get(directable, 'id') === id &&
-        get(directable, 'type') === type &&
+        get(directable, 'componentPath') === componentPath &&
         get(directable, 'instanceId') === instanceId;
     });
   },
 
-  handleDirectable(id, type, properties, resolve) {
-    const instanceId = get(properties, 'options.instance') || 0;
-    const directable = this.findDirectableWithId(id, type, instanceId);
+  handleDirectable(id, componentPath, properties, resolve) {
+    const instanceId = get(properties, 'attrs.instance') || 0;
+    const directable = this.findDirectableWithId(id, componentPath, instanceId);
 
     if (isBlank(directable)) {
-      this._addNewDirectable(merge(properties, { id, type, resolve, instanceId }));
+      this._addNewDirectable(merge(properties, { id, componentPath, resolve, instanceId }));
     } else {
       this._updateDirectable(directable, properties, resolve);
     }

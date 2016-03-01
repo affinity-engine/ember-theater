@@ -3,41 +3,76 @@ import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
-  get,
-  isPresent,
-  typeOf
+  merge,
+  set
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/text',
   layer: 'theater.prompt.text',
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
-  perform(resolve, characterOrText, textOrOptions = {}, optionsOnly = {}) {
-    const characterIsPresent = typeOf(textOrOptions) === 'string' ||
-      isPresent(get(textOrOptions, 'id')) ||
-      isPresent(get(textOrOptions, 'text'));
+  setup(text, character) {
+    this._addToQueue();
 
-    const text = characterIsPresent ? textOrOptions : characterOrText;
-    const character = characterIsPresent ?
-      get(this, 'fixtureStore').find('characters', characterOrText) :
-      null;
+    set(this, 'attrs.text', text);
+    set(this, 'attrs.character', character);
 
-    const options = characterIsPresent ? optionsOnly : textOrOptions;
-    const layer = get(options, 'layer') || get(this, 'layer');
-    const autoResolve = get(this, 'autoResolve');
-    const autoResolveResult = get(this, 'autoResolveResult');
+    return this;
+  },
 
-    const properties = {
-      autoResolve,
-      autoResolveResult,
-      character,
-      layer,
-      options,
-      text
-    };
+  classNames(classNames) {
+    set(this, 'attrs.classNames', Ember.Object.create(classNames));
 
-    get(this, 'stageManager').handleDirectable(null, 'text', properties, resolve);
+    return this;
+  },
+
+  instant(instant = true) {
+    set(this, 'attrs.instant', instant);
+
+    return this;
+  },
+
+  keys(keys) {
+    set(this, 'attrs.keys', { accept: keys });
+
+    return this;
+  },
+
+  scrollable(scrollable = true) {
+    set(this, 'attrs.scrollable', scrollable);
+
+    return this;
+  },
+
+  transition() {
+    this.transitionIn(...arguments);
+
+    return this;
+  },
+
+  transitionIn(effect, duration, options = {}) {
+    set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  transitionOut(effect, duration, options = {}) {
+    set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  typeAnimation(typeAnimation) {
+    set(this, 'attrs.typeAnimation', typeAnimation);
+
+    return this;
+  },
+
+  typeSpeed(typeSpeed) {
+    set(this, 'attrs.typeSpeed', typeSpeed);
+
+    return this;
   }
 });

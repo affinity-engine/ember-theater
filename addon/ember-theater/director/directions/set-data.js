@@ -1,11 +1,33 @@
+import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
-export default Direction.extend({
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theareId'),
+const {
+  get,
+  getProperties,
+  set
+} = Ember;
 
-  perform(resolve, key, value) {
-    this.get('saveStateManager').setStateValue(key, value);
+export default Direction.extend({
+  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
+
+  setup(key, value) {
+    this._addToQueue();
+
+    set(this, 'attrs.key', key);
+    set(this, 'attrs.value', value);
+
+    return this;
+  },
+
+  _perform(meta, resolve) {
+    const attrs = get(this, 'attrs');
+    const {
+      key,
+      value
+    } = getProperties(attrs, 'key', 'value');
+
+    get(this, 'saveStateManager').setStateValue(key, value);
 
     resolve();
   }

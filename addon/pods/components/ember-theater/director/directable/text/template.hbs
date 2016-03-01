@@ -1,13 +1,14 @@
-{{#if name}}
-  <div class='et-text-caption {{namePosition}}'>{{name}}</div>
-{{/if}}
-{{ember-theater/director/directable/text/body
+{{ember-theater/director/directable/text/display
+  nameClassNames=nameClassNames
+  decorativeClassNames=decorativeClassNames
+  structuralClassNames=structuralClassNames
   instantWriteText=instantWriteText
   keyboardActivated=keyboardActivated
   keyboardPriority=keyboardPriority
   keys=keys
+  name=name
   text=text
-  textAnimation=textAnimation
-  textSpeed=textSpeed
+  typeAnimation=typeAnimation
+  typeSpeed=typeSpeed
   resolve=(action 'completeText')
 }}

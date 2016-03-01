@@ -4,9 +4,8 @@ import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
-import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
-import animate from 'ember-theater/utils/ember-theater/animate';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import {
   keyDown,
@@ -33,10 +32,10 @@ const mixins = [
   EKMixin,
   PerfectScrollbarMixin,
   StyleableMixin,
-  TransitionInMixin
+  TransitionMixin
 ];
 
-const configurablePriority = ['directable.options', 'config.attrs.director.choice', 'config.attrs.globals'];
+const configurablePriority = ['directable.attrs', 'config.attrs.director.choice', 'config.attrs.globals'];
 
 export default Component.extend(...mixins, {
   layout,
@@ -47,15 +46,19 @@ export default Component.extend(...mixins, {
   config: multitonService('ember-theater/config', 'theaterId'),
   translator: service('ember-theater/translator'),
 
+  choices: configurable(configurablePriority, 'choices'),
+  header: configurable(configurablePriority, 'header'),
   moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),
   moveDownKeys: configurable(configurablePriority, 'keys.moveDown'),
   cancelKeys: configurable(configurablePriority, 'keys.cancel'),
-  transitionIn: configurable(configurablePriority, 'transitionIn.effect'),
-  transitionInDuration: configurable(configurablePriority, 'transitionIn.duration', 'transitionDuration'),
-  transitionOut: configurable(configurablePriority, 'transitionOut.effect'),
-  transitionOutDuration: configurable(configurablePriority, 'transitionOut.duration', 'transitionDuration'),
+  transitionIn: deepConfigurable(configurablePriority, 'transitionIn', 'transition'),
+  transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
   structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
+
+  transitionInChoice: on('didInsertElement', function() {
+    this.executeTransitionIn();
+  }),
 
   handleAutoResolve: on('didInitAttrs', function() {
     if (get(this, 'autoResolve')) {
@@ -65,9 +68,9 @@ export default Component.extend(...mixins, {
     }
   }),
 
-  choices: computed('directable.choices.[]', {
+  translatedChoices: computed('choices.[]', {
     get() {
-      const choices = get(this, 'directable.choices');
+      const choices = get(this, 'choices');
 
       return choices.map((value, index) => {
         const key = get(value, 'key') || index;
@@ -81,16 +84,16 @@ export default Component.extend(...mixins, {
     }
   }).readOnly(),
 
-  header: computed('directable.header', {
+  translatedHeader: computed('header', {
     get() {
-      const header = get(this, 'directable.header');
+      const header = get(this, 'header');
 
       return get(this, 'translator').translate(header);
     }
   }).readOnly(),
 
   setNumericalKey: on('didReceiveAttrs', function() {
-    const choices = get(this, 'choices');
+    const choices = get(this, 'translatedChoices');
 
     choices.find((choice, index) => {
       if (index >= 9) { return true; }
@@ -138,12 +141,9 @@ export default Component.extend(...mixins, {
 
   actions: {
     choose(choice) {
-      const effect = get(this, 'transitionOut');
-      const duration = get(this, 'transitionOutDuration');
-
       this.$().parents('.ember-theater').trigger('focus');
 
-      animate(this.element, effect, { duration }).then(() => {
+      this.executeTransitionOut().then(() => {
         this.resolveAndDestroy(choice);
       });
     }

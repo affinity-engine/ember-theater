@@ -1,40 +1,52 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
-import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
   computed,
-  get
+  get,
+  on
 } = Ember;
 
 const { inject: { service } } = Ember;
 
 const configurablePriority = [
-  'directable.options',
+  'directable.attrs',
   'expression.expression',
   'expression',
   'config.attrs.director.expression',
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
-  attributeBindings: ['caption:alt', 'src'],
+export default Component.extend(DirectableComponentMixin, TransitionMixin, {
+  attributeBindings: ['captionTranslation:alt', 'src'],
   classNames: ['et-character-expression'],
   tagName: 'img',
 
   translator: service('ember-theater/translator'),
 
+  config: multitonService('ember-theater/config', 'theaterId'),
+
+  caption: configurable(configurablePriority, 'caption'),
+  resolve: configurable(configurablePriority, 'resolve'),
   src: configurable(configurablePriority, 'src'),
+  transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
+  transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
-  caption: computed('expression.caption', 'expression.id', 'directable.options.caption', {
+  captionTranslation: computed('expression.id', 'caption', {
     get() {
-      const optional = get(this, 'directable.options.caption');
-      const fallback = optional || get(this, 'expression.caption');
-      const translation = optional || `expressions.${get(this, 'expression.id')}`;
+      const translation = get(this, 'caption') || `expressions.${get(this, 'expression.id')}`;
 
-      return get(this, 'translator').translate(fallback, translation);
+      return get(this, 'translator').translate(translation);
     }
+  }),
+
+  transitionInExpression: on('didInsertElement', function() {
+    this.executeTransitionIn().then(() => {
+      get(this, 'resolve')();
+    });
   })
 });

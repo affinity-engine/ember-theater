@@ -5,22 +5,39 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
-  typeOf
+  getProperties,
+  set
 } = Ember;
 
 export default Direction.extend({
   layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
 
-  perform(resolve, layerOrEffect, effectOrOptions = {}, optionsOnly = {}) {
-    const layerIsPresent = typeOf(effectOrOptions) === 'string' || typeOf(effectOrOptions) === 'array';
+  setup(layer, effect, duration = 500) {
+    this._addToQueue();
 
-    const layer = layerIsPresent ? layerOrEffect : '';
-    const effect = layerIsPresent ? effectOrOptions : layerOrEffect;
-    const options = layerIsPresent ? optionsOnly : effectOrOptions;
+    set(this, 'attrs.layer', layer);
+    set(this, 'attrs.effect', effect);
+    set(this, 'attrs.duration', duration);
+
+    return this;
+  },
+
+  destroy(destroy = true) {
+    set(this, 'destroy', destroy);
+
+    return this;
+  },
+
+  _perform(meta, resolve) {
+    const attrs = get(this, 'attrs');
+    const {
+      effect,
+      layer
+    } = getProperties(attrs, 'effect', 'layer');
 
     // const filterId = get(line, 'id');
     // const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
 
-    get(this, 'layerManager').addFilter(resolve, effect, options, layerName(layer));
+    get(this, 'layerManager').addFilter(resolve, effect, attrs, layerName(layer));
   }
 });

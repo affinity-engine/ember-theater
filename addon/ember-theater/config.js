@@ -5,15 +5,13 @@ export default {
       decorative: ['et-paper'],
       structural: ['et-block']
     },
-    textSpeed: 25,
-    textAnimation: {
-      opacity: 0,
-      translateX: '0.4vw',
-      translateY: '-0.1vw'
-    },
     transitionDuration: 200,
+    transition: {
+      duration: 500,
+      effect: { opacity: 1 }
+    },
     transitionIn: {
-      effect: { opacity: 0 }
+      effect: { opacity: 1 }
     },
     transitionOut: {
       effect: { opacity: 0 }
@@ -72,7 +70,13 @@ export default {
       }
     },
     text: {
-      namePosition: 'left'
+      namePosition: 'left',
+      typeSpeed: 5,
+      typeAnimation: {
+        opacity: 0,
+        translateX: '10px',
+        translateY: '-5px'
+      }
     }
   }
 };

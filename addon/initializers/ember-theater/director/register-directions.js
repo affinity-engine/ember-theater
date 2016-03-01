@@ -6,7 +6,7 @@ const {
   getOwner
 } = Ember;
 
-const { String: { camelize } } = Ember;
+const { String: { capitalize } } = Ember;
 
 const injectDirectionProxy = function injectDirectionProxy(application, name) {
   const proxy = function proxy(...args) {
@@ -16,8 +16,10 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
     return get(this, 'director').direct(this, factory, args);
   };
 
-  application.register(`direction:${name}-proxy`, proxy, { instantiate: false });
-  application.inject('scene', camelize(name), `direction:${name}-proxy`);
+  const constantizedName = name.split('-').map((section) => capitalize(section)).join('');
+
+  application.register(`direction:${name}-proxy`, proxy, { instantiate: false, singleton: false });
+  application.inject('scene', constantizedName, `direction:${name}-proxy`);
 };
 
 export function initialize(application) {

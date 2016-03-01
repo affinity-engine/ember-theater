@@ -14,11 +14,16 @@ $et-text-included: true;
   display: none;
 }
 
+.et-text-container {
+  @extend .et-full-screen;
+  @extend .et-hidden;
+
+  z-index: 100;
+}
+
 .et-text {
   text-align: $et-text-text-align;
-
   position: absolute;
-  z-index: 100;
 
   .et-text-caption {
     font-weight: $et-text-caption-font-weight;

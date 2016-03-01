@@ -1,7 +1,7 @@
-{{#if header}}
-  <div class='et-choice-header'>{{header}}</div>
+{{#if translatedHeader}}
+  <div class='et-choice-header'>{{translatedHeader}}</div>
 {{/if}}
-{{#each choices as |choice|}}
+{{#each translatedChoices as |choice|}}
   {{ember-theater/director/directable/choice/option
     keyboardActivated=keyboardActivated
     keyboardPriority=keyboardPriority
