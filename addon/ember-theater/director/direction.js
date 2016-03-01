@@ -19,6 +19,12 @@ export default Ember.Object.extend({
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
+  instance(instance) {
+    set(this, 'attrs.instance', instance);
+
+    return this;
+  },
+
   _addToQueue() {
     const queue = get(this, 'queue') || set(this, 'queue', Ember.A());
 

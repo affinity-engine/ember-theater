@@ -31,7 +31,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   handleDirectable(id, componentPath, properties, resolve) {
-    const instanceId = get(properties, 'options.instance') || 0;
+    const instanceId = get(properties, 'attrs.instance') || 0;
     const directable = this.findDirectableWithId(id, componentPath, instanceId);
 
     if (isBlank(directable)) {
