@@ -1,12 +1,40 @@
+import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
+const {
+  get,
+  merge,
+  set
+} = Ember;
+
 export default Direction.extend({
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theareId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
-  perform(resolve, sceneId, options) {
-    resolve();
+  setup(sceneId) {
+    this._addToQueue();
 
-    this.get('sceneManager').toScene(sceneId, options);
+    set(this, 'attrs.sceneId', sceneId);
+
+    return this;
+  },
+
+  autosave(autosave = true) {
+    set(this, 'attrs.autosave', autosave);
+
+    return this;
+  },
+
+  transitionOut(effect, duration, options = {}) {
+    set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  _perform() {
+    const attrs = get(this, 'attrs');
+    const sceneId = get(attrs, 'sceneId');
+
+    this.get('sceneManager').toScene(sceneId, attrs);
   }
 });

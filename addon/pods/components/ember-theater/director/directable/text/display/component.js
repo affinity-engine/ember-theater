@@ -10,7 +10,7 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
   layout,
 
   classNames: ['et-text'],

@@ -1,37 +1,27 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
-  get,
   set,
   typeOf
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/pause',
   layer: 'meta.pause',
 
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  setup(...args) {
+    this._addToQueue();
 
-  perform(resolve, ...args) {
-    const keys = Ember.A();
+    const keys = set(this, 'attrs.keys', Ember.A());
 
     args.forEach((arg) => {
       switch (typeOf(arg)) {
         case 'string': return keys.pushObject(arg);
-        case 'number': return set(this, 'duration', arg);
+        case 'number': return set(this, 'attrs.duration', arg);
       }
     });
 
-    const duration = get(this, 'duration');
-    const autoResolve = get(this, 'autoResolve');
-
-    const properties = {
-      autoResolve,
-      duration,
-      keys
-    };
-
-    get(this, 'stageManager').handleDirectable(null, 'pause', properties, resolve);
+    return this;
   }
 });

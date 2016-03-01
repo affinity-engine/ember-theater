@@ -3,13 +3,8 @@ import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
-  get,
-  getProperties,
-  isEmpty,
-  isPresent,
   merge,
-  set,
-  typeOf
+  set
 } = Ember;
 
 export default Direction.extend({
@@ -46,7 +41,7 @@ export default Direction.extend({
   },
 
   scrollable(scrollable = true) {
-    set(this, 'attrs.scrollable', instant);
+    set(this, 'attrs.scrollable', scrollable);
 
     return this;
   },

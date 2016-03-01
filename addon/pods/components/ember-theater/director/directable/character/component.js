@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
-import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
@@ -17,7 +18,6 @@ const {
   set
 } = Ember;
 
-const { alias } = computed;
 const { run: { later } } = Ember;
 const { Handlebars: { SafeString } } = Ember;
 
@@ -28,10 +28,11 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, VelocityLineMixin, WindowResizeMixin, {
+export default Component.extend(DirectableComponentMixin, TransitionMixin, TransitionObserverMixin, WindowResizeMixin, {
+  layout,
+
   attributeBindings: ['style'],
   classNames: ['et-character'],
-  layout: layout,
 
   config: multitonService('ember-theater/config', 'theaterId'),
 
@@ -41,7 +42,7 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
   height: configurable(configurablePriority, 'height'),
   transition: deepConfigurable(configurablePriority, 'transition'),
 
-  changeExpression(resolve, expression, { transitionIn = { attrs: { transition: {} } }, transitionOut = { attrs: { transition: {} } } }) {
+  changeExpression(resolve, expression, { transitionIn, transitionOut }) {
     this._transitionOutExpressions(transitionOut);
     this._transitionInExpression(resolve, expression, transitionIn);
   },
@@ -66,47 +67,39 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, Win
 
   addInitialExpression: on('didInsertElement', function() {
     const expression = get(this, 'expression');
+    const transitionIn = {
+      effect: { opacity: 1 },
+      duration: 0
+    };
 
-    const expressionContainer = Ember.Object.create({
-      expression,
-      directable: Directable.create({
-        attrs: {
-          transition: {
-            effect: { opacity: 1 },
-            duration: 0
-          }
-        },
-        resolve: K
-      })
-    });
-
-    this.get('expressionContainers').pushObject(expressionContainer);
+    this._transitionInExpression(K, expression, transitionIn);
   }),
 
-  _transitionOutExpressions(transition) {
-    const expression = get(this, 'expressionContainers.firstObject');
+  _transitionOutExpressions(transitionOut = { }) {
+    const expressionContainer = get(this, 'expressionContainers.firstObject');
+    const directable = get(expressionContainer, 'directable');
 
-    if (isBlank(get(transition, 'attrs.transition.effect'))) {
-      set(transition, 'attrs.transition.effect', 'transition.fadeOut');
-    }
-
-    set(transition, 'resolve', () => {
-      get(this, 'expressionContainers').removeObjects(expression);
+    set(directable, 'attrs.transitionOut', transitionOut);
+    get(directable, 'component').executeTransitionOut().then(() => {
+      get(this, 'expressionContainers').removeObject(expressionContainer);
     });
-
-    set(expression, 'directable', Directable.create(transition));
   },
 
-  _transitionInExpression(resolve, expression, transition) {
-    if (isBlank(get(transition, 'attrs.transition.effect'))) {
-      set(transition, 'attrs.transition.effect', { opacity: [1, 1] });
+  _transitionInExpression(resolve, expression, transitionIn = { }) {
+    if (isBlank(get(transitionIn, 'effect'))) {
+      set(transitionIn, 'effect', { opacity: [1, 1] });
     }
 
-    set(transition, 'resolve', resolve);
+    const directable = Directable.create({
+      attrs: {
+        resolve,
+        transitionIn
+      }
+    });
 
     const expressionContainer = Ember.Object.create({
       expression,
-      directable: Directable.create(transition)
+      directable
     });
 
     get(this, 'expressionContainers').unshiftObject(expressionContainer);

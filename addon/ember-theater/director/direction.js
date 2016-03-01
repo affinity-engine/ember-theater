@@ -7,8 +7,6 @@ const {
   get,
   getOwner,
   getProperties,
-  isEmpty,
-  merge,
   set
 } = Ember;
 

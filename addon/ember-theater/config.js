@@ -7,13 +7,14 @@ export default {
     },
     transitionDuration: 200,
     transition: {
-      duration: 500
+      duration: 500,
+      effect: { opacity: 1 }
     },
     transitionIn: {
       effect: { opacity: 1 }
     },
     transitionOut: {
-      effect: { opacity: 1 }
+      effect: { opacity: 0 }
     },
     keys: {
       accept: [' ', 'Enter'],

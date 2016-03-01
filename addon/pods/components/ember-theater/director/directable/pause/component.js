@@ -22,11 +22,12 @@ export default Component.extend(DirectableComponentMixin, EKMixin, {
   }),
 
   setup: on('didInsertElement', function() {
-    const directable = get(this, 'directable');
+    const attrs = get(this, 'directable.attrs');
+
     const {
       duration,
       keys
-    } = getProperties(directable, 'duration', 'keys');
+    } = getProperties(attrs, 'duration', 'keys');
 
     if (isPresent(keys)) {
       this._setupKeyPressWatcher(keys);

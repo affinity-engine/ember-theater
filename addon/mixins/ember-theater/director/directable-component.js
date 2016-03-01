@@ -10,6 +10,7 @@ const {
 } = Ember;
 
 const { computed: { alias } } = Ember;
+const { run: { next } } = Ember;
 
 export default Mixin.create({
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
@@ -36,9 +37,9 @@ export default Mixin.create({
 
     get(stageManager, 'directables').removeObject(directable);
 
-    Ember.run.next(() => {
+    next(() => {
       resolve(...args);
-    })
+    });
   },
 
   destroyDirectable: on('willDestroyElement', function() {

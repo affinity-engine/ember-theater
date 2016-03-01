@@ -1,29 +1,38 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
-  get
+  merge,
+  set
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/code-challenge',
   layer: 'theater.prompt.code-challenge',
 
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  setup(snippets) {
+    this._addToQueue();
 
-  perform(resolve, snippets, options = {}) {
-    const layer = get(options, 'layer') || get(this, 'layer');
-    const autoResolve = get(this, 'autoResolve');
-    const autoResolveResult = get(this, 'autoResolveResult');
+    set(this, 'attrs.snippets', snippets);
 
-    const properties = {
-      autoResolve,
-      autoResolveResult,
-      snippets,
-      layer,
-      options
-    };
+    return this;
+  },
 
-    get(this, 'stageManager').handleDirectable(null, 'code-challenge', properties, resolve);
+  transition() {
+    this.transitionIn(...arguments);
+
+    return this;
+  },
+
+  transitionIn(effect, duration, options = {}) {
+    set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  transitionOut(effect, duration, options = {}) {
+    set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
+
+    return this;
   }
 });

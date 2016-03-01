@@ -4,8 +4,6 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
-  getProperties,
-  isPresent,
   merge,
   set,
   typeOf
@@ -19,7 +17,7 @@ export default Direction.extend({
 
   setup(fixtureOrId) {
     const fixtureStore = get(this, 'fixtureStore');
-    const fixture = typeOf(fixtureOrId) === 'object' ?  fixtureOrId : fixtureStore.find('characters', fixtureOrId);
+    const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('characters', fixtureOrId);
     const id = get(fixture, 'id');
     const expressionId = get(fixture, 'defaultExpressionId');
 
@@ -70,6 +68,7 @@ export default Direction.extend({
 
   _findExpression(fixtureOrId) {
     const fixtureStore = get(this, 'fixtureStore');
-    return typeOf(fixtureOrId) === 'object' ?  fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
+
+    return typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
   }
 });

@@ -5,14 +5,23 @@ const {
   Mixin,
   get,
   getProperties,
-  merge,
-  observer,
-  on
+  merge
 } = Ember;
 
 export default Mixin.create({
-  perform: on('didInsertElement', observer('transition.effect', function() {
-    const transition = get(this, 'transition');
+  executeTransitionIn() {
+    const transition = get(this, 'transitionIn');
+
+    return this.executeTransition(transition);
+  },
+
+  executeTransitionOut() {
+    const transition = get(this, 'transitionOut');
+
+    return this.executeTransition(transition);
+  },
+
+  executeTransition(transition) {
     const effect = get(transition, 'effect');
     const options = getProperties(transition, ...Object.keys(transition));
 
@@ -20,8 +29,6 @@ export default Mixin.create({
       merge(options, { duration: 0 });
     }
 
-    animate(this.element, effect, options).then(() => {
-      this.resolve();
-    });
-  }))
+    return animate(this.element, effect, options);
+  }
 });

@@ -4,33 +4,41 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
-  isPresent
+  merge,
+  set,
+  typeOf
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/backdrop',
   layer: 'theater.stage.background.backdrop',
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
-  perform(resolve, id, effectOrOptions, optionsOnly) {
-    const effectIsPresent = isPresent(optionsOnly);
+  setup(fixtureOrId) {
+    this._addToQueue();
 
-    const backdrop = get(this, 'fixtureStore').find('backdrops', id);
-    const effect = effectIsPresent ? effectOrOptions : 'transition.fadeIn';
-    const options = effectIsPresent ? optionsOnly || {} : effectOrOptions || {};
-    const layer = get(options, 'layer') || get(this, 'layer');
-    const autoResolve = get(this, 'autoResolve');
+    const fixtureStore = get(this, 'fixtureStore');
+    const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('backdrops', fixtureOrId);
+    const id = get(fixture, 'id');
 
-    const properties = {
-      autoResolve,
-      backdrop,
-      effect,
-      id,
-      layer,
-      options
-    };
+    set(this, 'attrs.fixture', fixture);
+    set(this, 'id', id);
 
-    get(this, 'stageManager').handleDirectable(id, 'backdrop', properties, resolve);
+    return this;
+  },
+
+  caption(caption) {
+    set(this, 'attrs.caption', caption);
+
+    return this;
+  },
+
+  transition(effect, duration, options = {}) {
+    this._addToQueue();
+
+    set(this, 'attrs.transition', merge({ duration, effect }, options));
+
+    return this;
   }
 });

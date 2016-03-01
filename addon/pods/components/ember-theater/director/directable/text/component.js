@@ -1,18 +1,16 @@
 import Ember from 'ember';
 import layout from './template';
-import animate from 'ember-theater/utils/ember-theater/animate';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director/adjustable-keyboard';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
-import TransitionInMixin from 'ember-theater/mixins/ember-theater/director/transition-in';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Component,
   computed,
   get,
-  getProperties,
   isPresent,
   on
 } = Ember;
@@ -23,11 +21,17 @@ const {
 } = computed;
 
 const { run: { later } } = Ember;
-const { inject: { service } } = Ember;
 
-const configurablePriority = ['directable.attrs', 'character', 'character.fixture.text', 'character.fixture', 'config.attrs.director.text', 'config.attrs.globals'];
+const configurablePriority = [
+  'directable.attrs',
+  'character',
+  'character.fixture.text',
+  'character.fixture',
+  'config.attrs.director.text',
+  'config.attrs.globals'
+];
 
-export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionInMixin, {
+export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionMixin, {
   layout,
 
   classNames: ['et-text-container'],
@@ -54,6 +58,10 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
     if (get(this, 'autoResolve') && get(this, 'autoResolveResult') === '_RESOLVED') {
       this.resolveAndDestroy(true);
     }
+  }),
+
+  transitionInText: on('didInsertElement', function() {
+    this.executeTransitionIn();
   }),
 
   setTimeout: on('didInsertElement', function() {

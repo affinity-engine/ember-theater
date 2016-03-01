@@ -12,6 +12,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
+  soundManager: multitonService('ember-theater/sound-manager', 'theaterId'),
 
   resetGame: async function() {
     await get(this, 'saveStateManager').resetAutosave();
@@ -38,11 +39,13 @@ export default Ember.Object.extend(TheaterIdMixin, {
     const {
       config,
       saveStateManager,
-      sceneManager
-    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager');
+      sceneManager,
+      soundManager
+    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager', 'soundManager');
 
     saveStateManager.loadRecord(save);
     config.resetConfig();
+    soundManager.clearSounds();
 
     sceneManager.toScene(sceneId, options);
   }

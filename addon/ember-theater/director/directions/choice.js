@@ -3,34 +3,57 @@ import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
-  get,
-  typeOf
+  merge,
+  set
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/choice',
   layer: 'theater.prompt.choice',
 
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  perform(resolve, headerOrChoices, choicesOrOptions, optionsOnly) {
-    const headerIsPresent = typeOf(headerOrChoices) === 'string';
+  setup(choices) {
+    this._addToQueue();
 
-    const header = headerIsPresent ? headerOrChoices : null;
-    const choices = headerIsPresent ? choicesOrOptions : headerOrChoices;
-    const options = headerIsPresent ? optionsOnly || {} : choicesOrOptions || {};
-    const layer = get(options, 'layer') || get(this, 'layer');
-    const autoResolve = get(this, 'autoResolve');
-    const autoResolveResult = get(this, 'autoResolveResult');
+    set(this, 'attrs.choices', choices);
 
-    const properties = {
-      autoResolve,
-      autoResolveResult,
-      choices,
-      header,
-      layer,
-      options
-    };
+    return this;
+  },
 
-    get(this, 'stageManager').handleDirectable(null, 'choice', properties, resolve);
+  classNames(classNames) {
+    set(this, 'attrs.classNames', Ember.Object.create(classNames));
+
+    return this;
+  },
+
+  header(header) {
+    set(this, 'attrs.header', header);
+
+    return this;
+  },
+
+  keys(keys) {
+    set(this, 'attrs.keys', keys);
+
+    return this;
+  },
+
+  transition() {
+    this.transitionIn(...arguments);
+
+    return this;
+  },
+
+  transitionIn(effect, duration, options = {}) {
+    set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
+
+    return this;
+  },
+
+  transitionOut(effect, duration, options = {}) {
+    set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
+
+    return this;
   }
 });

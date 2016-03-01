@@ -1,12 +1,14 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
-import VelocityLineMixin from 'ember-theater/mixins/ember-theater/director/velocity-line';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
   computed,
-  get
+  get,
+  on
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -19,16 +21,20 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
+export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   attributeBindings: ['captionTranslation:alt', 'src'],
   classNames: ['et-character-expression'],
   tagName: 'img',
 
   translator: service('ember-theater/translator'),
 
+  config: multitonService('ember-theater/config', 'theaterId'),
+
   caption: configurable(configurablePriority, 'caption'),
+  resolve: configurable(configurablePriority, 'resolve'),
   src: configurable(configurablePriority, 'src'),
-  transition: deepConfigurable(configurablePriority, 'transition'),
+  transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
+  transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
   captionTranslation: computed('expression.id', 'caption', {
     get() {
@@ -36,5 +42,11 @@ export default Component.extend(DirectableComponentMixin, VelocityLineMixin, {
 
       return get(this, 'translator').translate(translation);
     }
+  }),
+
+  transitionInExpression: on('didInsertElement', function() {
+    this.executeTransitionIn().then(() => {
+      get(this, 'resolve')();
+    });
   })
 });
