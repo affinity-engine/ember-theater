@@ -33,6 +33,12 @@ export default Direction.extend({
     return this;
   },
 
+  keyboardPriority(keyboardPriority) {
+    set(this, 'attrs.keyboardPriority', keyboardPriority);
+
+    return this;
+  },
+
   keys(keys) {
     set(this, 'attrs.keys', keys);
 

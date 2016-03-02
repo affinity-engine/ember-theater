@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director/adjustable-keyboard';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
@@ -31,7 +30,7 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixin, StyleableMixin, TransitionMixin, {
+export default Component.extend(DirectableComponentMixin, StyleableMixin, TransitionMixin, {
   layout,
 
   classNames: ['et-text-container'],
@@ -41,6 +40,7 @@ export default Component.extend(AdjustableKeyboardMixin, DirectableComponentMixi
   character: alias('directable.attrs.character'),
   instantWriteText: or('instant', 'scrollable'),
 
+  keyboardPriority: configurable(configurablePriority, 'keyboardPriority'),
   keys: configurable(configurablePriority, 'keys.accept'),
   instant: configurable(configurablePriority, 'instant'),
   scrollable: configurable(configurablePriority, 'scrollable'),

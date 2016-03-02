@@ -24,7 +24,7 @@ const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 export default Component.extend(EKMixin, {
   layout,
 
-  keyboardFirstResponder: true,
+  keyboardPriority: 999999999,
 
   config: multitonService('ember-theater/config', 'theaterId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),

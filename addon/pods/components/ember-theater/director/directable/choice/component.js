@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from './template';
-import AdjustableKeyboardMixin from 'ember-theater/mixins/ember-theater/director/adjustable-keyboard';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
@@ -27,7 +26,6 @@ const { inject: { service } } = Ember;
 const { run: { next } } = Ember;
 
 const mixins = [
-  AdjustableKeyboardMixin,
   DirectableComponentMixin,
   EKMixin,
   PerfectScrollbarMixin,
@@ -48,6 +46,7 @@ export default Component.extend(...mixins, {
 
   choices: configurable(configurablePriority, 'choices'),
   header: configurable(configurablePriority, 'header'),
+  keyboardPriority: configurable(configurablePriority, 'keyboardPriority'),
   moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),
   moveDownKeys: configurable(configurablePriority, 'keys.moveDown'),
   cancelKeys: configurable(configurablePriority, 'keys.cancel'),
