@@ -1,7 +1,7 @@
 <div class="theater-container">
   {{#ember-theater config=config fixtures=fixtures isFocused=true theaterId="theater1" as |theater|}}
     {{#if theater.isLoaded}}
-      {{theater.director initialSceneId=1}}
+      {{theater.director initialSceneId="demo"}}
       {{#theater.menuBar as |menuBar|}}
         {{menuBar.rewind}}
         {{menuBar.save}}
@@ -16,6 +16,6 @@
 </div>
 <div class="theater-container">
   {{#ember-theater fixtures=fixtures theaterId="theater2" as |theater|}}
-    {{theater.director initialSceneId=1}}
+    {{theater.director initialSceneId="demo"}}
   {{/ember-theater}}
 </div>

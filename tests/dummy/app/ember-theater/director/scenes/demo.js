@@ -1,7 +1,7 @@
 import { Scene } from 'ember-theater/ember-theater/director';
 
 export default Scene.extend({
-  name: 'The Beach',
+  name: 'Ember Theater Demo',
 
   script: async function() {
     // const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
