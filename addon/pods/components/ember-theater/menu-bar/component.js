@@ -9,7 +9,8 @@ const {
   get,
   getOwner,
   on,
-  set
+  set,
+  setProperties
 } = Ember;
 
 const {
@@ -53,18 +54,26 @@ export default Component.extend({
 
       const resolve = () => {
         const filter = get(this, 'filter');
+        const attrs = get(filter, 'attrs');
 
-        set(filter, 'attrs.effect', get(config, 'innerEffect.effect'));
-        set(filter, 'attrs.duration', get(config, 'innerEffect.duration'));
-        set(filter, 'attrs.iterations', 'infinite');
+        setProperties(attrs, {
+          effect: get(config, 'innerEffect.effect'),
+          duration: get(config, 'innerEffect.duration'),
+          iterations: 'infinite'
+        });
+
         filter._perform({}, K);
       };
 
       const filter = get(this, 'filter');
+      const attrs = get(filter, 'attrs');
 
-      set(filter, 'attrs.layer', '');
-      set(filter, 'attrs.effect', get(config, 'transitionIn.effect'));
-      set(filter, 'attrs.duration', get(config, 'transitionIn.duration'));
+      setProperties(attrs, {
+        effect: get(config, 'transitionIn.effect'),
+        duration: get(config, 'transitionIn.duration'),
+        layer: ''
+      });
+
       filter._perform({}, resolve);
     },
 
@@ -76,10 +85,14 @@ export default Component.extend({
       set(this, 'isOpen', false);
 
       const filter = get(this, 'filter');
+      const attrs = get(filter, 'attrs');
 
-      set(filter, 'attrs.effect', get(config, 'transitionOut.effect'));
-      set(filter, 'attrs.duration', get(config, 'transitionOut.duration'));
-      set(filter, 'attrs.destroy', true);
+      setProperties(attrs, {
+        effect: get(config, 'transitionOut.effect'),
+        duration: get(config, 'transitionOut.duration'),
+        destroy: true
+      });
+
       filter._perform({}, K);
     }
   }
