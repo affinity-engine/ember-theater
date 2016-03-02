@@ -4,15 +4,15 @@ export default Scene.extend({
   name: 'The Beach',
 
   script: async function() {
-    const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
-
-    console.log(value);
+    // const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
+    //
+    // console.log(value);
 
     this.Sound('song__bolero').fadeIn();
     await this.Pause(1000);
     this.Sound('song__bolero').fadeOut();
 
-    await this.Character('bebe').initialExpression('bebe-blush').transition({ left: '50%' }, 5000, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a']).classNames({ name: 'et-right' });
+    await this.Character('bebe').initialExpression('bebe-blush').transition({ left: '50%' }, 5000, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
     await this.Character('bebe').initialExpression('bebe-panic').instance(1).transition({ left: '25%' });
     await this.Text('Bye!');
     await this.Character('bebe').Expression('bebe-neutral');

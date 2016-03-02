@@ -30,33 +30,6 @@ export default Component.extend({
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),
 
-  style: computed('animation', 'keyframeName', 'filter', {
-    get() {
-      const {
-        animation,
-        animationName,
-        filter
-      } = getProperties(this, 'animation', 'animationName', 'filter');
-
-      return new SafeString(`
-      animation: ${animation};
-      animation-name: ${animationName};
-      filter: ${filter};
-      -webkit-filter: ${filter};
-      `.replace(/\n|\s{2}/g, ''));
-    }
-  }).readOnly(),
-
-  layerFilter: computed('layerManager.filters.[]', {
-    get() {
-      const name = get(this, 'layerName');
-
-      return get(this, 'layerManager.filters').find((filter) => {
-        return get(filter, 'layer') === name;
-      }) || {};
-    }
-  }),
-
   setFilter: on('didInsertElement', function() {
     this.element.addEventListener('animationend', () => {
       const { layerFilter: {
@@ -80,10 +53,37 @@ export default Component.extend({
     set(this, 'filter', null);
   }),
 
-  layerDirectables: computed('directables.[]', {
+  style: computed('animation', 'keyframeName', 'filter', {
+    get() {
+      const {
+        animation,
+        animationName,
+        filter
+      } = getProperties(this, 'animation', 'animationName', 'filter');
+
+      return new SafeString(`
+      animation: ${animation};
+      animation-name: ${animationName};
+      filter: ${filter};
+      -webkit-filter: ${filter};
+      `.replace(/\n|\s{2}/g, ''));
+    }
+  }).readOnly(),
+
+  layerFilter: computed('layerManager.filters.@each.layer', 'layerName', {
+    get() {
+      const name = get(this, 'layerName');
+
+      return get(this, 'layerManager.filters').find((filter) => {
+        return get(filter, 'layer') === name;
+      }) || {};
+    }
+  }).readOnly(),
+
+  layerDirectables: computed('directables.@each.layer', 'name', {
     get() {
       return get(this, 'directables').filter((directable) => {
-        return get(directable, 'layer') === this.get('name');
+        return get(directable, 'layer') === get(this, 'name');
       });
     }
   }).readOnly(),
@@ -94,7 +94,7 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  childLayers: computed('directables.[].layer', {
+  childLayers: computed('directables.@each.layer', {
     get() {
       const name = this.get('name');
       const parentName = name ? `${name}.` : '';

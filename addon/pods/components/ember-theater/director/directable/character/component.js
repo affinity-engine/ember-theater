@@ -65,7 +65,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
     }, 50);
   }),
 
-  addInitialExpression: on('didInsertElement', function() {
+  addInitialExpression: on('init', function() {
     const expression = get(this, 'expression');
     const transitionIn = {
       effect: { opacity: 1 },

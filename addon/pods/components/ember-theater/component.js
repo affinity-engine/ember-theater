@@ -11,6 +11,7 @@ const {
 } = Ember;
 
 const { inject: { service } } = Ember;
+const { run: { debounce } } = Ember;
 
 export default Component.extend({
   layout,
@@ -25,7 +26,7 @@ export default Component.extend({
   configService: multitonService('ember-theater/config', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  initializeConfig: on('didReceiveAttrs', function() {
+  initializeConfig: on('init', function() {
     const config = get(this, 'config');
     const theaterId = get(this, 'theaterId') || 'ember-theater-default';
 
@@ -42,11 +43,11 @@ export default Component.extend({
   }),
 
   claimFocus: on('focusIn', function() {
-    set(this, 'isFocused', true);
+    debounce(this, () => set(this, 'isFocused', true), 100);
   }),
 
   relinquishFocus: on('focusOut', function() {
-    set(this, 'isFocused', false);
+    debounce(this, () => set(this, 'isFocused', false), 100);
   }),
 
   _loadfixtures() {

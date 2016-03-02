@@ -44,10 +44,10 @@ export default Component.extend(ConfigurableMixin, {
     }
   }),
 
-  _styleProgressBar: on('didInsertElement', function() {
+  _styleProgressBar: on('init', function() {
     const config = get(this, 'config.attrs');
 
-    const color = get(config, 'curtain.progressBarStyle.color') || this.$().css('color');
+    const color = get(config, 'curtain.progressBarStyle.color') || 'rgb(250, 250, 250)';
     const trailColor = get(config, 'curtain.progressBarStyle.trailColor') ||
       `rgba(${color.match(/(\d+)/g).slice(0, 3).join(', ')}, 0.62)`;
     const strokeWidth = get(config, 'curtain.progressBarStyle.strokeWidth') || 4;
@@ -63,7 +63,7 @@ export default Component.extend(ConfigurableMixin, {
     set(this, 'progressBarOptions', options);
   }),
 
-  _loadMedia: on('didInsertElement', function() {
+  _loadMedia: on('init', function() {
     const fixtureStore = get(this, 'fixtureStore');
     const preloader = get(this, 'preloader');
     const paths = get(this, 'filesToPreload').split(' ');
