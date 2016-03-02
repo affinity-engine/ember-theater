@@ -4,9 +4,9 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   script: async function() {
-    // const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
-    //
-    // console.log(value);
+    const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
+
+    console.log(value);
 
     this.Sound('song__bolero').fadeIn();
     await this.Pause(1000);
