@@ -35,9 +35,11 @@ export default Ember.Object.extend(TheaterIdMixin, {
   clearSounds() {
     const idMap = get(this, 'idMap');
 
-    Object.keys(idMap).forEach((instanceMap) => {
-      Object.keys(instanceMap).forEach((instance) => {
-        instance.stop();
+    Object.keys(idMap).forEach((mapKey) => {
+      const map = get(idMap, mapKey);
+
+      Object.keys(map).forEach((instanceKey) => {
+        get(map, instanceKey).stop();
       });
     });
 

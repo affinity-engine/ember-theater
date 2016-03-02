@@ -63,11 +63,11 @@ export default Component.extend(EKMixin, {
 
     new Promise((resolve) => {
       const directable = Ember.Object.create({
-        choices,
-        header,
         resolve,
-        options: {
-          classNames
+        attrs: {
+          choices,
+          classNames,
+          header
         }
       });
 

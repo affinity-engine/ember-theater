@@ -52,15 +52,20 @@ export default Component.extend({
       const config = get(this, 'config.attrs.menuBar');
 
       const resolve = () => {
-        get(this, 'filter').perform(K, get(config, 'innerEffect.effect'), {
-          duration: get(config, 'innerEffect.duration'),
-          iterations: 'infinite'
-        });
+        const filter = get(this, 'filter');
+
+        set(filter, 'attrs.effect', get(config, 'innerEffect.effect'));
+        set(filter, 'attrs.duration', get(config, 'innerEffect.duration'));
+        set(filter, 'attrs.iterations', 'infinite');
+        filter._perform({}, K);
       };
 
-      get(this, 'filter').perform(resolve, get(config, 'transitionIn.effect'), {
-        duration: get(config, 'transitionIn.duration')
-      });
+      const filter = get(this, 'filter');
+
+      set(filter, 'attrs.layer', '');
+      set(filter, 'attrs.effect', get(config, 'transitionIn.effect'));
+      set(filter, 'attrs.duration', get(config, 'transitionIn.duration'));
+      filter._perform({}, resolve);
     },
 
     closeMenu() {
@@ -69,10 +74,13 @@ export default Component.extend({
       const config = get(this, 'config.attrs.menuBar');
 
       set(this, 'isOpen', false);
-      get(this, 'filter').perform(K, get(config, 'transitionOut.effect'), {
-        duration: get(config, 'transitionOut.duration'),
-        destroy: true
-      });
+
+      const filter = get(this, 'filter');
+
+      set(filter, 'attrs.effect', get(config, 'transitionOut.effect'));
+      set(filter, 'attrs.duration', get(config, 'transitionOut.duration'));
+      set(filter, 'attrs.destroy', true);
+      filter._perform({}, K);
     }
   }
 });
