@@ -1,5 +1,5 @@
 export default {
   globals: {
-    title: 'Steven Universe'
+    title: 'Ember Theater Demo'
   }
 };

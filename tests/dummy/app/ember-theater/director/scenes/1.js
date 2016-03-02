@@ -12,13 +12,13 @@ export default Scene.extend({
     await this.Pause(1000);
     this.Sound('song__bolero').fadeOut();
 
-    await this.Character('steven').initialExpression('steven--jumping').transition({ left: '50%' }, 5000, { loop: 3 }).name('Tiger').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a']).classNames({ name: 'et-right' });
-    await this.Character('steven').initialExpression('steven').instance(1).transition({ left: '25%' });
+    await this.Character('bebe').initialExpression('bebe-blush').transition({ left: '50%' }, 5000, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a']).classNames({ name: 'et-right' });
+    await this.Character('bebe').initialExpression('bebe-panic').instance(1).transition({ left: '25%' });
     await this.Text('Bye!');
-    await this.Character('steven').Expression('steven');
-    await this.Character('steven').Text('How was that?');
+    await this.Character('bebe').Expression('bebe-neutral');
+    await this.Character('bebe').Text('How was that?');
 
-    await this.Backdrop('beach');
+    await this.Backdrop('classroom');
     this.Filter('theater.stage', ['blur(0px)', 'blur(10px)'], 1000);
     await this.Text('Hello!');
     this.Filter('theater.stage', ['blur(10px)', 'blur(0px)'], 1000).destroy();

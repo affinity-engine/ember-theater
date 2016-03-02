@@ -1,6 +1,11 @@
 export default [{
-  id: 'steven',
-  name: 'Steven',
-  height: 60,
-  defaultExpressionId: 'steven'
+  id: 'bebe',
+  name: 'Bebe',
+  height: 70,
+  defaultExpressionId: 'bebe-neutral'
+}, {
+  id: 'blixie',
+  name: 'Blixie',
+  height: 90,
+  defaultExpressionId: 'blixie-neutral'
 }];

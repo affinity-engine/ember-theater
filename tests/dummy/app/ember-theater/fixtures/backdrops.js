@@ -1,10 +1,13 @@
 export default [{
-  id: 'beach',
-  src: 'images/backdrops/beach.jpg',
-  position: 'center center'
+  id: 'classroom',
+  caption: 'Classroom',
+  src: 'theater/backdrops/classroom.png'
 }, {
-  id: 'beach--night',
-  caption: 'beach at nighttime',
-  src: 'images/backdrops/beach--night.jpg',
-  position: 'center center'
+  id: 'beach-day',
+  caption: 'beach during the day',
+  src: 'theater/backdrops/beach-day.jpg'
+}, {
+  id: 'beach-night',
+  caption: 'beach during the night',
+  src: 'theater/backdrops/beach-night.jpg'
 }];
