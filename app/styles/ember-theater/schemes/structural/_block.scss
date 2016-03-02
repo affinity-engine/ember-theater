@@ -5,6 +5,7 @@ $et-text-included: false !default;
   .et-choice.et-block {
     max-height: 100%;
     border-width: $et-choice-block-border-width;
+    border-radius: $et-choice-block-border-radius;
 
     .et-choice-option, .et-choice-input {
       width: $et-choice-option-block-width;
@@ -67,8 +68,11 @@ $et-text-included: false !default;
 
 @if ($et-text-included == true) {
   .et-text.et-block {
+    border-radius: $et-text-block-border-radius;
+
     .et-text-caption {
       position: absolute;
+      border-radius: $et-text-caption-block-border-radius;
     }
   }
 

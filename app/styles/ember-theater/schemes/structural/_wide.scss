@@ -8,6 +8,7 @@ $et-text-included: false !default;
     top: 0;
     bottom: 0;
     border-width: $et-choice-full-border-width;
+    border-radius: $et-choice-full-border-radius;
 
     .et-choice-option, .et-choice-input {
       border-width: $et-choice-option-full-border-width;
@@ -60,9 +61,11 @@ $et-text-included: false !default;
     left: 0;
     right: 0;
     border-width: $et-text-wide-border-width;
+    border-radius: $et-text-wide-border-radius;
 
     .et-text-caption {
       position: absolute;
+      border-radius: $et-text-caption-wide-border-radius;
     }
   }
 
