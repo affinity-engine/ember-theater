@@ -4,7 +4,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
-import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
 
@@ -40,7 +40,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
 
   expression: configurable(configurablePriority, 'expression'),
   height: configurable(configurablePriority, 'height'),
-  transition: deepConfigurable(configurablePriority, 'transition'),
+  transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
 
   changeExpression(resolve, expression, { transitionIn, transitionOut }) {
     this._transitionOutExpressions(transitionOut);

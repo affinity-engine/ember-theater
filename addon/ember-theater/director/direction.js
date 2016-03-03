@@ -74,7 +74,7 @@ export default Ember.Object.extend({
       sceneManager
     } = getProperties(this, 'queue', 'scene', 'sceneManager');
 
-    const meta = getProperties(this, 'autoResolve', 'autoResolveResult', 'layer');
+    const meta = getProperties(this, 'autoResolve', 'autoResolveResult');
 
     const promise = new Promise((resolve) => {
       queue.forEach((direction, index) => {
@@ -98,9 +98,10 @@ export default Ember.Object.extend({
       attrs,
       componentPath,
       id,
+      layer,
       stageManager
-    } = getProperties(this, 'attrs', 'componentPath', 'id', 'stageManager');
+    } = getProperties(this, 'attrs', 'componentPath', 'id', 'layer', 'stageManager');
 
-    stageManager.handleDirectable(id, componentPath, { attrs, ...meta }, resolve);
+    stageManager.handleDirectable(id, componentPath, { attrs, layer, ...meta }, resolve);
   }
 });

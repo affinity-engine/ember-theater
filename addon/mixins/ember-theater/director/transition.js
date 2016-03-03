@@ -3,6 +3,7 @@ import animate from 'ember-theater/utils/ember-theater/animate';
 
 const {
   Mixin,
+  K,
   get,
   getProperties,
   merge
@@ -19,6 +20,14 @@ export default Mixin.create({
     const transition = get(this, 'transitionOut');
 
     return this.executeTransition(transition);
+  },
+
+  executeTransitions(transitions) {
+    transitions.map((transition, index) => {
+      return this.executeTransition(transition);
+    });
+
+    return Ember.RSVP.map(transitions, K);
   },
 
   executeTransition(transition) {

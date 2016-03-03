@@ -16,6 +16,14 @@ const createKeyPriorityPairs = function createKeyPriorityPairs(priorities, ...ke
   }, []);
 };
 
+const deepMerge = function deepMerge(properties, context, initial = {}) {
+  const mergedProperty = properties.reduce((accumulator, property) => {
+    return extend({}, get(context, property) || {}, accumulator);
+  }, initial);
+
+  return Ember.Object.create(mergedProperty);
+}
+
 export default function configurable(priorities, keys) {
   const properties = createKeyPriorityPairs(priorities, keys);
 
@@ -33,11 +41,21 @@ export function deepConfigurable(priorities, keys) {
 
   return computed(...properties, {
     get() {
-      const mergedProperty = properties.reduce((accumulator, property) => {
-        return extend({}, get(this, property) || {}, accumulator);
-      }, {});
+      return deepMerge(properties, this);
+    }
+  });
+}
 
-      return Ember.Object.create(mergedProperty);
+export function deepArrayConfigurable(priorities, primaryKey, keys) {
+  const properties = createKeyPriorityPairs(priorities, keys);
+
+  return computed(`${primaryKey}.[]`, ...properties, {
+    get() {
+      const array = get(this, primaryKey).map((item) => {
+        return deepMerge(properties, this, item);
+      });
+
+      return Ember.A(array);
     }
   });
 }

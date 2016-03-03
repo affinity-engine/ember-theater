@@ -7,18 +7,19 @@ export default Scene.extend({
     // const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
     //
     // console.log(value);
+    await this.Character('bebe').initialExpression('bebe-blush').position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 100);
 
     this.Sound('song__bolero').fadeIn();
     await this.Pause(1000);
     this.Sound('song__bolero').fadeOut();
 
-    await this.Character('bebe').initialExpression('bebe-blush').transition({ left: '50%' }, 5000, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
-    await this.Character('bebe').initialExpression('bebe-panic').instance(1).transition({ left: '25%' });
+    await this.Character('bebe').initialExpression('bebe-blush').position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
+    await this.Character('bebe').initialExpression('bebe-panic').instance(1).transition({ translateX: '25%' });
     await this.Text('Bye!');
     await this.Character('bebe').Expression('bebe-neutral');
     await this.Character('bebe').Text('How was that?');
 
-    await this.Backdrop('classroom');
+    await this.Backdrop('classroom').transition('transition.whirlIn');
     this.Filter('theater.stage', ['blur(0px)', 'blur(10px)'], 1000);
     await this.Text('Hello!');
     this.Filter('theater.stage', ['blur(10px)', 'blur(0px)'], 1000).destroy();
@@ -39,7 +40,7 @@ export default Scene.extend({
 
     console.log('Entered Scene');
 
-    await this.TransitionToScene('1').transitionOut('transition.whirlOut', 1000);
+    await this.TransitionToScene('demo').transitionOut('transition.whirlOut', 1000);
 
     console.log('Left Scene');
   }

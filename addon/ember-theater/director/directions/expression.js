@@ -37,9 +37,9 @@ export default Direction.extend({
 
   Text(text) {
     const direction = this._createDirection('text');
-    const attrs = get(this, 'attrs');
+    const character = get(this, 'attrs.character');
 
-    return direction.setup(text, attrs);
+    return direction.setup(text, character);
   },
 
   _perform(meta, resolve) {

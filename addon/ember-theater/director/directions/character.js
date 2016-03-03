@@ -13,6 +13,7 @@ export default Direction.extend({
   componentPath: 'ember-theater/director/directable/character',
   layer: 'theater.stage.foreground.character',
 
+  config: multitonService('ember-theater/config', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
   setup(fixtureOrId) {
@@ -43,10 +44,20 @@ export default Direction.extend({
     return this;
   },
 
+  position(position, duration = 0, options = {}) {
+    const effect = get(this, `config.attrs.director.positions.text.${position}`) || get(this, `config.attrs.director.positions.${position}`);
+
+    this.transition(effect, duration, options);
+
+    return this;
+  },
+
   transition(effect, duration, options = {}) {
     this._addToQueue();
 
-    set(this, 'attrs.transition', merge({ duration, effect }, options));
+    const transitions = get(this, 'attrs.transitions') || set(this, 'attrs.transitions', Ember.A());
+
+    transitions.pushObject(merge({ duration, effect }, options));
 
     return this;
   },

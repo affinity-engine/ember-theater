@@ -8,10 +8,13 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  perform: on('didInsertElement', observer('transition.effect', function() {
-    const transition = get(this, 'transition');
+  perform: on('didInsertElement', observer('transitions.lastObject.effect', function() {
+    // create a clone of the transitions before clearing them
+    const transitions = get(this, 'transitions').slice(0);
 
-    this.executeTransition(transition).then(() => {
+    get(this, 'transitions').clear();
+
+    this.executeTransitions(transitions).then(() => {
       this.resolve();
     });
   }))

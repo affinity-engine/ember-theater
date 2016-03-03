@@ -3,7 +3,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
@@ -34,15 +34,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
 
   caption: configurable(configurablePriority, 'caption'),
   src: configurable(configurablePriority, 'src'),
-  transition: deepConfigurable(configurablePriority, 'transition'),
-
-  perform: on('didInsertElement', observer('transition.effect', function() {
-    const transition = get(this, 'transition');
-
-    this.executeTransition(transition).then(() => {
-      this.resolve();
-    });
-  })),
+  transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
 
   captionTranslation: computed('fixture.id', 'caption', {
     get() {

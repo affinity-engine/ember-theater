@@ -77,6 +77,17 @@ export default {
         translateX: '10px',
         translateY: '-5px'
       }
+    },
+    positions: {
+      center: {
+        translateX: '50%'
+      },
+      left: {
+        translateX: '10%'
+      },
+      right: {
+        translateX: '90%'
+      }
     }
   }
 };
