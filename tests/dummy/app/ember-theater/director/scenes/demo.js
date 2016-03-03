@@ -14,35 +14,35 @@ export default Scene.extend({
 
     this.Character('bebe').initialExpression('bebe-laughing').position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600)
+    await this.Pause(600);
 
     this.Character('bebe').stop();
 
-    await this.Pause(1000)
+    await this.Pause(1000);
 
     this.Character('bebe').position('right').transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600)
+    await this.Pause(600);
 
     this.Character('bebe').stop();
 
-    await this.Pause(1000)
+    await this.Pause(1000);
 
     this.Backdrop('classroom').transition({ opacity: 1 }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600)
+    await this.Pause(600);
 
     this.Backdrop('classroom').stop();
 
-    await this.Pause(1000)
+    await this.Pause(1000);
 
     this.Backdrop('classroom').transition({ opacity: 1, translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600)
+    await this.Pause(600);
 
     this.Backdrop('classroom').stop();
 
-    await this.Pause(1000)
+    await this.Pause(1000);
 
 
     // await this.Character('bebe').position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
