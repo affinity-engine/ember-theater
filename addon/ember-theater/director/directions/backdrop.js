@@ -18,7 +18,7 @@ export default Direction.extend({
 
   setup(fixtureOrId) {
     this._addToQueue();
-    
+
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('backdrops', fixtureOrId);
     const id = get(fixture, 'id');
@@ -34,6 +34,14 @@ export default Direction.extend({
 
   caption(caption) {
     set(this, 'attrs.caption', caption);
+
+    return this;
+  },
+
+  stop(queue = true) {
+    this._removeDefaultTransition();
+    
+    get(this, 'instanceComponent').stop(queue);
 
     return this;
   },

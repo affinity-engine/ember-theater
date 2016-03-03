@@ -52,6 +52,12 @@ export default Direction.extend({
     return this;
   },
 
+  stop(queue = true) {
+    get(this, 'instanceComponent').stop(queue);
+
+    return this;
+  },
+
   transition(effect, duration, options = {}) {
     this._addToQueue();
 

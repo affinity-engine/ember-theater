@@ -14,7 +14,7 @@ const { RSVP: { Promise } } = Ember;
 const { run: { next } } = Ember;
 
 export default Ember.Object.extend({
-  attrs: computed(() => Ember.Object.create()),
+  attrs: computed(() => Ember.Object.create({ instance: 0 })),
 
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
@@ -24,6 +24,21 @@ export default Ember.Object.extend({
 
     return this;
   },
+
+  instanceComponent: computed({
+    get() {
+      const instanceId = get(this, 'attrs.instance');
+      const {
+        componentPath,
+        id,
+        stageManager
+      } = getProperties(this, 'componentPath', 'id', 'stageManager');
+
+      const directable = stageManager.findDirectableWithId(id, componentPath, instanceId);
+
+      return get(directable, 'component');
+    }
+  }).volatile(),
 
   _addToQueue() {
     const queue = get(this, 'queue') || set(this, 'queue', Ember.A());

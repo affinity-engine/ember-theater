@@ -51,7 +51,7 @@ export function deepArrayConfigurable(priorities, primaryKey, keys) {
 
   return computed(`${primaryKey}.[]`, ...properties, {
     get() {
-      const array = get(this, primaryKey).map((item) => {
+      const array = (get(this, primaryKey) || []).map((item) => {
         return deepMerge(properties, this, item);
       });
 

@@ -4,11 +4,12 @@ const {
   Mixin,
   get,
   observer,
-  on
+  on,
+  set
 } = Ember;
 
 export default Mixin.create({
-  perform: on('didInsertElement', observer('transitions.lastObject.effect', function() {
+  performTransitions: on('didInsertElement', observer('transitions.lastObject.effect', function() {
     // create a clone of the transitions before clearing them
     const transitions = get(this, 'transitions').slice(0);
 
@@ -17,5 +18,9 @@ export default Mixin.create({
     this.executeTransitions(transitions).then(() => {
       this.resolve();
     });
-  }))
+  })),
+
+  stop(queue) {
+    this.$().velocity('stop', queue);
+  }
 });
