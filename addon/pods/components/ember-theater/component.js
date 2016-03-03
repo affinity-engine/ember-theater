@@ -10,6 +10,7 @@ const {
   set
 } = Ember;
 
+const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 const { run: { debounce } } = Ember;
 
@@ -24,7 +25,10 @@ export default Component.extend({
 
   multitonServiceManager: service('multiton-service-manager'),
   configService: multitonService('ember-theater/config', 'theaterId'),
+  producer: multitonService('ember-theater/producer', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+
+  isFocused: alias('producer.isFocused'),
 
   initializeConfig: on('init', function() {
     const config = get(this, 'config');

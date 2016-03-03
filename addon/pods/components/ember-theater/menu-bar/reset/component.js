@@ -7,6 +7,7 @@ const { set } = Ember;
 export default MenuBarControl.extend({
   layout,
   type: 'reset',
+  componentPath: 'ember-theater/menu-bar/reset/menu',
 
   startHoverEffect() {
     set(this, 'hovering', true);

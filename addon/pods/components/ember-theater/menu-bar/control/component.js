@@ -32,7 +32,9 @@ export default Component.extend(EKMixin, {
   }),
 
   toggleOpen: on('click', 'touchEnd', function() {
-    this.attrs.openMenu();
+    const componentPath = get(this, 'componentPath');
+
+    this.attrs.openMenu(componentPath);
   }),
 
   startHovering: on('focusIn', 'mouseEnter', function() {

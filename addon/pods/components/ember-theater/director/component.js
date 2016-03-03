@@ -16,11 +16,12 @@ export default Component.extend({
 
   classNames: ['et-director'],
 
+  producer: multitonService('ember-theater/producer', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   directables: alias('stageManager.directables'),
-  keyboardActivated: alias('isFocused'),
+  keyboardActivated: alias('producer.isFocused'),
 
   _loadLatestScene: on('init', function() {
     const {

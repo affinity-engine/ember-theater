@@ -4,6 +4,7 @@ import MenuBarControl from 'ember-theater/pods/components/ember-theater/menu-bar
 export default MenuBarControl.extend({
   layout,
   type: 'rewind',
+  componentPath: 'ember-theater/menu-bar/rewind/menu',
 
   startHoverEffect() {
     this.$('i').velocity({ translateX: '-0.15vw' }, { easing: 'easeInOut', duration: 500, delay: 150, loop: true });

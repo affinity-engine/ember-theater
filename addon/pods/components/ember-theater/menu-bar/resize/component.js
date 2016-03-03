@@ -7,6 +7,7 @@ const { on } = Ember;
 export default MenuBarControl.extend({
   layout,
   type: 'resize',
+  componentPath: 'ember-theater/menu-bar/resize/menu',
 
   toggleOpen: on('click', 'touchEnd', function() {
     const elem = this.$().parents('.ember-theater').get(0);

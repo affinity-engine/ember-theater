@@ -1,21 +1,21 @@
 <div class="theater-container">
-  {{#ember-theater config=config fixtures=fixtures isFocused=true theaterId="theater1" as |theater|}}
+  {{#ember-theater theaterId="theater1" config=config fixtures=fixtures isFocused=true as |theater|}}
     {{#if theater.isLoaded}}
-      {{theater.director initialSceneId="demo"}}
-      {{#theater.menuBar as |menuBar|}}
-        {{menuBar.rewind}}
-        {{menuBar.save}}
-        {{menuBar.load}}
-        {{menuBar.reset}}
-        {{menuBar.resize}}
-      {{/theater.menuBar}}
+      {{ember-theater/director theaterId=theater.theaterId initialSceneId="demo"}}
+      {{#ember-theater/menu-bar theaterId=theater.theaterId as |menuBar|}}
+        {{ember-theater/menu-bar/rewind theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/save theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/load theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/reset theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/resize theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+      {{/ember-theater/menu-bar}}
     {{else}}
-      {{theater.curtain filesToPreload="backdrops:src expressions:src" completePreload=theater.completePreload}}
+      {{ember-theater/curtain theaterId=theater.theaterId filesToPreload="backdrops:src expressions:src" completePreload=theater.completePreload}}
     {{/if}}
   {{/ember-theater}}
 </div>
 <div class="theater-container">
-  {{#ember-theater fixtures=fixtures theaterId="theater2" as |theater|}}
-    {{theater.director initialSceneId="demo"}}
+  {{#ember-theater theaterId="theater2" fixtures=fixtures as |theater|}}
+    {{ember-theater/director theaterId=theater.theaterId initialSceneId="demo"}}
   {{/ember-theater}}
 </div>

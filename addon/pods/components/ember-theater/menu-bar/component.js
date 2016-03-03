@@ -28,18 +28,19 @@ export default Component.extend({
   classNameBindings: ['decorativeClassNames'],
 
   config: multitonService('ember-theater/config', 'theaterId'),
+  producer: multitonService('ember-theater/producer', 'theaterId'),
 
   plugins: reads('config.attrs.menuBar.plugins'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
-  keyboardActivated: alias('isFocused'),
+  keyboardActivated: alias('producer.isFocused'),
 
   actions: {
     toggleControlProperty(property) {
       this.toggleProperty(property);
     },
 
-    openMenu(menuName) {
-      set(this, 'currentMenu', `${menuName}/menu`);
+    openMenu(componentPath) {
+      set(this, 'currentMenu', componentPath);
     },
 
     closeMenu() {

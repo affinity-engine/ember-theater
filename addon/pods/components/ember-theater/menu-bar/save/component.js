@@ -3,5 +3,6 @@ import MenuBarControl from 'ember-theater/pods/components/ember-theater/menu-bar
 
 export default MenuBarControl.extend({
   layout,
-  type: 'save'
+  type: 'save',
+  componentPath: 'ember-theater/menu-bar/save/menu'
 });
