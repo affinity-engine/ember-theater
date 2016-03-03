@@ -25,7 +25,7 @@ export default Ember.Object.extend({
     return this;
   },
 
-  instanceComponent: computed({
+  _instanceComponent: computed({
     get() {
       const instanceId = get(this, 'attrs.instance');
       const {
