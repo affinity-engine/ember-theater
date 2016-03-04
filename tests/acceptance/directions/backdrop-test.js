@@ -19,7 +19,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
   assert.expect(13);
 
   visit('/test-scenarios/directions/backdrop').then(() => {
-    return pause(50);
+    return pause(100);
   }).then(() => {
     assert.ok($hook('backdrop-direction').length > 0, 'backdrop is rendered');
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
