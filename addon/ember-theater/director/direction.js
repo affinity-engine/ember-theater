@@ -7,6 +7,7 @@ const {
   get,
   getOwner,
   getProperties,
+  isPresent,
   set
 } = Ember;
 
@@ -36,7 +37,7 @@ export default Ember.Object.extend({
 
       const directable = stageManager.findDirectableWithId(id, componentPath, instanceId);
 
-      return get(directable, 'component');
+      return isPresent(directable) ? get(directable, 'component') : undefined;
     }
   }).volatile(),
 

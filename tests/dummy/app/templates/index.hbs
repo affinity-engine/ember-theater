@@ -1,0 +1,21 @@
+<div class="theater-container">
+  {{#ember-theater theaterId="theater1" config=config fixtures=fixtures isFocused=true as |theater|}}
+    {{#if theater.isLoaded}}
+      {{ember-theater/director theaterId=theater.theaterId initialSceneId="demo"}}
+      {{#ember-theater/menu-bar theaterId=theater.theaterId as |menuBar|}}
+        {{ember-theater/menu-bar/rewind theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/save theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/load theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/reset theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+        {{ember-theater/menu-bar/resize theaterId=menuBar.theaterId openMenu=menuBar.openMenu}}
+      {{/ember-theater/menu-bar}}
+    {{else}}
+      {{ember-theater/curtain theaterId=theater.theaterId filesToPreload="backdrops:src expressions:src" completePreload=theater.completePreload}}
+    {{/if}}
+  {{/ember-theater}}
+</div>
+<div class="theater-container">
+  {{#ember-theater theaterId="theater2" fixtures=fixtures as |theater|}}
+    {{ember-theater/director theaterId=theater.theaterId initialSceneId="demo"}}
+  {{/ember-theater}}
+</div>

@@ -4,7 +4,14 @@
   "globals": {
     "loki": true,
     "PerfectScrollbar": true,
-    "requirejs": true
+    "requirejs": true,
+    "visit": true,
+    "andThen": true,
+    "currentURL": true,
+    "currentPath": true,
+    "currentRouteName": true,
+    "keyEvent": true,
+    "pause": true
   },
   "rules": {
     "arrow-parens": [2, "always"],

@@ -4,12 +4,34 @@ import animate from 'ember-theater/utils/ember-theater/animate';
 const {
   Mixin,
   K,
+  computed,
   get,
   getProperties,
-  merge
+  merge,
+  set
 } = Ember;
 
+const { Handlebars: { SafeString } } = Ember;
+
 export default Mixin.create({
+  attributeBindings: ['style'],
+
+  style: computed('styles.[]', '_style', {
+    get() {
+      const styles = get(this, 'styles') || [];
+      const _style = get(this, '_style') || '';
+
+      styles.push(_style);
+
+      const uniqueStyles = Ember.A(styles.join(' ').split(';').map((string) => string.trim())).uniq().join('; ');
+
+      return new SafeString(uniqueStyles);
+    },
+    set(attr, style) {
+      return set(this, '_style', style);
+    }
+  }),
+
   executeTransitionIn() {
     const transition = get(this, 'transitionIn');
 
@@ -38,6 +60,8 @@ export default Mixin.create({
       merge(options, { duration: 0 });
     }
 
-    return animate(this.element, effect, options);
+    return animate(this.element, effect, options).then(() => {
+      set(this, 'style', this.$().attr('style'));
+    });
   }
 });

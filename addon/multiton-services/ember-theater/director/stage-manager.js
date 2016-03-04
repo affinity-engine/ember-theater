@@ -49,8 +49,8 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _updateDirectable(directable, properties, resolve) {
-    const options = merge(get(directable, 'options'), get(properties, 'options'));
+    const attrs = Ember.$.extend({}, get(directable, 'attrs'), get(properties, 'attrs'));
 
-    setProperties(directable, merge(properties, { resolve, options }));
+    setProperties(directable, merge(properties, { resolve, attrs }));
   }
 });

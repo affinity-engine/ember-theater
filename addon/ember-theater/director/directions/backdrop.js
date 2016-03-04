@@ -4,6 +4,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  isEmpty,
   merge,
   set,
   typeOf
@@ -22,24 +23,31 @@ export default Direction.extend({
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('backdrops', fixtureOrId);
     const id = get(fixture, 'id');
-    const transition = get(this, 'config.attrs.director.backdrop.transition') || get(this, 'config.attrs.globals.transition');
 
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
-    set(this, 'attrs.transitions', Ember.A([transition]));
-    set(this, 'hasDefaultTransition', true);
+    set(this, 'attrs.transitions', Ember.A());
+
+    if (isEmpty(get(this, '_instanceComponent'))) {
+      const transition = get(this, 'config.attrs.director.backdrop.transition') || get(this, 'config.attrs.globals.transition');
+
+      get(this, 'attrs.transitions').pushObject(transition);
+      set(this, 'hasDefaultTransition', true);
+    }
 
     return this;
   },
 
   caption(caption) {
+    this._addToQueue();
+
     set(this, 'attrs.caption', caption);
 
     return this;
   },
 
   stop(queue = true) {
-    this._removeDefaultTransition();
+    this._addToQueue();
 
     get(this, '_instanceComponent').stop(queue);
 

@@ -16,7 +16,6 @@ $et-text-included: true;
 
 .et-text-container {
   @extend .et-full-screen;
-  @extend .et-hidden;
 
   z-index: 100;
 }
