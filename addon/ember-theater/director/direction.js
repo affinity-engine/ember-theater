@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import DirectionQueue from './direction-queue';
 
 const {
   K,
@@ -10,9 +11,6 @@ const {
   isPresent,
   set
 } = Ember;
-
-const { RSVP: { Promise } } = Ember;
-const { run: { next } } = Ember;
 
 export default Ember.Object.extend({
   attrs: computed(() => Ember.Object.create({ instance: 0 })),
@@ -41,28 +39,10 @@ export default Ember.Object.extend({
     }
   }).volatile(),
 
-  _addToQueue() {
-    const queue = get(this, 'queue') || set(this, 'queue', Ember.A());
+  then: async function(...args) {
+    await get(this, 'queue.allDirectionsAreLoaded');
 
-    if (!queue.contains(this)) {
-      queue.unshiftObject(this);
-
-      this._queueGo();
-    }
-  },
-
-  _queueGo() {
-    const goIsExecuted = new Promise((resolve) => {
-      next(() => {
-        if (get(this, 'queue').indexOf(this) === 0) {
-          set(this, 'promise', this._go());
-        }
-
-        resolve();
-      });
-    });
-
-    set(this, 'goIsExecuted', goIsExecuted);
+    return get(this, 'queue.executionComplete').then(...args);
   },
 
   _createDirection(name) {
@@ -77,36 +57,18 @@ export default Ember.Object.extend({
     }
   }).readOnly().volatile(),
 
-  then: async function(...args) {
-    await get(this, 'goIsExecuted');
+  _addToQueue() {
+    const queue = get(this, 'queue') || set(this, 'queue', DirectionQueue.create({
+      scene: get(this, 'scene'),
+      sceneManager: get(this, 'sceneManager'),
+      autoResolve: get(this, 'autoResolve'),
+      autoResolveResult: get(this, 'autoResolveResult')
+    }));
 
-    return get(this, 'promise').then(...args);
-  },
-
-  _go() {
-    const {
-      queue,
-      scene,
-      sceneManager
-    } = getProperties(this, 'queue', 'scene', 'sceneManager');
-
-    const meta = getProperties(this, 'autoResolve', 'autoResolveResult');
-
-    const promise = new Promise((resolve) => {
-      queue.forEach((direction, index) => {
-        direction._resolveDirection(index, meta, resolve);
-      });
-    });
-
-    sceneManager.recordSceneRecordEvent(promise, scene);
-
-    return promise;
-  },
-
-  _resolveDirection(index, meta, resolve) {
-    const resolveOrK = index === 0 ? resolve : K;
-
-    this._perform(meta, resolveOrK);
+    if (!queue.contains(this)) {
+      queue.unshiftObject(this);
+      queue.startCountdown(this);
+    }
   },
 
   _perform(meta, resolve) {
