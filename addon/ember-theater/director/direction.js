@@ -26,7 +26,7 @@ export default Ember.Object.extend({
     return this;
   },
 
-  _instanceComponent: computed({
+  _$instance: computed({
     get() {
       const instanceId = get(this, 'attrs.instance');
       const {
@@ -37,7 +37,7 @@ export default Ember.Object.extend({
 
       const directable = stageManager.findDirectableWithId(id, componentPath, instanceId);
 
-      return isPresent(directable) ? get(directable, 'component') : undefined;
+      return isPresent(directable) ? get(directable, 'component').$() : undefined;
     }
   }).volatile(),
 

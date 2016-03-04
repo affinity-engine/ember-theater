@@ -53,7 +53,7 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
-    get(this, '_instanceComponent').stop(queue);
+    get(this, '_$instance').stop(queue);
 
     return this;
   },

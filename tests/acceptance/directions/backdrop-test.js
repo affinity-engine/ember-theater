@@ -19,7 +19,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
   assert.expect(13);
 
   visit('/test-scenarios/directions/backdrop').then(() => {
-    return pause();
+    return pause(50);
   }).then(() => {
     assert.ok($hook('backdrop-direction').length > 0, 'backdrop is rendered');
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
@@ -28,7 +28,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause();
+    return pause(50);
   }).then(() => {
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), 0.2, '`transition` sets backdrop css');
 
@@ -48,7 +48,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause();
+    return pause(50);
   }).then(() => {
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(0)`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');

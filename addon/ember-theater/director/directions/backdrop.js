@@ -28,7 +28,7 @@ export default Direction.extend({
     set(this, 'id', id);
     set(this, 'attrs.transitions', Ember.A());
 
-    if (isEmpty(get(this, '_instanceComponent'))) {
+    if (isEmpty(get(this, '_$instance'))) {
       const transition = get(this, 'config.attrs.director.backdrop.transition') || get(this, 'config.attrs.globals.transition');
 
       get(this, 'attrs.transitions').pushObject(transition);
@@ -49,7 +49,7 @@ export default Direction.extend({
   stop(queue = true) {
     this._addToQueue();
 
-    get(this, '_instanceComponent').stop(queue);
+    get(this, '_$instance').stop(queue);
 
     return this;
   },

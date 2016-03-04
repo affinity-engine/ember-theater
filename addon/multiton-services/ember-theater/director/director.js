@@ -16,11 +16,5 @@ export default Ember.Object.extend(TheaterIdMixin, {
     const direction = factory.create({ autoResolve, autoResolveResult, scene, theaterId });
 
     return direction.setup(...args);
-  },
-
-  recordDirection(promise, scene) {
-    const sceneManager = get(this, 'sceneManager');
-
-    sceneManager.recordSceneRecordEvent(promise, scene);
   }
 });
