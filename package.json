@@ -36,7 +36,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-hook": "0.1.1",
+    "ember-hook": "0.0.4",
     "ember-i18n": "4.2.0",
     "ember-keyboard": "0.2.4",
     "ember-load-initializers": "^0.5.0",

@@ -3,7 +3,6 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import { HookMixin } from 'ember-hook';
 
 const {
   Component,
@@ -22,7 +21,7 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, HookMixin, TransitionMixin, {
+export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   attributeBindings: ['captionTranslation:alt', 'src'],
   classNames: ['et-character-expression'],
   hook: 'expression-direction',
