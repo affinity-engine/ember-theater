@@ -55,7 +55,7 @@ export default Direction.extend({
     return this;
   },
 
-  position(positions, duration = 0, options = {}) {
+  position(positions, duration, options = {}) {
     const effect = positions.split(' ').reduce((effect, position) => {
       return merge(effect,
         get(this, `fixture.positions.character.${position}`) ||
