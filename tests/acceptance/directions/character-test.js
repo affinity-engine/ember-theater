@@ -21,7 +21,7 @@ test('Ember Theater | Directions | character', function(assert) {
   const state = {};
 
   visit('/test-scenarios/directions/character').then(() => {
-    return pause(100);
+    return pause(150);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
     assert.equal($hook('expression-direction').attr('alt'), 'Bebe', '`alt` is set by the fixture `caption`');

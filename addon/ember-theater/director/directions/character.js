@@ -57,7 +57,12 @@ export default Direction.extend({
 
   position(positions, duration = 0, options = {}) {
     const effect = positions.split(' ').reduce((effect, position) => {
-      return merge(effect, get(this, `config.attrs.director.positions.text.${position}`) || get(this, `config.attrs.director.positions.${position}`))
+      return merge(effect,
+        get(this, `fixture.positions.character.${position}`) ||
+        get(this, `fixture.positions.${position}`) ||
+        get(this, `config.attrs.director.positions.character.${position}`) ||
+        get(this, `config.attrs.director.positions.${position}`)
+      )
     }, {});
 
     this.transition(effect, duration, options);
