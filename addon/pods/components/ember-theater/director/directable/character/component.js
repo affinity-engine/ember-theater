@@ -7,6 +7,7 @@ import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize'
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
+import { HookMixin } from 'ember-hook';
 
 const {
   Component,
@@ -28,11 +29,11 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, TransitionMixin, TransitionObserverMixin, WindowResizeMixin, {
+export default Component.extend(DirectableComponentMixin, HookMixin, TransitionMixin, TransitionObserverMixin, WindowResizeMixin, {
   layout,
 
-  attributeBindings: ['style'],
   classNames: ['et-character'],
+  hook: 'character-direction',
 
   config: multitonService('ember-theater/config', 'theaterId'),
 
@@ -47,11 +48,11 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
     this._transitionInExpression(resolve, expression, transitionIn);
   },
 
-  style: computed('height', {
+  styles: computed('height', {
     get() {
       const height = get(this, 'height');
 
-      return new SafeString(`height: ${height}%;`);
+      return [`height: ${height}%;`];
     }
   }).readOnly(),
 

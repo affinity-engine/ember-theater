@@ -4,6 +4,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  isEmpty,
   merge,
   set,
   typeOf
@@ -17,6 +18,8 @@ export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
   setup(fixtureOrId) {
+    this._addToQueue();
+
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('characters', fixtureOrId);
     const id = get(fixture, 'id');
@@ -26,6 +29,14 @@ export default Direction.extend({
 
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
+    set(this, 'attrs.transitions', Ember.A());
+
+    if (isEmpty(get(this, '_$instance'))) {
+      const transition = get(this, 'config.attrs.director.character.transition') || get(this, 'config.attrs.globals.transition');
+
+      get(this, 'attrs.transitions').pushObject(transition);
+      set(this, 'hasDefaultTransition', true);
+    }
 
     return this;
   },
@@ -59,7 +70,7 @@ export default Direction.extend({
   },
 
   transition(effect, duration, options = {}) {
-    this._addToQueue();
+    this._removeDefaultTransition();
 
     const transitions = get(this, 'attrs.transitions') || set(this, 'attrs.transitions', Ember.A());
 
@@ -69,6 +80,8 @@ export default Direction.extend({
   },
 
   Expression(fixtureOrId) {
+    if (get(this, 'transitions.length') === 0) { this._removeDefaultTransition(); }
+
     const direction = this._createDirection('expression');
     const fixture = this._findExpression(fixtureOrId);
     const attrs = get(this, 'attrs');
@@ -77,6 +90,8 @@ export default Direction.extend({
   },
 
   Text(text) {
+    if (get(this, 'transitions.length') === 0) { this._removeDefaultTransition(); }
+
     const direction = this._createDirection('text');
     const attrs = get(this, 'attrs');
 
@@ -87,5 +102,12 @@ export default Direction.extend({
     const fixtureStore = get(this, 'fixtureStore');
 
     return typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
+  },
+
+  _removeDefaultTransition() {
+    if (get(this, 'hasDefaultTransition')) {
+      set(this, 'hasDefaultTransition', false);
+      set(this, 'attrs.transitions', Ember.A())
+    }
   }
 });

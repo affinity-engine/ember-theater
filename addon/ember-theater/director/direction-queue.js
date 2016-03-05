@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 const {
+  K,
   computed,
   get,
   getProperties,

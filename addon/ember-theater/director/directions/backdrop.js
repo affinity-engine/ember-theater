@@ -47,15 +47,12 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
-    this._addToQueue();
-
     get(this, '_$instance').stop(queue);
 
     return this;
   },
 
   transition(effect, duration, options = {}) {
-    this._addToQueue();
     this._removeDefaultTransition();
 
     get(this, 'attrs.transitions').pushObject(merge({ duration, effect }, options));
