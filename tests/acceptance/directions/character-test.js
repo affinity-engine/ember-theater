@@ -16,7 +16,7 @@ moduleForAcceptance('Acceptance | directions/character', {
 });
 
 test('Ember Theater | Directions | character', function(assert) {
-  assert.expect(15);
+  assert.expect(17);
 
   const state = {};
 
@@ -64,7 +64,16 @@ test('Ember Theater | Directions | character', function(assert) {
     return pause(100);
   }).then(() => {
     assert.equal($hook('character-direction').length, 5, 'characters are rendered with `position`');
-    assert.equal(Ember.$(`${hook('character-direction')}:nth(4)`).css('transform'), 'matrix(1, 0, 0, 1, 640, 0)', '`position` positions the character');
+    assert.equal(Ember.$(`${hook('character-direction')}:nth(4)`).css('transform').match(/\d+/g)[4], '640', '`position` positions the character');
+
+    keyEvent(document, 'keyup', getKeyCode('p'));
+
+    return pause(200);
+  }).then(() => {
+    const matrix = Ember.$(`${hook('character-direction')}:nth(4)`).css('transform').match(/\d+/g);
+
+    assert.ok(parseInt(matrix[5], 10) >= 160, '`position` can accept multiple positions, Y');
+    assert.ok(parseInt(matrix[4], 10) === 256, '`position` can accept multiple positions, X');
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {

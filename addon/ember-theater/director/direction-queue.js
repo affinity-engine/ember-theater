@@ -18,6 +18,10 @@ export default Ember.Object.extend({
     return get(this, '_directions').contains(object);
   },
 
+  removeObject(object) {
+    return get(this, '_directions').removeObject(object);
+  },
+
   unshiftObject(object) {
     return get(this, '_directions').unshiftObject(object);
   },

@@ -33,6 +33,9 @@ export default Scene.extend({
     await this.Character('bebe').instance(2).position('center');
 
     await this.Pause('p');
+    await this.Character('bebe').instance(2).position('left low');
+
+    await this.Pause('p');
     await this.Character('bebe').instance(3).initialExpression('bebe-happy').position('center');
 
     await this.Pause('p');

@@ -55,8 +55,10 @@ export default Direction.extend({
     return this;
   },
 
-  position(position, duration = 0, options = {}) {
-    const effect = get(this, `config.attrs.director.positions.text.${position}`) || get(this, `config.attrs.director.positions.${position}`);
+  position(positions, duration = 0, options = {}) {
+    const effect = positions.split(' ').reduce((effect, position) => {
+      return merge(effect, get(this, `config.attrs.director.positions.text.${position}`) || get(this, `config.attrs.director.positions.${position}`))
+    }, {});
 
     this.transition(effect, duration, options);
 
@@ -64,6 +66,8 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
+    this._removeFromQueueIfDefault();
+
     get(this, '_$instance').velocity('stop', queue);
 
     return this;
@@ -80,7 +84,7 @@ export default Direction.extend({
   },
 
   Expression(fixtureOrId) {
-    if (get(this, 'transitions.length') === 0) { this._removeDefaultTransition(); }
+    this._removeFromQueueIfDefault();
 
     const direction = this._createDirection('expression');
     const fixture = this._findExpression(fixtureOrId);
@@ -90,7 +94,7 @@ export default Direction.extend({
   },
 
   Text(text) {
-    if (get(this, 'transitions.length') === 0) { this._removeDefaultTransition(); }
+    this._removeFromQueueIfDefault();
 
     const direction = this._createDirection('text');
     const attrs = get(this, 'attrs');
@@ -108,6 +112,12 @@ export default Direction.extend({
     if (get(this, 'hasDefaultTransition')) {
       set(this, 'hasDefaultTransition', false);
       set(this, 'attrs.transitions', Ember.A())
+    }
+  },
+
+  _removeFromQueueIfDefault() {
+    if (get(this, 'hasDefaultTransition')) {
+      get(this, 'queue').removeObject(this);
     }
   }
 });

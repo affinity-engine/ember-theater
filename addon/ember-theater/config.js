@@ -82,11 +82,65 @@ export default {
       center: {
         translateX: '50%'
       },
+      centerLeft: {
+        translateX: '35%'
+      },
+      centerRight: {
+        translateX: '65%'
+      },
       left: {
-        translateX: '10%'
+        translateX: '20%'
       },
       right: {
-        translateX: '90%'
+        translateX: '80%'
+      },
+      farLeft: {
+        translateX: '5%'
+      },
+      farRight: {
+        translateX: '95%'
+      },
+      offLeft: {
+        translateX: '-20%'
+      },
+      offRight: {
+        translateX: '120%'
+      },
+      high: {
+        translateY: '-30%'
+      },
+      baselineHigh: {
+        translateY: '-15%'
+      },
+      baseline: {
+        translateY: 0
+      },
+      baselineLow: {
+        translateY: '15%'
+      },
+      low: {
+        translateY: '30%'
+      },
+      farAhead: {
+        translateZ: '6vh'
+      },
+      ahead: {
+        translateZ: '4vh'
+      },
+      middleAhead: {
+        translateZ: '2vh'
+      },
+      middle: {
+        translateZ: 0
+      },
+      middleBehind: {
+        translateZ: '-2vh'
+      },
+      behind: {
+        translateZ: '-4vh'
+      },
+      farBehind: {
+        translateZ: '-6vh'
       }
     }
   }
