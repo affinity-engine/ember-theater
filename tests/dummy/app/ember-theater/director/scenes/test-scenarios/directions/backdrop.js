@@ -30,5 +30,10 @@ export default Scene.extend({
       caption: 'beach during the night',
       src: 'theater/backdrops/beach-night.jpg'
     });
+
+    await this.Pause('p');
+    await this.Backdrop('classroom').transition({ left: '30%' }, 10, { loop: true });
+    this.Backdrop('classroom').stop();
+    await this.Pause('p');
   }
 });

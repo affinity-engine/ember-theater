@@ -16,7 +16,9 @@ moduleForAcceptance('Acceptance | directions/character', {
 });
 
 test('Ember Theater | Directions | character', function(assert) {
-  assert.expect(14);
+  assert.expect(15);
+
+  const state = {};
 
   visit('/test-scenarios/directions/character').then(() => {
     return pause(100);
@@ -68,6 +70,16 @@ test('Ember Theater | Directions | character', function(assert) {
   }).then(() => {
     assert.ok(Ember.$(`${hook('expression-direction')}img:nth(5)`).attr('src').match('theater/characters/bebe/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
 
+    Ember.$.Velocity.mock = false;
+
+    keyEvent(document, 'keyup', getKeyCode('p'));
+
+    return pause(100);
+  }).then(() => {
+    state.stoppedLoopLeft = Ember.$(`${hook('backdrop-direction')}:first`).css('left');
+
     return keyEvent(document, 'keyup', getKeyCode('p'));
+  }).then(() => {
+    assert.equal(Ember.$(`${hook('backdrop-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
   });
 });

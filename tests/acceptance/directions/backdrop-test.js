@@ -16,7 +16,9 @@ moduleForAcceptance('Acceptance | directions/backdrop', {
 });
 
 test('Ember Theater | Directions | Backdrop', function(assert) {
-  assert.expect(13);
+  assert.expect(14);
+
+  const state = {};
 
   visit('/test-scenarios/directions/backdrop').then(() => {
     return pause(100);
@@ -50,7 +52,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     return pause(100);
   }).then(() => {
-    assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(0)`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
+    assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:first`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
@@ -62,6 +64,16 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
     assert.equal($hook('backdrop-direction').length, 4, '`Backdrop` can be passed a fixture directly');
     assert.ok(Ember.$(`${hook('backdrop-direction')}:nth(3)`).css('background-image').match('theater/backdrops/beach-night.jpg'), 'the manually defined backdrop src is set properly');
 
+    Ember.$.Velocity.mock = false;
+
+    keyEvent(document, 'keyup', getKeyCode('p'));
+
+    return pause(100);
+  }).then(() => {
+    state.stoppedLoopLeft = Ember.$(`${hook('backdrop-direction')}:first`).css('left');
+
     return keyEvent(document, 'keyup', getKeyCode('p'));
+  }).then(() => {
+    assert.equal(Ember.$(`${hook('backdrop-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
   });
 });

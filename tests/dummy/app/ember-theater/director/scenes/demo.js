@@ -18,7 +18,7 @@ export default Scene.extend({
 
     this.Character('bebe').stop();
 
-    await this.Pause(100000);
+    await this.Pause(1000);
 
     this.Character('bebe').position('right').transition({ translateX: '30%' }, 1000, { loop: true });
 

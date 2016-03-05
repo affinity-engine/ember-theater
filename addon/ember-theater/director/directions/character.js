@@ -64,7 +64,7 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
-    get(this, '_$instance').stop(queue);
+    get(this, '_$instance').velocity('stop', queue);
 
     return this;
   },
