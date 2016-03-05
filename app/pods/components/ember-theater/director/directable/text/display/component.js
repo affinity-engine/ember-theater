@@ -1,1 +1,1 @@
-export { default } from 'ember-theater/components/ember-theater/director/directable/text/display/component';
+export { default } from 'ember-theater/pods/components/ember-theater/director/directable/text/display/component';

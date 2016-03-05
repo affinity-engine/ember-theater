@@ -50,7 +50,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(150);
+    return pause(300);
   }).then(() => {
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:first`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');
