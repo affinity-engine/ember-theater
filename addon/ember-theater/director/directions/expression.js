@@ -37,12 +37,6 @@ export default Direction.extend({
     return this;
   },
 
-  delay(delay) {
-    set(this, 'attrs.delay', delay);
-
-    return this;
-  },
-
   Text(text) {
     const direction = this._createDirection('text');
     const character = get(this, 'attrs.character');

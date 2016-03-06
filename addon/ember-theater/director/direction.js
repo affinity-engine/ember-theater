@@ -18,6 +18,12 @@ export default Ember.Object.extend({
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
+  delay(delay) {
+    set(this, 'attrs.delay', delay);
+
+    return this;
+  },
+
   instance(instance) {
     set(this, 'attrs.instance', instance);
 
