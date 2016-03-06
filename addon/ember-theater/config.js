@@ -80,67 +80,52 @@ export default {
     },
     positions: {
       center: {
-        translateX: '50%'
+        left: '50%'
       },
       centerLeft: {
-        translateX: '35%'
+        left: '35%'
       },
       centerRight: {
-        translateX: '65%'
+        left: '65%'
       },
       left: {
-        translateX: '20%'
+        left: '20%'
       },
       right: {
-        translateX: '80%'
+        left: '80%'
       },
       farLeft: {
-        translateX: '5%'
+        left: '5%'
       },
       farRight: {
-        translateX: '95%'
+        left: '95%'
       },
       offLeft: {
-        translateX: '-20%'
+        left: '-20%'
       },
       offRight: {
-        translateX: '120%'
+        left: '120%'
       },
-      high: {
-        translateY: '-30%'
+      nudgeLeft: {
+        left: '-=5%'
       },
-      baselineHigh: {
-        translateY: '-15%'
+      nudgeRight: {
+        left: '+=5%'
       },
-      baseline: {
-        translateY: 0
+      bottom: {
+        bottom: 0
       },
-      baselineLow: {
-        translateY: '15%'
+      nudgeUp: {
+        bottom: '+=5%'
       },
-      low: {
-        translateY: '30%'
+      nudgeDown: {
+        bottom: '-=5%'
       },
-      farAhead: {
-        translateZ: '6vh'
+      nudgeBack: {
+        translateZ: '-=2vh'
       },
-      ahead: {
-        translateZ: '4vh'
-      },
-      middleAhead: {
-        translateZ: '2vh'
-      },
-      middle: {
-        translateZ: 0
-      },
-      middleBehind: {
-        translateZ: '-2vh'
-      },
-      behind: {
-        translateZ: '-4vh'
-      },
-      farBehind: {
-        translateZ: '-6vh'
+      nudgeForward: {
+        translateZ: '+=2vh'
       }
     }
   }

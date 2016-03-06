@@ -12,45 +12,42 @@ export default Scene.extend({
     // await this.Pause(1000);
     // this.Sound('song__bolero').fadeOut();
 
-    const bebe = await this.Character('bebe').position('center', 1000).initialExpression('bebe-laughing');
+    const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing');
+    await bebe.position('nudgeRight', 1000).Text('nudgeRight');
+    await bebe.position('nudgeRight', 1000).Text('nudgeRight');
+    await bebe.position('nudgeRight', 1000).Text('nudgeRight');
+    await bebe.position('nudgeLeft', 1000).Text('nudgeLeft');
+    await bebe.position('nudgeUp', 1000).Text('nudgeUp');
+    await bebe.position('nudgeDown', 1000).Text('nudgeDown');
+    await bebe.position('nudgeForward', 1000).Text('nudgeForward');
+    await bebe.position('nudgeBack', 1000).Text('nudgeBack');
 
-    await bebe.position('farLeft', 2000);
+    await bebe.Text('farLeft');
+    await bebe.position('left', 1000).Text('left');
+    await bebe.position('centerLeft', 1000).Text('centerLeft');
+    await bebe.position('center', 1000).Text('center');
+    await bebe.position('centerRight', 1000).Text('centerRight');
+    await bebe.position('right', 1000).Text('right');
+    await bebe.position('farRight', 1000).Text('farRight');
+    await bebe.position('offRight', 1000).Text('offRight');
+    await bebe.position('center', 1000).position('row2').Text('center row2');
+
+
+    bebe.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
+
+    await this.Pause(600);
+
+    bebe.stop();
 
     await this.Pause(1000);
 
-    this.Character('bebe').position('offLeft', 0).position('farLeft farBehind', 3000);
-    this.Character('bebe').position('offLeft', 0).position('farLeft behind', 2000);
-    this.Character('bebe').position('offLeft', 0).position('farLeft middleBehind', 1000);
-    bebe.position('offLeft', 0).position('farLeft high', 1000);
-    this.Character('bebe').position('offLeft', 0).position('farLeft middleAhead', 1000);
-    this.Character('bebe').position('offLeft', 0).position('farLeft ahead', 2000);
-    this.Character('bebe').position('offLeft', 0).position('farLeft farAhead', 3000);
-    // await bebe.Text('farLeft');
-    // await bebe.position('left', 1000).Text('left');
-    // await bebe.position('centerLeft', 1000).Text('centerLeft');
-    // await bebe.position('center', 1000).Text('center');
-    // await bebe.position('centerRight', 1000).Text('centerRight');
-    // await bebe.position('right', 1000).Text('right');
-    // await bebe.position('farRight', 1000).Text('farRight');
-    // await bebe.position('offRight', 1000).Text('offRight');
-    // await bebe.position('center', 1000).position('row2').Text('center row2');
+    bebe.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
 
+    await this.Pause(600);
 
-    // bebe.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
-    //
-    // await this.Pause(600);
-    //
-    // bebe.stop();
-    //
-    // await this.Pause(1000);
-    //
-    // bebe.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
-    //
-    // await this.Pause(600);
-    //
-    // bebe.stop();
-    //
-    // await this.Pause(1000);
+    bebe.stop();
+
+    await this.Pause(1000);
 
     const classroom = this.Backdrop('classroom').transition({ opacity: 1 }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
 
