@@ -13,6 +13,8 @@ const {
 } = Ember;
 
 export default Ember.Object.extend({
+  _shouldReset: true,
+
   attrs: computed(() => Ember.Object.create({ instance: 0 })),
 
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
@@ -24,31 +26,42 @@ export default Ember.Object.extend({
     return this;
   },
 
-  instance(instance) {
-    set(this, 'attrs.instance', instance);
+  _$instance: computed({
+    get() {
+      const component = get(this, 'directable.component');
+
+      return isPresent(component) ? component.$() : undefined;
+    }
+  }).volatile(),
+
+  _entryPoint() {
+    if (get(this, '_shouldReset')) {
+      this._reset();
+    }
+
+    this._convertToPromise();
+    this._addToQueue();
 
     return this;
   },
 
-  _$instance: computed({
-    get() {
-      const instanceId = get(this, 'attrs.instance');
-      const {
-        componentPath,
-        id,
-        stageManager
-      } = getProperties(this, 'componentPath', 'id', 'stageManager');
+  _reset(attrs) {
+    set(this, '_shouldReset', false);
+    set(this, '_hasDefaultTransition', false);
+    set(this, 'attrs', Ember.Object.create(attrs));
+    set(this, 'queue', undefined);
+  },
 
-      const directable = stageManager.findDirectableWithId(id, componentPath, instanceId);
+  _convertToPromise() {
+    const _this = this;
 
-      return isPresent(directable) ? get(directable, 'component').$() : undefined;
-    }
-  }).volatile(),
+    _this.then = async function(...args) {
+      await get(_this, 'queue.allDirectionsAreLoaded');
 
-  then: async function(...args) {
-    await get(this, 'queue.allDirectionsAreLoaded');
+      delete _this.then;
 
-    return get(this, 'queue.executionComplete').then(...args);
+      return get(_this, 'queue.executionComplete').then(...args);
+    };
   },
 
   _createDirection(name) {
@@ -86,6 +99,8 @@ export default Ember.Object.extend({
       stageManager
     } = getProperties(this, 'attrs', 'componentPath', 'id', 'layer', 'stageManager');
 
-    stageManager.handleDirectable(id, componentPath, { attrs, layer, ...meta }, resolve);
+    set(this, '_shouldReset', true);
+
+    stageManager.handleDirectable(id, componentPath, { attrs, layer, direction: this, ...meta }, resolve);
   }
 });

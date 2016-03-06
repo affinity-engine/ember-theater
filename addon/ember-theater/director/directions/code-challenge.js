@@ -11,7 +11,7 @@ export default Direction.extend({
   layer: 'theater.prompt.code-challenge',
 
   setup(snippets) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.snippets', snippets);
 
@@ -19,18 +19,24 @@ export default Direction.extend({
   },
 
   transition() {
+    this._entryPoint();
+
     this.transitionIn(...arguments);
 
     return this;
   },
 
   transitionIn(effect, duration, options = {}) {
+    this._entryPoint();
+
     set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
 
     return this;
   },
 
   transitionOut(effect, duration, options = {}) {
+    this._entryPoint();
+    
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
 
     return this;

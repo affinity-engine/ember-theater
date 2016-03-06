@@ -12,7 +12,7 @@ export default Direction.extend({
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
   setup(sceneId) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.sceneId', sceneId);
 

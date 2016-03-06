@@ -16,7 +16,7 @@ export default Mixin.create({
     get(this, 'transitions').clear();
 
     this.executeTransitions(transitions).then(() => {
-      this.resolve();
+      this.resolve(get(this, 'directable.direction'));
     });
   })),
 

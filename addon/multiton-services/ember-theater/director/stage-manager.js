@@ -7,6 +7,7 @@ const {
   getOwner,
   isBlank,
   merge,
+  set,
   setProperties
 } = Ember;
 
@@ -34,7 +35,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   handleDirectable(id, componentPath, properties, resolve) {
     const instanceId = get(properties, 'attrs.instance') || 0;
-    const directable = this.findDirectableWithId(id, componentPath, instanceId);
+    const directable = get(properties, 'direction.directable');
     const delay = get(properties, 'attrs.delay') || 0;
 
     later(() => {
@@ -49,6 +50,8 @@ export default Ember.Object.extend(TheaterIdMixin, {
   _addNewDirectable(properties) {
     const Directable = getOwner(this).lookup('directable:main');
     const directable = Directable.create(properties);
+
+    set(get(properties, 'direction'), 'directable', directable);
 
     get(this, 'directables').pushObject(directable);
   },

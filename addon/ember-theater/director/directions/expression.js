@@ -3,6 +3,7 @@ import { Direction } from 'ember-theater/ember-theater/director';
 
 const {
   get,
+  getProperties,
   merge,
   set
 } = Ember;
@@ -11,12 +12,18 @@ const { run: { later } } = Ember;
 
 export default Direction.extend({
   setup(fixture, character) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.expression', fixture);
     set(this, 'attrs.character', character);
 
     return this;
+  },
+
+  _reset() {
+    const attrs = get(this, 'attrs');
+
+    return this._super(getProperties(attrs, 'expression', 'character'));
   },
 
   transition() {

@@ -4,19 +4,19 @@ export default Scene.extend({
   name: 'Character Direction Test',
 
   script: async function() {
-    this.Character('bebe');
+    const bebe = this.Character('bebe');
 
     await this.Pause('p');
-    this.Character('bebe').transition({ opacity: 0.2 });
+    bebe.transition({ opacity: 0.2 });
 
     await this.Pause('p');
-    await this.Character('bebe').transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
+    await bebe.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
     await this.Pause('p');
-    await this.Character('bebe').instance(1).transition();
+    const bebe2 = await this.Character('bebe').transition();
 
     await this.Pause('p');
-    await this.Character('bebe').instance(1).transition({ opacity: 0.6 });
+    await bebe2.transition({ opacity: 0.6 });
 
     await this.Pause('p');
     await this.Character('blixie').transition();
@@ -30,17 +30,17 @@ export default Scene.extend({
     }).transition();
 
     await this.Pause('p');
-    await this.Character('bebe').instance(2).position('center');
+    const bebe3 = await this.Character('bebe').position('center');
 
     await this.Pause('p');
-    await this.Character('bebe').instance(2).position('left low');
+    await bebe3.position('left low');
 
     await this.Pause('p');
-    await this.Character('bebe').instance(3).initialExpression('bebe-happy').position('center');
+    await this.Character('bebe').initialExpression('bebe-happy').position('center');
 
     await this.Pause('p');
-    await this.Character('bebe').transition({ left: '30%' }, 10, { loop: true });
-    this.Character('bebe').stop();
+    await bebe.transition({ left: '30%' }, 10, { loop: true });
+    bebe.stop();
     await this.Pause('p');
   }
 });

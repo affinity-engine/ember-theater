@@ -4,22 +4,22 @@ export default Scene.extend({
   name: 'Backdrop Direction Test',
 
   script: async function() {
-    this.Backdrop('classroom');
+    const classroom = this.Backdrop('classroom');
 
     await this.Pause('p');
-    this.Backdrop('classroom').transition({ opacity: 0.2 });
+    classroom.transition({ opacity: 0.2 });
 
     await this.Pause('p');
-    await this.Backdrop('classroom').transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
+    await classroom.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
     await this.Pause('p');
-    await this.Backdrop('classroom').caption('foo');
+    await classroom.caption('foo');
 
     await this.Pause('p');
-    await this.Backdrop('classroom').instance(1);
+    const classroom2 = await this.Backdrop('classroom');
 
     await this.Pause('p');
-    await this.Backdrop('classroom').instance(1).transition({ opacity: 0.6 });
+    await classroom2.transition({ opacity: 0.6 });
 
     await this.Pause('p');
     await this.Backdrop('beach-day');
@@ -32,8 +32,8 @@ export default Scene.extend({
     });
 
     await this.Pause('p');
-    await this.Backdrop('classroom').transition({ left: '30%' }, 10, { loop: true });
-    this.Backdrop('classroom').stop();
+    await classroom.transition({ left: '30%' }, 10, { loop: true });
+    classroom.stop();
     await this.Pause('p');
   }
 });

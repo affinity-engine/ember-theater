@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import DirectionQueue from '../direction-queue';
 
 const {
   get,
@@ -18,7 +19,7 @@ export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
   setup(fixtureOrId) {
-    this._addToQueue();
+    this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('characters', fixtureOrId);
@@ -29,7 +30,6 @@ export default Direction.extend({
 
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
-    set(this, 'attrs.transitions', Ember.A());
 
     if (isEmpty(get(this, '_$instance'))) {
       const transition = get(this, 'config.attrs.director.character.transition') || get(this, 'config.attrs.globals.transition');
@@ -41,7 +41,15 @@ export default Direction.extend({
     return this;
   },
 
+  _reset() {
+    const fixture = get(this, 'attrs.fixture');
+
+    return this._super({ fixture, transitions: Ember.A() });
+  },
+
   initialExpression(fixtureOrId) {
+    this._entryPoint();
+
     const fixture = this._findExpression(fixtureOrId);
 
     set(this, 'attrs.expression', fixture);
@@ -50,12 +58,16 @@ export default Direction.extend({
   },
 
   name(name) {
+    this._entryPoint();
+
     set(this, 'attrs.name', name);
 
     return this;
   },
 
   position(positions, duration, options = {}) {
+    this._entryPoint();
+
     const effect = positions.split(' ').reduce((effect, position) => {
       return merge(effect,
         get(this, `fixture.positions.character.${position}`) ||
@@ -71,6 +83,7 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
+    this._entryPoint();
     this._removeFromQueueIfDefault();
 
     get(this, '_$instance').velocity('stop', queue);
@@ -79,6 +92,7 @@ export default Direction.extend({
   },
 
   transition(effect, duration, options = {}) {
+    this._entryPoint();
     this._removeDefaultTransition();
 
     const transitions = get(this, 'attrs.transitions') || set(this, 'attrs.transitions', Ember.A());
@@ -89,6 +103,7 @@ export default Direction.extend({
   },
 
   Expression(fixtureOrId) {
+    this._entryPoint();
     this._removeFromQueueIfDefault();
 
     const direction = this._createDirection('expression');
@@ -99,6 +114,7 @@ export default Direction.extend({
   },
 
   Text(text) {
+    this._entryPoint();
     this._removeFromQueueIfDefault();
 
     const direction = this._createDirection('text');

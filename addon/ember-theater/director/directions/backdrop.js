@@ -18,7 +18,7 @@ export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
   setup(fixtureOrId) {
-    this._addToQueue();
+    this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('backdrops', fixtureOrId);
@@ -26,7 +26,6 @@ export default Direction.extend({
 
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
-    set(this, 'attrs.transitions', Ember.A());
 
     if (isEmpty(get(this, '_$instance'))) {
       const transition = get(this, 'config.attrs.director.backdrop.transition') || get(this, 'config.attrs.globals.transition');
@@ -38,8 +37,14 @@ export default Direction.extend({
     return this;
   },
 
+  _reset() {
+    const fixture = get(this, 'attrs.fixture');
+
+    return this._super({ fixture, transitions: Ember.A() });
+  },
+
   caption(caption) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.caption', caption);
 
@@ -47,12 +52,16 @@ export default Direction.extend({
   },
 
   stop(queue = true) {
+    this._entryPoint();
+
     get(this, '_$instance').velocity('stop', queue);
 
     return this;
   },
 
   transition(effect, duration, options = {}) {
+    this._entryPoint();
+
     this._removeDefaultTransition();
 
     get(this, 'attrs.transitions').pushObject(merge({ duration, effect }, options));

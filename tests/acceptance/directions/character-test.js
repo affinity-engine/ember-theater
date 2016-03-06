@@ -85,10 +85,10 @@ test('Ember Theater | Directions | character', function(assert) {
 
     return pause(100);
   }).then(() => {
-    state.stoppedLoopLeft = Ember.$(`${hook('backdrop-direction')}:first`).css('left');
+    state.stoppedLoopLeft = Ember.$(`${hook('character-direction')}:first`).css('left');
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
-    assert.equal(Ember.$(`${hook('backdrop-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
+    assert.equal(Ember.$(`${hook('character-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
   });
 });

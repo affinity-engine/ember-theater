@@ -11,7 +11,7 @@ export default Direction.extend({
   layer: 'meta.pause',
 
   setup(...args) {
-    this._addToQueue();
+    this._entryPoint();
 
     const keys = set(this, 'attrs.keys', Ember.A());
 

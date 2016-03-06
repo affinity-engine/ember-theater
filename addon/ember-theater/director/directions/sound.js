@@ -4,6 +4,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  getProperties,
   set,
   typeOf
 } = Ember;
@@ -16,7 +17,7 @@ export default Direction.extend({
   soundManager: multitonService('ember-theater/sound-manager', 'theaterId'),
 
   setup(fixtureOrId) {
-    this._addToQueue();
+    this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('sounds', fixtureOrId);
@@ -30,6 +31,12 @@ export default Direction.extend({
     return this;
   },
 
+  _reset() {
+    const attrs = get(this, 'attrs');
+
+    return this._super(getProperties(attrs, 'audioId', 'soundInstance'));
+  },
+
   instance(instanceId) {
     const soundManager = get(this, 'soundManager');
     const audioId = get(this, 'attrs.audioId');
@@ -39,6 +46,8 @@ export default Direction.extend({
   },
 
   on(event, callback) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.on(event, callback);
@@ -47,6 +56,8 @@ export default Direction.extend({
   },
 
   play() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.paused = false;
@@ -56,6 +67,8 @@ export default Direction.extend({
   },
 
   stop() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.stop();
@@ -64,6 +77,8 @@ export default Direction.extend({
   },
 
   pause() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.paused = true;
@@ -72,6 +87,8 @@ export default Direction.extend({
   },
 
   unpause() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.paused = false;
@@ -80,6 +97,8 @@ export default Direction.extend({
   },
 
   position(position) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.position = position;
@@ -88,6 +107,8 @@ export default Direction.extend({
   },
 
   loop(loop = true) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.loop = loop === true ? -1 : loop;
@@ -96,6 +117,8 @@ export default Direction.extend({
   },
 
   mute() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.muted = true;
@@ -104,6 +127,8 @@ export default Direction.extend({
   },
 
   unmute() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.muted = false;
@@ -112,6 +137,8 @@ export default Direction.extend({
   },
 
   volume(volume) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     this.stopFade(soundInstance);
@@ -122,6 +149,8 @@ export default Direction.extend({
   },
 
   fadeTo(volume, duration, callback = Ember.K) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     this.stopFade(soundInstance);
@@ -147,6 +176,8 @@ export default Direction.extend({
   },
 
   fadeIn(volume = 1, duration) {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     soundInstance.volume = 0;
@@ -158,6 +189,8 @@ export default Direction.extend({
   },
 
   fadeOut(duration) {
+    this._entryPoint();
+
     this.fadeTo(0, duration, () => {
       this.stop();
     });
@@ -166,6 +199,8 @@ export default Direction.extend({
   },
 
   stopFade() {
+    this._entryPoint();
+
     const soundInstance = get(this, 'attrs.soundInstance');
 
     clearInterval(soundInstance.currentFade);

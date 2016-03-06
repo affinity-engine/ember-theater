@@ -13,7 +13,7 @@ export default Direction.extend({
   layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
 
   setup(layer, effect, duration = 500) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.layer', layer);
     set(this, 'attrs.effect', effect);

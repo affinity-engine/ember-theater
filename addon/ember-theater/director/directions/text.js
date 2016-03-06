@@ -4,6 +4,8 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   merge,
+  get,
+  getProperties,
   set
 } = Ember;
 
@@ -14,7 +16,7 @@ export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
   setup(text, character) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.text', text);
     set(this, 'attrs.character', character);
@@ -22,61 +24,87 @@ export default Direction.extend({
     return this;
   },
 
+  _reset() {
+    const attrs = get(this, 'attrs');
+
+    return this._super(getProperties(attrs, 'text', 'character'));
+  },
+
   classNames(classNames) {
+    this._entryPoint();
+
     set(this, 'attrs.classNames', Ember.Object.create(classNames));
 
     return this;
   },
 
   instant(instant = true) {
+    this._entryPoint();
+
     set(this, 'attrs.instant', instant);
 
     return this;
   },
 
   keyboardPriority(keyboardPriority) {
+    this._entryPoint();
+
     set(this, 'attrs.keyboardPriority', keyboardPriority);
 
     return this;
   },
 
   keys(keys) {
+    this._entryPoint();
+
     set(this, 'attrs.keys', { accept: keys });
 
     return this;
   },
 
   scrollable(scrollable = true) {
+    this._entryPoint();
+
     set(this, 'attrs.scrollable', scrollable);
 
     return this;
   },
 
   transition() {
+    this._entryPoint();
+
     this.transitionIn(...arguments);
 
     return this;
   },
 
   transitionIn(effect, duration, options = {}) {
+    this._entryPoint();
+
     set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
 
     return this;
   },
 
   transitionOut(effect, duration, options = {}) {
+    this._entryPoint();
+
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
 
     return this;
   },
 
   typeAnimation(typeAnimation) {
+    this._entryPoint();
+
     set(this, 'attrs.typeAnimation', typeAnimation);
 
     return this;
   },
 
   typeSpeed(typeSpeed) {
+    this._entryPoint();
+
     set(this, 'attrs.typeSpeed', typeSpeed);
 
     return this;

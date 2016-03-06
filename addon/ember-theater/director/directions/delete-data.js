@@ -11,7 +11,7 @@ export default Direction.extend({
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
 
   setup(key) {
-    this._addToQueue();
+    this._entryPoint();
 
     set(this, 'attrs.key', key);
 
