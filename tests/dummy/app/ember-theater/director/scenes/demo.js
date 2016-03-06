@@ -8,9 +8,9 @@ export default Scene.extend({
     //
     // console.log(value);
 
-    this.Sound('song__bolero').fadeIn();
-    await this.Pause(1000);
-    this.Sound('song__bolero').fadeOut();
+    // this.Sound('song__bolero').fadeIn();
+    // await this.Pause(1000);
+    // this.Sound('song__bolero').fadeOut();
 
     this.Character('bebe').instance(3).position('offLeft', 0).position('farLeft farBehind', 3000);
     this.Character('bebe').instance(2).position('offLeft', 0).position('farLeft behind', 2000);

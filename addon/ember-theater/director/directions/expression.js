@@ -7,6 +7,8 @@ const {
   set
 } = Ember;
 
+const { run: { later } } = Ember;
+
 export default Direction.extend({
   setup(fixture, character) {
     this._addToQueue();
@@ -35,6 +37,12 @@ export default Direction.extend({
     return this;
   },
 
+  delay(delay) {
+    set(this, 'attrs.delay', delay);
+
+    return this;
+  },
+
   Text(text) {
     const direction = this._createDirection('text');
     const character = get(this, 'attrs.character');
@@ -50,7 +58,10 @@ export default Direction.extend({
     const character = get(directable, 'component');
     const expression = get(this, 'attrs.expression');
     const attrs = get(this, 'attrs');
+    const delay = get(attrs, 'delay');
 
-    character.changeExpression(resolve, expression, attrs);
+    later(() => {
+      character.changeExpression(resolve, expression, attrs);
+    }, delay);
   }
 });

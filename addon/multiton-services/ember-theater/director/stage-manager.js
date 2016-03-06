@@ -10,6 +10,8 @@ const {
   setProperties
 } = Ember;
 
+const { run: { later } } = Ember;
+
 export default Ember.Object.extend(TheaterIdMixin, {
   directables: computed(() => Ember.A()),
 
@@ -33,12 +35,15 @@ export default Ember.Object.extend(TheaterIdMixin, {
   handleDirectable(id, componentPath, properties, resolve) {
     const instanceId = get(properties, 'attrs.instance') || 0;
     const directable = this.findDirectableWithId(id, componentPath, instanceId);
+    const delay = get(properties, 'attrs.delay') || 0;
 
-    if (isBlank(directable)) {
-      this._addNewDirectable(merge(properties, { id, componentPath, resolve, instanceId }));
-    } else {
-      this._updateDirectable(directable, properties, resolve);
-    }
+    later(() => {
+      if (isBlank(directable)) {
+        this._addNewDirectable(merge(properties, { id, componentPath, resolve, instanceId }));
+      } else {
+        this._updateDirectable(directable, properties, resolve);
+      }
+    }, delay);
   },
 
   _addNewDirectable(properties) {
