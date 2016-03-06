@@ -108,9 +108,8 @@ export default Direction.extend({
 
     const direction = this._createDirection('expression');
     const fixture = this._findExpression(fixtureOrId);
-    const attrs = get(this, 'attrs');
 
-    return direction.setup(fixture, attrs);
+    return direction.setup(fixture, this);
   },
 
   Text(text) {
@@ -118,9 +117,8 @@ export default Direction.extend({
     this._removeFromQueueIfDefault();
 
     const direction = this._createDirection('text');
-    const attrs = get(this, 'attrs');
 
-    return direction.setup(text, attrs);
+    return direction.setup(text, this);
   },
 
   _findExpression(fixtureOrId) {

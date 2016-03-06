@@ -64,16 +64,18 @@ test('Ember Theater | Directions | character', function(assert) {
     return pause(100);
   }).then(() => {
     assert.equal($hook('character-direction').length, 5, 'characters are rendered with `position`');
-    assert.equal(Ember.$(`${hook('character-direction')}:nth(4)`).css('transform').match(/\d+/g)[4], '640', '`position` positions the character');
+    assert.equal(Ember.$(`${hook('character-direction')}:nth(4)`).css('left'), '640px', '`position` positions the character');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
     return pause(200);
   }).then(() => {
-    const matrix = Ember.$(`${hook('character-direction')}:nth(4)`).css('transform').match(/\d+/g);
+    const $bebe4 = Ember.$(`${hook('character-direction')}:nth(4)`);
 
-    assert.ok(parseInt(matrix[5], 10) >= 160, '`position` can accept multiple positions, Y');
-    assert.ok(parseInt(matrix[4], 10) === 256, '`position` can accept multiple positions, X');
+    assert.equal($bebe4.css('left'), '256px', '`position` can accept multiple positions, Y');
+
+    // phantom return -5%, while Chrome return -38.375px
+    assert.ok(['-38.375px', '-5%'].indexOf($bebe4.css('bottom')) > -1, '`position` can accept multiple positions, X');
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {

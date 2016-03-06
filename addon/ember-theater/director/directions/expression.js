@@ -52,13 +52,9 @@ export default Direction.extend({
   },
 
   _perform(meta, resolve) {
-    const stageManager = get(this, 'stageManager');
-    const instanceId = get(this, 'attrs.instance') || 0;
-    const characterId = get(this, 'attrs.character.fixture.id');
-    const directable = stageManager.findDirectableWithId(characterId, 'ember-theater/director/directable/character', instanceId);
-    const character = get(directable, 'component');
-    const expression = get(this, 'attrs.expression');
     const attrs = get(this, 'attrs');
+    const character = get(attrs, 'character.directable.component');
+    const expression = get(attrs, 'expression');
     const delay = get(attrs, 'delay');
 
     later(() => {

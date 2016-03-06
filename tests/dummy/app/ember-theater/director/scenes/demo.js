@@ -13,6 +13,10 @@ export default Scene.extend({
     // this.Sound('song__bolero').fadeOut();
 
     const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing');
+    const bebe2 = await this.Character('bebe').position('centerLeft', 0);
+
+    bebe.Expression('bebe-blush');
+    bebe2.Expression('bebe-laughing');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');

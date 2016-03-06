@@ -23,9 +23,9 @@ const { run: { later } } = Ember;
 
 const configurablePriority = [
   'directable.attrs',
-  'character',
-  'character.fixture.text',
-  'character.fixture',
+  'character.attrs',
+  'character.attrs.fixture.text',
+  'character.attrs.fixture',
   'config.attrs.director.text',
   'config.attrs.globals'
 ];

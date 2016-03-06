@@ -33,7 +33,7 @@ export default Scene.extend({
     const bebe3 = await this.Character('bebe').position('center');
 
     await this.Pause('p');
-    await bebe3.position('left low');
+    await bebe3.position('left nudgeDown');
 
     await this.Pause('p');
     await this.Character('bebe').initialExpression('bebe-happy').position('center');
