@@ -45,7 +45,7 @@ export default Direction.extend({
   _reset() {
     const attrs = get(this, 'attrs');
 
-    return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'fixture', 'name', 'text') });
+    return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'fixture', 'name', 'namePosition') });
   },
 
   initialExpression(fixtureOrId) {
@@ -62,6 +62,14 @@ export default Direction.extend({
     this._entryPoint();
 
     set(this, 'attrs.name', name);
+
+    return this;
+  },
+
+  namePosition(namePosition) {
+    this._entryPoint();
+
+    set(this, 'attrs.namePosition', namePosition);
 
     return this;
   },
@@ -88,16 +96,6 @@ export default Direction.extend({
     this._removeFromQueueIfDefault();
 
     get(this, '_$instance').velocity('stop', queue);
-
-    return this;
-  },
-
-  textClassNames(classNames) {
-    this._entryPoint();
-
-    const text = get(this, 'attrs.text') || set(this, 'attrs.text', Ember.Object.create());
-
-    set(text, 'classNames', Ember.Object.create(classNames));
 
     return this;
   },

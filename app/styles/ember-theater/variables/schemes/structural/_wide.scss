@@ -16,5 +16,5 @@ $et-text-caption-wide-font-size: $et-text-caption-font-size !default;
 $et-text-caption-wide-top: $et-text-caption-wide-font-size * -1.5 !default;
 $et-text-caption-wide-side: $et-text-wide-padding-base !default;
 $et-text-caption-wide-padding-ends: 0 !default;
-$et-text-caption-wide-padding-sides: $et-text-wide-padding-base !default;
+$et-text-caption-wide-padding-sides: $et-text-wide-padding-base * 0.5 !default;
 $et-text-caption-wide-border-radius: $et-text-wide-border-radius * 0.7 !default;

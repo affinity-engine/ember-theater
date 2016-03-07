@@ -28,6 +28,7 @@ const configurablePriority = [
   'character.attrs.fixture.text',
   'character.attrs.fixture',
   'config.attrs.director.text',
+  'config.attrs.director',
   'config.attrs.globals'
 ];
 
@@ -49,7 +50,8 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
   transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
   structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
-  nameClassNames: configurable(configurablePriority, 'classNames.name'),
+  namePosition: configurable(configurablePriority, 'namePosition'),
+  namePositions: configurable(configurablePriority, 'namePositions'),
   text: configurable(configurablePriority, 'text'),
   typeAnimation: configurable(configurablePriority, 'typeAnimation'),
   typeSpeed: configurable(configurablePriority, 'typeSpeed'),

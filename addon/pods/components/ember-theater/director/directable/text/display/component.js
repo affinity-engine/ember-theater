@@ -8,6 +8,7 @@ const {
   on
 } = Ember;
 
+const { Handlebars: { SafeString } } = Ember;
 const { inject: { service } } = Ember;
 
 export default Component.extend({
@@ -29,6 +30,16 @@ export default Component.extend({
   nameTranslation: computed('name', {
     get() {
       return get(this, 'translator').translate(get(this, 'name'));
+    }
+  }).readOnly(),
+
+  nameStyle: computed('namePosition', 'namePositions.[]', {
+    get() {
+      const namePosition = get(this, 'namePosition');
+      const styleObject = get(this, `namePositions.${namePosition}`);
+      const styleString = Object.keys(styleObject).map((key) => `${key}: ${get(styleObject, key)};`).join(' ');
+
+      return new SafeString(styleString);
     }
   }).readOnly(),
 

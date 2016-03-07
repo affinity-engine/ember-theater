@@ -82,14 +82,6 @@ $et-text-included: false !default;
         top: $et-text-caption-wide-top * map-get($breakpoint_factors, small);
         padding: $et-text-caption-wide-padding-ends * map-get($breakpoint_factors, small) $et-text-caption-wide-padding-sides * map-get($breakpoint_factors, small);
         font-size: $et-text-caption-wide-font-size * map-get($breakpoint_factors, small);
-
-        &.et-left {
-          left: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
-        }
-
-        &.et-right {
-          right: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
-        }
       }
     }
   }
@@ -107,14 +99,6 @@ $et-text-included: false !default;
         top: $et-text-caption-wide-top;
         padding: $et-text-caption-wide-padding-ends $et-text-caption-wide-padding-sides;
         font-size: $et-text-caption-wide-font-size;
-
-        &.et-left {
-          left: $et-text-caption-wide-side;
-        }
-
-        &.et-right {
-          right: $et-text-caption-wide-side;
-        }
       }
     }
   }
