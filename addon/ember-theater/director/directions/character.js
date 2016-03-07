@@ -5,6 +5,7 @@ import DirectionQueue from '../direction-queue';
 
 const {
   get,
+  getProperties,
   isEmpty,
   merge,
   set,
@@ -42,9 +43,9 @@ export default Direction.extend({
   },
 
   _reset() {
-    const fixture = get(this, 'attrs.fixture');
+    const attrs = get(this, 'attrs');
 
-    return this._super({ fixture, transitions: Ember.A() });
+    return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'fixture', 'name', 'text') });
   },
 
   initialExpression(fixtureOrId) {
@@ -87,6 +88,16 @@ export default Direction.extend({
     this._removeFromQueueIfDefault();
 
     get(this, '_$instance').velocity('stop', queue);
+
+    return this;
+  },
+
+  textClassNames(classNames) {
+    this._entryPoint();
+
+    const text = get(this, 'attrs.text') || set(this, 'attrs.text', Ember.Object.create());
+
+    set(text, 'classNames', Ember.Object.create(classNames));
 
     return this;
   },
