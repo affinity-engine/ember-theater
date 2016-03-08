@@ -81,7 +81,9 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
     // do nothing on right-click or mouse wheel or combo
     if (event.buttons > 1) { return; }
 
+    // even though we prevent default, we still want focus
     event.preventDefault();
+    this.focus();
 
     set(this, 'pressEventTriggered', true);
   }),
