@@ -70,10 +70,10 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
   }).readOnly(),
 
-  advanceText: on('mouseDown', 'touchStart', function(event) {
-    if (isPresent(event)) {
-      event.preventDefault();
-    }
+  advanceText: on('didReceiveAttrs', function() {
+    if (!get(this, 'pressEventTriggered')) { return; }
+
+    set(this, 'pressEventTriggered', false);
 
     if (get(this, 'pageLoaded')) {
       this.turnPage();

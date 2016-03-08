@@ -11,7 +11,8 @@ const {
   computed,
   get,
   isPresent,
-  on
+  on,
+  set
 } = Ember;
 
 const {
@@ -74,6 +75,15 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
         this.send('completeText');
       }, duration);
     }
+  }),
+
+  pressEvent: on('mouseDown', 'touchStart', function(event) {
+    // do nothing on right-click or mouse wheel or combo
+    if (event.buttons > 1) { return; }
+
+    event.preventDefault();
+
+    set(this, 'pressEventTriggered', true);
   }),
 
   actions: {
