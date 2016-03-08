@@ -66,6 +66,11 @@ $et-text-included: false !default;
     .et-text-caption {
       position: absolute;
       border-radius: $et-text-caption-wide-border-radius;
+
+      &.center {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   }
 
@@ -82,6 +87,14 @@ $et-text-included: false !default;
         top: $et-text-caption-wide-top * map-get($breakpoint_factors, small);
         padding: $et-text-caption-wide-padding-ends * map-get($breakpoint_factors, small) $et-text-caption-wide-padding-sides * map-get($breakpoint_factors, small);
         font-size: $et-text-caption-wide-font-size * map-get($breakpoint_factors, small);
+
+        &.left {
+          left: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
+        }
+
+        &.right {
+          right: $et-text-caption-wide-side * map-get($breakpoint_factors, small);
+        }
       }
     }
   }
@@ -99,6 +112,14 @@ $et-text-included: false !default;
         top: $et-text-caption-wide-top;
         padding: $et-text-caption-wide-padding-ends $et-text-caption-wide-padding-sides;
         font-size: $et-text-caption-wide-font-size;
+      }
+
+      &.left {
+        left: $et-text-caption-wide-side;
+      }
+
+      &.right {
+        right: $et-text-caption-wide-side;
       }
     }
   }

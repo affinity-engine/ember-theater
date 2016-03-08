@@ -51,7 +51,6 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
   structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
   namePosition: configurable(configurablePriority, 'namePosition'),
-  namePositions: configurable(configurablePriority, 'namePositions'),
   text: configurable(configurablePriority, 'text'),
   typeAnimation: configurable(configurablePriority, 'typeAnimation'),
   typeSpeed: configurable(configurablePriority, 'typeSpeed'),

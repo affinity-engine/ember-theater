@@ -127,18 +127,6 @@ export default {
       nudgeForward: {
         translateZ: '+=2vh'
       }
-    },
-    namePositions: {
-      center: {
-        transform: 'translateX(-50%)',
-        left: '50%'
-      },
-      left: {
-        left: '1rem'
-      },
-      right: {
-        right: '1rem'
-      }
     }
   }
 };

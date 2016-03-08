@@ -12,12 +12,13 @@ export default Scene.extend({
     // await this.Pause(1000);
     // this.Sound('song__bolero').fadeOut();
 
-    const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing').namePosition('left').name('Bebe Prime');
+    const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing').name('Bebe Prime');
     const bebe2 = await this.Character('bebe').position('centerLeft', 0);
 
-    await bebe.Text('Hello!')
-
-    await bebe.namePosition('center').Text('Hello!')
+    await bebe.Text('Default!');
+    await bebe.namePosition('right').Text('Right!');
+    await bebe.namePosition('center').Text('Center!');
+    await bebe.namePosition('left').Text('Left!');
 
     bebe.Expression('bebe-blush');
     bebe2.Expression('bebe-laughing');

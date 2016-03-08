@@ -73,6 +73,11 @@ $et-text-included: false !default;
     .et-text-caption {
       position: absolute;
       border-radius: $et-text-caption-block-border-radius;
+
+      &.center {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
   }
 
@@ -93,6 +98,14 @@ $et-text-included: false !default;
         padding: $et-text-caption-block-padding-ends * map-get($breakpoint_factors, small) $et-text-caption-block-padding-sides * map-get($breakpoint_factors, small);
         font-size: $et-text-caption-block-font-size * map-get($breakpoint_factors, small);
         border-width: $et-text-block-border-width * map-get($breakpoint_factors, small);
+
+        &.left {
+          left: $et-text-caption-block-side * map-get($breakpoint_factors, small);
+        }
+
+        &.right {
+          right: $et-text-caption-block-side * map-get($breakpoint_factors, small);
+        }
       }
     }
   }
@@ -114,6 +127,14 @@ $et-text-included: false !default;
         padding: $et-text-caption-block-padding-ends $et-text-caption-block-padding-sides;
         font-size: $et-text-caption-block-font-size;
         border-width: $et-text-block-border-width;
+
+        &.left {
+          left: $et-text-caption-block-side;
+        }
+
+        &.right {
+          right: $et-text-caption-block-side;
+        }
       }
     }
   }

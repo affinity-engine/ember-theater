@@ -33,16 +33,6 @@ export default Component.extend({
     }
   }).readOnly(),
 
-  nameStyle: computed('namePosition', 'namePositions.[]', {
-    get() {
-      const namePosition = get(this, 'namePosition');
-      const styleObject = get(this, `namePositions.${namePosition}`);
-      const styleString = Object.keys(styleObject).map((key) => `${key}: ${get(styleObject, key)};`).join(' ');
-
-      return new SafeString(styleString);
-    }
-  }).readOnly(),
-
   textTranslation: computed('text', {
     get() {
       const text = get(this, 'text');
