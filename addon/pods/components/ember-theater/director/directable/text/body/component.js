@@ -70,17 +70,25 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
   }).readOnly(),
 
-  advanceText: on('didReceiveAttrs', function() {
+  observePressEvent: on('didReceiveAttrs', function() {
     if (!get(this, 'pressEventTriggered')) { return; }
 
     set(this, 'pressEventTriggered', false);
+
+    this.advanceText();
+  }),
+
+  advanceText(event) {
+    if (event) {
+      event.preventDefault()
+    }
 
     if (get(this, 'pageLoaded')) {
       this.turnPage();
     } else {
       set(this, 'instantWritePage', true);
     }
-  }),
+  },
 
   turnPage() {
     const nextPageFirstWord = this.nextPageFirstWord();
