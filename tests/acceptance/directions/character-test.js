@@ -24,8 +24,8 @@ test('Ember Theater | Directions | character', function(assert) {
     return pause(150);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
-    assert.equal($hook('expression-direction').attr('alt'), 'Bebe', '`alt` is set by the fixture `caption`');
-    assert.ok(Ember.$(`${hook('expression-direction')}img`).attr('src').match('theater/characters/bebe/neutral.png'), 'it sets the `src` based on the associated fixture expression');
+    assert.equal(Ember.$(`${hook('expression-direction')} img`).attr('alt'), 'Bebe', '`alt` is set by the fixture `caption`');
+    assert.ok(Ember.$(`${hook('expression-direction')} img`).attr('src').match('theater/characters/bebe/neutral.png'), 'it sets the `src` based on the associated fixture expression');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
@@ -57,7 +57,7 @@ test('Ember Theater | Directions | character', function(assert) {
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
     assert.equal($hook('character-direction').length, 4, '`character` can be passed a fixture directly');
-    assert.ok(Ember.$(`${hook('expression-direction')}img:nth(3)`).attr('src').match('theater/characters/blixie/neutral.png'), 'the manually defined character defaultExpressionId is set properly');
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(3) img`).attr('src').match('theater/characters/blixie/neutral.png'), 'the manually defined character defaultExpressionId is set properly');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
@@ -79,7 +79,7 @@ test('Ember Theater | Directions | character', function(assert) {
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
-    assert.ok(Ember.$(`${hook('expression-direction')}img:nth(5)`).attr('src').match('theater/characters/bebe/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bebe/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
 
     Ember.$.Velocity.mock = false;
 

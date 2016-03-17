@@ -1,11 +1,14 @@
-.et-backdrop {
-  @extend .et-full-screen;
-
+.et-backdrop-container, .et-backdrop {
   height: 100%;
   width: 100%;
+}
 
-  background-position: center;
-  background-size: cover;
+.et-backdrop-container {
+  display: flex;
+}
+
+.et-backdrop {
+  object-fit: cover;
 
   color: transparent;
 }

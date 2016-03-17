@@ -16,14 +16,17 @@ export default Direction.extend({
 
   config: multitonService('ember-theater/config', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
   setup(fixtureOrId) {
     this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('backdrops', fixtureOrId);
+    const imageId = get(this, 'preloader').idFor(fixture, 'src');
     const id = get(fixture, 'id');
 
+    set(fixture, '_imageId', imageId);
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
 

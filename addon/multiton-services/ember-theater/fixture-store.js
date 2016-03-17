@@ -13,6 +13,8 @@ export default Ember.Object.extend(TheaterIdMixin, {
   add(type, fixtures) {
     const collection = this.findAll(type) || this.instantiateCollection(type);
 
+    fixtures.forEach((fixture) => set(fixture, '_type', type));
+
     return collection.pushObjects(fixtures);
   },
 

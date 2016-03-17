@@ -18,6 +18,7 @@ export default Direction.extend({
 
   config: multitonService('ember-theater/config', 'theaterId'),
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
   setup(fixtureOrId) {
     this._entryPoint();
@@ -132,8 +133,12 @@ export default Direction.extend({
 
   _findExpression(fixtureOrId) {
     const fixtureStore = get(this, 'fixtureStore');
+    const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
+    const imageId = get(this, 'preloader').idFor(fixture, 'src');
 
-    return typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
+    set(fixture, '_imageId', imageId);
+
+    return fixture;
   },
 
   _removeDefaultTransition() {

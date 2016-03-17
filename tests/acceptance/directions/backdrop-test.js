@@ -25,8 +25,8 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
   }).then(() => {
     assert.ok($hook('backdrop-direction').length > 0, 'backdrop is rendered');
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
-    assert.equal($hook('backdrop-direction').attr('alt'), 'Classroom', '`alt` is set by the fixture `caption`');
-    assert.ok($hook('backdrop-direction').css('background-image').match('theater/backdrops/classroom.png'), 'it sets the `src` based on the associated fixture');
+    assert.equal(Ember.$(`${hook('backdrop-direction')} img`).attr('alt'), 'Classroom', '`alt` is set by the fixture `caption`');
+    assert.ok(Ember.$(`${hook('backdrop-direction')} img`).attr('src').match('theater/backdrops/classroom.png'), 'it sets the `src` based on the associated fixture');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
@@ -42,7 +42,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
-    assert.equal($hook('backdrop-direction').attr('alt'), 'foo', '`alt` can be set by direction function `caption`');
+    assert.equal(Ember.$(`${hook('backdrop-direction')} img`).attr('alt'), 'foo', '`alt` can be set by direction function `caption`');
 
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
@@ -62,7 +62,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
     return keyEvent(document, 'keyup', getKeyCode('p'));
   }).then(() => {
     assert.equal($hook('backdrop-direction').length, 4, '`Backdrop` can be passed a fixture directly');
-    assert.ok(Ember.$(`${hook('backdrop-direction')}:nth(3)`).css('background-image').match('theater/backdrops/beach-night.jpg'), 'the manually defined backdrop src is set properly');
+    assert.ok(Ember.$(`${hook('backdrop-direction')}:nth(3) img`).attr('src').match('theater/backdrops/beach-night.jpg'), 'the manually defined backdrop src is set properly');
 
     Ember.$.Velocity.mock = false;
 

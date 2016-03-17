@@ -15,8 +15,12 @@ export default Ember.Object.extend(TheaterIdMixin, {
     set(this, 'queue', queue);
   }),
 
-  idFor(model, attribute) {
-    return `${model.constructor.modelName}:${model.id}:${attribute}`;
+  idFor(fixture, attribute) {
+    return `${fixture._type}:${fixture.id}:${attribute}`;
+  },
+
+  getElement(id) {
+    return get(this, 'queue').getResult(id);
   },
 
   loadFile(file) {

@@ -24,30 +24,43 @@ const configurablePriority = [
 ];
 
 export default Component.extend(DirectableComponentMixin, TransitionMixin, TransitionObserverMixin, {
-  attributeBindings: ['captionTranslation:alt'],
-  classNames: ['et-backdrop'],
+  classNames: ['et-backdrop-container'],
   hook: 'backdrop-direction',
-  tagName: 'img',
 
   translator: service('ember-theater/translator'),
 
   config: multitonService('ember-theater/config', 'theaterId'),
+  preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
   caption: configurable(configurablePriority, 'caption'),
   src: configurable(configurablePriority, 'src'),
   transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
 
-  captionTranslation: computed('fixture.id', 'caption', {
+  captionTranslation: computed('directable.attrs.fixture.id', 'caption', {
     get() {
-      const translation = get(this, 'caption') || `backdrops.${get(this, 'fixture.id')}`;
+      const translation = get(this, 'caption') || `backdrops.${get(this, 'directable.attrs.fixture.id')}`;
 
       return get(this, 'translator').translate(translation);
     }
   }).readOnly(),
 
-  styles: computed('src', {
-    get() {
-      return [`background-image: url("${get(this, 'src')}");`];
-    }
-  }).readOnly()
+  insertImage: on('didInsertElement', function() {
+    const preloader = get(this, 'preloader');
+    const fixture = get(this, 'directable.attrs.fixture');
+    const captionTranslation = get(this, 'captionTranslation');
+    const id = get(fixture, '_imageId');
+    const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
+    const $image = this.$(image);
+
+    $image.addClass('et-backdrop');
+    $image.attr('alt', captionTranslation);
+
+    this.$().append($image);
+  }),
+
+  changeCaption: observer('captionTranslation', function() {
+    const caption = get(this, 'captionTranslation');
+
+    this.$('img').attr('alt', caption);
+  })
 });

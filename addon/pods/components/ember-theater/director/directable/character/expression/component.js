@@ -8,6 +8,7 @@ const {
   Component,
   computed,
   get,
+  observer,
   on
 } = Ember;
 
@@ -22,14 +23,13 @@ const configurablePriority = [
 ];
 
 export default Component.extend(DirectableComponentMixin, TransitionMixin, {
-  attributeBindings: ['captionTranslation:alt', 'src'],
-  classNames: ['et-character-expression'],
+  classNames: ['et-character-expression-container'],
   hook: 'expression-direction',
-  tagName: 'img',
 
   translator: service('ember-theater/translator'),
 
   config: multitonService('ember-theater/config', 'theaterId'),
+  preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
   caption: configurable(configurablePriority, 'caption'),
   resolve: configurable(configurablePriority, 'resolve'),
@@ -49,5 +49,25 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
     this.executeTransitionIn().then(() => {
       get(this, 'resolve')();
     });
+  }),
+
+  insertImage: on('didInsertElement', function() {
+    const preloader = get(this, 'preloader');
+    const fixture = get(this, 'expression');
+    const captionTranslation = get(this, 'captionTranslation');
+    const id = get(fixture, '_imageId');
+    const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
+    const $image = this.$(image);
+
+    $image.addClass('et-character-expression');
+    $image.attr('alt', captionTranslation);
+
+    this.$().append($image);
+  }),
+
+  changeCaption: observer('captionTranslation', function() {
+    const caption = get(this, 'captionTranslation');
+
+    this.$('img').attr('alt', caption);
   })
 });

@@ -74,7 +74,8 @@ export default Component.extend(ConfigurableMixin, {
     });
 
     fixtureAttributePairs.forEach((pair) => {
-      const fixtures = fixtureStore.findAll(this._standardizeFixtureName(pair.fixture));
+      const fixtureName = camelize(pair.fixture);
+      const fixtures = fixtureStore.findAll(fixtureName);
       const attribute = pair.attribute;
 
       fixtures.forEach((fixture) => {
@@ -101,9 +102,5 @@ export default Component.extend(ConfigurableMixin, {
         this.attrs.completePreload();
       });
     }, 750);
-  },
-
-  _standardizeFixtureName(name) {
-    return camelize(name);
   }
 });

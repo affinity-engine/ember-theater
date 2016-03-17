@@ -19,9 +19,10 @@ module.exports = function(defaults) {
       useLintTree: false
     },
 
-    eslint: {
-      testGenerator: eslintTestGenerator
-    },
+    // eslint: {
+    //   testGenerator: eslintTestGenerator
+    // },
+
     codemirror: {
       modes: ['javascript']
     }
