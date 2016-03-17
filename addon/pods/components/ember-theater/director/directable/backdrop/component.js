@@ -50,7 +50,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
     const captionTranslation = get(this, 'captionTranslation');
     const id = get(fixture, '_imageId');
     const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
-    const $image = this.$(image);
+    const $image = this.$(image).clone();
 
     $image.addClass('et-backdrop');
     $image.attr('alt', captionTranslation);
