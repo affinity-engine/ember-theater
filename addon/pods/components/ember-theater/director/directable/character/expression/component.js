@@ -13,6 +13,7 @@ const {
 } = Ember;
 
 const { inject: { service } } = Ember;
+const { run: { next } } = Ember;
 
 const configurablePriority = [
   'directable.attrs',
@@ -52,17 +53,19 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   }),
 
   insertImage: on('didInsertElement', function() {
-    const preloader = get(this, 'preloader');
-    const fixture = get(this, 'expression');
-    const captionTranslation = get(this, 'captionTranslation');
-    const id = get(fixture, '_imageId');
-    const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
-    const $image = this.$(image).clone();
+    next(() => {
+      const preloader = get(this, 'preloader');
+      const fixture = get(this, 'expression');
+      const captionTranslation = get(this, 'captionTranslation');
+      const id = get(fixture, '_imageId');
+      const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
+      const $image = this.$(image).clone();
 
-    $image.addClass('et-character-expression');
-    $image.attr('alt', captionTranslation);
+      $image.addClass('et-character-expression');
+      $image.attr('alt', captionTranslation);
 
-    this.$().append($image);
+      this.$().append($image);
+    });
   }),
 
   changeCaption: observer('captionTranslation', function() {
