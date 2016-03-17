@@ -15,6 +15,8 @@ export default Scene.extend({
     const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing').name('Bebe Prime');
     const bebe2 = await this.Character('bebe').position('centerLeft', 0);
 
+    await bebe2.Expression('bebe-blush').transitionIn('transition.whirlIn', 1000).transitionOut('transition.fadeOut', 1000);
+
     await bebe.Text('Default!');
     await bebe.namePosition('right').Text('Right!');
     await bebe.namePosition('center').Text('Center!');
