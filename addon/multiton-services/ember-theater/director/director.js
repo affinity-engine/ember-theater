@@ -8,12 +8,12 @@ const { RSVP: { resolve } } = Ember;
 export default Ember.Object.extend(TheaterIdMixin, {
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
-  direct(scene, factory, args) {
-    if (get(scene, 'isAborted')) { return resolve(); }
+  direct(script, factory, args) {
+    if (get(script, 'isAborted')) { return resolve(); }
 
-    const theaterId = get(scene, 'theaterId');
+    const theaterId = get(script, 'theaterId');
     const { autoResolve, autoResolveResult } = get(this, 'sceneManager').advanceSceneRecord();
-    const direction = factory.create({ autoResolve, autoResolveResult, scene, theaterId });
+    const direction = factory.create({ autoResolve, autoResolveResult, script, theaterId });
 
     return direction.setup(...args);
   }

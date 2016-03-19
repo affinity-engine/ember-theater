@@ -43,9 +43,9 @@ export default Ember.Object.extend({
   _execute() {
     const {
       _directions,
-      scene,
+      script,
       sceneManager
-    } = getProperties(this, '_directions', 'scene', 'sceneManager');
+    } = getProperties(this, '_directions', 'script', 'sceneManager');
 
     const meta = getProperties(this, 'autoResolve', 'autoResolveResult');
 
@@ -55,7 +55,7 @@ export default Ember.Object.extend({
       });
     });
 
-    sceneManager.recordSceneRecordEvent(promise, scene);
+    sceneManager.recordSceneRecordEvent(promise, script);
 
     return promise;
   },

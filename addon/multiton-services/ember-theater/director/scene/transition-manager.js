@@ -33,9 +33,9 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _abortPreviousScene() {
-    const scene = get(this, 'sceneManager.scene');
+    const script = get(this, 'sceneManager.script');
 
-    if (isPresent(scene)) { scene.abort(); }
+    if (isPresent(script)) { script.abort(); }
   },
 
   _transitionScene(id, options) {
@@ -43,7 +43,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     const script = getOwner(this).lookup('script:main').create({ theaterId: get(this, 'theaterId') });
 
     this._clearStage();
-    this._setSceneManager(scene, options);
+    this._setSceneManager(scene, script, options);
     this._updateAutosave(scene, options);
 
     scene.start(script);
@@ -65,11 +65,11 @@ export default Ember.Object.extend(TheaterIdMixin, {
     get(this, 'layerManager').clearFilters();
   },
 
-  _setSceneManager(scene, options) {
+  _setSceneManager(scene, script, options) {
     const sceneManager = get(this, 'sceneManager');
     const isLoading = get(options, 'isLoading');
 
-    sceneManager.setScene(scene);
+    sceneManager.setScene(scene, script);
     sceneManager.setIsLoading(isLoading);
     sceneManager.resetSceneRecord(isLoading);
   },

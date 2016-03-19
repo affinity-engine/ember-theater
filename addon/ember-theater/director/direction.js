@@ -72,13 +72,13 @@ export default Ember.Object.extend({
 
   _directionMeta: computed({
     get() {
-      return getProperties(this, 'autoResolve', 'autoResolveResult', 'queue', 'scene', 'theaterId');
+      return getProperties(this, 'autoResolve', 'autoResolveResult', 'queue', 'script', 'theaterId');
     }
   }).readOnly().volatile(),
 
   _addToQueue() {
     const queue = get(this, 'queue') || set(this, 'queue', DirectionQueue.create({
-      scene: get(this, 'scene'),
+      script: get(this, 'script'),
       sceneManager: get(this, 'sceneManager'),
       autoResolve: get(this, 'autoResolve'),
       autoResolveResult: get(this, 'autoResolveResult')

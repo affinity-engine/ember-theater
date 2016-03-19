@@ -36,8 +36,9 @@ export default Ember.Object.extend(TheaterIdMixin, {
     set(this, 'initialSceneId', initialSceneId);
   },
 
-  setScene(scene) {
+  setScene(scene, script) {
     set(this, 'scene', scene);
+    set(this, 'script', script);
   },
 
   setIsLoading(isLoading) {
@@ -50,8 +51,8 @@ export default Ember.Object.extend(TheaterIdMixin, {
     return get(this, 'recorder').advance(isLoading);
   },
 
-  recordSceneRecordEvent(promise, scene) {
-    get(this, 'recorder').record(promise, scene);
+  recordSceneRecordEvent(promise, script) {
+    get(this, 'recorder').record(promise, script);
   },
 
   resetSceneRecord(isLoading) {

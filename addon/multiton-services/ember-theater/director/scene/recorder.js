@@ -27,11 +27,11 @@ export default Ember.Object.extend(TheaterIdMixin, {
     set(this, 'sceneRecordIndex', 0);
   },
 
-  record(promise, scene) {
+  record(promise, script) {
     const key = get(this, 'sceneRecordIndex');
 
     promise.then((value) => {
-      if (get(scene, 'isAborted')) { return; }
+      if (get(script, 'isAborted')) { return; }
 
       this._update(key, value);
     });
