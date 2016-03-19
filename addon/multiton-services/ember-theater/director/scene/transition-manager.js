@@ -40,12 +40,13 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   _transitionScene(id, options) {
     const scene = this._buildScene(id, options);
+    const script = getOwner(this).lookup('script:main').create({ theaterId: get(this, 'theaterId') });
 
     this._clearStage();
     this._setSceneManager(scene, options);
     this._updateAutosave(scene, options);
 
-    scene.script();
+    scene.start(script);
   },
 
   _buildScene(id, options) {

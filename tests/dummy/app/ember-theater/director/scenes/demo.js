@@ -3,17 +3,17 @@ import { Scene } from 'ember-theater/ember-theater/director';
 export default Scene.extend({
   name: 'Ember Theater Demo',
 
-  script: async function() {
-    // const value = await this.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
+  start: async function(script) {
+    // const value = await script.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
     //
     // console.log(value);
 
-    // this.Sound('song__bolero').fadeIn();
-    // await this.Pause(1000);
-    // this.Sound('song__bolero').fadeOut();
+    // script.Sound('song__bolero').fadeIn();
+    // await script.Pause(1000);
+    // script.Sound('song__bolero').fadeOut();
 
-    const bebe = await this.Character('bebe').position('center', 0).initialExpression('bebe-laughing').name('Bebe Prime');
-    const bebe2 = await this.Character('bebe').position('centerLeft', 0);
+    const bebe = await script.Character('bebe').position('center', 0).initialExpression('bebe-laughing').name('Bebe Prime');
+    const bebe2 = await script.Character('bebe').position('centerLeft', 0);
 
     await bebe2.Expression('bebe-blush').transitionIn('transition.whirlIn', 1000).transitionOut('transition.fadeOut', 1000);
 
@@ -46,64 +46,64 @@ export default Scene.extend({
 
     bebe.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600);
+    await script.Pause(600);
 
     bebe.stop();
 
-    await this.Pause(1000);
+    await script.Pause(1000);
 
     bebe.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600);
+    await script.Pause(600);
 
     bebe.stop();
 
-    await this.Pause(1000);
+    await script.Pause(1000);
 
-    const classroom = this.Backdrop('classroom').transition({ opacity: 1 }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
+    const classroom = script.Backdrop('classroom').transition({ opacity: 1 }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600);
+    await script.Pause(600);
 
     classroom.stop();
 
-    await this.Pause(1000);
+    await script.Pause(1000);
 
     classroom.transition({ opacity: 1, translateX: '30%' }, 1000, { loop: true });
 
-    await this.Pause(600);
+    await script.Pause(600);
 
     classroom.stop();
 
-    await this.Pause(1000);
+    await script.Pause(1000);
 
 
     await bebe.position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
-    await this.Text('Bye!');
+    await script.Text('Bye!');
     await bebe.Expression('bebe-blush');
     await bebe.Text('How was that?');
 
     await classroom.transition('transition.whirlIn');
-    this.Filter('theater.stage', ['blur(0px)', 'blur(10px)'], 1000);
-    await this.Text('Hello!');
-    this.Filter('theater.stage', ['blur(10px)', 'blur(0px)'], 1000).destroy();
-    await this.Text('Bye!');
+    script.Filter('theater.stage', ['blur(0px)', 'blur(10px)'], 1000);
+    await script.Text('Hello!');
+    script.Filter('theater.stage', ['blur(10px)', 'blur(0px)'], 1000).destroy();
+    await script.Text('Bye!');
 
-    const choice = await this.Choice(['A', 'B', 'C']);
+    const choice = await script.Choice(['A', 'B', 'C']);
 
     console.log(choice);
 
-    this.Text('Hello!');
-    await this.Pause(500);
-    await this.Text('Bye!');
+    script.Text('Hello!');
+    await script.Pause(500);
+    await script.Text('Bye!');
 
-    this.SetData('foo', 'bar');
-    console.log(await this.GetData('foo'));
-    this.DeleteData('foo');
-    console.log(await this.DeleteData('foo'));
+    script.SetData('foo', 'bar');
+    console.log(await script.GetData('foo'));
+    script.DeleteData('foo');
+    console.log(await script.DeleteData('foo'));
 
     console.log('Entered Scene');
 
-    await this.TransitionToScene('demo').transitionOut('transition.whirlOut', 1000);
+    await script.TransitionToScene('demo').transitionOut('transition.whirlOut', 1000);
 
     console.log('Left Scene');
   }

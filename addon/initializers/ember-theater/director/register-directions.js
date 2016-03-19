@@ -19,7 +19,7 @@ const injectDirectionProxy = function injectDirectionProxy(application, name) {
   const constantizedName = name.split('-').map((section) => capitalize(section)).join('');
 
   application.register(`direction:${name}-proxy`, proxy, { instantiate: false, singleton: false });
-  application.inject('scene', constantizedName, `direction:${name}-proxy`);
+  application.inject('script', constantizedName, `direction:${name}-proxy`);
 };
 
 export function initialize(application) {
