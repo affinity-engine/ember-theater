@@ -3,37 +3,37 @@ import { Scene } from 'ember-theater/ember-theater/director';
 export default Scene.extend({
   name: 'Backdrop Direction Test',
 
-  start: async function(S) {
-    const classroom = S.Backdrop('classroom');
+  start: async function(script) {
+    const classroom = script.Backdrop('classroom');
 
-    await S.Pause('p');
+    await script.Pause('p');
     classroom.transition({ opacity: 0.2 });
 
-    await S.Pause('p');
+    await script.Pause('p');
     await classroom.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
-    await S.Pause('p');
+    await script.Pause('p');
     await classroom.caption('foo');
 
-    await S.Pause('p');
-    const classroom2 = await S.Backdrop('classroom');
+    await script.Pause('p');
+    const classroom2 = await script.Backdrop('classroom');
 
-    await S.Pause('p');
+    await script.Pause('p');
     await classroom2.transition({ opacity: 0.6 });
 
-    await S.Pause('p');
-    await S.Backdrop('beach-day');
+    await script.Pause('p');
+    await script.Backdrop('beach-day');
 
-    await S.Pause('p');
-    await S.Backdrop({
+    await script.Pause('p');
+    await script.Backdrop({
       id: 'beach-night',
       caption: 'beach during the night',
       src: 'theater/backdrops/beach-night.jpg'
     });
 
-    await S.Pause('p');
+    await script.Pause('p');
     await classroom.transition({ left: '30%' }, 10, { loop: true });
     classroom.stop();
-    await S.Pause('p');
+    await script.Pause('p');
   }
 });
