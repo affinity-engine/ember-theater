@@ -25,11 +25,11 @@ export default Component.extend({
 
   _loadLatestScene: on('init', function() {
     const {
-      initialSceneId,
+      initialScene,
       sceneManager
-    } = getProperties(this, 'initialSceneId', 'sceneManager');
+    } = getProperties(this, 'initialScene', 'sceneManager');
 
-    sceneManager.setInitialSceneId(initialSceneId);
+    sceneManager.setinitialScene(initialScene);
     sceneManager.loadLatestScene();
   })
 });

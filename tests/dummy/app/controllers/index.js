@@ -14,5 +14,16 @@ export default Controller.extend({
     characters,
     expressions,
     sounds
+  },
+
+  actions: {
+    actionScene: async function(script) {
+      await script.Text('First Scene');
+      script.TransitionToScene(this.actions.nextScene);
+    },
+
+    nextScene(script) {
+      script.Text('Next Scene!')
+    }
   }
 });
