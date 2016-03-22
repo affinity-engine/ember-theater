@@ -40,6 +40,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _transitionScene(scene, options) {
+    const data = get(this, 'saveStateManager.activeState');
     const script = this._buildScript();
     const { start, sceneId, sceneName } = typeOf(scene) === 'function' ?
       { start: scene } :
@@ -49,7 +50,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     this._setSceneManager(script, options);
     this._updateAutosave(sceneId, sceneName, options);
 
-    start(script, options);
+    start(script, data);
   },
 
   _buildScene(id) {
