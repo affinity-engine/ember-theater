@@ -9,6 +9,7 @@ const {
   getProperties,
   guidFor,
   isBlank,
+  isPresent,
   merge,
   set
 } = Ember;
@@ -48,18 +49,33 @@ export default Mixin.create({
     return this.executeTransition(transition);
   },
 
-  executeTransitions(transitions, resolve) {
+  executeTransitions(transitions) {
+    return new Promise((resolve) => {
+      this._executeTransitions(transitions, resolve);
+    });
+  },
+
+  _executeTransitions(transitions, resolve) {
     const transition = transitions.shift();
 
     if (isBlank(transition)) {
       return resolve();
     } else {
-      const next = () => this.executeTransitions(transitions, resolve);
+      let promise;
 
       switch(get(transition, 'type')) {
-        case 'delay': return this.delay(transition).then(next);
-        case 'expression': return this.changeExpression(transition).then(next);
-        case 'transition': return this.executeTransition(transition).then(next);
+        case 'delay': promise = this.delay(transition); break;
+        case 'expression': promise = this.changeExpression(transition); break;
+        case 'transition': promise = this.executeTransition(transition); break;
+      }
+
+      const next = () => this._executeTransitions(transitions, resolve);
+      const blocking = isPresent(get(transition, 'blocking')) ? get(transition, 'blocking') : true;
+
+      if (blocking) {
+        promise.then(() => next());
+      } else {
+        next();
       }
     }
   },

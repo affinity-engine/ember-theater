@@ -15,9 +15,7 @@ export default Mixin.create({
 
     get(this, 'transitions').clear();
 
-    new Ember.RSVP.Promise((resolve) => {
-      this.executeTransitions(transitions, resolve);
-    }).then(() => {
+    this.executeTransitions(transitions).then(() => {
       this.resolve(get(this, 'directable.direction'));
     });
   })),

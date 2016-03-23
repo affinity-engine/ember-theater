@@ -57,23 +57,23 @@ export default Direction.extend({
     return this;
   },
 
-  expression(fixtureOrId, transitionIn, transitionOut) {
+  expression(fixtureOrId, options = {}) {
     this._entryPoint();;
 
     if (get(this, 'hasDefaultTransition')) {
       return this.initialExpression(fixtureOrId)
     } else {
-      return this._changeExpression(fixtureOrId, transitionIn, transitionOut);
+      return this._changeExpression(fixtureOrId, options);
     }
   },
 
-  _changeExpression(fixtureOrId, transitionIn, transitionOut) {
+  _changeExpression(fixtureOrId, options) {
     this._removeDefaultTransition();
 
     const transitions = get(this, 'attrs.transitions')
     const expression = this._findExpression(fixtureOrId);
 
-    transitions.pushObject({ expression, transitionIn, transitionOut, type: 'expression' });
+    transitions.pushObject(merge({ expression, type: 'expression' }, options));
 
     return this;
   },
