@@ -49,6 +49,35 @@ export default Direction.extend({
     return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'fixture', 'name', 'namePosition') });
   },
 
+  delay(delay) {
+    const transitions = get(this, 'attrs.transitions');
+
+    transitions.pushObject({ delay, type: 'delay' });
+
+    return this;
+  },
+
+  expression(fixtureOrId, transitionIn, transitionOut) {
+    this._entryPoint();;
+
+    if (get(this, 'hasDefaultTransition')) {
+      return this.initialExpression(fixtureOrId)
+    } else {
+      return this._changeExpression(fixtureOrId, transitionIn, transitionOut);
+    }
+  },
+
+  _changeExpression(fixtureOrId, transitionIn, transitionOut) {
+    this._removeDefaultTransition();
+
+    const transitions = get(this, 'attrs.transitions')
+    const expression = this._findExpression(fixtureOrId);
+
+    transitions.pushObject({ expression, transitionIn, transitionOut, type: 'expression' });
+
+    return this;
+  },
+
   initialExpression(fixtureOrId) {
     this._entryPoint();
 
@@ -105,21 +134,11 @@ export default Direction.extend({
     this._entryPoint();
     this._removeDefaultTransition();
 
-    const transitions = get(this, 'attrs.transitions') || set(this, 'attrs.transitions', Ember.A());
+    const transitions = get(this, 'attrs.transitions');
 
-    transitions.pushObject(merge({ duration, effect }, options));
+    transitions.pushObject(merge({ duration, effect, type: 'transition' }, options));
 
     return this;
-  },
-
-  Expression(fixtureOrId) {
-    this._entryPoint();
-    this._removeFromQueueIfDefault();
-
-    const direction = this._createDirection('expression');
-    const fixture = this._findExpression(fixtureOrId);
-
-    return direction.setup(fixture, this);
   },
 
   Text(text) {

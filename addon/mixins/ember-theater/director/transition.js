@@ -7,11 +7,15 @@ const {
   computed,
   get,
   getProperties,
+  guidFor,
+  isBlank,
   merge,
   set
 } = Ember;
 
 const { Handlebars: { SafeString } } = Ember;
+const { RSVP: { Promise } } = Ember;
+const { run: { later } } = Ember;
 
 export default Mixin.create({
   attributeBindings: ['style'],
@@ -44,12 +48,26 @@ export default Mixin.create({
     return this.executeTransition(transition);
   },
 
-  executeTransitions(transitions) {
-    transitions.map((transition, index) => {
-      return this.executeTransition(transition);
-    });
+  executeTransitions(transitions, resolve) {
+    const transition = transitions.shift();
 
-    return Ember.RSVP.map(transitions, K);
+    if (isBlank(transition)) {
+      return resolve();
+    } else {
+      const next = () => this.executeTransitions(transitions, resolve);
+
+      switch(get(transition, 'type')) {
+        case 'delay': return this.delay(transition).then(next);
+        case 'expression': return this.changeExpression(transition).then(next);
+        case 'transition': return this.executeTransition(transition).then(next);
+      }
+    }
+  },
+
+  delay(transition) {
+    return new Promise((resolve) => {
+      later(() => resolve(), get(transition, 'delay'));
+    });
   },
 
   executeTransition(transition) {
@@ -57,7 +75,7 @@ export default Mixin.create({
     const options = getProperties(transition, ...Object.keys(transition));
 
     if (get(this, 'autoResolve')) {
-      merge(options, { duration: 0 });
+      set(options, 'duration', 0);
     }
 
     return animate(this.element, effect, options).then(() => {

@@ -54,6 +54,14 @@ export default Direction.extend({
     return this;
   },
 
+  delay(delay) {
+    const transitions = get(this, 'attrs.transitions');
+
+    transitions.pushObject({ delay, type: 'delay' });
+
+    return this;
+  },
+
   stop(queue = true) {
     this._entryPoint();
 
@@ -64,10 +72,11 @@ export default Direction.extend({
 
   transition(effect, duration, options = {}) {
     this._entryPoint();
-
     this._removeDefaultTransition();
 
-    get(this, 'attrs.transitions').pushObject(merge({ duration, effect }, options));
+    const transitions = get(this, 'attrs.transitions');
+
+    transitions.pushObject(merge({ duration, effect, type: 'transition' }, options));
 
     return this;
   },

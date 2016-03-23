@@ -12,18 +12,18 @@ export default Scene.extend({
     // await script.Pause(1000);
     // script.Sound('song__bolero').fadeOut();
 
-    const bebe = await script.Character('bebe').position('center', 0).initialExpression('bebe-laughing').name('Bebe Prime');
-    const bebe2 = await script.Character('bebe').position('centerLeft', 0);
+    const bebe = await script.Character('bebe').expression('bebe-blush').position('center', 1000).expression('bebe-laughing', { duration: 3000, effect: 'transition.whirlIn' }, { duration: 3000, effect: 'transition.whirlOut' }).position('right', 1000).expression('bebe-angry').name('Bebe Prime');
+    bebe.position('left', 1000).position('center', 2000).transition('transition.whirlIn', 2000).transition('callout.bounce', 1000);
 
-    await bebe2.Expression('bebe-blush').transitionIn('transition.whirlIn', 1000).transitionOut('transition.fadeOut', 1000);
+    const bebe2 = await script.Character('bebe').position('centerLeft', 0);
 
     await bebe.Text('Default!');
     await bebe.namePosition('right').Text('Right!');
     await bebe.namePosition('center').Text('Center!');
     await bebe.namePosition('left').Text('Left!');
 
-    bebe.Expression('bebe-blush');
-    bebe2.Expression('bebe-laughing');
+    bebe.expression('bebe-blush');
+    bebe2.expression('bebe-laughing');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');
     await bebe.position('nudgeRight', 1000).Text('nudgeRight');
@@ -79,7 +79,7 @@ export default Scene.extend({
 
     await bebe.position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
     await script.Text('Bye!');
-    await bebe.Expression('bebe-blush');
+    await bebe.expression('bebe-blush');
     await bebe.Text('How was that?');
 
     await classroom.transition('transition.whirlIn');

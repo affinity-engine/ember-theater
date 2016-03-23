@@ -18,8 +18,15 @@ const {
   set
 } = Ember;
 
-const { run: { later } } = Ember;
+const {
+  run: {
+    later,
+    next
+  }
+} = Ember;
+
 const { Handlebars: { SafeString } } = Ember;
+const { RSVP: { Promise } } = Ember;
 
 const configurablePriority = [
   'directable.attrs',
@@ -42,9 +49,13 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
   height: configurable(configurablePriority, 'height'),
   transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
 
-  changeExpression(resolve, expression, { transitionIn, transitionOut }) {
-    this._transitionOutExpressions(transitionOut);
-    this._transitionInExpression(resolve, expression, transitionIn);
+  changeExpression({ expression, transitionIn, transitionOut }) {
+    return new Promise((resolve) => {
+      next(() => {
+        this._transitionOutExpressions(transitionOut);
+        this._transitionInExpression(resolve, expression, transitionIn);
+      });
+    });
   },
 
   styles: computed('height', {
