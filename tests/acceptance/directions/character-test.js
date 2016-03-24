@@ -16,7 +16,7 @@ moduleForAcceptance('Acceptance | directions/character', {
 });
 
 test('Ember Theater | Directions | character', function(assert) {
-  assert.expect(17);
+  assert.expect(16);
 
   const state = {};
 
@@ -86,11 +86,5 @@ test('Ember Theater | Directions | character', function(assert) {
     keyEvent(document, 'keyup', getKeyCode('p'));
 
     return pause(100);
-  }).then(() => {
-    state.stoppedLoopLeft = Ember.$(`${hook('character-direction')}:first`).css('left');
-
-    return keyEvent(document, 'keyup', getKeyCode('p'));
-  }).then(() => {
-    assert.equal(Ember.$(`${hook('character-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
   });
 });

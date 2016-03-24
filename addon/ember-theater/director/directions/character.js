@@ -34,7 +34,7 @@ export default Direction.extend({
     set(this, 'id', id);
 
     if (isEmpty(get(this, '_$instance'))) {
-      const transition = get(this, 'config.attrs.director.character.transition') || get(this, 'config.attrs.globals.transition');
+      const transition = { type: 'transition', queue: 'main' };
 
       get(this, 'attrs.transitions').pushObject(transition);
       set(this, 'hasDefaultTransition', true);
@@ -49,10 +49,10 @@ export default Direction.extend({
     return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'fixture', 'name', 'namePosition') });
   },
 
-  delay(delay) {
+  delay(delay, options = {}) {
     const transitions = get(this, 'attrs.transitions');
 
-    transitions.pushObject({ delay, type: 'delay' });
+    transitions.pushObject(merge({ delay, type: 'delay', queue: 'main' }, options));
 
     return this;
   },
@@ -73,7 +73,7 @@ export default Direction.extend({
     const transitions = get(this, 'attrs.transitions')
     const expression = this._findExpression(fixtureOrId);
 
-    transitions.pushObject(merge({ expression, type: 'expression' }, options));
+    transitions.pushObject(merge({ expression, type: 'crossFade', queue: 'expression' }, options));
 
     return this;
   },
@@ -121,22 +121,13 @@ export default Direction.extend({
     return this;
   },
 
-  stop(queue = true) {
-    this._entryPoint();
-    this._removeFromQueueIfDefault();
-
-    get(this, '_$instance').velocity('stop', queue);
-
-    return this;
-  },
-
   transition(effect, duration, options = {}) {
     this._entryPoint();
     this._removeDefaultTransition();
 
     const transitions = get(this, 'attrs.transitions');
 
-    transitions.pushObject(merge({ duration, effect, type: 'transition' }, options));
+    transitions.pushObject(merge({ duration, effect, type: 'transition', queue: 'main' }, options));
 
     return this;
   },

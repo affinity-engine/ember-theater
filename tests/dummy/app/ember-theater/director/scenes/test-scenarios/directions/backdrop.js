@@ -30,10 +30,5 @@ export default Scene.extend({
       caption: 'beach during the night',
       src: 'theater/backdrops/beach-night.jpg'
     });
-
-    await script.Pause('p');
-    await classroom.transition({ left: '30%' }, 10, { loop: true });
-    classroom.stop();
-    await script.Pause('p');
   }
 });

@@ -51,33 +51,45 @@ export default Mixin.create({
 
   executeTransitions(transitions) {
     return new Promise((resolve) => {
-      this._executeTransitions(transitions, resolve);
+      this._executeTransitions(transitions, 'main', resolve);
     });
   },
 
-  _executeTransitions(transitions, resolve) {
+  _executeTransitions(transitions, parentQueue, resolve = K) {
     const transition = transitions.shift();
 
     if (isBlank(transition)) {
-      return resolve();
+      resolve();
     } else {
-      let promise;
+      const promise = this._transitionSwitch(transition);
 
-      switch(get(transition, 'type')) {
-        case 'delay': promise = this.delay(transition); break;
-        case 'expression': promise = this.changeExpression(transition); break;
-        case 'transition': promise = this.executeTransition(transition); break;
-      }
+      const queue = get(transition, 'queue');
 
-      const next = () => this._executeTransitions(transitions, resolve);
-      const blocking = isPresent(get(transition, 'blocking')) ? get(transition, 'blocking') : true;
+      const next = () => this._executeTransitions(transitions, parentQueue, resolve);
 
-      if (blocking) {
-        promise.then(() => next());
-      } else {
+      if (queue !== parentQueue) {
+        this._startParallelQueue(queue, transitions);
+
         next();
+      } else {
+        promise.then(next);
       }
     }
+  },
+
+  _transitionSwitch(transition) {
+    switch(get(transition, 'type')) {
+      case 'delay': return this.delay(transition);
+      case 'crossFade': return this.crossFade(transition);
+      case 'transition': return this.executeTransition(transition);
+    }
+  },
+
+  _startParallelQueue(queue, transitions) {
+    const exitTransition = transitions.find((transition) => get(transition, 'queue') !== queue);
+    const queueLength = transitions.indexOf(exitTransition);
+
+    this._executeTransitions(transitions.splice(0, queueLength), queue);
   },
 
   delay(transition) {
@@ -89,6 +101,8 @@ export default Mixin.create({
   executeTransition(transition) {
     const effect = get(transition, 'effect');
     const options = getProperties(transition, ...Object.keys(transition));
+
+    delete options.queue;
 
     if (get(this, 'autoResolve')) {
       set(options, 'duration', 0);

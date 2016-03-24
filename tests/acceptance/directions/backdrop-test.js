@@ -16,7 +16,7 @@ moduleForAcceptance('Acceptance | directions/backdrop', {
 });
 
 test('Ember Theater | Directions | Backdrop', function(assert) {
-  assert.expect(14);
+  assert.expect(13);
 
   const state = {};
 
@@ -69,11 +69,5 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
     keyEvent(document, 'keyup', getKeyCode('p'));
 
     return pause(100);
-  }).then(() => {
-    state.stoppedLoopLeft = Ember.$(`${hook('backdrop-direction')}:first`).css('left');
-
-    return keyEvent(document, 'keyup', getKeyCode('p'));
-  }).then(() => {
-    assert.equal(Ember.$(`${hook('backdrop-direction')}:first`).css('left'), state.stoppedLoopLeft, '`stop` terminates the animation');
   });
 });

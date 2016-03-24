@@ -31,7 +31,7 @@ export default Direction.extend({
     set(this, 'id', id);
 
     if (isEmpty(get(this, '_$instance'))) {
-      const transition = get(this, 'config.attrs.director.backdrop.transition') || get(this, 'config.attrs.globals.transition');
+      const transition = { type: 'transition', queue: 'main' };
 
       get(this, 'attrs.transitions').pushObject(transition);
       set(this, 'hasDefaultTransition', true);
@@ -54,18 +54,10 @@ export default Direction.extend({
     return this;
   },
 
-  delay(delay) {
+  delay(delay, options = {}) {
     const transitions = get(this, 'attrs.transitions');
 
-    transitions.pushObject({ delay, type: 'delay' });
-
-    return this;
-  },
-
-  stop(queue = true) {
-    this._entryPoint();
-
-    get(this, '_$instance').velocity('stop', queue);
+    transitions.pushObject(merge({ delay, type: 'delay', queue: 'main' }, options));
 
     return this;
   },
@@ -76,7 +68,7 @@ export default Direction.extend({
 
     const transitions = get(this, 'attrs.transitions');
 
-    transitions.pushObject(merge({ duration, effect, type: 'transition' }, options));
+    transitions.pushObject(merge({ duration, effect, type: 'transition', queue: 'main' }, options));
 
     return this;
   },

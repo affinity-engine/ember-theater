@@ -37,10 +37,5 @@ export default Scene.extend({
 
     await script.Pause('p');
     await script.Character('bebe').initialExpression('bebe-happy').position('center');
-
-    await script.Pause('p');
-    await bebe.transition({ left: '30%' }, 10, { loop: true });
-    bebe.stop();
-    await script.Pause('p');
   }
 });

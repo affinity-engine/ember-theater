@@ -49,7 +49,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
   height: configurable(configurablePriority, 'height'),
   transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
 
-  changeExpression({ expression, transitionIn, transitionOut }) {
+  crossFade({ expression, transitionIn, transitionOut }) {
     return new Promise((resolve) => {
       next(() => {
         this._transitionOutExpressions(transitionOut);
