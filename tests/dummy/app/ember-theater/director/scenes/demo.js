@@ -97,15 +97,6 @@ export default Scene.extend({
     await script.Pause(500);
     await script.Text('Bye!');
 
-    script.SetData('foo', 'bar');
-    console.log(await script.GetData('foo'));
-    script.DeleteData('foo');
-    console.log(await script.DeleteData('foo'));
-
-    console.log('Entered Scene');
-
-    await script.TransitionToScene('demo').transitionOut('transition.whirlOut', 1000);
-
-    console.log('Left Scene');
+    await script.Scene('demo').transitionOut('transition.whirlOut', 1000);
   }
 });
