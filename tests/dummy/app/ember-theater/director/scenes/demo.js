@@ -11,7 +11,7 @@ export default Scene.extend({
     // script.Sound('song__bolero').fadeIn();
     // await script.Pause(1000);
     // script.Sound('song__bolero').fadeOut();
-    await script.Character('blixie')
+    const blixie = await script.Character('blixie').position('center');
 
     const bebe = await script.Character('bebe').expression('bebe-blush').position('center', 1000).expression('bebe-laughing', { transitionIn: { duration: 1000, effect: 'transition.whirlIn' }, transitionOut: { duration: 1000, effect: 'transition.whirlOut' } }).position('right', 1000).expression('bebe-angry').name('Bebe Prime');
     bebe.position('left', 1000).position('center', 2000).transition('transition.whirlIn', 2000).transition('callout.bounce', 1000);
