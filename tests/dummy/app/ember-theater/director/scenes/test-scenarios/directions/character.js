@@ -13,13 +13,13 @@ export default Scene.extend({
     await bebe.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
     await script.Pause('p');
-    const bebe2 = await script.Character('bebe').transition();
+    const bebe2 = await script.Character('bebe');
 
     await script.Pause('p');
     await bebe2.transition({ opacity: 0.6 });
 
     await script.Pause('p');
-    await script.Character('blixie').transition();
+    await script.Character('blixie');
 
     await script.Pause('p');
     await script.Character({
@@ -27,7 +27,7 @@ export default Scene.extend({
       name: 'Bobo',
       height: 90,
       defaultExpressionId: 'blixie-neutral'
-    }).transition();
+    });
 
     await script.Pause('p');
     const bebe3 = await script.Character('bebe').position('center');

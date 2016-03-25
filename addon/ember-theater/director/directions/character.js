@@ -51,6 +51,7 @@ export default Direction.extend({
 
   delay(delay, options = {}) {
     this._removeDefaultTransition();
+    this._entryPoint();
 
     const transitions = get(this, 'attrs.transitions');
 
@@ -69,6 +70,7 @@ export default Direction.extend({
 
   _changeExpression(fixtureOrId, options) {
     this._removeDefaultTransition();
+    this._entryPoint();
 
     const transitions = get(this, 'attrs.transitions')
     const expression = this._findExpression(fixtureOrId);
@@ -87,12 +89,16 @@ export default Direction.extend({
   },
 
   name(name) {
+    this._entryPoint();
+
     set(this, 'attrs.name', name);
 
     return this;
   },
 
   namePosition(namePosition) {
+    this._entryPoint();
+
     set(this, 'attrs.namePosition', namePosition);
 
     return this;
@@ -115,6 +121,7 @@ export default Direction.extend({
 
   transition(effect, duration, options = {}) {
     this._removeDefaultTransition();
+    this._entryPoint();
 
     const transitions = get(this, 'attrs.transitions');
 

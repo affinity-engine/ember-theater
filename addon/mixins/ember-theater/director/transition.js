@@ -65,7 +65,9 @@ export default Mixin.create({
 
       const queue = get(transition, 'queue');
 
-      const next = () => this._executeTransitions(transitions, parentQueue, resolve);
+      const next = () => {
+        this._executeTransitions(transitions, parentQueue, resolve);
+      }
 
       if (queue !== parentQueue) {
         this._startParallelQueue(queue, transitions);

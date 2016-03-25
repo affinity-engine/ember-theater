@@ -13,10 +13,10 @@ export default Scene.extend({
     await classroom.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
     await script.Pause('p');
-    await classroom.caption('foo');
+    classroom.caption('foo');
 
     await script.Pause('p');
-    const classroom2 = await script.Backdrop('classroom');
+    const classroom2 = await script.Backdrop('classroom').transition({ opacity: 0.8 });
 
     await script.Pause('p');
     await classroom2.transition({ opacity: 0.6 });

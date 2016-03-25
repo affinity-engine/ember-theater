@@ -47,14 +47,14 @@ export default Direction.extend({
   },
 
   caption(caption) {
+    this._entryPoint();
+
     set(this, 'attrs.caption', caption);
 
     return this;
   },
 
   delay(delay, options = {}) {
-    this._removeDefaultTransition();
-
     const transitions = get(this, 'attrs.transitions');
 
     transitions.pushObject(merge({ delay, type: 'delay', queue: 'main' }, options));
@@ -64,6 +64,7 @@ export default Direction.extend({
 
   transition(effect, duration, options = {}) {
     this._removeDefaultTransition();
+    this._entryPoint();
 
     const transitions = get(this, 'attrs.transitions');
 
@@ -75,7 +76,7 @@ export default Direction.extend({
   _removeDefaultTransition() {
     if (get(this, 'hasDefaultTransition')) {
       set(this, 'hasDefaultTransition', false);
-      set(this, 'attrs.transitions', Ember.A());
+      set(this, 'attrs.transitions', Ember.A())
     }
   }
 });
