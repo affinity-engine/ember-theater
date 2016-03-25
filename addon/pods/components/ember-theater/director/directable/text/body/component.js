@@ -125,7 +125,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     });
   }),
 
-  scrollToFirstWord: on('didRender', function() {
+  scrollToFirstWord: on('didInsertElement', function() {
     const $words = get(this, '$words');
     const firstWord = $words.first();
 

@@ -15,7 +15,7 @@
   {{/ember-theater}}
 </div> --}}
 <div class="theater-container">
-  {{#ember-theater theaterId="theater2" fixtures=fixtures as |theater|}}
+  {{#ember-theater theaterId="theater2" fixtures=fixtures isFocused=true as |theater|}}
     {{ember-theater/director theaterId=theater.theaterId initialScene="demo"}}
   {{/ember-theater}}
 </div>
