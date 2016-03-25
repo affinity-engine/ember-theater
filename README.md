@@ -11,4 +11,4 @@ Just a fair warning. This project is still in early alpha and you should expect 
 
 ## Documentation
 
-You'll find it [here](http://ember-theater.github.io/ember-theater/#/learn).
+You'll find it [here](http://www.ember.theater/learn).
