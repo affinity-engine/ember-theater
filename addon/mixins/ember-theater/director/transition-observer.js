@@ -8,7 +8,7 @@ const {
   set
 } = Ember;
 
-const { run: { debouce } } = Ember;
+const { run: { debounce } } = Ember;
 
 export default Mixin.create({
   performTransitions: on('didInsertElement', observer('transitions.lastObject.effect', function() {
