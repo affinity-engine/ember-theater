@@ -1,11 +1,12 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/pods/components/ember-theater/menu-bar/menu/component';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 
 const { get } = Ember;
 
 const { computed: { reads } } = Ember;
 
-export default Menu.extend({
+export default Menu.extend(BusPublisherMixin, {
   header: 'ember-theater.menu.reset.header',
 
   menuClassNames: reads('config.attrs.menuBar.reset.classNames'),
@@ -21,8 +22,7 @@ export default Menu.extend({
   resolve(choice) {
     switch (get(choice, 'key')) {
       case 1:
-        get(this, 'saveStateManager').resetAutosave();
-        get(this, 'sceneManager').resetGame();
+        this.publish('resetGame');
         break;
     }
 

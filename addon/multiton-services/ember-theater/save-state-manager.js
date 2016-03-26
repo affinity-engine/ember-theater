@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 
 const {
   computed,
@@ -8,13 +9,14 @@ const {
   getProperties,
   isPresent,
   merge,
+  on,
   set,
   setProperties
 } = Ember;
 
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
   version: '1.1.0',
 
   store: service(),
@@ -61,17 +63,17 @@ export default Ember.Object.extend(TheaterIdMixin, {
     }
   }).readOnly().volatile(),
 
-  resetAutosave: async function() {
+  resetAutosave: on('bus:resetGame', async function() {
     const autosave = await get(this, 'autosave');
 
     set(this, 'activeState', Ember.Object.create());
     get(this, 'statePoints').clear();
 
     this.updateRecord(autosave);
-  },
+  }),
 
   // RECORD MANAGEMENT //
-  createRecord: async function(name) {
+  createRecord: on('bus:saveGame', async function(name) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -84,9 +86,9 @@ export default Ember.Object.extend(TheaterIdMixin, {
     });
 
     return await record.save();
-  },
+  }),
 
-  updateRecord: async function(record) {
+  updateRecord: on('bus:updateSaveGame', async function(record) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -98,7 +100,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     });
 
     return await record.save();
-  },
+  }),
 
   _getCurrentStatePoints() {
     const statePoints = nativeCopy(get(this, 'statePoints'));
@@ -109,9 +111,9 @@ export default Ember.Object.extend(TheaterIdMixin, {
     return statePoints;
   },
 
-  deleteRecord: async function(record) {
+  deleteRecord: on('bus:deleteSaveGame', async function(record) {
     return await record.destroyRecord();
-  },
+  }),
 
   loadRecord(record) {
     record.reload();
@@ -136,11 +138,11 @@ export default Ember.Object.extend(TheaterIdMixin, {
     set(this, 'activeState', activeState);
   },
 
-  loadStatePoint(statePoints) {
+  loadStatePoint: on('bus:rewindGame', function(statePoints) {
     const activeState = get(statePoints, 'lastObject');
 
     setProperties(this, { activeState, statePoints });
-  },
+  }),
 
   deleteStateValue(key) {
     return this.setStateValue(key, null);
@@ -150,7 +152,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     return get(this, `activeState.${key}`);
   },
 
-  setStateValue(key, value) {
+  setStateValue: on('bus:record', function(key, value) {
     return set(this, `activeState.${key}`, value);
-  }
+  })
 });

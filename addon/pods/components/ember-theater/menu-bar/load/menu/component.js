@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/pods/components/ember-theater/menu-bar/menu/component';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 
 const {
   get,
@@ -8,7 +9,7 @@ const {
 
 const { computed: { reads } } = Ember;
 
-export default Menu.extend({
+export default Menu.extend(BusPublisherMixin, {
   header: 'ember-theater.menu.load.header',
 
   menuClassNames: reads('config.attrs.menuBar.load.classNames'),
@@ -30,11 +31,10 @@ export default Menu.extend({
     const save = get(choice, 'object');
 
     if (isPresent(save)) {
-      const sceneManager = get(this, 'sceneManager');
       const sceneId = get(save, 'activeState.sceneId');
       const options = { autosave: false };
 
-      sceneManager.loadScene(save, sceneId, options);
+      this.publish('loadGame', save, sceneId, options);
     }
 
     this.attrs.closeMenu();

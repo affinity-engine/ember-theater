@@ -1,11 +1,12 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/pods/components/ember-theater/menu-bar/menu/component';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 
 const { get } = Ember;
 
 const { computed: { reads } } = Ember;
 
-export default Menu.extend({
+export default Menu.extend(BusPublisherMixin, {
   header: 'ember-theater.menu.save.header',
 
   menuClassNames: reads('config.attrs.menuBar.save.classNames'),
@@ -41,16 +42,15 @@ export default Menu.extend({
   },
 
   resolve(choice) {
-    const saveStateManager = get(this, 'saveStateManager');
     const sceneRecord = get(this, 'sceneManager.sceneRecord');
 
-    saveStateManager.setStateValue('_sceneRecord', sceneRecord);
+    this.publish('record', '_sceneRecord', sceneRecord);
 
     switch (get(choice, 'key')) {
       case 0: return this.attrs.closeMenu();
-      case 1: saveStateManager.createRecord(get(choice, 'input')); break;
-      case 'save': saveStateManager.updateRecord(get(choice, 'object')); break;
-      case 'delete': saveStateManager.deleteRecord(get(choice, 'object')); break;
+      case 1: this.publish('saveGame', get(choice, 'input')); break;
+      case 'save': this.publish('updateSaveGame', get(choice, 'object')); break;
+      case 'delete': this.publish('deleteSaveGame', get(choice, 'object')); break;
     }
 
     this.attrs.closeMenu();

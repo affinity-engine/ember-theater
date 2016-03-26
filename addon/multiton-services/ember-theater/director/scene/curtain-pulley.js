@@ -1,23 +1,25 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
   get,
   getProperties,
-  isEmpty
+  isEmpty,
+  on
 } = Ember;
 
-export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
+export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, TheaterIdMixin, {
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
-  resetGame: async function() {
+  resetGame: on('bus:resetGame', async function() {
     await get(this, 'saveStateManager').resetAutosave();
 
     this.loadLatestScene();
-  },
+  }),
 
   loadLatestScene: async function() {
     const saveStateManager = get(this, 'saveStateManager');
@@ -34,7 +36,7 @@ export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
     this.loadScene(save, sceneId, options);
   },
 
-  loadScene(save, sceneId, options) {
+  loadScene: on('bus:loadGame', function(save, sceneId, options) {
     const {
       saveStateManager,
       sceneManager
@@ -45,5 +47,5 @@ export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
     this.publish('reset');
 
     sceneManager.toScene(sceneId, options);
-  }
+  })
 });

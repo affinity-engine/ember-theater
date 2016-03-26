@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import Menu from 'ember-theater/pods/components/ember-theater/menu-bar/menu/component';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 
 const {
   get,
@@ -8,7 +9,7 @@ const {
 
 const { computed: { reads } } = Ember;
 
-export default Menu.extend({
+export default Menu.extend(BusPublisherMixin, {
   header: 'ember-theater.menu.rewind.header',
 
   menuClassNames: reads('config.attrs.menuBar.rewind.classNames'),
@@ -29,10 +30,7 @@ export default Menu.extend({
     const point = get(choice, 'object');
 
     if (isPresent(point)) {
-      get(this, 'saveStateManager').loadStatePoint(point);
-      get(this, 'sceneManager').toScene(get(point, 'lastObject.sceneId'), {
-        autosave: false
-      });
+      this.publish('rewindGame', point);
     }
 
     this.attrs.closeMenu();
