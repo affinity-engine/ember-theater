@@ -21,7 +21,7 @@ export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
 
   loadLatestScene: async function() {
     const saveStateManager = get(this, 'saveStateManager');
-    const options = { autosave: false, isLoading: true };
+    const options = { autosave: false };
     const save = await saveStateManager.getMostRecentSave();
 
     let sceneId = get(save, 'activeState.sceneId');

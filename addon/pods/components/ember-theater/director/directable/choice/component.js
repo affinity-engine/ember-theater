@@ -59,9 +59,9 @@ export default Component.extend(...mixins, {
     this.executeTransitionIn();
   }),
 
-  handleAutoResolve: on('didInitAttrs', function() {
-    if (get(this, 'autoResolve')) {
-      const choice = get(this, 'autoResolveResult');
+  handlePriorSceneRecord: on('didInitAttrs', function() {
+    if (isPresent(get(this, 'priorSceneRecord'))) {
+      const choice = get(this, 'priorSceneRecord');
 
       this.resolveAndDestroy(choice);
     }

@@ -153,6 +153,9 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
 
   writeWord(index) {
     const $words = get(this, '$words');
+
+    if (isBlank($words)) { return; }
+
     const $word = $words.eq(index);
     const nextPageFirstWord = this.nextPageFirstWord();
 

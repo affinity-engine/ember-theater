@@ -32,7 +32,7 @@ export default Menu.extend({
     if (isPresent(save)) {
       const sceneManager = get(this, 'sceneManager');
       const sceneId = get(save, 'activeState.sceneId');
-      const options = { autosave: false, isLoading: true };
+      const options = { autosave: false };
 
       sceneManager.loadScene(save, sceneId, options);
     }

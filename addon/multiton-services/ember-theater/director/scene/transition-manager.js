@@ -66,10 +66,12 @@ export default Ember.Object.extend(TheaterIdMixin, {
   },
 
   _buildScript(options) {
+    const sceneManager = get(this, 'sceneManager');
+    const sceneRecord = get(sceneManager, 'sceneRecord') || sceneManager.resetSceneRecord();
     const factory = getOwner(this).lookup('script:main');
     const theaterId = get(this, 'theaterId');
 
-    return factory.create({ theaterId });
+    return factory.create({ sceneRecord, theaterId });
   },
 
   _clearStage() {
@@ -79,11 +81,9 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   _setSceneManager(script, options) {
     const sceneManager = get(this, 'sceneManager');
-    const isLoading = get(options, 'isLoading');
 
     sceneManager.setScript(script);
-    sceneManager.setIsLoading(isLoading);
-    sceneManager.resetSceneRecord(isLoading);
+    sceneManager.resetSceneRecord();
   },
 
   _updateAutosave: async function(sceneId, sceneName, options) {

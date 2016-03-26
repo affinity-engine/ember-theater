@@ -30,7 +30,12 @@ export default Ember.Object.extend({
     const allDirectionsAreLoaded = new Promise((resolve) => {
       next(() => {
         if (get(this, '_directions').indexOf(object) === 0) {
-          set(this, 'executionComplete', this._execute());
+          const promise = this._execute();
+          const script = get(this, 'script');
+
+          script.record(promise);
+
+          set(this, 'executionComplete', promise);
         }
 
         resolve();
@@ -41,28 +46,22 @@ export default Ember.Object.extend({
   },
 
   _execute() {
-    const {
-      _directions,
-      script,
-      sceneManager
-    } = getProperties(this, '_directions', 'script', 'sceneManager');
+    const script = get(this, 'script');
 
-    const meta = getProperties(this, 'autoResolve', 'autoResolveResult');
+    script.incrementSceneRecordIndex();
 
-    const promise = new Promise((resolve) => {
-      _directions.forEach((direction, index) => {
-        this._resolveDirection(direction, index, meta, resolve);
+    const priorSceneRecord = script.getPriorSceneRecord();
+
+    return new Promise((resolve) => {
+      get(this, '_directions').forEach((direction, index) => {
+        this._resolveDirection(direction, index, priorSceneRecord, resolve);
       });
     });
-
-    sceneManager.recordSceneRecordEvent(promise, script);
-
-    return promise;
   },
 
-  _resolveDirection(direction, index, meta, resolve) {
+  _resolveDirection(direction, index, priorSceneRecord, resolve) {
     const resolveOrK = index === 0 ? resolve : K;
 
-    direction._perform(meta, resolveOrK);
+    direction._perform(priorSceneRecord, resolveOrK);
   },
 })

@@ -25,7 +25,7 @@ export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
     return this.resetConfig();
   },
 
-  resetConfig: on('reset', function() {
+  resetConfig: on('bus:reset', function() {
     const theaterConfig = get(this, 'theaterConfig');
     const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
     const saveStateManager = get(this, 'saveStateManager');

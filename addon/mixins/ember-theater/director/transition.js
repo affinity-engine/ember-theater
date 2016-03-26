@@ -106,12 +106,14 @@ export default Mixin.create({
 
     delete options.queue;
 
-    if (get(this, 'autoResolve')) {
+    if (isPresent(get(this, 'priorSceneRecord'))) {
       set(options, 'duration', 0);
     }
 
     return animate(this.element, effect, options).then(() => {
-      set(this, 'style', this.$().attr('style'));
+      if (isPresent(this.element)) {
+        set(this, 'style', this.$().attr('style'));
+      }
     });
   }
 });

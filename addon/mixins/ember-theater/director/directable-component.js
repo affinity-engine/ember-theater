@@ -15,8 +15,7 @@ const { run: { next } } = Ember;
 export default Mixin.create({
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
-  autoResolve: alias('directable.autoResolve'),
-  autoResolveResult: alias('directable.autoResolveResult'),
+  priorSceneRecord: alias('directable.priorSceneRecord'),
 
   associateDirectable: on('didInitAttrs', function() {
     const directable = get(this, 'directable');

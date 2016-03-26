@@ -9,6 +9,7 @@ const {
   Component,
   computed,
   get,
+  isPresent,
   on,
   set
 } = Ember;
@@ -24,9 +25,9 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
   transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
-  handleAutoResolve: on('didInitAttrs', function() {
-    if (get(this, 'autoResolve')) {
-      const choice = get(this, 'autoResolveResult');
+  handlePriorSceneRecord: on('didInitAttrs', function() {
+    if (isPresent(get(this, 'priorSceneRecord'))) {
+      const choice = get(this, 'priorSceneRecord');
 
       this.resolveAndDestroy(choice);
     }

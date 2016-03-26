@@ -28,7 +28,7 @@ export default Direction.extend({
     return this;
   },
 
-  _perform(meta, resolve) {
+  _perform(priorSceneRecord, resolve) {
     const attrs = get(this, 'attrs');
     const {
       effect,

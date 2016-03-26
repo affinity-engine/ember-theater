@@ -13,6 +13,7 @@ const {
 } = Ember;
 
 export default Ember.Object.extend({
+  _isDirection: true,
   _shouldReset: true,
 
   attrs: computed(() => Ember.Object.create({ instance: 0 })),
@@ -72,7 +73,7 @@ export default Ember.Object.extend({
 
   _directionMeta: computed({
     get() {
-      return getProperties(this, 'autoResolve', 'autoResolveResult', 'queue', 'script', 'theaterId');
+      return getProperties(this, 'priorSceneRecord', 'queue', 'script', 'theaterId');
     }
   }).readOnly().volatile(),
 
@@ -80,8 +81,7 @@ export default Ember.Object.extend({
     const queue = get(this, 'queue') || set(this, 'queue', DirectionQueue.create({
       script: get(this, 'script'),
       sceneManager: get(this, 'sceneManager'),
-      autoResolve: get(this, 'autoResolve'),
-      autoResolveResult: get(this, 'autoResolveResult')
+      priorSceneRecord: get(this, 'priorSceneRecord')
     }));
 
     if (!queue.contains(this)) {
@@ -90,7 +90,7 @@ export default Ember.Object.extend({
     }
   },
 
-  _perform(meta, resolve) {
+  _perform(priorSceneRecord, resolve) {
     const {
       attrs,
       componentPath,
@@ -101,6 +101,6 @@ export default Ember.Object.extend({
 
     set(this, '_shouldReset', true);
 
-    stageManager.handleDirectable(id, componentPath, { attrs, layer, direction: this, ...meta }, resolve);
+    stageManager.handleDirectable(id, componentPath, { attrs, layer, direction: this, priorSceneRecord }, resolve);
   }
 });

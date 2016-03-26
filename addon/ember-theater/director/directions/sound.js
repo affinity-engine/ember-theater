@@ -208,7 +208,7 @@ export default Direction.extend({
     return this;
   },
 
-  _perform(meta, resolve) {
+  _perform(priorSceneRecord, resolve) {
     this.on('complete', () => {
       resolve();
     });

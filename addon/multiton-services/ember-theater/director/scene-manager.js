@@ -40,27 +40,15 @@ export default Ember.Object.extend(TheaterIdMixin, {
     set(this, 'script', script);
   },
 
-  setIsLoading(isLoading) {
-    set(this, 'isLoading', isLoading);
-  },
-
   advanceSceneRecord() {
-    const isLoading = get(this, 'isLoading');
-
-    return get(this, 'recorder').advance(isLoading);
+    return get(this, 'recorder').advance();
   },
 
   recordSceneRecordEvent(promise, script) {
     get(this, 'recorder').record(promise, script);
   },
 
-  resetSceneRecord(isLoading) {
-    const recorder = get(this, 'recorder');
-
-    if (isLoading) {
-      recorder.resetIndex();
-    } else {
-      recorder.resetRecord();
-    }
+  resetSceneRecord() {
+    return get(this, 'recorder').resetRecord();
   }
 });
