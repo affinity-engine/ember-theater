@@ -1,15 +1,17 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
   computed,
   get,
   isBlank,
+  on,
   set
 } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
 
   idMap: computed(() => Ember.Object.create()),
@@ -32,7 +34,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     return set(idMap, `${soundId}.${instanceId}`, instance);
   },
 
-  clearSounds() {
+  clearSounds: on('reset', function() {
     const idMap = get(this, 'idMap');
 
     Object.keys(idMap).forEach((mapKey) => {
@@ -44,5 +46,5 @@ export default Ember.Object.extend(TheaterIdMixin, {
     });
 
     set(this, 'idMap', Ember.Object.create());
-  }
+  })
 });

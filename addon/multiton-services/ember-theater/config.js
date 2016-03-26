@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import deepMerge from 'ember-theater/utils/ember-theater/deep-merge';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
@@ -9,10 +10,11 @@ const {
   isEmpty,
   isPresent,
   set,
-  setProperties
+  setProperties,
+  on,
 } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
   attrs: computed(() => Ember.Object.create()),
 
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
@@ -23,7 +25,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     return this.resetConfig();
   },
 
-  resetConfig() {
+  resetConfig: on('reset', function() {
     const theaterConfig = get(this, 'theaterConfig');
     const configs = get(this, '_configs').sort((a, b) => get(a, 'priority') - get(b, 'priority'));
     const saveStateManager = get(this, 'saveStateManager');
@@ -32,7 +34,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
     const attrs = get(this, 'attrs');
 
     return setProperties(attrs, mergedConfig);
-  },
+  }),
 
   _configs: computed({
     get() {

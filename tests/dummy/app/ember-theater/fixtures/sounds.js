@@ -1,7 +1,7 @@
 export default [{
   id: 'song__bolero',
-  src: 'sounds/songs/bolero.mp3'
+  src: 'theater/sounds/songs/bolero.mp3'
 }, {
   id: 'se__blaster',
-  src: 'sounds/se/blaster.wav'
+  src: 'theater/sounds/se/blaster.wav'
 }];

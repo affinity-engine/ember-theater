@@ -32,9 +32,8 @@ export default Component.extend({
 
   initializeConfig: on('init', function() {
     const config = get(this, 'config');
-    const theaterId = get(this, 'theaterId') || 'ember-theater-default';
+    const theaterId = get(this, 'theaterId') || set(this, 'theaterId', 'ember-theater-default');
 
-    set(this, 'theaterId', theaterId);
     get(this, 'configService').initializeConfig(config);
 
     this._loadfixtures();

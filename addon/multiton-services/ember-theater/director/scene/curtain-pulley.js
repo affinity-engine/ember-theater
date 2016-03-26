@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
@@ -8,11 +9,9 @@ const {
   isEmpty
 } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
-  config: multitonService('ember-theater/config', 'theaterId'),
+export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
-  soundManager: multitonService('ember-theater/sound-manager', 'theaterId'),
 
   resetGame: async function() {
     await get(this, 'saveStateManager').resetAutosave();
@@ -37,15 +36,13 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   loadScene(save, sceneId, options) {
     const {
-      config,
       saveStateManager,
-      sceneManager,
-      soundManager
-    } = getProperties(this, 'config', 'saveStateManager', 'sceneManager', 'soundManager');
+      sceneManager
+    } = getProperties(this, 'saveStateManager', 'sceneManager');
 
     saveStateManager.loadRecord(save);
-    config.resetConfig();
-    soundManager.clearSounds();
+
+    this.publish('reset');
 
     sceneManager.toScene(sceneId, options);
   }

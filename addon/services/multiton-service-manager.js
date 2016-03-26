@@ -10,6 +10,7 @@ const {
 } = Ember;
 
 export default Service.extend({
+  factories: computed(() => Ember.Object.create()),
   serviceMap: computed(() => Ember.Object.create()),
 
   getService(path, key) {
@@ -17,14 +18,12 @@ export default Service.extend({
   },
 
   addService(path, key) {
-    const multitonService = getOwner(this).lookup(`multiton-service:${path}`, { singleton: false });
     const serviceMap = get(this, 'serviceMap');
+    const multitonService = getOwner(this).lookup(`multiton-service:${path}`).create({ _multitonServiceKey: key });
 
     if (isBlank(get(serviceMap, key))) {
       set(serviceMap, key, Ember.Object.create());
     }
-
-    set(multitonService, '_multitonServiceKey', key);
 
     return set(serviceMap, `${key}.${path}`, multitonService);
   },
