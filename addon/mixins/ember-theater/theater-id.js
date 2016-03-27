@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 const { Mixin } = Ember;
-const { computed: { alias } } = Ember;
+const { computed: { reads } } = Ember;
 
 export default Mixin.create({
-  theaterId: alias('_multitonServiceKey')
+  theaterId: reads('_multitonServiceKeys.firstObject')
 });

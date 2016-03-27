@@ -13,30 +13,35 @@ export default Service.extend({
   factories: computed(() => Ember.Object.create()),
   serviceMap: computed(() => Ember.Object.create()),
 
-  getService(path, key) {
-    return get(this, `serviceMap.${key}.${path}`);
+  getService(path, ...keys) {
+    return get(this, `serviceMap.${keys.join('.')}.${path}`);
   },
 
-  addService(path, key) {
+  addService(path, ...keys) {
     const serviceMap = get(this, 'serviceMap');
-    const multitonService = getOwner(this).lookup(`multiton-service:${path}`).create({ _multitonServiceKey: key });
+    const multitonService = getOwner(this).lookup(`multiton-service:${path}`).create({ _multitonServiceKeys: Ember.A(keys) });
 
-    if (isBlank(get(serviceMap, key))) {
-      set(serviceMap, key, Ember.Object.create());
-    }
+    const joinedKeys = keys.reduce((joinedKeys, key) => {
+      if (isBlank(get(serviceMap, `${joinedKeys}${key}`))) {
+        set(serviceMap, `${joinedKeys}${key}`, Ember.Object.create());
+      }
 
-    return set(serviceMap, `${key}.${path}`, multitonService);
+      return `${joinedKeys}${key}.`
+    }, '');
+
+    return set(serviceMap, `${joinedKeys}${path}`, multitonService);
   },
 
-  removeServices(key) {
+  removeServices(...keys) {
+    const joinedKeys = keys.join('.');
     const serviceMap = get(this, 'serviceMap');
-    const service = get(serviceMap, key);
+    const service = get(serviceMap, joinedKeys);
     const multitonKeys = Object.keys(service);
 
     multitonKeys.forEach((multitonKey) => {
       get(service, multitonKey).destroy();
     });
 
-    Reflect.deleteProperty(serviceMap[key]);
+    Reflect.deleteProperty(serviceMap[joinedKeys]);
   }
 });
