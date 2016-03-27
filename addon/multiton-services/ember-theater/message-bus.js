@@ -22,7 +22,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
   publish(name, ...messages) {
     get(this, 'subscribers').forEach((subscriber) => {
-      subscriber.trigger(`bus:${name}`, ...messages);
+      subscriber.trigger(name, ...messages);
     })
   }
 });

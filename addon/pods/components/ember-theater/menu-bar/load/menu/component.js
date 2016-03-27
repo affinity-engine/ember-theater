@@ -34,7 +34,7 @@ export default Menu.extend(BusPublisherMixin, {
       const sceneId = get(save, 'activeState.sceneId');
       const options = { autosave: false };
 
-      this.publish('loadGame', save, sceneId, options);
+      this.publish('et:saveIsLoading', save, sceneId, options);
     }
 
     this.attrs.closeMenu();

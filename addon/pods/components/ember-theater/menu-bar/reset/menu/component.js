@@ -22,7 +22,7 @@ export default Menu.extend(BusPublisherMixin, {
   resolve(choice) {
     switch (get(choice, 'key')) {
       case 1:
-        this.publish('resetGame');
+        this.publish('et:gameIsResetting');
         break;
     }
 

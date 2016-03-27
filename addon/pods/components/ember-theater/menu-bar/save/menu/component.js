@@ -44,13 +44,13 @@ export default Menu.extend(BusPublisherMixin, {
   resolve(choice) {
     const sceneRecord = get(this, 'sceneManager.sceneRecord');
 
-    this.publish('record', '_sceneRecord', sceneRecord);
+    this.publish('et:recordingSaveData', '_sceneRecord', sceneRecord);
 
     switch (get(choice, 'key')) {
       case 0: return this.attrs.closeMenu();
-      case 1: this.publish('saveGame', get(choice, 'input')); break;
-      case 'save': this.publish('updateSaveGame', get(choice, 'object')); break;
-      case 'delete': this.publish('deleteSaveGame', get(choice, 'object')); break;
+      case 1: this.publish('et:saveIsCreating', get(choice, 'input')); break;
+      case 'save': this.publish('et:saveIsUpdating', get(choice, 'object')); break;
+      case 'delete': this.publish('et:saveIsDestroying', get(choice, 'object')); break;
     }
 
     this.attrs.closeMenu();

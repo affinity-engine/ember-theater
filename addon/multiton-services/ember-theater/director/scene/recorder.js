@@ -22,7 +22,7 @@ export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
     return set(this, 'sceneRecord', {});
   },
 
-  completeDirection: on('bus:resolveDirection', function(index, value) {
+  completeDirection: on('et:directionCompleted', function(index, value) {
     this._update(index, value);
   }),
 

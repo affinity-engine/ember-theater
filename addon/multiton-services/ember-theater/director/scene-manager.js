@@ -30,7 +30,7 @@ export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
     get(this, 'curtainPulley').resetGame();
   },
 
-  rewindToScene: on('bus:rewindGame', function(point) {
+  rewindToScene: on('et:gameIsRewinding', function(point) {
     this.toScene(get(point, 'lastObject.sceneId'), {
       autosave: false
     });

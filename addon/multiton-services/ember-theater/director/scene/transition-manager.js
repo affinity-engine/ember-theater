@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
 
 const {
@@ -12,7 +13,7 @@ const {
 
 const { run: { later } } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
   layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
@@ -20,7 +21,7 @@ export default Ember.Object.extend(TheaterIdMixin, {
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
 
   toScene(scene, options) {
-    this._abortPreviousScene();
+    this.publish('et:scriptsMustAbort');
 
     const $director = Ember.$('.et-director');
     const duration = get(options, 'transitionOut.duration') || get(this, 'config.attrs.director.scene.transitionOut.duration');
@@ -31,12 +32,6 @@ export default Ember.Object.extend(TheaterIdMixin, {
 
       later(() => $director.removeAttr('style'));
     });
-  },
-
-  _abortPreviousScene() {
-    const script = get(this, 'sceneManager.script');
-
-    if (isPresent(script)) { script.abort(); }
   },
 
   _transitionScene(scene, options) {

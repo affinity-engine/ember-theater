@@ -15,9 +15,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Theate
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
 
-  resetGame: on('bus:resetGame', async function() {
-    await get(this, 'saveStateManager').resetAutosave();
-
+  resetGame: on('et:gameIsResetting', async function() {
     this.loadLatestScene();
   }),
 
@@ -36,7 +34,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Theate
     this.loadScene(save, sceneId, options);
   },
 
-  loadScene: on('bus:loadGame', function(save, sceneId, options) {
+  loadScene: on('et:saveIsLoading', function(save, sceneId, options) {
     const {
       saveStateManager,
       sceneManager
@@ -44,7 +42,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Theate
 
     saveStateManager.loadRecord(save);
 
-    this.publish('reset');
+    this.publish('et:reseting');
 
     sceneManager.toScene(sceneId, options);
   })

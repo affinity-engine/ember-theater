@@ -34,7 +34,7 @@ export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
     return set(idMap, `${soundId}.${instanceId}`, instance);
   },
 
-  clearSounds: on('bus:reset', function() {
+  clearSounds: on('et:reseting', function() {
     const idMap = get(this, 'idMap');
 
     Object.keys(idMap).forEach((mapKey) => {
