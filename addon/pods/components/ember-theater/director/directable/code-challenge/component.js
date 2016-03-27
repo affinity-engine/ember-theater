@@ -25,11 +25,11 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
   transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
-  handlePriorSceneRecord: on('didInitAttrs', function() {
+  handlePriorSceneRecord: on('didInsertElement', function() {
     if (isPresent(get(this, 'priorSceneRecord'))) {
-      const choice = get(this, 'priorSceneRecord');
+      set(this, 'directable.direction.result', get(this, 'priorSceneRecord'));
 
-      this.resolveAndDestroy(choice);
+      this.resolveAndDestroy();
     }
   }),
 
@@ -76,8 +76,10 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
       }
 
       if (isValid) {
+        set(this, 'directable.direction.result', result);
+
         this.executeTransitionIn().then(() => {
-          this.resolveAndDestroy(result);
+          this.resolveAndDestroy();
         });
       }
     }

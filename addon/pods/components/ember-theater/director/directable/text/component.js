@@ -57,9 +57,9 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
   typeSpeed: configurable(configurablePriority, 'typeSpeed'),
   name: configurable(configurablePriority, 'name'),
 
-  handlePriorSceneRecord: on('didInitAttrs', function() {
-    if (get(this, 'priorSceneRecord') === '_RESOLVED') {
-      this.resolveAndDestroy(true);
+  handlePriorSceneRecord: on('didInsertElement', function() {
+    if (isPresent(get(this, 'priorSceneRecord'))) {
+      this.resolveAndDestroy();
     }
   }),
 

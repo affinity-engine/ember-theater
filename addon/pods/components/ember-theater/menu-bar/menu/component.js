@@ -64,6 +64,7 @@ export default Component.extend(EKMixin, {
     new Promise((resolve) => {
       const directable = Ember.Object.create({
         resolve,
+        direction: {},
         attrs: {
           choices,
           classNames,
@@ -72,6 +73,6 @@ export default Component.extend(EKMixin, {
       });
 
       set(this, 'directable', directable);
-    }).then((choice) => this.resolve(choice));
+    }).then((choice) => this.resolve(choice.result));
   }
 });

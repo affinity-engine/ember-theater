@@ -59,11 +59,11 @@ export default Component.extend(...mixins, {
     this.executeTransitionIn();
   }),
 
-  handlePriorSceneRecord: on('didInitAttrs', function() {
+  handlePriorSceneRecord: on('didInsertElement', function() {
     if (isPresent(get(this, 'priorSceneRecord'))) {
       const choice = get(this, 'priorSceneRecord');
 
-      this.resolveAndDestroy(choice);
+      this.send('choose', choice);
     }
   }),
 
@@ -140,10 +140,14 @@ export default Component.extend(...mixins, {
 
   actions: {
     choose(choice) {
+      const direction = get(this, 'directable.direction');
+
+      set(direction, 'result', choice);
+
       this.$().parents('.ember-theater').trigger('focus');
 
       this.executeTransitionOut().then(() => {
-        this.resolveAndDestroy(choice);
+        this.resolveAndDestroy();
       });
     }
   }

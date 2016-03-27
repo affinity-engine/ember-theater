@@ -26,7 +26,7 @@ export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
     this._update(index, value);
   }),
 
-  _update(key, value) {
-    set(this, `sceneRecord.${key}`, isPresent(value) && !value._isDirection ? value : '_RESOLVED');
+  _update(key, direction) {
+    set(this, `sceneRecord.${key}`, get(direction, 'result') || '_RESOLVED');
   }
 });

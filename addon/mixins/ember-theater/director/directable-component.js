@@ -23,12 +23,13 @@ export default Mixin.create({
     set(directable, 'component', this);
   }),
 
-  resolve(...args) {
-    get(this, 'directable').resolve(...args);
+  resolve() {
+    get(this, 'directable').resolve(get(this, 'directable.direction'));
   },
 
-  resolveAndDestroy(...args) {
+  resolveAndDestroy() {
     const directable = get(this, 'directable');
+    const direction = get(directable, 'direction');
     const stageManager = get(this, 'stageManager');
     const resolve = get(this, 'directable').resolve;
 
@@ -37,7 +38,7 @@ export default Mixin.create({
     get(stageManager, 'directables').removeObject(directable);
 
     next(() => {
-      resolve(...args);
+      resolve(direction);
     });
   },
 
