@@ -2,7 +2,7 @@ import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   get,
@@ -11,9 +11,9 @@ const {
   on
 } = Ember;
 
-export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, TheaterIdMixin, {
+export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, MultitonIdsMixin, {
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   resetGame: on('et:gameIsResetting', async function() {
     this.loadLatestScene();

@@ -12,7 +12,7 @@ const {
 export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, {
   sceneRecordIndex: -1,
 
-  director: multitonService('ember-theater/director/director', 'theaterId'),
+  director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
 
   abort: on('et:scriptsMustAbort', function() {
     set(this, 'isAborted', true);

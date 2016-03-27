@@ -9,7 +9,7 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   setup(sceneId) {
     this._entryPoint();

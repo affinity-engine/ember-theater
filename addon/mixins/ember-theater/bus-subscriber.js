@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   Evented,
@@ -9,7 +9,7 @@ const {
   on
 } = Ember;
 
-export default Mixin.create(Evented, TheaterIdMixin, {
+export default Mixin.create(Evented, MultitonIdsMixin, {
   messageBus: multitonService('ember-theater/message-bus', 'theaterId'),
 
   registerWithBus: on('init', function() {

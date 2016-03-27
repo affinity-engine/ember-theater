@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   computed,
@@ -7,7 +7,7 @@ const {
   set
 } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(MultitonIdsMixin, {
   fixtureMap: computed(() => Ember.Object.create()),
 
   add(type, fixtures) {

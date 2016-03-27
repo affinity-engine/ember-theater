@@ -24,8 +24,8 @@ export default Component.extend({
   classNames: ['et-layer'],
   classNameBindings: ['layerName'],
 
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),

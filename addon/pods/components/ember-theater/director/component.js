@@ -15,10 +15,11 @@ export default Component.extend({
   layout,
 
   classNames: ['et-director'],
+  windowId: 'main',
 
   producer: multitonService('ember-theater/producer', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   directables: alias('stageManager.directables'),
   keyboardActivated: alias('producer.isFocused'),

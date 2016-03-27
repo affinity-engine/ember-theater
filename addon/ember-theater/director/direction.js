@@ -18,8 +18,8 @@ export default Ember.Object.extend({
 
   attrs: computed(() => Ember.Object.create({ instance: 0 })),
 
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   delay(delay) {
     set(this, 'attrs.delay', delay);
@@ -73,7 +73,7 @@ export default Ember.Object.extend({
 
   _directionMeta: computed({
     get() {
-      return getProperties(this, 'priorSceneRecord', 'queue', 'script', 'theaterId');
+      return getProperties(this, 'priorSceneRecord', 'queue', 'script', 'theaterId', 'windowId');
     }
   }).readOnly().volatile(),
 

@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(MultitonIdsMixin, {
   isFocused: null
 });

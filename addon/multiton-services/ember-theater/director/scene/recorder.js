@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   get,
@@ -13,7 +13,7 @@ const {
 
 const { computed: { alias } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
 
   sceneRecord: alias('saveStateManager.activeState._sceneRecord'),

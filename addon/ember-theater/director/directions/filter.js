@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
+  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
 
   setup(layer, effect, duration = 500) {
     this._entryPoint();

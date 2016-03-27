@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 
 const {
@@ -16,7 +16,7 @@ const {
 
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, TheaterIdMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   version: '1.1.0',
 
   store: service(),

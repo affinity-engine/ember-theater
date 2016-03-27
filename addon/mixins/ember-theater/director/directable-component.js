@@ -13,7 +13,7 @@ const { computed: { alias } } = Ember;
 const { run: { next } } = Ember;
 
 export default Mixin.create({
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   priorSceneRecord: alias('directable.priorSceneRecord'),
 

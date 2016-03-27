@@ -1,12 +1,12 @@
 import Ember from 'ember';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   computed,
   get
 } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(MultitonIdsMixin, {
   subscribers: computed(() => Ember.A()),
 
   register(subscriber) {

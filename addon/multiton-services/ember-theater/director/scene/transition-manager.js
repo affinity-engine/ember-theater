@@ -2,23 +2,24 @@ import Ember from 'ember';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   get,
   getOwner,
+  getProperties,
   isPresent,
   typeOf
 } = Ember;
 
 const { run: { later } } = Ember;
 
-export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
+export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId'),
+  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId'),
+  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
     this.publish('et:scriptsMustAbort');
@@ -50,8 +51,8 @@ export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
 
   _buildScene(id) {
     const factory = getOwner(this).lookup(`scene:${id}`);
-    const theaterId = get(this, 'theaterId');
-    const instance = factory.create({ theaterId });
+    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
+    const instance = factory.create({ theaterId, windowId });
 
     return {
       start: instance.start,
@@ -64,9 +65,9 @@ export default Ember.Object.extend(BusPublisherMixin, TheaterIdMixin, {
     const sceneManager = get(this, 'sceneManager');
     const sceneRecord = get(sceneManager, 'sceneRecord') || sceneManager.resetSceneRecord();
     const factory = getOwner(this).lookup('script:main');
-    const theaterId = get(this, 'theaterId');
+    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
 
-    return factory.create({ sceneRecord, theaterId });
+    return factory.create({ sceneRecord, theaterId, windowId });
   },
 
   _clearStage() {

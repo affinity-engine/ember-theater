@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   computed,
@@ -13,7 +13,7 @@ const {
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(TheaterIdMixin, {
+export default Ember.Object.extend(MultitonIdsMixin, {
   dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),

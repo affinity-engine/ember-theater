@@ -1,13 +1,13 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import TheaterIdMixin from 'ember-theater/mixins/ember-theater/theater-id';
+import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   Mixin,
   get
 } = Ember;
 
-export default Mixin.create(TheaterIdMixin, {
+export default Mixin.create(MultitonIdsMixin, {
   messageBus: multitonService('ember-theater/message-bus', 'theaterId'),
 
   publish(name, ...messages) {
