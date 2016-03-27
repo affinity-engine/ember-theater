@@ -4,19 +4,26 @@ import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher'
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 
 const {
+  Evented,
   get,
   on,
   set
 } = Ember;
 
-export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, {
+export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evented, {
   sceneRecordIndex: -1,
 
   director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
 
-  abort: on('et:scriptsMustAbort', function() {
-    set(this, 'isAborted', true);
+  setupEvents: on('init', function() {
+    const windowId = get(this, 'windowId');
+
+    this.on(`et:${windowId}:scriptsMustAbort`, this, this.abort);
   }),
+
+  abort() {
+    set(this, 'isAborted', true);
+  },
 
   incrementSceneRecordIndex() {
     this.incrementProperty('sceneRecordIndex');
@@ -34,7 +41,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, {
     promise.then((value) => {
       if (get(this, 'isAborted')) { return; }
 
-      this.publish('et:directionCompleted', sceneRecordIndex, value);
+      this.publish(`et:${get(this, 'windowId')}:directionCompleted`, sceneRecordIndex, value);
     })
   }
 });

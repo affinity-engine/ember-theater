@@ -22,7 +22,7 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
-    this.publish('et:scriptsMustAbort');
+    this.publish(`et:${get(this, 'windowId')}:scriptsMustAbort`);
 
     const $director = Ember.$('.et-director');
     const duration = get(options, 'transitionOut.duration') || get(this, 'config.attrs.director.scene.transitionOut.duration');
