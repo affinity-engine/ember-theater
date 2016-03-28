@@ -140,9 +140,7 @@ export default Component.extend(...mixins, {
 
   actions: {
     choose(choice) {
-      const direction = get(this, 'directable.direction');
-
-      set(direction, 'result', choice);
+      set(this, 'directable.direction.result', choice);
 
       this.$().parents('.ember-theater').trigger('focus');
 

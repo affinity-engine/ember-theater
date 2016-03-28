@@ -30,7 +30,7 @@ export default Menu.extend(BusPublisherMixin, {
     const point = get(choice, 'object');
 
     if (isPresent(point)) {
-      this.publish('et:gameIsRewinding', point);
+      this.publish('et:main:gameIsRewinding', point);
     }
 
     this.attrs.closeMenu();

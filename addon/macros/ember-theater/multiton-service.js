@@ -3,17 +3,19 @@ import Ember from 'ember';
 const {
   computed,
   get,
-  getOwner
+  getOwner,
+  getProperties
 } = Ember;
 
-export default function multiService(path, keyAttribute) {
-  return computed(keyAttribute, {
+export default function multiService(path, ...keyAttributes) {
+  return computed(...keyAttributes, {
     get() {
-      const multitonKey = get(this, keyAttribute);
+      const multitonProperties = getProperties(this, ...keyAttributes);
+      const multitonKeys = Object.keys(multitonProperties).map((key) => get(multitonProperties, key));
       const owner = getOwner(this);
       const manager = owner.lookup('service:multiton-service-manager');
 
-      return manager.getService(path, multitonKey) || manager.addService(path, multitonKey);
+      return manager.getService(path, ...multitonKeys) || manager.addService(path, ...multitonKeys);
     }
   }).readOnly();
 }

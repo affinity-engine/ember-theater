@@ -5,6 +5,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 const {
   Component,
   computed,
+  get,
   getProperties,
   on
 } = Ember;
@@ -27,10 +28,17 @@ export default Component.extend({
   _loadLatestScene: on('init', function() {
     const {
       initialScene,
-      sceneManager
-    } = getProperties(this, 'initialScene', 'sceneManager');
+      sceneManager,
+      windowId
+    } = getProperties(this, 'initialScene', 'sceneManager', 'windowId');
 
-    sceneManager.setinitialScene(initialScene);
-    sceneManager.loadLatestScene();
+    if (windowId === 'main') {
+      sceneManager.setinitialScene(initialScene);
+      sceneManager.loadLatestScene();
+    } else {
+      const sceneRecord = get(this, 'sceneRecord');
+
+      sceneManager.toScene(initialScene, { autosave: false, sceneRecord });
+    }
   })
 });

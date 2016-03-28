@@ -36,14 +36,15 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   },
 
   _transitionScene(scene, options) {
+    this._clearStage();
+    this._setSceneManager(script, options);
+
     const data = get(this, 'saveStateManager.activeState');
     const script = this._buildScript();
     const { start, sceneId, sceneName } = typeOf(scene) === 'function' ?
       { start: scene } :
       this._buildScene(scene);
 
-    this._clearStage();
-    this._setSceneManager(script, options);
     this._updateAutosave(sceneId, sceneName, options);
 
     start(script, data);
@@ -63,9 +64,9 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
 
   _buildScript(options) {
     const sceneManager = get(this, 'sceneManager');
-    const sceneRecord = get(sceneManager, 'sceneRecord') || sceneManager.resetSceneRecord();
     const factory = getOwner(this).lookup('script:main');
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
+    const sceneRecord = get(sceneManager, 'sceneRecord') || sceneManager.setSceneRecord();
 
     return factory.create({ sceneRecord, theaterId, windowId });
   },
@@ -77,9 +78,11 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
 
   _setSceneManager(script, options) {
     const sceneManager = get(this, 'sceneManager');
+    const saveStateManager = get(this, 'saveStateManager');
+    const sceneRecord = get(options, 'sceneRecord') || saveStateManager.getStateValue('_sceneRecord') || {};
 
     sceneManager.setScript(script);
-    sceneManager.resetSceneRecord();
+    sceneManager.setSceneRecord(sceneRecord);
   },
 
   _updateAutosave: async function(sceneId, sceneName, options) {

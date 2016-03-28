@@ -30,7 +30,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     get(this, 'curtainPulley').resetGame();
   },
 
-  rewindToScene: on('et:gameIsRewinding', function(point) {
+  rewindToScene: on('et:main:gameIsRewinding', function(point) {
     this.toScene(get(point, 'lastObject.sceneId'), {
       autosave: false
     });
@@ -56,7 +56,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     get(this, 'recorder').record(promise, script);
   },
 
-  resetSceneRecord() {
-    return get(this, 'recorder').resetRecord();
+  setSceneRecord(sceneRecord) {
+    return get(this, 'recorder').setRecord(sceneRecord);
   }
 });

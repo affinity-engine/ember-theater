@@ -15,18 +15,14 @@ const {
 const { computed: { alias } } = Ember;
 
 export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
-
-  sceneRecord: alias('saveStateManager.activeState._sceneRecord'),
-
   setupEvents: on('init', function() {
     const windowId = get(this, 'windowId');
 
     this.on(`et:${windowId}:directionCompleted`, this, this._update);
   }),
 
-  resetRecord() {
-    return set(this, 'sceneRecord', {});
+  setRecord(sceneRecord = {}) {
+    return set(this, 'sceneRecord', sceneRecord);
   },
 
   _update(key, direction) {

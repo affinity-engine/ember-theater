@@ -63,7 +63,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     }
   }).readOnly().volatile(),
 
-  resetAutosave: on('et:gameIsResetting', async function() {
+  resetAutosave: on('et:main:gameIsResetting', async function() {
     const autosave = await get(this, 'autosave');
 
     set(this, 'activeState', Ember.Object.create());
@@ -73,7 +73,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   }),
 
   // RECORD MANAGEMENT //
-  createRecord: on('et:saveIsCreating', async function(name) {
+  createRecord: on('et:main:saveIsCreating', async function(name) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -88,7 +88,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return await record.save();
   }),
 
-  updateRecord: on('et:saveIsUpdating', async function(record) {
+  updateRecord: on('et:main:saveIsUpdating', async function(record) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -111,7 +111,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return statePoints;
   },
 
-  deleteRecord: on('et:saveIsDestroying', async function(record) {
+  deleteRecord: on('et:main:saveIsDestroying', async function(record) {
     return await record.destroyRecord();
   }),
 
@@ -138,7 +138,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     set(this, 'activeState', activeState);
   },
 
-  loadStatePoint: on('et:gameIsRewinding', function(statePoints) {
+  loadStatePoint: on('et:main:gameIsRewinding', function(statePoints) {
     const activeState = get(statePoints, 'lastObject');
 
     setProperties(this, { activeState, statePoints });
@@ -152,7 +152,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return get(this, `activeState.${key}`);
   },
 
-  setStateValue: on('et:recordingSaveData', function(key, value) {
+  setStateValue: on('et:main:recordingSaveData', function(key, value) {
     return set(this, `activeState.${key}`, value);
   })
 });

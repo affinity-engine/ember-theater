@@ -15,7 +15,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
-  resetGame: on('et:gameIsResetting', async function() {
+  resetGame: on('et:main:gameIsResetting', async function() {
     this.loadLatestScene();
   }),
 
@@ -34,7 +34,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
     this.loadScene(save, sceneId, options);
   },
 
-  loadScene: on('et:saveIsLoading', function(save, sceneId, options) {
+  loadScene: on('et:main:saveIsLoading', function(save, sceneId, options) {
     const {
       saveStateManager,
       sceneManager
@@ -42,7 +42,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
 
     saveStateManager.loadRecord(save);
 
-    this.publish('et:reseting');
+    this.publish('et:main:reseting');
 
     sceneManager.toScene(sceneId, options);
   })

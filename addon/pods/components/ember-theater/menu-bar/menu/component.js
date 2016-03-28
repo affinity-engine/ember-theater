@@ -28,7 +28,6 @@ export default Component.extend(EKMixin, {
 
   config: multitonService('ember-theater/config', 'theaterId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   cancelKeys: configurable(configurablePriority, 'keys.cancel'),
   menuBarClassNames: configurable(configurablePriority, 'classNames'),

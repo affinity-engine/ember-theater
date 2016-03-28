@@ -33,20 +33,10 @@ export default Mixin.create({
     const stageManager = get(this, 'stageManager');
     const resolve = get(this, 'directable').resolve;
 
-    directable.destroy();
-
     get(stageManager, 'directables').removeObject(directable);
 
     next(() => {
       resolve(direction);
     });
-  },
-
-  destroyDirectable: on('willDestroyElement', function() {
-    const directable = get(this, 'directable');
-
-    if (isPresent(directable)) {
-      directable.destroy();
-    }
-  })
+  }
 });

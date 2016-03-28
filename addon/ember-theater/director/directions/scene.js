@@ -4,11 +4,15 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  isPresent,
   merge,
   set
 } = Ember;
 
 export default Direction.extend({
+  componentPath: 'ember-theater/director/directable/scene-window',
+  layer: 'windows',
+
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   setup(sceneId) {
@@ -31,10 +35,21 @@ export default Direction.extend({
     return this;
   },
 
-  _perform() {
-    const attrs = get(this, 'attrs');
-    const sceneId = get(attrs, 'sceneId');
+  window(sceneWindowId) {
+    set(this, 'attrs.sceneWindowId', sceneWindowId);
 
-    this.get('sceneManager').toScene(sceneId, attrs);
+    return this;
+  },
+
+  _perform(...args) {
+    const attrs = get(this, 'attrs');
+
+    if (isPresent(get(attrs, 'sceneWindowId'))) {
+      return this._super(...args);
+    } else {
+      const sceneId = get(attrs, 'sceneId');
+
+      this.get('sceneManager').toScene(sceneId, attrs);
+    }
   }
 });
