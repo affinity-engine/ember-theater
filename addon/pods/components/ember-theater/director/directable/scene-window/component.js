@@ -2,6 +2,8 @@ import Ember from 'ember';
 import layout from './template';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
@@ -18,22 +20,27 @@ const { computed: { reads } } = Ember;
 const configurablePriority = [
   'directable.attrs',
   'config.attrs.director.scene',
+  'config.attrs.director',
   'config.attrs.globals'
 ];
 
-export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, {
+export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, TransitionMixin, {
   layout,
 
   attributeBindings: ['sceneWindowId:data-scene-window-id'],
   classNames: ['et-scene-window'],
+
+  config: multitonService('ember-theater/config', 'theaterId'),
 
   configurableClassNames: configurable(configurablePriority, 'classNames'),
   priority: configurable(configurablePriority, 'priority'),
   sceneId: configurable(configurablePriority, 'sceneId'),
   sceneWindowId: configurable(configurablePriority, 'sceneWindowId'),
   screen: configurable(configurablePriority, 'screen'),
+  transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
+  transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
 
-  style: computed('priority', {
+  childStyle: computed('priority', {
     get() {
       const priority = get(this, 'priority') * 1000;
 
@@ -44,7 +51,7 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, {
   setupEvents: on('init', function() {
     const windowId = get(this, 'sceneWindowId');
 
-    this.on(`et:${windowId}:closeWindow`, this, this.removeDirectable);
+    this.on(`et:${windowId}:closeWindow`, this, this.close);
   }),
 
   handlePriorSceneRecord: on('didReceiveAttrs', function() {
@@ -54,5 +61,15 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, {
     set(this, 'directable.direction.result', sceneRecord);
 
     this.resolve();
-  })
+  }),
+
+  transitionInWindow: on('didInsertElement', function() {
+    this.executeTransitionIn();
+  }),
+
+  close() {
+    this.executeTransitionOut().then(() => {
+      this.removeDirectable();
+    });
+  }
 });

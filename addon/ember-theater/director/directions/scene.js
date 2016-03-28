@@ -25,12 +25,24 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   autosave(autosave = true) {
+    this._entryPoint();
+
     set(this, 'attrs.autosave', autosave);
 
     return this;
   },
 
+  transitionIn(effect, duration, options = {}) {
+    this._entryPoint();
+
+    set(this, 'attrs.transitionIn', merge({ duration, effect }, options));
+
+    return this;
+  },
+
   transitionOut(effect, duration, options = {}) {
+    this._entryPoint();
+
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
 
     return this;
@@ -43,26 +55,32 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   classNames(classNames) {
+    this._entryPoint();
+
     set(this, 'attrs.classNames', classNames);
 
     return this;
   },
 
-  close() {
+  close(effect, duration, options) {
     const windowId = get(this, 'windowId');
 
-    this.publish(`et:${windowId}:closeWindow`);
+    this.publish(`et:${windowId}:closeWindow`, effect, duration, options);
 
     return this;
   },
 
   priority(priority) {
+    this._entryPoint();
+
     set(this, 'attrs.priority', priority);
 
     return this;
   },
 
   screen(screen = true) {
+    this._entryPoint();
+
     set(this, 'attrs.screen', screen);
 
     return this;

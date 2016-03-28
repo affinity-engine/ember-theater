@@ -33,7 +33,12 @@ const mixins = [
   TransitionMixin
 ];
 
-const configurablePriority = ['directable.attrs', 'config.attrs.director.menu', 'config.attrs.globals'];
+const configurablePriority = [
+  'directable.attrs',
+  'config.attrs.director.menu',
+  'config.attrs.director',
+  'config.attrs.globals'
+];
 
 export default Component.extend(...mixins, {
   layout,
