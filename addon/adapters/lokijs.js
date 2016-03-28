@@ -60,15 +60,27 @@ export default Adapter.extend({
   },
 
   query(store, type, query) {
-    const collection = this._findOrAddCollection(type).find(query);
+    const collection = this._findOrAddCollection(type).find(this._queryConstructor(query));
 
     return this._promiseWrap(collection);
   },
 
   queryRecord(store, type, query) {
-    const record = this._findOrAddCollection(type).findOne(query);
+    const record = this._findOrAddCollection(type).findOne(this._queryConstructor(query));
 
     return this._promiseWrap(record);
+  },
+
+  _queryConstructor(query) {
+    const keys = Object.keys(query);
+
+    return keys.length <= 1 ? query : { '$and': keys.map((key) => {
+      const object = {};
+
+      object[key] = query[key];
+
+      return object;
+    })};
   },
 
   _findOrAddCollection(type) {

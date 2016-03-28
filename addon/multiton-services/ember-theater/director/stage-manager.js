@@ -1,20 +1,29 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 
 const {
+  Evented,
   computed,
   get,
   getOwner,
   isBlank,
   merge,
+  on,
   set,
   setProperties
 } = Ember;
 
 const { run: { later } } = Ember;
 
-export default Ember.Object.extend(MultitonIdsMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
   directables: computed(() => Ember.A()),
+
+  setupEvents: on('init', function() {
+    const windowId = get(this, 'windowId');
+
+    this.on(`et:${windowId}:stageIsClearing`, this, this.clearDirectables);
+  }),
 
   clearDirectables() {
     get(this, 'directables').clear();

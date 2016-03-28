@@ -22,7 +22,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
   loadLatestScene: async function() {
     const saveStateManager = get(this, 'saveStateManager');
     const options = { autosave: false };
-    const save = await saveStateManager.getMostRecentSave();
+    const save = await saveStateManager.get('mostRecentSave');
 
     let sceneId = get(save, 'activeState.sceneId');
 
@@ -43,6 +43,8 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
     saveStateManager.loadRecord(save);
 
     this.publish('et:main:reseting');
+
+    options.sceneRecord = saveStateManager.getStateValue('_sceneRecord') || {};
 
     sceneManager.toScene(sceneId, options);
   })

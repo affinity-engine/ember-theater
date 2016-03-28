@@ -24,13 +24,15 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   activeState: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
-  getMostRecentSave: async function() {
-    await this._ensureAutosave();
+  mostRecentSave: computed({
+    get: async function() {
+      await this._ensureAutosave();
 
-    const saves = await get(this, 'saves');
+      const saves = await get(this, 'saves');
 
-    return saves.sortBy('updated').reverseObjects().get('firstObject');
-  },
+      return saves.sortBy('updated').reverseObjects().get('firstObject');
+    }
+  }).volatile(),
 
   autosave: computed({
     get() {
@@ -41,7 +43,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
         isAutosave: true
       });
     }
-  }).readOnly(),
+  }).readOnly().volatile(),
 
   _ensureAutosave: async function() {
     if (isPresent(await get(this, 'autosave'))) { return; }
@@ -69,7 +71,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     set(this, 'activeState', Ember.Object.create());
     get(this, 'statePoints').clear();
 
-    this.updateRecord(autosave);
+    return this.updateRecord(autosave);
   }),
 
   // RECORD MANAGEMENT //

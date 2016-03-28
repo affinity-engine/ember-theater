@@ -16,10 +16,8 @@ const { run: { later } } = Ember;
 
 export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
     const windowId = get(this, 'windowId');
@@ -68,20 +66,20 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
     const sceneManager = get(this, 'sceneManager');
     const factory = getOwner(this).lookup('script:main');
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
-    const sceneRecord = get(sceneManager, 'sceneRecord') || sceneManager.setSceneRecord();
+    const sceneRecord = get(sceneManager, 'sceneRecord');
 
     return factory.create({ sceneRecord, theaterId, windowId });
   },
 
   _clearStage() {
-    get(this, 'stageManager').clearDirectables();
-    get(this, 'layerManager').clearFilters();
+    const windowId = get(this, 'windowId');
+
+    this.publish(`et:${windowId}:stageIsClearing`);
   },
 
   _setSceneManager(script, options) {
     const sceneManager = get(this, 'sceneManager');
-    const saveStateManager = get(this, 'saveStateManager');
-    const sceneRecord = get(options, 'sceneRecord') || saveStateManager.getStateValue('_sceneRecord') || {};
+    const sceneRecord = get(options, 'sceneRecord');
 
     sceneManager.setScript(script);
     sceneManager.setSceneRecord(sceneRecord);

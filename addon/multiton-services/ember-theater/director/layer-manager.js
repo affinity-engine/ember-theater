@@ -1,11 +1,14 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 
 const {
+  Evented,
   computed,
   generateGuid,
   get,
   getProperties,
+  on,
   setProperties,
   typeOf
 } = Ember;
@@ -13,10 +16,16 @@ const {
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(MultitonIdsMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
   dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),
+
+  setupEvents: on('init', function() {
+    const windowId = get(this, 'windowId');
+
+    this.on(`et:${windowId}:stageIsClearing`, this, this.clearFilters);
+  }),
 
   getFilter(layer) {
     return this.get('filters').find((filter) => {
