@@ -8,7 +8,7 @@ const {
 } = Ember;
 
 export default TextField.extend({
-  classNames: ['et-choice-input'],
+  classNames: ['et-menu-input'],
 
   setKeys: on('didReceiveAttrs', function() {
     const cancelKeys = get(this, 'cancelKeys');

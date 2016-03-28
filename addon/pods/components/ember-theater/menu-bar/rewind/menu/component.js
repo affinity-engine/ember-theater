@@ -26,8 +26,8 @@ export default Menu.extend(BusPublisherMixin, {
     });
   },
 
-  resolve(choice) {
-    const point = get(choice, 'object');
+  resolve(menu) {
+    const point = get(menu, 'object');
 
     if (isPresent(point)) {
       this.publish('et:main:gameIsRewinding', point);

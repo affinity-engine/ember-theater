@@ -1,0 +1,24 @@
+$et-menu-rhythm: $et-default-line-height / 10 !default;
+
+$et-menu-padding: $et-menu-rhythm * 5 !default;
+$et-menu-border-width: $et-default-border-width !default;
+$et-menu-opacity: $et-semi-transparency !default;
+
+$et-menu-header-font-size: $et-large-font-size !default;
+$et-menu-header-margin: 0 $et-menu-rhythm !default;
+$et-menu-header-margin-bottom: $et-menu-rhythm * 8 !default;
+$et-menu-header-font-family: $et-primary-serif !default;
+
+$et-menu-option-pair-major-float: left !default;
+$et-menu-option-pair-major-width: 90% !default;
+$et-menu-option-pair-minor-float: right !default;
+$et-menu-option-pair-minor-width: 9% !default;
+
+$et-menu-option-margin-bottom: $et-menu-rhythm * 2 !default;
+$et-menu-option-font-size: $et-small-font-size !default;
+$et-menu-option-width: 100% !default;
+$et-menu-option-font-weight: bold !default;
+$et-menu-option-font-family: $et-primary-sans-serif !default;
+
+$et-menu-child-line-height: $et-default-line-height !default;
+$et-menu-child-text-align: center !default;

@@ -30,24 +30,24 @@
   }
 }
 
-$et-choice-included: false !default;
+$et-menu-included: false !default;
 $et-menu-bar-included: false !default;
 $et-text-included: false !default;
 
-@if ($et-choice-included == true) {
-  .et-choice.et-coastal {
+@if ($et-menu-included == true) {
+  .et-menu.et-coastal {
     @extend .et-coastal;
 
-    background-color: $et-choice-coastal-background-color;
-    opacity: $et-choice-coastal-opacity;
+    background-color: $et-menu-coastal-background-color;
+    opacity: $et-menu-coastal-opacity;
 
-    .et-choice-header {
-      font-family: $et-choice-header-coastal-font-family;
+    .et-menu-header {
+      font-family: $et-menu-header-coastal-font-family;
     }
 
-    .et-choice-option {
-      font-weight: $et-choice-option-coastal-font-weight;
-      font-family: $et-choice-option-coastal-font-family;
+    .et-menu-option {
+      font-weight: $et-menu-option-coastal-font-weight;
+      font-family: $et-menu-option-coastal-font-family;
     }
   }
 }

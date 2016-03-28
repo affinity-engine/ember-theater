@@ -9,8 +9,8 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  componentPath: 'ember-theater/director/directable/choice',
-  layer: 'theater.prompt.choice',
+  componentPath: 'ember-theater/director/directable/menu',
+  layer: 'theater.prompt.menu',
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 

@@ -33,25 +33,25 @@
   }
 }
 
-$et-choice-included: false !default;
+$et-menu-included: false !default;
 $et-menu-bar-included: false !default;
 $et-text-included: false !default;
 
-@if ($et-choice-included == true) {
-  .et-choice.et-paper {
+@if ($et-menu-included == true) {
+  .et-menu.et-paper {
     @extend .et-paper;
 
-    background-color: $et-choice-paper-background-color;
-    opacity: $et-choice-paper-opacity;
+    background-color: $et-menu-paper-background-color;
+    opacity: $et-menu-paper-opacity;
 
-    .et-choice-header {
-      font-family: $et-choice-header-paper-font-family;
-      color: $et-choice-header-paper-color;
+    .et-menu-header {
+      font-family: $et-menu-header-paper-font-family;
+      color: $et-menu-header-paper-color;
     }
 
-    .et-choice-option {
-      font-weight: $et-choice-option-paper-font-weight;
-      font-family: $et-choice-option-paper-font-family;
+    .et-menu-option {
+      font-weight: $et-menu-option-paper-font-weight;
+      font-family: $et-menu-option-paper-font-family;
     }
   }
 }

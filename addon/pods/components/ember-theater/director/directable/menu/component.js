@@ -33,12 +33,12 @@ const mixins = [
   TransitionMixin
 ];
 
-const configurablePriority = ['directable.attrs', 'config.attrs.director.choice', 'config.attrs.globals'];
+const configurablePriority = ['directable.attrs', 'config.attrs.director.menu', 'config.attrs.globals'];
 
 export default Component.extend(...mixins, {
   layout,
 
-  classNames: ['et-choice'],
+  classNames: ['et-menu'],
   classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
 
   config: multitonService('ember-theater/config', 'theaterId'),
@@ -55,15 +55,15 @@ export default Component.extend(...mixins, {
   decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
   structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
 
-  transitionInChoice: on('didInsertElement', function() {
+  transitionInMenu: on('didInsertElement', function() {
     this.executeTransitionIn();
   }),
 
   handlePriorSceneRecord: on('didInsertElement', function() {
     if (isPresent(get(this, 'priorSceneRecord'))) {
-      const choice = get(this, 'priorSceneRecord');
+      const menu = get(this, 'priorSceneRecord');
 
-      this.send('choose', choice);
+      this.send('choose', menu);
     }
   }),
 
@@ -94,7 +94,7 @@ export default Component.extend(...mixins, {
   setNumericalKey: on('didReceiveAttrs', function() {
     const choices = get(this, 'translatedChoices');
 
-    choices.find((choice, index) => {
+    choices.find((menu, index) => {
       if (index >= 9) { return true; }
 
       this.on(keyUp((index + 1).toString()), () => set(this, 'activeIndex', index));
@@ -108,7 +108,7 @@ export default Component.extend(...mixins, {
     moveUpKeys.forEach((key) => this.on(keyDown(key), (event) => this.focusUp(event)));
   }),
 
-  focusFirstChoice: on('didInsertElement', function() {
+  focusFirstMenu: on('didInsertElement', function() {
     next(() => {
       if (get(this, 'keyboardActivated')) {
         this.focusDown();
@@ -139,8 +139,8 @@ export default Component.extend(...mixins, {
   },
 
   actions: {
-    choose(choice) {
-      set(this, 'directable.direction.result', choice);
+    choose(menu) {
+      set(this, 'directable.direction.result', menu);
 
       this.$().parents('.ember-theater').trigger('focus');
 

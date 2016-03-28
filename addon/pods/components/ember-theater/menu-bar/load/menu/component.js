@@ -27,8 +27,8 @@ export default Menu.extend(BusPublisherMixin, {
     });
   },
 
-  resolve(choice) {
-    const save = get(choice, 'object');
+  resolve(menu) {
+    const save = get(menu, 'object');
 
     if (isPresent(save)) {
       const sceneId = get(save, 'activeState.sceneId');

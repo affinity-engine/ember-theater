@@ -1,66 +1,66 @@
-$et-choice-included: false !default;
+$et-menu-included: false !default;
 $et-text-included: false !default;
 
-@if ($et-choice-included == true) {
-  .et-choice.et-block {
+@if ($et-menu-included == true) {
+  .et-menu.et-block {
     max-height: 100%;
-    border-width: $et-choice-block-border-width;
-    border-radius: $et-choice-block-border-radius;
+    border-width: $et-menu-block-border-width;
+    border-radius: $et-menu-block-border-radius;
 
-    .et-choice-option, .et-choice-input {
-      width: $et-choice-option-block-width;
-      border-width: $et-choice-option-block-border-width;
+    .et-menu-option, .et-menu-input {
+      width: $et-menu-option-block-width;
+      border-width: $et-menu-option-block-border-width;
     }
   }
 
   @media (min-width: map-get($breakpoints, small)) {
-    .et-choice.et-block {
-      top: $et-choice-block-top * map-get($breakpoint_factors, small) * 0.2;
-      right: $et-choice-block-right * map-get($breakpoint_factors, small);
-      left: $et-choice-block-left * map-get($breakpoint_factors, small);
-      padding: $et-choice-block-padding * map-get($breakpoint_factors, small);
+    .et-menu.et-block {
+      top: $et-menu-block-top * map-get($breakpoint_factors, small) * 0.2;
+      right: $et-menu-block-right * map-get($breakpoint_factors, small);
+      left: $et-menu-block-left * map-get($breakpoint_factors, small);
+      padding: $et-menu-block-padding * map-get($breakpoint_factors, small);
 
-      .et-choice-header {
-        font-size: $et-choice-header-block-font-size * map-get($breakpoint_factors, small);
-        margin-bottom: $et-choice-header-block-margin-bottom * map-get($breakpoint_factors, small);
-        line-height: $et-choice-header-block-line-height * map-get($breakpoint_factors, small);
+      .et-menu-header {
+        font-size: $et-menu-header-block-font-size * map-get($breakpoint_factors, small);
+        margin-bottom: $et-menu-header-block-margin-bottom * map-get($breakpoint_factors, small);
+        line-height: $et-menu-header-block-line-height * map-get($breakpoint_factors, small);
       }
 
-      .et-choice-option {
-        font-size: $et-choice-option-block-font-size * map-get($breakpoint_factors, small);
+      .et-menu-option {
+        font-size: $et-menu-option-block-font-size * map-get($breakpoint_factors, small);
       }
 
-      .et-choice-option, .et-choice-input {
-        width: $et-choice-option-block-width;
-        margin-bottom: $et-choice-option-block-margin-bottom * map-get($breakpoint_factors, small);
-        border-width: $et-choice-option-block-border-width;
-        line-height: $et-choice-option-block-line-height * map-get($breakpoint_factors, small);
+      .et-menu-option, .et-menu-input {
+        width: $et-menu-option-block-width;
+        margin-bottom: $et-menu-option-block-margin-bottom * map-get($breakpoint_factors, small);
+        border-width: $et-menu-option-block-border-width;
+        line-height: $et-menu-option-block-line-height * map-get($breakpoint_factors, small);
       }
     }
   }
 
   @media (min-width: map-get($breakpoints, medium)) {
-    .et-choice.et-block {
-      transform: translateY(-$et-choice-block-top);
+    .et-menu.et-block {
+      transform: translateY(-$et-menu-block-top);
 
-      top: $et-choice-block-top;
-      right: $et-choice-block-right;
-      left: $et-choice-block-left;
-      padding: $et-choice-block-padding;
+      top: $et-menu-block-top;
+      right: $et-menu-block-right;
+      left: $et-menu-block-left;
+      padding: $et-menu-block-padding;
 
-      .et-choice-header {
-        font-size: $et-choice-header-block-font-size;
-        margin-bottom: $et-choice-header-block-margin-bottom;
-        line-height: $et-choice-header-block-line-height;
+      .et-menu-header {
+        font-size: $et-menu-header-block-font-size;
+        margin-bottom: $et-menu-header-block-margin-bottom;
+        line-height: $et-menu-header-block-line-height;
       }
 
-      .et-choice-option {
-        font-size: $et-choice-option-block-font-size;
+      .et-menu-option {
+        font-size: $et-menu-option-block-font-size;
       }
 
-      .et-choice-option, .et-choice-input {
-        margin-bottom: $et-choice-option-block-margin-bottom;
-        line-height: $et-choice-option-block-line-height;
+      .et-menu-option, .et-menu-input {
+        margin-bottom: $et-menu-option-block-margin-bottom;
+        line-height: $et-menu-option-block-line-height;
       }
     }
   }

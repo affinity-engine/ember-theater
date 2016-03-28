@@ -38,7 +38,7 @@ export default Component.extend(EKMixin, {
     cancelKeys.forEach((key) => this.on(keyUp(key), () => this.attrs.closeMenu()));
   }),
 
-  initializeChoiceMenu: on('init', async function() {
+  initializeMenuMenu: on('init', async function() {
     await this.populateChoices();
     this.renderDirectable();
   }),
@@ -46,7 +46,7 @@ export default Component.extend(EKMixin, {
   choices: computed({
     get() {
       return Ember.A([{
-        class: 'et-choice-close',
+        class: 'et-menu-close',
         icon: 'arrow-right',
         text: 'ember-theater.menu.cancel'
       }]);
@@ -72,6 +72,6 @@ export default Component.extend(EKMixin, {
       });
 
       set(this, 'directable', directable);
-    }).then((choice) => this.resolve(choice.result));
+    }).then((menu) => this.resolve(menu.result));
   }
 });

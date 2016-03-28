@@ -9,13 +9,13 @@ const { run: { next } } = Ember;
 export default Component.extend({
   layout: layout,
 
-  classNameBindings: ['choice.classNames'],
+  classNameBindings: ['menu.classNames'],
 
-  isInput: and('choice.inputable', 'inputOpen'),
+  isInput: and('menu.inputable', 'inputOpen'),
 
   actions: {
-    choose(choice) {
-      this.attrs.choose(choice);
+    choose(menu) {
+      this.attrs.choose(menu);
     },
 
     toggleInput() {

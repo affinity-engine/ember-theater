@@ -1,0 +1,12 @@
+{{#if translatedHeader}}
+  <div class='et-menu-header'>{{translatedHeader}}</div>
+{{/if}}
+{{#each translatedChoices as |menu|}}
+  {{ember-theater/director/directable/menu/option
+    keyboardActivated=keyboardActivated
+    keyboardPriority=keyboardPriority
+    menu=menu
+    cancelKeys=cancelKeys
+    choose=(action 'choose' menu)
+  }}
+{{/each}}

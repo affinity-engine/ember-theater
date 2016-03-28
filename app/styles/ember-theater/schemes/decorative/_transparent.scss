@@ -31,25 +31,25 @@
   }
 }
 
-$et-choice-included: false !default;
+$et-menu-included: false !default;
 $et-menu-bar-included: false !default;
 $et-text-included: false !default;
 
-@if ($et-choice-included == true) {
-  .et-choice.et-transparent {
+@if ($et-menu-included == true) {
+  .et-menu.et-transparent {
     @extend .et-transparent;
 
-    background-color: $et-choice-transparent-background-color;
-    opacity: $et-choice-transparent-opacity;
+    background-color: $et-menu-transparent-background-color;
+    opacity: $et-menu-transparent-opacity;
 
-    .et-choice-header {
-      font-family: $et-choice-header-transparent-font-family;
-      color: $et-choice-header-transparent-color;
+    .et-menu-header {
+      font-family: $et-menu-header-transparent-font-family;
+      color: $et-menu-header-transparent-color;
     }
 
-    .et-choice-option {
-      font-weight: $et-choice-option-transparent-font-weight;
-      font-family: $et-choice-option-transparent-font-family;
+    .et-menu-option {
+      font-weight: $et-menu-option-transparent-font-weight;
+      font-family: $et-menu-option-transparent-font-family;
     }
   }
 }

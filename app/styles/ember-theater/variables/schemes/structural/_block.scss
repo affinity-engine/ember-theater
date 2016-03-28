@@ -2,24 +2,24 @@ $et-block-left: 15%;
 $et-block-right: 15%;
 $et-block-bottom: 10%;
 
-// choice
-$et-choice-block-width: 62% !default;
-$et-choice-block-top: 20% !default;
-$et-choice-block-right: (100 - $et-choice-block-width) / 2 !default;
-$et-choice-block-left: (100 - $et-choice-block-width) / 2 !default;
-$et-choice-block-padding: $et-choice-padding !default;
-$et-choice-block-border-width: $et-choice-border-width !default;
-$et-choice-block-border-radius: $et-default-border-radius !default;
+// menu
+$et-menu-block-width: 62% !default;
+$et-menu-block-top: 20% !default;
+$et-menu-block-right: (100 - $et-menu-block-width) / 2 !default;
+$et-menu-block-left: (100 - $et-menu-block-width) / 2 !default;
+$et-menu-block-padding: $et-menu-padding !default;
+$et-menu-block-border-width: $et-menu-border-width !default;
+$et-menu-block-border-radius: $et-default-border-radius !default;
 
-$et-choice-header-block-font-size: $et-choice-header-font-size !default;
-$et-choice-header-block-margin-bottom: $et-choice-header-margin-bottom !default;
-$et-choice-header-block-line-height: $et-default-line-height !default;
+$et-menu-header-block-font-size: $et-menu-header-font-size !default;
+$et-menu-header-block-margin-bottom: $et-menu-header-margin-bottom !default;
+$et-menu-header-block-line-height: $et-default-line-height !default;
 
-$et-choice-option-block-font-size: $et-choice-option-font-size !default;
-$et-choice-option-block-margin-bottom: $et-choice-option-margin-bottom !default;
-$et-choice-option-block-width: $et-choice-option-width !default;
-$et-choice-option-block-border-width: $et-choice-border-width !default;
-$et-choice-option-block-line-height: $et-default-line-height !default;
+$et-menu-option-block-font-size: $et-menu-option-font-size !default;
+$et-menu-option-block-margin-bottom: $et-menu-option-margin-bottom !default;
+$et-menu-option-block-width: $et-menu-option-width !default;
+$et-menu-option-block-border-width: $et-menu-border-width !default;
+$et-menu-option-block-line-height: $et-default-line-height !default;
 
 // text
 $et-text-block-padding-base: $et-text-padding-base !default;

@@ -20,8 +20,8 @@ export default Scene.extend({
     // await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').typeSpeed(100)
 
     await script.Text('Start').typeSpeed(100);
-    const choice1 = await script.Choice(['A', 'B']);
-    if (choice1.result.key === 0) {
+    const menu1 = await script.Menu(['A', 'B']);
+    if (menu1.result.key === 0) {
       script.Scene('test-scenarios/directions/character').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');
     }
     await script.Text('After').typeSpeed(100)
@@ -103,9 +103,9 @@ export default Scene.extend({
     // script.Filter('theater.stage', ['blur(10px)', 'blur(0px)'], 1000).destroy();
     // await script.Text('Bye!');
     //
-    // const choice = await script.Choice(['A', 'B', 'C']);
+    // const menu = await script.Menu(['A', 'B', 'C']);
     //
-    // console.log(choice);
+    // console.log(menu);
     //
     // script.Text('Hello!');
     // await script.Pause(500);

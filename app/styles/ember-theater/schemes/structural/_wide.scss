@@ -1,56 +1,56 @@
-$et-choice-included: false !default;
+$et-menu-included: false !default;
 $et-text-included: false !default;
 
-@if ($et-choice-included == true) {
-  .et-choice.et-wide {
+@if ($et-menu-included == true) {
+  .et-menu.et-wide {
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    border-width: $et-choice-full-border-width;
-    border-radius: $et-choice-full-border-radius;
+    border-width: $et-menu-full-border-width;
+    border-radius: $et-menu-full-border-radius;
 
-    .et-choice-option, .et-choice-input {
-      border-width: $et-choice-option-full-border-width;
+    .et-menu-option, .et-menu-input {
+      border-width: $et-menu-option-full-border-width;
     }
   }
 
   @media (min-width: map-get($breakpoints, small)) {
-    .et-choice.et-wide {
-      padding: $et-choice-full-padding * map-get($breakpoint_factors, small);
+    .et-menu.et-wide {
+      padding: $et-menu-full-padding * map-get($breakpoint_factors, small);
 
-      .et-choice-header {
-        font-size: $et-choice-header-full-font-size * map-get($breakpoint_factors, small);
-        margin-bottom: $et-choice-header-full-margin-bottom * map-get($breakpoint_factors, small);
+      .et-menu-header {
+        font-size: $et-menu-header-full-font-size * map-get($breakpoint_factors, small);
+        margin-bottom: $et-menu-header-full-margin-bottom * map-get($breakpoint_factors, small);
       }
 
-      .et-choice-option {
-        font-size: $et-choice-option-full-font-size * map-get($breakpoint_factors, small);
+      .et-menu-option {
+        font-size: $et-menu-option-full-font-size * map-get($breakpoint_factors, small);
       }
 
-      .et-choice-option, .et-choice-input {
-        width: $et-choice-option-full-width * 0.95;
-        margin: $et-choice-option-full-margin-bottom auto;
+      .et-menu-option, .et-menu-input {
+        width: $et-menu-option-full-width * 0.95;
+        margin: $et-menu-option-full-margin-bottom auto;
       }
     }
   }
 
   @media (min-width: map-get($breakpoints, medium)) {
-    .et-choice.et-wide {
-      padding: $et-choice-full-padding;
+    .et-menu.et-wide {
+      padding: $et-menu-full-padding;
 
-      .et-choice-header {
-        font-size: $et-choice-header-full-font-size;
-        margin-bottom: $et-choice-header-full-margin-bottom;
+      .et-menu-header {
+        font-size: $et-menu-header-full-font-size;
+        margin-bottom: $et-menu-header-full-margin-bottom;
       }
 
-      .et-choice-option {
-        font-size: $et-choice-option-full-font-size;
+      .et-menu-option {
+        font-size: $et-menu-option-full-font-size;
       }
 
-      .et-choice-option, .et-choice-input {
-        width: $et-choice-option-full-width;
-        margin-bottom: $et-choice-option-full-margin-bottom;
+      .et-menu-option, .et-menu-input {
+        width: $et-menu-option-full-width;
+        margin-bottom: $et-menu-option-full-margin-bottom;
       }
     }
   }

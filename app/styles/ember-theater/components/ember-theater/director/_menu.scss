@@ -1,0 +1,54 @@
+$et-menu-included: true;
+
+.et-menu {
+  z-index: 1000;
+
+  position: absolute;
+
+  .et-menu-option-pair-major {
+    display: inline-block;
+    float: $et-menu-option-pair-major-float;
+    width: $et-menu-option-pair-major-width;
+  }
+
+  .et-menu-option-pair-minor {
+    display: inline-block;
+    float: $et-menu-option-pair-minor-float;
+    width: $et-menu-option-pair-minor-width;
+  }
+
+  .et-menu-option {
+    @extend .et-button;
+
+    display: block;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .et-menu-header {
+    margin: $et-menu-header-margin;
+  }
+
+  .et-menu-option, .et-menu-header, .et-menu-input {
+    line-height: $et-menu-child-line-height;
+    text-align: $et-menu-child-text-align;
+  }
+
+  .et-menu-input {
+    @extend .et-input;
+  }
+
+  .et-menu-close {
+    position: absolute;
+    width: inherit !important;
+    top: $et-menu-padding;
+    right: $et-menu-padding;
+    padding: 0 $et-menu-padding;
+
+    .et-menu-option-text {
+      @extend .sr-only;
+    }
+  }
+}

@@ -19,8 +19,8 @@ export default Menu.extend(BusPublisherMixin, {
     });
   },
 
-  resolve(choice) {
-    switch (get(choice, 'key')) {
+  resolve(menu) {
+    switch (get(menu, 'key')) {
       case 1:
         this.publish('et:main:gameIsResetting');
         break;

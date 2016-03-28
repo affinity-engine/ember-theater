@@ -19,8 +19,8 @@ export default Menu.extend(BusPublisherMixin, {
     const saves = await get(this, 'saveStateManager.saves');
     const choices = get(this, 'choices');
 
-    // Position is important. New Game must be the second choice, as its position determines the way
-    // this choice is resolved.
+    // Position is important. New Game must be the second menu, as its position determines the way
+    // this menu is resolved.
     choices.pushObject({
       icon: 'save',
       inputable: true,
@@ -33,28 +33,28 @@ export default Menu.extend(BusPublisherMixin, {
           key: 'save',
           object: save,
           text: get(save, 'name'),
-          classNames: ['et-choice-option-pair-major']
+          classNames: ['et-menu-option-pair-major']
         });
         choices.pushObject({
           key: 'delete',
           object: save,
           icon: 'remove',
-          classNames: ['et-choice-option-pair-minor']
+          classNames: ['et-menu-option-pair-minor']
         });
       }
     });
   },
 
-  resolve(choice) {
+  resolve(menu) {
     const sceneRecord = get(this, 'sceneManager.sceneRecord');
 
     this.publish('et:main:recordingSaveData', '_sceneRecord', sceneRecord);
 
-    switch (get(choice, 'key')) {
+    switch (get(menu, 'key')) {
       case 0: return this.attrs.closeMenu();
-      case 1: this.publish('et:main:saveIsCreating', get(choice, 'input')); break;
-      case 'save': this.publish('et:main:saveIsUpdating', get(choice, 'object')); break;
-      case 'delete': this.publish('et:main:saveIsDestroying', get(choice, 'object')); break;
+      case 1: this.publish('et:main:saveIsCreating', get(menu, 'input')); break;
+      case 'save': this.publish('et:main:saveIsUpdating', get(menu, 'object')); break;
+      case 'delete': this.publish('et:main:saveIsDestroying', get(menu, 'object')); break;
     }
 
     this.attrs.closeMenu();
