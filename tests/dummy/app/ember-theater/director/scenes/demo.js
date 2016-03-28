@@ -4,18 +4,18 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
-    // const pause3 = script.Pause(100);
-    // const pause = await script.Pause(100);
-    // const pause2 = await script.Pause(100);
+    // const delay3 = script.Delay(100);
+    // const delay = await script.Delay(100);
+    // const delay2 = await script.Delay(100);
     // const value = await script.CodeChallenge([{ code: 'let two = 1 + 1;', readOnly: true }, { }, { code: 'return two;', readOnly: true }]);
     //
     // console.log(value);
 
     // script.Sound('song__bolero').fadeIn();
-    // await script.Pause(1000);
+    // await script.Delay(1000);
     // script.Sound('song__bolero').fadeOut();
 
-    // await script.Pause('p');
+    // await script.Delay('p');
 
     // await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').typeSpeed(100)
 
@@ -61,35 +61,35 @@ export default Scene.extend({
     //
     // bebe.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
     //
-    // await script.Pause(600);
+    // await script.Delay(600);
     //
     // bebe.stop();
     //
-    // await script.Pause(1000);
+    // await script.Delay(1000);
     //
     // bebe.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
     //
-    // await script.Pause(600);
+    // await script.Delay(600);
     //
     // bebe.stop();
     //
-    // await script.Pause(1000);
+    // await script.Delay(1000);
     //
     // const classroom = script.Backdrop('classroom').transition({ opacity: 1 }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
     //
-    // await script.Pause(600);
+    // await script.Delay(600);
     //
     // classroom.stop();
     //
-    // await script.Pause(1000);
+    // await script.Delay(1000);
     //
     // classroom.transition({ opacity: 1, translateX: '30%' }, 1000, { loop: true });
     //
-    // await script.Pause(600);
+    // await script.Delay(600);
     //
     // classroom.stop();
     //
-    // await script.Pause(1000);
+    // await script.Delay(1000);
     //
     //
     // await bebe.position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
@@ -108,7 +108,7 @@ export default Scene.extend({
     // console.log(menu);
     //
     // script.Text('Hello!');
-    // await script.Pause(500);
+    // await script.Delay(500);
     // await script.Text('Bye!');
     //
     // await script.Scene('demo').transitionOut('transition.whirlOut', 1000);

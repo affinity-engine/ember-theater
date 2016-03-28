@@ -21,7 +21,7 @@ test('Ember Theater | Directions | character', function(assert) {
   const state = {};
 
   visit('/test-scenarios/directions/character').then(() => {
-    return pause(150);
+    return delay(150);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
     assert.equal(Ember.$(`${hook('expression-direction')} img`).attr('alt'), 'Bebe', '`alt` is set by the fixture `caption`');
@@ -29,13 +29,13 @@ test('Ember Theater | Directions | character', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), 0.2, '`transition` sets character css');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), 0.5, '`transition`s can be chained');
 
@@ -45,7 +45,7 @@ test('Ember Theater | Directions | character', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal(parseFloat(Ember.$(`${hook('character-direction')}:nth(0)`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('character-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');
@@ -61,14 +61,14 @@ test('Ember Theater | Directions | character', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal($hook('character-direction').length, 5, 'characters are rendered with `position`');
     assert.equal(Ember.$(`${hook('character-direction')}:nth(4)`).css('left'), '640px', '`position` positions the character');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(200);
+    return delay(200);
   }).then(() => {
     const $bebe4 = Ember.$(`${hook('character-direction')}:nth(4)`);
 
@@ -85,6 +85,6 @@ test('Ember Theater | Directions | character', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   });
 });

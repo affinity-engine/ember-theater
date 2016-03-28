@@ -21,7 +21,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
   const state = {};
 
   visit('/test-scenarios/directions/backdrop').then(() => {
-    return pause(150);
+    return delay(150);
   }).then(() => {
     assert.ok($hook('backdrop-direction').length > 0, 'backdrop is rendered');
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
@@ -30,13 +30,13 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), 0.2, '`transition` sets backdrop css');
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   }).then(() => {
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), 0.5, '`transition`s can be chained');
 
@@ -50,7 +50,7 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(300);
+    return delay(300);
   }).then(() => {
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:first`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');
@@ -68,6 +68,6 @@ test('Ember Theater | Directions | Backdrop', function(assert) {
 
     keyEvent(document, 'keyup', getKeyCode('p'));
 
-    return pause(100);
+    return delay(100);
   });
 });

@@ -9,7 +9,7 @@ export default {
     steven: 'Steven standing'
   },
   1: {
-    firstTest: 'This is the first #{pause} test message, {{val1}}.',
+    firstTest: 'This is the first #{delay} test message, {{val1}}.',
     noId: 'This text has no id',
     menu1: {
       header: 'Translated Header',

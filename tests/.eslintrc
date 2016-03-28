@@ -11,7 +11,7 @@
     "currentPath": true,
     "currentRouteName": true,
     "keyEvent": true,
-    "pause": true
+    "delay": true
   },
   "rules": {
     "arrow-parens": [2, "always"],

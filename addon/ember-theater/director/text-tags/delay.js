@@ -13,7 +13,7 @@ const { run: { later } } = Ember;
 
 export default TextTag.extend({
   /**
-    Pauses the text until one of the component's designated keys is pressed or
+    Delays the text until one of the component's designated keys is pressed or
     the provided duration elapses. Note that it temporarily disables the component's
     standard keyboard bindings to avoid conflict.
 

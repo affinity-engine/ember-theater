@@ -6,22 +6,22 @@ export default Scene.extend({
   start: async function(script) {
     const bebe = script.Character('bebe');
 
-    await script.Pause('p');
+    await script.Delay('p');
     bebe.transition({ opacity: 0.2 });
 
-    await script.Pause('p');
+    await script.Delay('p');
     await bebe.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
-    await script.Pause('p');
+    await script.Delay('p');
     const bebe2 = await script.Character('bebe');
 
-    await script.Pause('p');
+    await script.Delay('p');
     await bebe2.transition({ opacity: 0.6 });
 
-    await script.Pause('p');
+    await script.Delay('p');
     await script.Character('blixie');
 
-    await script.Pause('p');
+    await script.Delay('p');
     await script.Character({
       id: 'bobo',
       name: 'Bobo',
@@ -29,13 +29,13 @@ export default Scene.extend({
       defaultExpressionId: 'blixie-neutral'
     });
 
-    await script.Pause('p');
+    await script.Delay('p');
     const bebe3 = await script.Character('bebe').position('center');
 
-    await script.Pause('p');
+    await script.Delay('p');
     await bebe3.position('left nudgeDown');
 
-    await script.Pause('p');
+    await script.Delay('p');
     await script.Character('bebe').initialExpression('bebe-happy').position('center');
   }
 });

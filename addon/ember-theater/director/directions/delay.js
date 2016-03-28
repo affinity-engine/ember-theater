@@ -7,8 +7,8 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  componentPath: 'ember-theater/director/directable/pause',
-  layer: 'meta.pause',
+  componentPath: 'ember-theater/director/directable/delay',
+  layer: 'meta.delay',
 
   setup(...args) {
     this._entryPoint();
