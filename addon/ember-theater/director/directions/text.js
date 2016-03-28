@@ -70,6 +70,22 @@ export default Direction.extend({
     return this;
   },
 
+  textAnimation(textAnimation) {
+    this._entryPoint();
+
+    set(this, 'attrs.textAnimation', textAnimation);
+
+    return this;
+  },
+
+  textSpeed(textSpeed) {
+    this._entryPoint();
+
+    set(this, 'attrs.textSpeed', textSpeed);
+
+    return this;
+  },
+
   transition() {
     this._entryPoint();
 
@@ -90,22 +106,6 @@ export default Direction.extend({
     this._entryPoint();
 
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
-
-    return this;
-  },
-
-  typeAnimation(typeAnimation) {
-    this._entryPoint();
-
-    set(this, 'attrs.typeAnimation', typeAnimation);
-
-    return this;
-  },
-
-  typeSpeed(typeSpeed) {
-    this._entryPoint();
-
-    set(this, 'attrs.typeSpeed', typeSpeed);
 
     return this;
   }

@@ -77,8 +77,8 @@ export default {
     },
     text: {
       namePosition: 'left',
-      typeSpeed: 5,
-      typeAnimation: {
+      textSpeed: 5,
+      textAnimation: {
         opacity: 0,
         translateX: '10px',
         translateY: '-5px'
