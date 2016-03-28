@@ -25,7 +25,7 @@ export default Component.extend({
   directables: alias('stageManager.directables'),
   keyboardActivated: alias('producer.isFocused'),
 
-  _loadLatestScene: on('init', function() {
+  _loadLatestScene: on('didInsertElement', function() {
     const {
       initialScene,
       sceneManager,

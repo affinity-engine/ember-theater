@@ -1,0 +1,17 @@
+$et-scene-window-light: #fff !default;
+$et-scene-window-dark: #000 !default;
+
+$et-scene-window-screen-opacity: 0.3 !default;
+$et-scene-window-screen-dark-background: $et-scene-window-dark !default;
+$et-scene-window-screen-light-background: $et-scene-window-light !default;
+
+$et-scene-window-main-center-percentage: 19% !default;
+$et-scene-window-main-center-percentage-top: $et-scene-window-main-center-percentage !default;
+$et-scene-window-main-center-percentage-right: $et-scene-window-main-center-percentage !default;
+$et-scene-window-main-center-percentage-bottom: $et-scene-window-main-center-percentage !default;
+$et-scene-window-main-center-percentage-left: $et-scene-window-main-center-percentage !default;
+
+$et-scene-window-main-background-dark: $et-scene-window-dark !default;
+$et-scene-window-main-background-light: $et-scene-window-light !default;
+$et-scene-window-main-shadow-dark: 0 0 100px $et-scene-window-dark !default;
+$et-scene-window-main-shadow-light: 0 0 100px $et-scene-window-light !default;

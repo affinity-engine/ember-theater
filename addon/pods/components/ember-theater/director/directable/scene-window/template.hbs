@@ -1,6 +1,11 @@
-{{ember-theater/director
-  initialScene=sceneId
-  sceneRecord=sceneRecord
-  theaterId=theaterId
-  windowId=sceneWindowId
-}}
+{{#if screen}}
+  <div class="et-scene-window-screen {{ember-theater/joined-array screen}}" style={{style}}></div>
+{{/if}}
+<div class="et-scene-window-main {{ember-theater/joined-array configurableClassNames}}" style={{style}}>
+  {{ember-theater/director
+    initialScene=sceneId
+    sceneRecord=sceneRecord
+    theaterId=theaterId
+    windowId=sceneWindowId
+  }}
+</div>

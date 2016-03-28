@@ -22,11 +22,13 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
-    this.publish(`et:${get(this, 'windowId')}:scriptsMustAbort`);
-
-    const $director = Ember.$('.et-director');
+    const windowId = get(this, 'windowId');
+    const query = windowId === 'main' ? '.et-director' : `[data-scene-window-id="${windowId}"] .et-director`;
+    const $director = Ember.$(query);
     const duration = get(options, 'transitionOut.duration') || get(this, 'config.attrs.director.scene.transitionOut.duration');
     const effect = get(options, 'transitionOut.effect') || get(this, 'config.attrs.director.scene.transitionOut.effect');
+
+    this.publish(`et:${windowId}:scriptsMustAbort`);
 
     animate($director, effect, { duration }).then(() => {
       this._transitionScene(scene, options);

@@ -41,6 +41,24 @@ export default Direction.extend({
     return this;
   },
 
+  classNames(classNames) {
+    set(this, 'attrs.classNames', classNames);
+
+    return this;
+  },
+
+  priority(priority) {
+    set(this, 'attrs.priority', priority);
+
+    return this;
+  },
+
+  screen(screen = true) {
+    set(this, 'attrs.screen', screen);
+
+    return this;
+  },
+
   _perform(...args) {
     const attrs = get(this, 'attrs');
 

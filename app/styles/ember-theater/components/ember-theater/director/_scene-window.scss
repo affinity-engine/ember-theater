@@ -1,10 +1,54 @@
 .et-scene-window {
-  z-index: 10000;
-  position: absolute;
-  top: 20%;
-  left: 20%;
-  right: 20%;
-  bottom: 20%;
-  background-color: white;
-  overflow: hidden;
+  .et-scene-window-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: $et-scene-window-screen-opacity;
+
+    &.et-dark {
+      background: $et-scene-window-screen-dark-background;
+    }
+
+    &.et-light {
+      background: $et-scene-window-screen-light-background;
+    }
+  }
+
+  .et-scene-window-main {
+    overflow: hidden;
+
+    &.et-center {
+      position: absolute;
+      top: $et-scene-window-main-center-percentage-top;
+      left: $et-scene-window-main-center-percentage-left;
+      bottom: $et-scene-window-main-center-percentage-bottom;
+      right: $et-scene-window-main-center-percentage-right;
+    }
+
+    &.et-full {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    &.et-background-dark {
+      background: $et-scene-window-main-background-dark;
+    }
+
+    &.et-background-light {
+      background: $et-scene-window-main-background-light;
+    }
+
+    &.et-shadow-dark {
+      box-shadow: $et-scene-window-main-shadow-dark;
+    }
+
+    &.et-shadow-light {
+      box-shadow: $et-scene-window-main-shadow-light;
+    }
+  }
 }
