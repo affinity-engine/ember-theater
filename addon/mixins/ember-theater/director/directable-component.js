@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
   Mixin,
   get,
+  getProperties,
   isPresent,
   on,
   set
@@ -12,9 +14,7 @@ const {
 const { computed: { alias } } = Ember;
 const { run: { next } } = Ember;
 
-export default Mixin.create({
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
-
+export default Mixin.create(BusPublisherMixin, {
   priorSceneRecord: alias('directable.priorSceneRecord'),
 
   associateDirectable: on('didInitAttrs', function() {
@@ -29,14 +29,18 @@ export default Mixin.create({
 
   resolveAndDestroy() {
     const directable = get(this, 'directable');
-    const direction = get(directable, 'direction');
-    const stageManager = get(this, 'stageManager');
-    const resolve = get(this, 'directable').resolve;
+    const { direction, resolve } = getProperties(directable, 'direction', 'resolve');
 
-    get(stageManager, 'directables').removeObject(directable);
+    this.removeDirectable();
 
     next(() => {
       resolve(direction);
     });
+  },
+
+  removeDirectable() {
+    const { directable, windowId } = getProperties(this, 'directable', 'windowId');
+
+    this.publish(`et:${windowId}:removeDirectable`, directable);
   }
 });

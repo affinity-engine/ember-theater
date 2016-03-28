@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
+import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
@@ -20,7 +21,7 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Component.extend(DirectableComponentMixin, {
+export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, {
   layout,
 
   attributeBindings: ['sceneWindowId:data-scene-window-id'],
@@ -39,6 +40,12 @@ export default Component.extend(DirectableComponentMixin, {
       return `z-index: ${priority};`;
     }
   }).readOnly(),
+
+  setupEvents: on('init', function() {
+    const windowId = get(this, 'sceneWindowId');
+
+    this.on(`et:${windowId}:closeWindow`, this, this.removeDirectable);
+  }),
 
   handlePriorSceneRecord: on('didReceiveAttrs', function() {
     const sceneRecord = get(this, 'priorSceneRecord') || {};

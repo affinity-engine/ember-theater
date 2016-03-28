@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
+import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
@@ -9,7 +10,7 @@ const {
   set
 } = Ember;
 
-export default Direction.extend({
+export default Direction.extend(BusPublisherMixin, {
   componentPath: 'ember-theater/director/directable/scene-window',
   layer: 'windows',
 
@@ -47,6 +48,14 @@ export default Direction.extend({
     return this;
   },
 
+  close() {
+    const windowId = get(this, 'windowId');
+
+    this.publish(`et:${windowId}:closeWindow`);
+
+    return this;
+  },
+
   priority(priority) {
     set(this, 'attrs.priority', priority);
 
@@ -64,7 +73,7 @@ export default Direction.extend({
 
     if (isPresent(get(attrs, 'sceneWindowId'))) {
       return this._super(...args);
-    } else {
+    } else if (isPresent(get(attrs, 'sceneId'))) {
       const sceneId = get(attrs, 'sceneId');
 
       this.get('sceneManager').toScene(sceneId, attrs);

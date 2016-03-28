@@ -23,6 +23,7 @@ export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin
     const windowId = get(this, 'windowId');
 
     this.on(`et:${windowId}:stageIsClearing`, this, this.clearDirectables);
+    this.on(`et:${windowId}:removeDirectable`, this, this.removeDirectable);
   }),
 
   clearDirectables() {
