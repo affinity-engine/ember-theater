@@ -59,10 +59,13 @@ export default Ember.Object.extend({
     _this.then = async function(...args) {
       await get(_this, 'queue.allDirectionsAreLoaded');
 
-      delete _this.then;
-
       return get(_this, 'queue.executionComplete').then(...args);
     };
+  },
+
+  // allows us to resolve the promise by returning the direction
+  _devertFromPromise() {
+    delete this.then;
   },
 
   _createDirection(name) {

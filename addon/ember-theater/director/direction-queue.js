@@ -62,6 +62,8 @@ export default Ember.Object.extend({
   _resolveDirection(direction, index, priorSceneRecord, resolve) {
     const resolveOrK = index === 0 ? resolve : K;
 
+    direction._devertFromPromise();
+
     direction._perform(priorSceneRecord, resolveOrK);
   },
 })
