@@ -59,12 +59,12 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
 
     set(this, 'sceneRecord', sceneRecord);
     set(this, 'directable.direction.result', sceneRecord);
-
-    this.resolve();
   }),
 
   transitionInWindow: on('didInsertElement', function() {
-    this.executeTransitionIn();
+    this.executeTransitionIn().then(() => {
+      this.resolve();
+    });
   }),
 
   close() {

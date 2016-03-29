@@ -22,7 +22,7 @@ export default Scene.extend({
     await script.Text('Start').textSpeed(100);
     const menu1 = await script.Menu(['A', 'B']);
     if (menu1.result.key === 0) {
-      script.Scene('child').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');
+      await script.Scene('child').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');
     }
     await script.Text('After').textSpeed(100)
     await script.Text('alkajsldkfj').textSpeed(100)
