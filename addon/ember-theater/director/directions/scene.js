@@ -5,6 +5,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  getProperties,
   isPresent,
   merge,
   set
@@ -22,6 +23,12 @@ export default Direction.extend(BusPublisherMixin, {
     set(this, 'attrs.sceneId', sceneId);
 
     return this;
+  },
+
+  _reset() {
+    const attrs = get(this, 'attrs');
+
+    return this._super(getProperties(attrs, 'sceneWindowId', 'window'));
   },
 
   autosave(autosave = true) {
@@ -49,6 +56,7 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   window(sceneWindowId) {
+    set(this, 'attrs.window', this);
     set(this, 'attrs.sceneWindowId', sceneWindowId);
 
     return this;
@@ -62,10 +70,10 @@ export default Direction.extend(BusPublisherMixin, {
     return this;
   },
 
-  close(effect, duration, options) {
-    const windowId = get(this, 'windowId');
+  close() {
+    const sceneWindowId = get(this, 'attrs.sceneWindowId');
 
-    this.publish(`et:${windowId}:closeWindow`, effect, duration, options);
+    this.publish(`et:${sceneWindowId}:closeWindow`);
 
     return this;
   },

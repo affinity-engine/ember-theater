@@ -41,11 +41,6 @@ export default Component.extend({
 
     openMenu(componentPath) {
       set(this, 'currentMenu', componentPath);
-    },
-
-    closeMenu() {
-      set(this, 'currentMenu', false);
-      set(this, 'isOpen', false);
     }
   }
 });

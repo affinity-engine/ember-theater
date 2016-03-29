@@ -47,7 +47,7 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
 
     this._updateAutosave(sceneId, sceneName, options);
 
-    start(script, data);
+    start(script, data, get(options, 'window'));
   },
 
   _buildScene(id) {

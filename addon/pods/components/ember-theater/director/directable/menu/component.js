@@ -19,7 +19,8 @@ const {
   getProperties,
   isPresent,
   on,
-  set
+  set,
+  typeOf
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -80,9 +81,10 @@ export default Component.extend(...mixins, {
         const key = get(value, 'key') || index;
         const text = get(this, 'translator').translate(value);
 
-        return Ember.$.extend(value, {
+        return Ember.Object.create({
+          ...value,
           key,
-          text
+          text: typeOf(text) === 'string' ? text : ''
         });
       });
     }

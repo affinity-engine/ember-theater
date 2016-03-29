@@ -39,6 +39,7 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
   screen: configurable(configurablePriority, 'screen'),
   transitionIn: deepConfigurable(configurablePriority, 'transitionIn'),
   transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
+  window: configurable(configurablePriority, 'window'),
 
   childStyle: computed('priority', {
     get() {
@@ -49,9 +50,9 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
   }).readOnly(),
 
   setupEvents: on('init', function() {
-    const windowId = get(this, 'sceneWindowId');
+    const sceneWindowId = get(this, 'sceneWindowId');
 
-    this.on(`et:${windowId}:closeWindow`, this, this.close);
+    this.on(`et:${sceneWindowId}:closeWindow`, this, this.close);
   }),
 
   handlePriorSceneRecord: on('didReceiveAttrs', function() {

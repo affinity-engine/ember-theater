@@ -29,8 +29,9 @@ export default Component.extend({
     const {
       initialScene,
       sceneManager,
-      windowId
-    } = getProperties(this, 'initialScene', 'sceneManager', 'windowId');
+      windowId,
+      window
+    } = getProperties(this, 'initialScene', 'sceneManager', 'windowId', 'window');
 
     if (windowId === 'main') {
       sceneManager.setinitialScene(initialScene);
@@ -38,7 +39,7 @@ export default Component.extend({
     } else {
       const sceneRecord = get(this, 'sceneRecord');
 
-      sceneManager.toScene(initialScene, { autosave: false, sceneRecord });
+      sceneManager.toScene(initialScene, { autosave: false, sceneRecord, window });
     }
   })
 });

@@ -2,12 +2,19 @@ import Ember from 'ember';
 import layout from './template';
 import MenuBarControl from 'ember-theater/pods/components/ember-theater/menu-bar/control/component';
 
-const { set } = Ember;
+const {
+  get,
+  set
+} = Ember;
+
+const { computed: { reads } } = Ember;
 
 export default MenuBarControl.extend({
   layout,
+  header: 'ember-theater.menu.reset.header',
   type: 'reset',
-  componentPath: 'ember-theater/menu-bar/reset/menu',
+
+  menuClassNames: reads('config.attrs.menuBar.reset.classNames'),
 
   startHoverEffect() {
     set(this, 'hovering', true);
@@ -15,5 +22,21 @@ export default MenuBarControl.extend({
 
   stopHoverEffect() {
     set(this, 'hovering', false);
+  },
+
+  populateChoices() {
+    const choices = get(this, 'choices');
+
+    choices.pushObject({
+      text: 'ember-theater.menu.reset.confirm'
+    });
+  },
+
+  resolve({ result }) {
+    switch (get(result, 'key')) {
+      case 1:
+        this.publish('et:main:gameIsResetting');
+        break;
+    }
   }
 });

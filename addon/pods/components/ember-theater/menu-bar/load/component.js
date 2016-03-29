@@ -1,8 +1,42 @@
+import Ember from 'ember';
 import layout from './template';
 import MenuBarControl from 'ember-theater/pods/components/ember-theater/menu-bar/control/component';
 
+const {
+  get,
+  isPresent
+} = Ember;
+
+const { computed: { reads } } = Ember;
+
 export default MenuBarControl.extend({
   layout,
+  header: 'ember-theater.menu.load.header',
   type: 'load',
-  componentPath: 'ember-theater/menu-bar/load/menu'
+
+  menuClassNames: reads('config.attrs.menuBar.load.classNames'),
+
+  populateChoices: async function() {
+    const saves = await get(this, 'saveStateManager.saves');
+    const choices = get(this, 'choices');
+
+    saves.forEach((save) => {
+      choices.pushObject({
+        key: get(save, 'id'),
+        object: save,
+        text: get(save, 'name')
+      });
+    });
+  },
+
+  resolve({ result }) {
+    const save = get(result, 'object');
+
+    if (isPresent(save)) {
+      const sceneId = get(save, 'activeState.sceneId');
+      const options = { autosave: false };
+
+      this.publish('et:main:saveIsLoading', save, sceneId, options);
+    }
+  }
 });
