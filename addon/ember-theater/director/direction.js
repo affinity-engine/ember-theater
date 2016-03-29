@@ -61,6 +61,8 @@ export default Ember.Object.extend({
 
       return get(_this, 'queue.executionComplete').then(...args);
     };
+
+    set(this, 'promise', { then: this.then });
   },
 
   // allows us to resolve the promise by returning the direction

@@ -26,8 +26,9 @@ export default Component.extend(DirectableComponentMixin, EKMixin, {
 
     const {
       duration,
-      keys
-    } = getProperties(attrs, 'duration', 'keys');
+      keys,
+      promise
+    } = getProperties(attrs, 'duration', 'keys', 'promise');
 
     if (isPresent(keys)) {
       this._setupKeyPressWatcher(keys);
@@ -37,6 +38,12 @@ export default Component.extend(DirectableComponentMixin, EKMixin, {
       run.later(() => {
         this._resolve();
       }, duration);
+    }
+
+    if (isPresent(promise)) {
+      promise.then(() => {
+        this._resolve();
+      });
     }
   }),
 

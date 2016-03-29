@@ -2,6 +2,7 @@ import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 
 const {
+  get,
   set,
   typeOf
 } = Ember;
@@ -19,6 +20,7 @@ export default Direction.extend({
       switch (typeOf(arg)) {
         case 'string': return keys.pushObject(arg);
         case 'number': return set(this, 'attrs.duration', arg);
+        case 'instance': return set(this, 'attrs.promise', get(arg, 'promise'));
       }
     });
 
