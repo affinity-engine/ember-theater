@@ -89,10 +89,10 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
       } = getProperties(this, 'animation', 'animationName', 'filter');
 
       return new SafeString(`
-      animation: ${animation};
-      animation-name: ${animationName};
-      filter: ${filter};
-      -webkit-filter: ${filter};
+        animation: ${animation};
+        animation-name: ${animationName};
+        filter: ${filter};
+        -webkit-filter: ${filter};
       `.replace(/\n|\s{2}/g, ''));
     }
   }).readOnly(),

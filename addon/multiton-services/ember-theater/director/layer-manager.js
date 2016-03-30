@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import DirectableManagerMixin from 'ember-theater/mixins/ember-theater/director/directable-manager';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
 const {
@@ -21,7 +22,7 @@ const {
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
+export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {
   dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),
@@ -45,32 +46,10 @@ export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin
     return get(this, 'layers').find((layer) => get(layer, 'layerName') === layerName(name));
   },
 
-  handleDirectable(layerName, properties, resolve) {
-    const directable = get(properties, 'direction.directable');
-    const delay = get(properties, 'attrs.delay') || 0;
+  _finalizeNewDirectable(properties, directable) {
+    const layer = this.getLayer(get(properties, 'id'));
 
-    later(() => {
-      if (isBlank(directable)) {
-        this._addNewDirectable(layerName, merge(properties, { resolve }));
-      } else {
-        this._updateDirectable(directable, properties, resolve);
-      }
-    }, delay);
-  },
-
-  _addNewDirectable(layerName, properties) {
-    const Directable = getOwner(this).lookup('directable:main');
-    const directable = Directable.create(properties);
-    const layer = this.getLayer(layerName);
-
-    set(get(properties, 'direction'), 'directable', directable);
     set(layer, 'directable', directable);
-  },
-
-  _updateDirectable(directable, properties, resolve) {
-    const attrs = Ember.$.extend({}, get(directable, 'attrs'), get(properties, 'attrs'));
-
-    setProperties(directable, merge(properties, { resolve, attrs }));
   },
 
   getFilter(layer) {

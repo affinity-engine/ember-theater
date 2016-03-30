@@ -106,6 +106,6 @@ export default Ember.Object.extend({
 
     set(this, '_shouldReset', true);
 
-    stageManager.handleDirectable(id, componentPath, { attrs, layer, direction: this, priorSceneRecord }, resolve);
+    stageManager.handleDirectable(id, { attrs, componentPath, layer, direction: this, priorSceneRecord }, resolve);
   }
 });

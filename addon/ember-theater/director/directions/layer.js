@@ -46,17 +46,6 @@ export default Direction.extend({
   },
 
   _perform(priorSceneRecord, resolve) {
-    // const attrs = get(this, 'attrs');
-    // const {
-    //   effect,
-    //   layer
-    // } = getProperties(attrs, 'effect', 'layer');
-    //
-    // // const filterId = get(line, 'id');
-    // // const effect = filterId ? `url('/filters/${filterId}.svg#${filterId}')` : get(line, 'effect');
-    //
-    // get(this, 'layerManager').addFilter(resolve, effect, attrs, layerName(layer));
-
     const {
       attrs,
       layerManager
