@@ -16,7 +16,7 @@ export default Mixin.create(Evented, MultitonIdsMixin, {
     get(this, 'messageBus').register(this);
   }),
 
-  unregisterWithBus: on('willDestroy', function() {
+  unregisterWithBus: on('willDestroy', 'willDestroyElement', function() {
     get(this, 'messageBus').unregister(this);
   })
 });

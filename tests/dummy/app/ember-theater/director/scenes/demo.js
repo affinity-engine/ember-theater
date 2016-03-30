@@ -19,7 +19,9 @@ export default Scene.extend({
 
     // await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').textSpeed(100)
 
-    await script.Text('Start').textSpeed(100);
+    await script.Character('bebe')
+    script.Layer('theater').filter(['blur(0px)', 'blur(10px)'], 10000)
+    script.Text('Start').textSpeed(100);
     const menu1 = await script.Menu(['A', 'B']);
     if (menu1.result.key === 0) {
       await script.Scene('child').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');

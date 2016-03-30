@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import layout from './template';
-import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
+import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
+import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
+import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
+import configurable, { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
 const {
   Component,
@@ -14,10 +18,19 @@ const {
   set
 } = Ember;
 
-const { alias } = computed;
 const { Handlebars: { SafeString } } = Ember;
+const { RSVP: { Promise } } = Ember;
 
-export default Component.extend({
+const { alias } = computed;
+
+const configurablePriority = [
+  'directable.attrs',
+  'config.attrs.director.layer',
+  'config.attrs.director',
+  'config.attrs.globals'
+];
+
+export default Component.extend(DirectableComponentMixin, TransitionMixin, TransitionObserverMixin, {
   layout,
 
   attributeBindings: ['animationName:animation-name', 'style'],
@@ -25,10 +38,24 @@ export default Component.extend({
   classNameBindings: ['layerName'],
 
   layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),
+  transitions: deepArrayConfigurable(configurablePriority, 'directable.attrs.transitions', 'transition'),
+
+  registerWithLayerManager: on('didInsertElement', function() {
+    get(this, 'layerManager').registerLayer(this);
+  }),
+
+  unregisterWithLayerManager: on('willDestroyElement', function() {
+    get(this, 'layerManager').unregisterLayer(this);
+  }),
+
+  addFilter(transition) {
+    return new Promise((resolve) => {
+      get(this, 'layerManager').addFilter(resolve, get(transition, 'effect'), transition, get(this, 'layerName'));
+    });
+  },
 
   setFilter: on('didInsertElement', function() {
     this.element.addEventListener('animationend', () => {

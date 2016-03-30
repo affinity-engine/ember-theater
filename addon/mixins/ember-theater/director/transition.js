@@ -83,6 +83,7 @@ export default Mixin.create({
     switch(get(transition, 'type')) {
       case 'delay': return this.delay(transition);
       case 'crossFade': return this.crossFade(transition);
+      case 'filter': return this.addFilter(transition);
       case 'transition': return this.executeTransition(transition);
     }
   },

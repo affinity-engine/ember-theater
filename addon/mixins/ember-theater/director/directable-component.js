@@ -6,6 +6,7 @@ const {
   Mixin,
   get,
   getProperties,
+  isBlank,
   isPresent,
   on,
   set
@@ -19,6 +20,8 @@ export default Mixin.create(BusPublisherMixin, {
 
   associateDirectable: on('didInitAttrs', function() {
     const directable = get(this, 'directable');
+
+    if (isBlank(directable)) { return; }
 
     set(directable, 'component', this);
   }),
