@@ -46,7 +46,10 @@ export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, E
     return get(this, 'layers').find((layer) => get(layer, 'layerName') === layerName(name));
   },
 
-  _finalizeNewDirectable(properties, directable) {
+  _addNewDirectable(properties) {
+    this._super(properties);
+
+    const directable = get(properties, 'direction.directable');
     const layer = this.getLayer(get(properties, 'id'));
 
     set(layer, 'directable', directable);

@@ -31,8 +31,6 @@ export default Mixin.create({
     const directable = Directable.create(properties);
 
     set(get(properties, 'direction'), 'directable', directable);
-
-    this._finalizeNewDirectable(properties, directable);
   },
 
   _updateDirectable(directable, properties, resolve) {

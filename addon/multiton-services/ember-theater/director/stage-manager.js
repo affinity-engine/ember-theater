@@ -34,7 +34,11 @@ export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, E
     directable.destroy();
   },
 
-  _finalizeNewDirectable(properties, directable) {
+  _addNewDirectable(properties) {
+    this._super(properties);
+
+    const directable = get(properties, 'direction.directable');
+
     get(this, 'directables').pushObject(directable);
   }
 });
