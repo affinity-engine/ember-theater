@@ -53,8 +53,9 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
   structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
   namePosition: configurable(configurablePriority, 'namePosition'),
   text: configurable(configurablePriority, 'text'),
-  textAnimation: configurable(configurablePriority, 'textAnimation'),
   textSpeed: configurable(configurablePriority, 'textSpeed'),
+  textTransition: configurable(configurablePriority, 'textTransition'),
+  textTransitionRate: configurable(configurablePriority, 'textTransitionRate'),
   name: configurable(configurablePriority, 'name'),
 
   handlePriorSceneRecord: on('didInsertElement', function() {

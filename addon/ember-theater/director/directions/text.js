@@ -70,10 +70,10 @@ export default Direction.extend({
     return this;
   },
 
-  textAnimation(textAnimation) {
+  textTransition(textTransition) {
     this._entryPoint();
 
-    set(this, 'attrs.textAnimation', textAnimation);
+    set(this, 'attrs.textTransition', textTransition);
 
     return this;
   },

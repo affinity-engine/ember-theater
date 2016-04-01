@@ -16,7 +16,7 @@ export default TextTag.extend({
   start(context, index, animateString) {
     const animate = eval(`(${animateString})`);
 
-    set(context, 'textAnimation', animate);
+    set(context, 'textTransition', animate);
     context.writeWord(index + 1);
 
     this.destroy();

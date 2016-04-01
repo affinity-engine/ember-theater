@@ -77,11 +77,12 @@ export default {
     },
     text: {
       namePosition: 'left',
-      textSpeed: 5,
-      textAnimation: {
+      textSpeed: 20,
+      textTransitionRate: 10,
+      textTransition: {
         opacity: 0,
         translateX: '10px',
-        translateY: '-5px'
+        translateY: '-6px'
       }
     },
     positions: {

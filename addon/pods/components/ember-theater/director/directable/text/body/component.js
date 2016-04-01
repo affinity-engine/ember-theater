@@ -200,12 +200,13 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
     }
 
     const duration = 1000 / get(this, 'textSpeed');
-    const style = get(this, 'textAnimation');
+    const rate = get(this, 'textTransitionRate');
+    const style = get(this, 'textTransition');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);
 
     $letter.css({ opacity: 1 });
     animate($letter, style, { duration: 0 });
-    animate($letter, 'reverse', { duration });
+    animate($letter, 'reverse', { duration: duration * rate });
 
     later(() => {
       if (characterIndex + 1 < wordLength) {
@@ -213,7 +214,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
       } else {
         this.writeWord(wordIndex + 1);
       }
-    }, duration * 0.25);
+    }, duration);
   },
 
   executeCustomTag(text, index) {
