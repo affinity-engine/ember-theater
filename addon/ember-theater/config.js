@@ -77,8 +77,8 @@ export default {
     },
     text: {
       namePosition: 'left',
-      textSpeed: 20,
-      textTransitionRate: 10,
+      textSpeed: 50,
+      textTransitionRate: 15,
       textTransition: {
         opacity: 0,
         translateX: '10px',
@@ -108,10 +108,10 @@ export default {
         left: '95%'
       },
       offLeft: {
-        left: '-20%'
+        left: '-50%'
       },
       offRight: {
-        left: '120%'
+        left: '150%'
       },
       nudgeLeft: {
         left: '-=5%'

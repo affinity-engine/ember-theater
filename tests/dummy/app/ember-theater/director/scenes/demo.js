@@ -4,6 +4,29 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
+    script.Backdrop('classroom');
+    const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
+    await bitsy.Text('theaters.welcome.bitsyGreeting');
+
+    const emma = script.Character('blixie').position('offLeft', 0).position('centerLeft', 1000);
+    bitsy.delay(100).position('centerRight', 400);
+    await emma.Text('theaters.welcome.emmaGreeting');
+
+    await bitsy.Text('theaters.welcome.bitsyMakeGames');
+    await emma.Text('theaters.welcome.emmaMakeGames');
+
+    bitsy.expression('bitsy-panic');
+    await bitsy.Text('theaters.welcome.bitsyShock');
+    bitsy.expression('bitsy-laughing');
+    await bitsy.Text('theaters.welcome.bitsyFun');
+    emma.expression('emma-laughing');
+    await emma.Text('theaters.welcome.emmaFun');
+
+    bitsy.expression('bitsy-happy');
+    emma.expression('emma-neutral');
+    await bitsy.Text('theaters.welcome.bitsyNext');
+    emma.position('offLeft', 1000);
+    bitsy.delay(100).position('offLeft', 1300);
     // const delay3 = script.Delay(100);
     // const delay = await script.Delay(100);
     // const delay2 = await script.Delay(100);
@@ -17,27 +40,27 @@ export default Scene.extend({
 
     // await script.Delay('p');
 
-    await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').textSpeed(100)
-
-    await script.Character('bebe')
-    script.Layer('theater').filter(['blur(0px)', 'blur(10px)'], 10000)
-    script.Text('Start').textSpeed(100);
-    const menu1 = await script.Menu(['A', 'B']);
-    if (menu1.result.key === 0) {
-      await script.Scene('child').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');
-    }
-    await script.Text('After').textSpeed(100)
-    await script.Text('alkajsldkfj').textSpeed(100)
-
-    const bebe = await script.Character('bebe').expression('bebe-blush').position('center', 1000).expression('bebe-laughing', { transitionIn: { duration: 1000, effect: 'transition.whirlIn' }, transitionOut: { duration: 1000, effect: 'transition.whirlOut' } }).position('right', 1000).expression('bebe-angry').name('Bebe Prime');
-    bebe.position('left', 1000).position('center', 2000).expression('bebe-blush').transition('callout.bounce', 1000);
-
-    const bebe2 = await script.Character('bebe').position('centerLeft', 0);
-
-    await bebe.Text('Default!');
-    await bebe.namePosition('right').Text('Right!');
-    await bebe.namePosition('center').Text('Center!');
-    await bebe.namePosition('left').Text('Left!');
+    // await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').textSpeed(100)
+    //
+    // await script.Character('bebe')
+    // script.Layer('theater').filter(['blur(0px)', 'blur(10px)'], 10000)
+    // script.Text('Start').textSpeed(100);
+    // const menu1 = await script.Menu(['A', 'B']);
+    // if (menu1.result.key === 0) {
+    //   await script.Scene('child').window('child').classNames(['et-center', 'et-background-light', 'et-shadow-light']).priority(1).screen('et-light');
+    // }
+    // await script.Text('After').textSpeed(100)
+    // await script.Text('alkajsldkfj').textSpeed(100)
+    //
+    // const bebe = await script.Character('bebe').expression('bebe-blush').position('center', 1000).expression('bebe-laughing', { transitionIn: { duration: 1000, effect: 'transition.whirlIn' }, transitionOut: { duration: 1000, effect: 'transition.whirlOut' } }).position('right', 1000).expression('bebe-angry').name('Bebe Prime');
+    // bebe.position('left', 1000).position('center', 2000).expression('bebe-blush').transition('callout.bounce', 1000);
+    //
+    // const bebe2 = await script.Character('bebe').position('centerLeft', 0);
+    //
+    // await bebe.Text('Default!');
+    // await bebe.namePosition('right').Text('Right!');
+    // await bebe.namePosition('center').Text('Center!');
+    // await bebe.namePosition('left').Text('Left!');
     //
     // bebe.expression('bebe-blush');
     // bebe2.expression('bebe-laughing');
