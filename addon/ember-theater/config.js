@@ -108,10 +108,10 @@ export default {
         left: '95%'
       },
       offLeft: {
-        left: '-50%'
+        left: '-30%'
       },
       offRight: {
-        left: '150%'
+        left: '130%'
       },
       nudgeLeft: {
         left: '-=5%'
