@@ -55,6 +55,9 @@ export default Direction.extend({
   },
 
   delay(delay, options = {}) {
+    this._removeDefaultTransition();
+    this._entryPoint();
+
     const transitions = get(this, 'attrs.transitions');
 
     transitions.pushObject(merge({ delay, type: 'delay', queue: 'main' }, options));
