@@ -11,7 +11,7 @@ export default Direction.extend({
   componentPath: 'ember-theater/director/directable/delay',
   layer: 'meta.delay',
 
-  setup(...args) {
+  _setup(...args) {
     this._entryPoint();
 
     const keys = set(this, 'attrs.keys', Ember.A());

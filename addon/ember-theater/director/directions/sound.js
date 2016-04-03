@@ -16,7 +16,7 @@ export default Direction.extend({
   preloader: multitonService('ember-theater/preloader', 'theaterId'),
   soundManager: multitonService('ember-theater/sound-manager', 'theaterId'),
 
-  setup(fixtureOrId) {
+  _setup(fixtureOrId) {
     this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');

@@ -10,7 +10,7 @@ export default Direction.extend({
   componentPath: 'ember-theater/director/directable/code-challenge',
   layer: 'theater.prompt.code-challenge',
 
-  setup(snippets) {
+  _setup(snippets) {
     this._entryPoint();
 
     set(this, 'attrs.snippets', snippets);

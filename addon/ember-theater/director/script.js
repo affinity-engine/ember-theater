@@ -11,32 +11,32 @@ const {
 } = Ember;
 
 export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evented, {
-  sceneRecordIndex: -1,
+  _sceneRecordIndex: -1,
 
   director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
 
-  setupEvents: on('init', function() {
+  _setupEvents: on('init', function() {
     const windowId = get(this, 'windowId');
 
-    this.on(`et:${windowId}:scriptsMustAbort`, this, this.abort);
+    this.on(`et:${windowId}:scriptsMustAbort`, this, this._abort);
   }),
 
-  abort() {
+  _abort() {
     set(this, 'isAborted', true);
   },
 
-  incrementSceneRecordIndex() {
-    this.incrementProperty('sceneRecordIndex');
+  _incrementSceneRecordIndex() {
+    this.incrementProperty('_sceneRecordIndex');
   },
 
-  getPriorSceneRecord() {
-    const sceneRecordIndex = get(this, 'sceneRecordIndex');
+  _getPriorSceneRecord() {
+    const sceneRecordIndex = get(this, '_sceneRecordIndex');
 
     return get(this, `sceneRecord.${sceneRecordIndex}`);
   },
 
-  record(promise) {
-    const sceneRecordIndex = get(this, 'sceneRecordIndex');
+  _record(promise) {
+    const sceneRecordIndex = get(this, '_sceneRecordIndex');
 
     promise.then((value) => {
       if (get(this, 'isAborted')) { return; }

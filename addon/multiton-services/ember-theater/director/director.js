@@ -17,6 +17,6 @@ export default Ember.Object.extend(MultitonIdsMixin, {
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
     const direction = factory.create({ script, theaterId, windowId });
 
-    return direction.setup(...args);
+    return direction._setup(...args);
   }
 });

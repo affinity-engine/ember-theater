@@ -10,7 +10,7 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  setup(min = 0, max = 1) {
+  _setup(min = 0, max = 1) {
     this._entryPoint();
 
     const attrs = get(this, 'attrs');

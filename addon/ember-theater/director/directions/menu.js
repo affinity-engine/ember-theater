@@ -14,7 +14,7 @@ export default Direction.extend({
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  setup(choices) {
+  _setup(choices) {
     this._entryPoint();
 
     set(this, 'attrs.choices', choices);

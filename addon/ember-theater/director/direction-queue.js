@@ -33,7 +33,7 @@ export default Ember.Object.extend({
           const promise = this._execute();
           const script = get(this, 'script');
 
-          script.record(promise);
+          script._record(promise);
 
           set(this, 'executionComplete', promise);
         }
@@ -48,9 +48,9 @@ export default Ember.Object.extend({
   _execute() {
     const script = get(this, 'script');
 
-    script.incrementSceneRecordIndex();
+    script._incrementSceneRecordIndex();
 
-    const priorSceneRecord = script.getPriorSceneRecord();
+    const priorSceneRecord = script._getPriorSceneRecord();
 
     return new Promise((resolve) => {
       get(this, '_directions').forEach((direction, index) => {

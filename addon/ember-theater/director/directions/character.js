@@ -20,7 +20,7 @@ export default Direction.extend({
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
   preloader: multitonService('ember-theater/preloader', 'theaterId'),
 
-  setup(fixtureOrId) {
+  _setup(fixtureOrId) {
     this._entryPoint();
 
     const fixtureStore = get(this, 'fixtureStore');
@@ -135,7 +135,7 @@ export default Direction.extend({
 
     const direction = this._createDirection('text');
 
-    return direction.setup(text, this);
+    return direction._setup(text, this);
   },
 
   _findExpression(fixtureOrId) {

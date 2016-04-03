@@ -17,7 +17,7 @@ export default Direction.extend(BusPublisherMixin, {
 
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
-  setup(sceneId) {
+  _setup(sceneId) {
     this._entryPoint();
 
     set(this, 'attrs.sceneId', sceneId);
