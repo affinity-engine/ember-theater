@@ -10,6 +10,7 @@ import {
 
 const {
   Component,
+  K,
   computed,
   get,
   getOwner,
@@ -98,7 +99,7 @@ export default Component.extend(BusPublisherMixin, EKMixin, {
   renderDirectable() {
     const { director, theaterId, windowId } = getProperties(this, 'director', 'theaterId', 'windowId');
     const container = getOwner(this);
-    const script = container.lookup('script:main').create({ sceneRecord: {}, theaterId, windowId });
+    const script = container.lookup('script:main').create({ sceneRecord: {}, theaterId, windowId, record: K });
     const direction = container.lookup('direction:scene');
     const args = (script, data, window) => {
       this.scene(script, data, window);

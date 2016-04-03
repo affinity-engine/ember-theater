@@ -67,9 +67,9 @@ export default Component.extend(...mixins, {
 
   handlePriorSceneRecord: on('didInsertElement', function() {
     if (isPresent(get(this, 'priorSceneRecord'))) {
-      const menu = get(this, 'priorSceneRecord');
+      const choice = get(this, 'priorSceneRecord');
 
-      this.send('choose', menu);
+      this.send('choose', choice);
     }
   }),
 
@@ -146,8 +146,8 @@ export default Component.extend(...mixins, {
   },
 
   actions: {
-    choose(menu) {
-      set(this, 'directable.direction.result', menu);
+    choose(choice) {
+      set(this, 'directable.direction.result', choice);
 
       this.$().parents('.ember-theater').trigger('focus');
 

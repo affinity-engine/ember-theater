@@ -4,29 +4,29 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
-    script.Backdrop('classroom');
-    const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
-    await bitsy.Text('theaters.welcome.bitsyGreeting');
-
-    const emma = script.Character('blixie').position('offLeft', 0).position('centerLeft', 1000);
-    bitsy.delay(100).position('centerRight', 400);
-    await emma.Text('theaters.welcome.emmaGreeting');
-
-    await bitsy.Text('theaters.welcome.bitsyMakeGames');
-    await emma.Text('theaters.welcome.emmaMakeGames');
-
-    bitsy.expression('bitsy-panic');
-    await bitsy.Text('theaters.welcome.bitsyShock');
-    bitsy.expression('bitsy-laughing');
-    await bitsy.Text('theaters.welcome.bitsyFun');
-    emma.expression('emma-laughing');
-    await emma.Text('theaters.welcome.emmaFun');
-
-    bitsy.expression('bitsy-happy');
-    emma.expression('emma-neutral');
-    await bitsy.Text('theaters.welcome.bitsyNext');
-    emma.position('offLeft', 1000);
-    bitsy.delay(100).position('offLeft', 1300);
+    // script.Backdrop('classroom');
+    // const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
+    // await bitsy.Text('theaters.welcome.bitsyGreeting');
+    //
+    // const emma = script.Character('blixie').position('offLeft', 0).position('centerLeft', 1000);
+    // bitsy.delay(100).position('centerRight', 400);
+    // await emma.Text('theaters.welcome.emmaGreeting');
+    //
+    // await bitsy.Text('theaters.welcome.bitsyMakeGames');
+    // await emma.Text('theaters.welcome.emmaMakeGames');
+    //
+    // bitsy.expression('bitsy-panic');
+    // await bitsy.Text('theaters.welcome.bitsyShock');
+    // bitsy.expression('bitsy-laughing');
+    // await bitsy.Text('theaters.welcome.bitsyFun');
+    // emma.expression('emma-laughing');
+    // await emma.Text('theaters.welcome.emmaFun');
+    //
+    // bitsy.expression('bitsy-happy');
+    // emma.expression('emma-neutral');
+    // await bitsy.Text('theaters.welcome.bitsyNext');
+    // emma.position('offLeft', 1000);
+    // bitsy.delay(100).position('offLeft', 1300);
     // const delay3 = script.Delay(100);
     // const delay = await script.Delay(100);
     // const delay2 = await script.Delay(100);
