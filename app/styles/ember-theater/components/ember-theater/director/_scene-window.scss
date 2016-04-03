@@ -27,6 +27,14 @@
       right: $et-scene-window-main-center-percentage-right;
     }
 
+    &.et-center-large {
+      position: absolute;
+      top: $et-scene-window-main-center-large-percentage-top;
+      left: $et-scene-window-main-center-large-percentage-left;
+      bottom: $et-scene-window-main-center-large-percentage-bottom;
+      right: $et-scene-window-main-center-large-percentage-right;
+    }
+
     &.et-full {
       position: absolute;
       top: 0;

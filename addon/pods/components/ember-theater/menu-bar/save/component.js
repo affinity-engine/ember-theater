@@ -33,7 +33,7 @@ export default MenuBarControl.extend({
         choices.pushObject({
           key: 'save',
           object: save,
-          text: get(save, 'name'),
+          text: get(save, 'fullName'),
           classNames: ['et-menu-option-pair-major']
         });
         choices.pushObject({

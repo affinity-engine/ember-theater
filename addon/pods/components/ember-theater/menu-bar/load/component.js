@@ -20,11 +20,11 @@ export default MenuBarControl.extend({
     const saves = await get(this, 'saveStateManager.saves');
     const choices = get(this, 'choices');
 
-    saves.forEach((save) => {
+    saves.sortBy('updated').reverseObjects().forEach((save) => {
       choices.pushObject({
         key: get(save, 'id'),
         object: save,
-        text: get(save, 'name')
+        text: get(save, 'fullName')
       });
     });
   },

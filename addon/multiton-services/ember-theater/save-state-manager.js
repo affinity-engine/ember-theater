@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
   computed,
@@ -26,34 +26,11 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
 
   mostRecentSave: computed({
     get: async function() {
-      await this._ensureAutosave();
-
       const saves = await get(this, 'saves');
 
       return saves.sortBy('updated').reverseObjects().get('firstObject');
     }
   }).volatile(),
-
-  autosave: computed({
-    get() {
-      const theaterId = get(this, 'theaterId');
-
-      return get(this, 'store').queryRecord('ember-theater/local-save', {
-        theaterId,
-        isAutosave: true
-      });
-    }
-  }).readOnly().volatile(),
-
-  _ensureAutosave: async function() {
-    if (isPresent(await get(this, 'autosave'))) { return; }
-
-    const autosave = await this.createRecord('autosave');
-
-    set(autosave, 'isAutosave', true);
-    autosave.save();
-    this.notifyPropertyChange('autosave');
-  },
 
   saves: computed({
     get() {
@@ -65,17 +42,8 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     }
   }).readOnly().volatile(),
 
-  resetAutosave: on('et:main:gameIsResetting', async function() {
-    const autosave = await get(this, 'autosave');
-
-    set(this, 'activeState', Ember.Object.create());
-    get(this, 'statePoints').clear();
-
-    return this.updateRecord(autosave);
-  }),
-
   // RECORD MANAGEMENT //
-  createRecord: on('et:main:saveIsCreating', async function(name) {
+  createRecord: on('et:main:saveIsCreating', async function(name, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -84,13 +52,14 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
       name,
       statePoints,
       theaterId,
-      version
+      version,
+      ...options
     });
 
     return await record.save();
   }),
 
-  updateRecord: on('et:main:saveIsUpdating', async function(record) {
+  updateRecord: on('et:main:saveIsUpdating', async function(record, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -98,7 +67,8 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     setProperties(record, {
       statePoints,
       theaterId,
-      version
+      version,
+      ...options
     });
 
     return await record.save();
@@ -132,13 +102,13 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   },
 
   // STATE MANAGEMENT //
-  appendActiveState(optionalValues) {
+  appendActiveState:  on('et:main:appendingActiveState', function(optionalValues) {
     const activeState = nativeCopy(get(this, 'activeState'));
     const mergedState = merge(activeState, optionalValues);
 
     get(this, 'statePoints').pushObject(mergedState);
     set(this, 'activeState', activeState);
-  },
+  }),
 
   loadStatePoint: on('et:main:gameIsRewinding', function(statePoints) {
     const activeState = get(statePoints, 'lastObject');

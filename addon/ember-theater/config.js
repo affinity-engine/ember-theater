@@ -25,19 +25,10 @@ export default {
       moveUp: ['ArrowUp', 'w']
     }
   },
+  autosaveManager: {
+    maxAutosaves: 3
+  },
   menuBar: {
-    transitionIn: {
-      effect: ['blur(0px)', 'blur(10px)'],
-      duration: 500
-    },
-    transitionOut: {
-      effect: ['blur(10px)', 'blur(0px)'],
-      duration: 500
-    },
-    innerEffect: {
-      effect: ['blur(10px)', 'blur(7px)', 'blur(10px)'],
-      duration: 5000
-    },
     load: {
       keys: {
         open: ['ctrl+l']

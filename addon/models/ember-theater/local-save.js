@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import moment from 'moment';
 import LokiJSModelMixin from 'ember-theater/mixins/lokijs-model';
 
 const {
@@ -12,11 +13,15 @@ const {
   get
 } = Ember;
 
+const { inject: { service } } = Ember;
+
 export default Model.extend(LokiJSModelMixin, {
   isAutosave: attr('boolean'),
   name: attr('string'),
   statePoints: attr('array'),
   theaterId: attr('string'),
+
+  i18n: service(),
 
   activeState: computed('statePoints', {
     get() {
@@ -30,5 +35,19 @@ export default Model.extend(LokiJSModelMixin, {
     get() {
       return get(this, 'meta.updated') || get(this, 'meta.created');
     }
-  }).readOnly()
+  }).readOnly(),
+
+  fullName: computed('name', 'activeState.sceneName', 'updated', {
+    get() {
+      let name = get(this, 'name') || get(this, 'activeState.sceneName');
+
+      if (get(this, 'isAutosave')) {
+        const autoTranslation = get(this, 'i18n').t('ember-theater.local-save.auto');
+
+        name = `${autoTranslation}: ${name}`;
+      }
+
+      return `${name}, ${moment(get(this, 'updated')).format('MM/DD/YY h:mm:ss A')}`
+    }
+  })
 });

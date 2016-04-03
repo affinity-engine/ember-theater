@@ -5,6 +5,9 @@ export default {
       loadingSounds: 'Loading sounds',
       complete: 'Complete!'
     },
+    'local-save': {
+      auto: 'Auto'
+    },
     menu: {
       cancel: 'cancel',
       load: {

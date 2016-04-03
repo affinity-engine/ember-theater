@@ -8,6 +8,7 @@ const {
   get,
   getProperties,
   isEmpty,
+  isPresent,
   on
 } = Ember;
 
@@ -24,14 +25,15 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
     const options = { autosave: false };
     const save = await saveStateManager.get('mostRecentSave');
 
-    let sceneId = get(save, 'activeState.sceneId');
+    if (isPresent(save)) {
+      const sceneId = get(save, 'activeState.sceneId');
 
-    if (isEmpty(sceneId)) {
-      sceneId = get(this, 'sceneManager.initialScene');
-      options.autosave = true;
+      this.loadScene(save, sceneId, options);
+    } else {
+      const sceneId = get(this, 'sceneManager.initialScene');
+
+      get(this, 'sceneManager').toScene(sceneId, options);
     }
-
-    this.loadScene(save, sceneId, options);
   },
 
   loadScene: on('et:main:saveIsLoading', function(save, sceneId, options) {

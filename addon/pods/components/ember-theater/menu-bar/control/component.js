@@ -99,12 +99,12 @@ export default Component.extend(BusPublisherMixin, EKMixin, {
   renderDirectable() {
     const { director, theaterId, windowId } = getProperties(this, 'director', 'theaterId', 'windowId');
     const container = getOwner(this);
-    const script = container.lookup('script:main').create({ sceneRecord: {}, theaterId, windowId, record: K });
+    const script = container.lookup('script:main').create({ sceneRecord: {}, theaterId, windowId, _record: K });
     const direction = container.lookup('direction:scene');
     const args = (script, data, window) => {
       this.scene(script, data, window);
     }
 
-    director.direct(script, direction, [args]).window('_menubar').classNames('et-center').priority(1000).transitionIn({ opacity: 1 }, 0);
+    director.direct(script, direction, [args]).window('_menubar').classNames('et-center-large').priority(1000).transitionIn({ opacity: 1 }, 0);
   }
 });

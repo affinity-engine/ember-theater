@@ -5,6 +5,8 @@ export default Scene.extend({
 
   start: async function(script) {
     script.Character('bebe').position('center').transition('transition.fadeIn');
+    await script.Text('Go!');
+    script.Scene('demo');
     // script.Backdrop('classroom');
     // const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
     // await bitsy.Text('theaters.welcome.bitsyGreeting');
