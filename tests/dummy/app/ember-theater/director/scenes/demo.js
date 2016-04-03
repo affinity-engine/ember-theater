@@ -4,6 +4,7 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
+    script.Character('bebe').position('center').transition('transition.fadeIn');
     // script.Backdrop('classroom');
     // const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
     // await bitsy.Text('theaters.welcome.bitsyGreeting');
