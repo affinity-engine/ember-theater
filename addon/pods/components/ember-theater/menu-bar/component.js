@@ -25,13 +25,11 @@ const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 export default Component.extend({
   layout,
 
-  classNameBindings: ['decorativeClassNames'],
-
   config: multitonService('ember-theater/config', 'theaterId'),
   producer: multitonService('ember-theater/producer', 'theaterId'),
 
   plugins: reads('config.attrs.menuBar.plugins'),
-  decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
+  customClassNames: configurable(configurablePriority, 'classNames'),
   keyboardActivated: alias('producer.isFocused'),
 
   actions: {

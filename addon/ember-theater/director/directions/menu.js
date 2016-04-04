@@ -29,7 +29,7 @@ export default Direction.extend({
   classNames(classNames) {
     this._entryPoint();
 
-    set(this, 'attrs.classNames', Ember.Object.create(classNames));
+    set(this, 'attrs.classNames', classNames);
 
     return this;
   },

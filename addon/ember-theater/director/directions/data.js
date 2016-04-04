@@ -64,8 +64,8 @@ export default Direction.extend(BusPublisherMixin, {
   _performActions() {
     const dataId = get(this, 'attrs.dataId');
 
-    get(this, 'actions').forEach(({ event, arguments }) => {
-      this.publish(event, dataId, ...arguments);
+    get(this, 'actions').forEach((action) => {
+      this.publish(action.event, dataId, ...action.arguments);
     });
   }
 });

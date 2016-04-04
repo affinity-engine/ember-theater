@@ -15,7 +15,7 @@ export default Component.extend({
   layout,
 
   classNames: ['et-text'],
-  classNameBindings: ['decorativeClassNames', 'structuralClassNames', 'scrollable:et-scrollable'],
+  classNameBindings: ['customClassNames'],
 
   translator: service('ember-theater/translator'),
 

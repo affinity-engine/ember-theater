@@ -1,10 +1,7 @@
 export default {
   priority: 0,
   globals: {
-    classNames: {
-      decorative: ['et-paper'],
-      structural: ['et-block']
-    },
+    classNames: ['et-paper', 'et-block'],
     transitionDuration: 200,
     transition: {
       duration: 250,

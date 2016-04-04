@@ -45,7 +45,7 @@ export default Component.extend(...mixins, {
   layout,
 
   classNames: ['et-menu'],
-  classNameBindings: ['decorativeClassNames', 'structuralClassNames'],
+  classNameBindings: ['joinedCustomClassNames'],
 
   config: multitonService('ember-theater/config', 'theaterId'),
   translator: service('ember-theater/translator'),
@@ -58,8 +58,15 @@ export default Component.extend(...mixins, {
   cancelKeys: configurable(configurablePriority, 'keys.cancel'),
   transitionIn: deepConfigurable(configurablePriority, 'transitionIn', 'transition'),
   transitionOut: deepConfigurable(configurablePriority, 'transitionOut'),
-  decorativeClassNames: configurable(configurablePriority, 'classNames.decorative'),
-  structuralClassNames: configurable(configurablePriority, 'classNames.structural'),
+  customClassNames: configurable(configurablePriority, 'classNames'),
+
+  joinedCustomClassNames: computed('customClassNames.[]', {
+    get() {
+      const classNames = get(this, 'customClassNames');
+
+      return typeOf(classNames) === 'array' ? classNames.join(' ') : classNames;
+    }
+  }),
 
   transitionInMenu: on('didInsertElement', function() {
     this.executeTransitionIn();
