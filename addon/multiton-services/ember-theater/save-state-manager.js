@@ -116,15 +116,27 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     setProperties(this, { activeState, statePoints });
   }),
 
-  deleteStateValue(key) {
-    return this.setStateValue(key, null);
-  },
-
   getStateValue(key) {
     return get(this, `activeState.${key}`);
   },
 
-  setStateValue: on('et:main:recordingSaveData', function(key, value) {
+  setStateValue: on('et:main:settingStateValue', function(key, value) {
     return set(this, `activeState.${key}`, value);
+  }),
+
+  decrementStateValue: on('et:main:decrementingStateValue', function(key, amount) {
+    return this.decrementProperty(`activeState.${key}`, amount);
+  }),
+
+  incrementStateValue: on('et:main:incrementingStateValue', function(key, amount) {
+    return this.incrementProperty(`activeState.${key}`, amount);
+  }),
+
+  toggleStateValue: on('et:main:togglingStateValue', function(key) {
+    return this.toggleProperty(`activeState.${key}`);
+  }),
+
+  deleteStateValue: on('et:main:deletingStateValue', function(key) {
+    return this.setStateValue(key, undefined);
   })
 });

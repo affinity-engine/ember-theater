@@ -7,7 +7,8 @@ const {
   Evented,
   get,
   on,
-  set
+  set,
+  typeOf
 } = Ember;
 
 export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evented, {
@@ -38,8 +39,11 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evente
   _record(promise) {
     const sceneRecordIndex = get(this, '_sceneRecordIndex');
 
-    promise.then((value) => {
+    promise.then((direction) => {
       if (get(this, 'isAborted')) { return; }
+
+      const isDirection = typeOf(direction) === 'instance' && get(direction, '_isDirection');
+      const value = isDirection ? get(direction, 'result') || '_RESOLVED' : direction;
 
       this.publish(`et:${get(this, 'windowId')}:directionCompleted`, sceneRecordIndex, value);
     })

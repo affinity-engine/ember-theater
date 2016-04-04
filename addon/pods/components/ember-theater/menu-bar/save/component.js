@@ -49,7 +49,7 @@ export default MenuBarControl.extend({
   resolve({ result }) {
     const sceneRecord = get(this, 'sceneManager.sceneRecord');
 
-    this.publish('et:main:recordingSaveData', '_sceneRecord', sceneRecord);
+    this.publish('et:main:settingStateValue', '_sceneRecord', sceneRecord);
 
     switch (get(result, 'key')) {
       case 0: return;

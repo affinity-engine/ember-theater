@@ -17,7 +17,6 @@ const { run: { later } } = Ember;
 export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
   autosaveManager: multitonService('ember-theater/autosave-manager', 'theaterId'),
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
@@ -40,7 +39,6 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
     this._clearStage();
     this._setSceneManager(script, options);
 
-    const data = get(this, 'saveStateManager.activeState');
     const script = this._buildScript();
     const { start, sceneId, sceneName } = typeOf(scene) === 'function' ?
       { start: scene } :
@@ -48,7 +46,7 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
 
     this._updateAutosave(sceneId, sceneName, options);
 
-    start(script, data, get(options, 'window'));
+    start(script, get(options, 'window'));
   },
 
   _buildScene(id) {
@@ -89,14 +87,14 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
   _updateAutosave: async function(sceneId, sceneName, options) {
     if (get(options, 'autosave') === false || get(this, 'config.attrs.director.scene.autosave') === false) { return; }
 
-    this.publish('et:main:recordingSaveData', '_sceneRecord', undefined);
+    get(this, 'autosaveManager'); // initialize the autosave-manager
+
+    this.publish('et:main:deletingStateValue', '_sceneRecord');
 
     this.publish('et:main:appendingActiveState', {
       sceneId,
       sceneName
     });
-
-    get(this, 'autosaveManager'); // initialize the autosave-manager
 
     this.publish('et:main:writeAutosave');
   }

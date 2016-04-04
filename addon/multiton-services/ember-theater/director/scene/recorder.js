@@ -25,7 +25,7 @@ export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin
     return set(this, 'sceneRecord', sceneRecord);
   },
 
-  _update(key, direction) {
-    set(this, `sceneRecord.${key}`, get(direction, 'result') || '_RESOLVED');
+  _update(key, value) {
+    set(this, `sceneRecord.${key}`, value);
   }
 });
