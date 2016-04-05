@@ -28,10 +28,10 @@ export default Direction.extend({
     const id = get(fixture, 'id');
     const expressionId = get(fixture, 'defaultExpressionId');
 
-    this.initialExpression(expressionId);
-
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
+
+    this.initialExpression(expressionId);
 
     if (isEmpty(get(this, '_$instance'))) {
       const transition = { type: 'transition', queue: 'main' };
@@ -138,14 +138,16 @@ export default Direction.extend({
     return direction._setup(text, this);
   },
 
-  _findExpression(fixtureOrId) {
+  _findExpression(fixtureOrIdOrAlias) {
+    const character = get(this, 'attrs.fixture');
+    const fixtureOrId = get(character, `expressions.${fixtureOrIdOrAlias}`) || fixtureOrIdOrAlias;
     const fixtureStore = get(this, 'fixtureStore');
-    const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
-    const imageId = get(this, 'preloader').idFor(fixture, 'src');
+    const expression = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
+    const imageId = get(this, 'preloader').idFor(expression, 'src');
 
-    set(fixture, '_imageId', imageId);
+    set(expression, '_imageId', imageId);
 
-    return fixture;
+    return expression;
   },
 
   _removeDefaultTransition() {
