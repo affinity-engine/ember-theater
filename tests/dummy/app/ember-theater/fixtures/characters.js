@@ -2,7 +2,7 @@ export default [{
   id: 'bebe',
   name: 'Bebe',
   height: 70,
-  defaultExpressionId: 'bebe-neutral',
+  defaultExpression: 'bebe-neutral',
   expressions: {
     neutral: 'bebe-neutral',
     happy: 'bebe-happy',
@@ -19,5 +19,9 @@ export default [{
   id: 'blixie',
   name: 'Blixie',
   height: 90,
-  defaultExpressionId: 'blixie-neutral'
+  defaultExpression: {
+    id: 'blixie-neutral',
+    caption: 'Blixie',
+    src: 'theater/characters/blixie/neutral.png'
+  }
 }];

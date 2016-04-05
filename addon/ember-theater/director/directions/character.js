@@ -26,12 +26,12 @@ export default Direction.extend({
     const fixtureStore = get(this, 'fixtureStore');
     const fixture = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('characters', fixtureOrId);
     const id = get(fixture, 'id');
-    const expressionId = get(fixture, 'defaultExpressionId');
+    const expressionFixtureOrId = get(fixture, 'defaultExpression');
 
     set(this, 'attrs.fixture', fixture);
     set(this, 'id', id);
 
-    this.initialExpression(expressionId);
+    this.initialExpression(expressionFixtureOrId);
 
     if (isEmpty(get(this, '_$instance'))) {
       const transition = { type: 'transition', queue: 'main' };
@@ -80,8 +80,8 @@ export default Direction.extend({
     return this;
   },
 
-  initialExpression(fixtureOrId) {
-    const fixture = this._findExpression(fixtureOrId);
+  initialExpression(expressionFixtureOrId) {
+    const fixture = this._findExpression(expressionFixtureOrId);
 
     set(this, 'attrs.expression', fixture);
 
