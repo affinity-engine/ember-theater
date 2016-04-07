@@ -25,7 +25,9 @@ export default Direction.extend(BusPublisherMixin, {
   _reset() {
     const attrs = get(this, 'attrs');
 
-    return this._super({ actions: Ember.A(), ...getProperties(attrs, 'dataId') });
+    set(this, 'actions', Ember.A());
+
+    return this._super({ ...getProperties(attrs, 'dataId') });
   },
 
   delete() {

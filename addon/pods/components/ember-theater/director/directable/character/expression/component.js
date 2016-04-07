@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
@@ -25,8 +24,6 @@ const configurablePriority = [
 ];
 
 export default Component.extend(DirectableComponentMixin, TransitionMixin, {
-  layout,
-
   classNames: ['et-character-expression-container'],
   hook: 'expression-direction',
 
