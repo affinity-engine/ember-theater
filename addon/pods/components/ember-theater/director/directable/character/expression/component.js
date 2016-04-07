@@ -62,19 +62,19 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
   }),
 
   insertImage: on('didInsertElement', function() {
-    // next(() => {
-    //   const preloader = get(this, 'preloader');
-    //   const fixture = get(this, 'expression');
-    //   const captionTranslation = get(this, 'captionTranslation');
-    //   const id = get(fixture, '_imageId');
-    //   const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
-    //   const $image = this.$(image).clone();
-    //
-    //   $image.addClass('et-character-expression');
-    //   $image.attr('alt', captionTranslation);
-    //
-    //   this.$().append($image);
-    // });
+    next(() => {
+      const preloader = get(this, 'preloader');
+      const fixture = get(this, 'expression');
+      const captionTranslation = get(this, 'captionTranslation');
+      const id = get(fixture, '_imageId');
+      const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
+      const $image = this.$(image).clone();
+
+      $image.addClass('et-character-expression');
+      $image.attr('alt', captionTranslation);
+
+      this.$().append($image);
+    });
   }),
 
   changeCaption: observer('captionTranslation', function() {

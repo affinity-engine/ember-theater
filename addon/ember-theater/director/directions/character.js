@@ -145,17 +145,7 @@ export default Direction.extend({
     const expression = typeOf(fixtureOrId) === 'object' ? fixtureOrId : fixtureStore.find('expressions', fixtureOrId);
     const imageId = get(this, 'preloader').idFor(expression, 'src');
 
-
-      const preloader = get(this, 'preloader');
-      // const captionTranslation = get(this, 'captionTranslation');
-      // const id = get(expression, '_imageId');
-      const image = preloader.getElement(imageId) || `<img src="${get(expression, 'src')}">`;
-      const $image = Ember.$(image).clone();
-
-      $image.addClass('et-character-expression');
-      // $image.attr('alt', captionTranslation);
-
-    set(expression, '$image', $image);
+    set(expression, 'imageId', imageId);
 
     return expression;
   },
