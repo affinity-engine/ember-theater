@@ -26,7 +26,7 @@ export default Scene.extend({
       id: 'bobo',
       name: 'Bobo',
       height: 90,
-      defaultExpressionId: 'blixie-neutral'
+      defaultExpression: 'blixie-neutral'
     });
 
     await script.Delay('p');

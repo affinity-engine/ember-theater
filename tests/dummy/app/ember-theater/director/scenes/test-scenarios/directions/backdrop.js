@@ -6,6 +6,7 @@ export default Scene.extend({
   start: async function(script) {
     const classroom = script.Backdrop('classroom');
 
+    await script.Delay(0); // why is this necessary?
     await script.Delay('p');
     classroom.transition({ opacity: 0.2 });
 
