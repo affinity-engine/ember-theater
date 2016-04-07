@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
@@ -24,6 +25,8 @@ const configurablePriority = [
 ];
 
 export default Component.extend(DirectableComponentMixin, TransitionMixin, {
+  layout,
+
   classNames: ['et-character-expression-container'],
   hook: 'expression-direction',
 
@@ -52,20 +55,26 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
     });
   }),
 
+  image: computed('expression.$image', {
+    get() {
+      return get(this, 'expression.$image')[0]
+    }
+  }),
+
   insertImage: on('didInsertElement', function() {
-    next(() => {
-      const preloader = get(this, 'preloader');
-      const fixture = get(this, 'expression');
-      const captionTranslation = get(this, 'captionTranslation');
-      const id = get(fixture, '_imageId');
-      const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
-      const $image = this.$(image).clone();
-
-      $image.addClass('et-character-expression');
-      $image.attr('alt', captionTranslation);
-
-      this.$().append($image);
-    });
+    // next(() => {
+    //   const preloader = get(this, 'preloader');
+    //   const fixture = get(this, 'expression');
+    //   const captionTranslation = get(this, 'captionTranslation');
+    //   const id = get(fixture, '_imageId');
+    //   const image = preloader.getElement(id) || `<img src="${get(this, 'src')}">`;
+    //   const $image = this.$(image).clone();
+    //
+    //   $image.addClass('et-character-expression');
+    //   $image.attr('alt', captionTranslation);
+    //
+    //   this.$().append($image);
+    // });
   }),
 
   changeCaption: observer('captionTranslation', function() {
