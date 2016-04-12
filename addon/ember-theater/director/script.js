@@ -1,11 +1,12 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-publisher';
 
 const {
   Evented,
   get,
+  getProperties,
   on,
   set,
   typeOf
@@ -17,9 +18,9 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evente
   director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
 
   _setupEvents: on('init', function() {
-    const windowId = get(this, 'windowId');
+    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
 
-    this.on(`et:${windowId}:scriptsMustAbort`, this, this._abort);
+    this.on(`et:${theaterId}:${windowId}:scriptsMustAbort`, this, this._abort);
   }),
 
   _abort() {
@@ -37,6 +38,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evente
   },
 
   _record(promise) {
+    const theaterId = get(this, 'theaterId');
     const sceneRecordIndex = get(this, '_sceneRecordIndex');
 
     promise.then((direction) => {
@@ -45,7 +47,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evente
       const isDirection = typeOf(direction) === 'instance' && get(direction, '_isDirection');
       const value = isDirection ? get(direction, 'result') || '_RESOLVED' : direction;
 
-      this.publish(`et:${get(this, 'windowId')}:directionCompleted`, sceneRecordIndex, value);
+      this.publish(`et:${theaterId}:${get(this, 'windowId')}:directionCompleted`, sceneRecordIndex, value);
     })
   }
 });

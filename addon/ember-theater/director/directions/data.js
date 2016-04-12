@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
 
 const {
   get,
@@ -31,23 +31,23 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   delete() {
-    get(this, 'actions').pushObject({ event: 'et:main:deletingStateValue', arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:deletingStateValue`, arguments });
   },
 
   decrement() {
-    get(this, 'actions').pushObject({ event: 'et:main:decrementingStateValue', arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:decrementingStateValue`, arguments });
   },
 
   increment() {
-    get(this, 'actions').pushObject({ event: 'et:main:incrementingStateValue', arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:incrementingStateValue`, arguments });
   },
 
   set() {
-    get(this, 'actions').pushObject({ event: 'et:main:settingStateValue', arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:settingStateValue`, arguments });
   },
 
   toggle() {
-    get(this, 'actions').pushObject({ event: 'et:main:togglingStateValue', arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:togglingStateValue`, arguments });
   },
 
   _perform(priorSceneRecord, resolve) {

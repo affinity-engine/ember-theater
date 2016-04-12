@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -16,8 +16,11 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
   saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
-  resetGame: on('et:main:gameIsResetting', async function() {
-    this.loadLatestScene();
+  setupEvents: on('init', function() {
+    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
+
+    this.on(`et:${theaterId}:${windowId}:gameIsResetting`, this, this.toInitialScene);
+    this.on(`et:${theaterId}:${windowId}:saveIsLoading`, this, this.loadScene);
   }),
 
   loadLatestScene: async function() {
@@ -30,24 +33,29 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
 
       this.loadScene(save, sceneId, options);
     } else {
-      const sceneId = get(this, 'sceneManager.initialScene');
-
-      get(this, 'sceneManager').toScene(sceneId, options);
+      this.toInitialScene();
     }
   },
 
-  loadScene: on('et:main:saveIsLoading', function(save, sceneId, options) {
+  toInitialScene() {
+    const sceneId = get(this, 'sceneManager.initialScene');
+
+    get(this, 'sceneManager').toScene(sceneId, { autosave: false });
+  },
+
+  loadScene(save, sceneId, options) {
     const {
       saveStateManager,
-      sceneManager
-    } = getProperties(this, 'saveStateManager', 'sceneManager');
+      sceneManager,
+      theaterId
+    } = getProperties(this, 'saveStateManager', 'sceneManager', 'theaterId');
 
     saveStateManager.loadRecord(save);
 
-    this.publish('et:main:reseting');
+    this.publish(`et:${theaterId}:main:reseting`);
 
     options.sceneRecord = saveStateManager.getStateValue('_sceneRecord') || {};
 
     sceneManager.toScene(sceneId, options);
-  })
+  }
 });

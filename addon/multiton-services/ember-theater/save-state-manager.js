@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
@@ -24,6 +24,22 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   activeState: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
 
+  setupEventListenerss: on('init', function() {
+    const theaterId = get(this, 'theaterId');
+
+    this.on(`et:${theaterId}:main:saveIsCreating`, this, this.createRecord);
+    this.on(`et:${theaterId}:main:saveIsUpdating`, this, this.updateRecord);
+    this.on(`et:${theaterId}:main:saveIsDestroying`, this, this.deleteRecord);
+    this.on(`et:${theaterId}:main:appendingActiveState`, this, this.appendActiveState);
+    this.on(`et:${theaterId}:main:gameIsRewinding`, this, this.loadStatePoint);
+    this.on(`et:${theaterId}:main:gameIsResetting`, this, this.resetActiveState);
+    this.on(`et:${theaterId}:main:settingStateValue`, this, this.setStateValue);
+    this.on(`et:${theaterId}:main:decrementingStateValue`, this, this.decrementStateValue);
+    this.on(`et:${theaterId}:main:incrementingStateValue`, this, this.incrementStateValue);
+    this.on(`et:${theaterId}:main:togglingStateValue`, this, this.toggleStateValue);
+    this.on(`et:${theaterId}:main:deletingStateValue`, this, this.deleteStateValue);
+  }),
+
   mostRecentSave: computed({
     get: async function() {
       const saves = await get(this, 'saves');
@@ -43,7 +59,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   }).readOnly().volatile(),
 
   // RECORD MANAGEMENT //
-  createRecord: on('et:main:saveIsCreating', async function(name, options) {
+  createRecord: async function(name, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -57,9 +73,9 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     });
 
     return await record.save();
-  }),
+  },
 
-  updateRecord: on('et:main:saveIsUpdating', async function(record, options) {
+  updateRecord: async function(record, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -72,7 +88,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     });
 
     return await record.save();
-  }),
+  },
 
   _getCurrentStatePoints() {
     const statePoints = nativeCopy(get(this, 'statePoints'));
@@ -83,9 +99,9 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return statePoints;
   },
 
-  deleteRecord: on('et:main:saveIsDestroying', async function(record) {
+  deleteRecord: async function(record) {
     return await record.destroyRecord();
-  }),
+  },
 
   loadRecord(record) {
     record.reload();
@@ -102,41 +118,48 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   },
 
   // STATE MANAGEMENT //
-  appendActiveState:  on('et:main:appendingActiveState', function(optionalValues) {
+  resetActiveState() {
+    setProperties(this, {
+      activeState: {},
+      statePoints: Ember.A()
+    });
+  },
+
+  appendActiveState(optionalValues) {
     const activeState = nativeCopy(get(this, 'activeState'));
     const mergedState = merge(activeState, optionalValues);
 
     get(this, 'statePoints').pushObject(mergedState);
     set(this, 'activeState', activeState);
-  }),
+  },
 
-  loadStatePoint: on('et:main:gameIsRewinding', function(statePoints) {
+  loadStatePoint(statePoints) {
     const activeState = get(statePoints, 'lastObject');
 
     setProperties(this, { activeState, statePoints });
-  }),
+  },
 
   getStateValue(key) {
     return get(this, `activeState.${key}`);
   },
 
-  setStateValue: on('et:main:settingStateValue', function(key, value) {
+  setStateValue(key, value) {
     return set(this, `activeState.${key}`, value);
-  }),
+  },
 
-  decrementStateValue: on('et:main:decrementingStateValue', function(key, amount) {
+  decrementStateValue(key, amount) {
     return this.decrementProperty(`activeState.${key}`, amount);
-  }),
+  },
 
-  incrementStateValue: on('et:main:incrementingStateValue', function(key, amount) {
+  incrementStateValue(key, amount) {
     return this.incrementProperty(`activeState.${key}`, amount);
-  }),
+  },
 
-  toggleStateValue: on('et:main:togglingStateValue', function(key) {
+  toggleStateValue(key) {
     return this.toggleProperty(`activeState.${key}`);
-  }),
+  },
 
-  deleteStateValue: on('et:main:deletingStateValue', function(key) {
+  deleteStateValue(key) {
     return this.setStateValue(key, undefined);
-  })
+  }
 });

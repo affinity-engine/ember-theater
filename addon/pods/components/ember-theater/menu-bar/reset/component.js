@@ -35,7 +35,7 @@ export default MenuBarControl.extend({
   resolve({ result }) {
     switch (get(result, 'key')) {
       case 1:
-        this.publish('et:main:gameIsResetting');
+        this.publish(`et:${get(this, 'theaterId')}:main:gameIsResetting`);
         break;
     }
   }

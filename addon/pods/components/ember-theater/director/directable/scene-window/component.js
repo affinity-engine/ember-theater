@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
@@ -50,9 +50,10 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
   }).readOnly(),
 
   setupEvents: on('init', function() {
+    const theaterId = get(this, 'theaterId');
     const sceneWindowId = get(this, 'sceneWindowId');
 
-    this.on(`et:${sceneWindowId}:closeWindow`, this, this.close);
+    this.on(`et:${theaterId}:${sceneWindowId}:closingWindow`, this, this.close);
   }),
 
   handlePriorSceneRecord: on('didReceiveAttrs', function() {

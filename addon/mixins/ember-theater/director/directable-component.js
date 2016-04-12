@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
@@ -42,8 +42,8 @@ export default Mixin.create(BusPublisherMixin, {
   },
 
   removeDirectable() {
-    const { directable, windowId } = getProperties(this, 'directable', 'windowId');
+    const { directable, theaterId, windowId } = getProperties(this, 'directable', 'theaterId', 'windowId');
 
-    this.publish(`et:${windowId}:removeDirectable`, directable);
+    this.publish(`et:${theaterId}:${windowId}:removingDirectable`, directable);
   }
 });

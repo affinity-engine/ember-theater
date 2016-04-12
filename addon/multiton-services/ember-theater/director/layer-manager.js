@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import DirectableManagerMixin from 'ember-theater/mixins/ember-theater/director/directable-manager';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
@@ -29,9 +29,9 @@ export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, E
   layers: computed(() => Ember.A()),
 
   setupEvents: on('init', function() {
-    const windowId = get(this, 'windowId');
+    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
 
-    this.on(`et:${windowId}:stageIsClearing`, this, this.clearFilters);
+    this.on(`et:${theaterId}:${windowId}:stageIsClearing`, this, this.clearFilters);
   }),
 
   registerLayer(layer) {

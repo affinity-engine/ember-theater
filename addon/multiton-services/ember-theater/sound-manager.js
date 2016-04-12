@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -15,6 +15,12 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   config: multitonService('ember-theater/config', 'theaterId'),
 
   idMap: computed(() => Ember.Object.create()),
+
+  setupEvents: on('init', function() {
+    const theaterId = get(this, 'theaterId');
+
+    this.on(`et:${theaterId}:main:reseting`, this, this.clearSounds);
+  }),
 
   findOrCreateInstance(soundId, instanceId = 0) {
     const instance = get(this, `idMap.${soundId}.${instanceId}`);
@@ -34,7 +40,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return set(idMap, `${soundId}.${instanceId}`, instance);
   },
 
-  clearSounds: on('et:main:reseting', function() {
+  clearSounds() {
     const idMap = get(this, 'idMap');
 
     Object.keys(idMap).forEach((mapKey) => {
@@ -46,5 +52,5 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     });
 
     set(this, 'idMap', Ember.Object.create());
-  })
+  }
 });

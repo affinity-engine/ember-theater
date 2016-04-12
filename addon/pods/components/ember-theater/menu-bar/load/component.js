@@ -33,10 +33,11 @@ export default MenuBarControl.extend({
     const save = get(result, 'object');
 
     if (isPresent(save)) {
+      const theaterId = get(this, 'theaterId');
       const sceneId = get(save, 'activeState.sceneId');
       const options = { autosave: false };
 
-      this.publish('et:main:saveIsLoading', save, sceneId, options);
+      this.publish(`et:${theaterId}:main:saveIsLoading`, save, sceneId, options);
     }
   }
 });

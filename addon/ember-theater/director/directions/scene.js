@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 
 const {
@@ -71,9 +71,10 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   close() {
+    const theaterId = get(this, 'theaterId');
     const sceneWindowId = get(this, 'attrs.sceneWindowId');
 
-    this.publish(`et:${sceneWindowId}:closeWindow`);
+    this.publish(`et:${theaterId}:${sceneWindowId}:closingWindow`);
 
     return this;
   },

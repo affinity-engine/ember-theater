@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusSubscriberMixin from 'ember-theater/mixins/ember-theater/bus-subscriber';
+import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -18,6 +18,12 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
 
   sceneRecord: alias('recorder.sceneRecord'),
 
+  setupEvents: on('init', function() {
+    const theaterId = get(this, 'theaterId');
+
+    this.on(`et:${theaterId}:main:gameIsRewinding`, this, this.rewindToScene);
+  }),
+
   loadLatestScene() {
     get(this, 'curtainPulley').loadLatestScene();
   },
@@ -30,11 +36,11 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
     get(this, 'curtainPulley').resetGame();
   },
 
-  rewindToScene: on('et:main:gameIsRewinding', function(point) {
+  rewindToScene(point) {
     this.toScene(get(point, 'lastObject.sceneId'), {
       autosave: false
     });
-  }),
+  },
 
   toScene(id, options = {}) {
     get(this, 'transitionManager').toScene(id, options);

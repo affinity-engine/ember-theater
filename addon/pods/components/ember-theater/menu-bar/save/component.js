@@ -48,14 +48,15 @@ export default MenuBarControl.extend({
 
   resolve({ result }) {
     const sceneRecord = get(this, 'sceneManager.sceneRecord');
+    const theaterId = get(this, 'theaterId');
 
-    this.publish('et:main:settingStateValue', '_sceneRecord', sceneRecord);
+    this.publish(`et:${theaterId}:main:settingStateValue`, '_sceneRecord', sceneRecord);
 
     switch (get(result, 'key')) {
       case 0: return;
-      case 1: this.publish('et:main:saveIsCreating', get(result, 'input')); break;
-      case 'save': this.publish('et:main:saveIsUpdating', get(result, 'object')); break;
-      case 'delete': this.publish('et:main:saveIsDestroying', get(result, 'object')); break;
+      case 1: this.publish(`et:${theaterId}:main:saveIsCreating`, get(result, 'input')); break;
+      case 'save': this.publish(`et:${theaterId}:main:saveIsUpdating`, get(result, 'object')); break;
+      case 'delete': this.publish(`et:${theaterId}:main:saveIsDestroying`, get(result, 'object')); break;
     }
   }
 });

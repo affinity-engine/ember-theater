@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/ember-theater/bus-publisher';
+import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
 
 import {
   keyDown,
