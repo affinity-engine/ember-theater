@@ -41,7 +41,7 @@ export default MenuBarControl.extend({
     const point = get(result, 'object');
 
     if (isPresent(point)) {
-      this.publish(`et:${get(this, 'theaterId')}:main:gameIsRewinding`, point);
+      this.publish(`et:${get(this, 'theaterId')}:gameIsRewinding`, point);
     }
   }
 });

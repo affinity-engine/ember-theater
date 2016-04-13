@@ -21,7 +21,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   setupEvents: on('init', function() {
     const theaterId = get(this, 'theaterId');
 
-    this.on(`et:${theaterId}:main:gameIsRewinding`, this, this.rewindToScene);
+    this.on(`et:${theaterId}:gameIsRewinding`, this, this.rewindToScene);
   }),
 
   loadLatestScene() {

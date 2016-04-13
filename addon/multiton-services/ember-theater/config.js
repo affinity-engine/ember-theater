@@ -22,7 +22,7 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   setupEvents: on('init', function() {
     const theaterId = get(this, 'theaterId');
 
-    this.on(`et:${theaterId}:main:reseting`, this, this.resetConfig);
+    this.on(`et:${theaterId}:reseting`, this, this.resetConfig);
   }),
 
   initializeConfig(theaterConfig = {}) {

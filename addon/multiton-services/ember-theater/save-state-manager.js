@@ -27,17 +27,17 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   setupEventListenerss: on('init', function() {
     const theaterId = get(this, 'theaterId');
 
-    this.on(`et:${theaterId}:main:saveIsCreating`, this, this.createRecord);
-    this.on(`et:${theaterId}:main:saveIsUpdating`, this, this.updateRecord);
-    this.on(`et:${theaterId}:main:saveIsDestroying`, this, this.deleteRecord);
-    this.on(`et:${theaterId}:main:appendingActiveState`, this, this.appendActiveState);
-    this.on(`et:${theaterId}:main:gameIsRewinding`, this, this.loadStatePoint);
-    this.on(`et:${theaterId}:main:gameIsResetting`, this, this.resetActiveState);
-    this.on(`et:${theaterId}:main:settingStateValue`, this, this.setStateValue);
-    this.on(`et:${theaterId}:main:decrementingStateValue`, this, this.decrementStateValue);
-    this.on(`et:${theaterId}:main:incrementingStateValue`, this, this.incrementStateValue);
-    this.on(`et:${theaterId}:main:togglingStateValue`, this, this.toggleStateValue);
-    this.on(`et:${theaterId}:main:deletingStateValue`, this, this.deleteStateValue);
+    this.on(`et:${theaterId}:saveIsCreating`, this, this.createRecord);
+    this.on(`et:${theaterId}:saveIsUpdating`, this, this.updateRecord);
+    this.on(`et:${theaterId}:saveIsDestroying`, this, this.deleteRecord);
+    this.on(`et:${theaterId}:appendingActiveState`, this, this.appendActiveState);
+    this.on(`et:${theaterId}:gameIsRewinding`, this, this.loadStatePoint);
+    this.on(`et:${theaterId}:gameIsResetting`, this, this.resetActiveState);
+    this.on(`et:${theaterId}:settingStateValue`, this, this.setStateValue);
+    this.on(`et:${theaterId}:decrementingStateValue`, this, this.decrementStateValue);
+    this.on(`et:${theaterId}:incrementingStateValue`, this, this.incrementStateValue);
+    this.on(`et:${theaterId}:togglingStateValue`, this, this.toggleStateValue);
+    this.on(`et:${theaterId}:deletingStateValue`, this, this.deleteStateValue);
   }),
 
   mostRecentSave: computed({

@@ -91,13 +91,13 @@ export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
 
     get(this, 'autosaveManager'); // initialize the autosave-manager
 
-    this.publish(`et:${theaterId}:main:deletingStateValue`, '_sceneRecord');
+    this.publish(`et:${theaterId}:deletingStateValue`, '_sceneRecord');
 
-    this.publish(`et:${theaterId}:main:appendingActiveState`, {
+    this.publish(`et:${theaterId}:appendingActiveState`, {
       sceneId,
       sceneName
     });
 
-    this.publish(`et:${theaterId}:main:writingAutosave`);
+    this.publish(`et:${theaterId}:writingAutosave`);
   }
 });

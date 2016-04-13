@@ -52,7 +52,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
 
     saveStateManager.loadRecord(save);
 
-    this.publish(`et:${theaterId}:main:reseting`);
+    this.publish(`et:${theaterId}:reseting`);
 
     options.sceneRecord = saveStateManager.getStateValue('_sceneRecord') || {};
 

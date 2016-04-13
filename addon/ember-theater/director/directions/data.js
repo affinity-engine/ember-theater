@@ -31,23 +31,23 @@ export default Direction.extend(BusPublisherMixin, {
   },
 
   delete() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:deletingStateValue`, arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:deletingStateValue`, arguments });
   },
 
   decrement() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:decrementingStateValue`, arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:decrementingStateValue`, arguments });
   },
 
   increment() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:incrementingStateValue`, arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:incrementingStateValue`, arguments });
   },
 
   set() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:settingStateValue`, arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:settingStateValue`, arguments });
   },
 
   toggle() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:main:togglingStateValue`, arguments });
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:togglingStateValue`, arguments });
   },
 
   _perform(priorSceneRecord, resolve) {

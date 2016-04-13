@@ -30,7 +30,7 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
   setupEvents: on('init', function() {
     const theaterId = get(this, 'theaterId');
 
-    this.on(`et:${theaterId}:main:writingAutosave`, this, this.writeAutosave);
+    this.on(`et:${theaterId}:writingAutosave`, this, this.writeAutosave);
   }),
 
   autosaves: computed({
@@ -49,11 +49,11 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
     const theaterId = get(this, 'theaterId');
 
     if (get(this, 'maxAutosaves') > get(autosaves, 'length')) {
-      this.publish(`et:${theaterId}:main:saveIsCreating`, '', { isAutosave: true });
+      this.publish(`et:${theaterId}:saveIsCreating`, '', { isAutosave: true });
     } else {
       const autosave = autosaves.sortBy('updated').get('firstObject');
 
-      this.publish(`et:${theaterId}:main:saveIsUpdating`, autosave);
+      this.publish(`et:${theaterId}:saveIsUpdating`, autosave);
     }
   }
 });
