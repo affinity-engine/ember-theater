@@ -10,14 +10,12 @@ const {
 export default TextField.extend({
   classNames: ['et-menu-input'],
 
-  setKeys: on('didReceiveAttrs', function() {
-    const cancelKeys = get(this, 'cancelKeys');
-
-    cancelKeys.forEach((key) => this.on(keyUp(key), this.attrs.toggleInput));
-  }),
-
   focus: on('didInsertElement', function() {
     this.$().focus();
+  }),
+
+  onFocusOut: on('focusOut', function() {
+    this.attrs.toggleInput();
   }),
 
   complete: on(keyDown('Enter'), function() {

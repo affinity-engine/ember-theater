@@ -63,6 +63,9 @@ export default {
         duration: 250
       }
     },
+    menu: {
+      menuUI: 'ember-theater/director/directable/menu/single-column',
+    },
     text: {
       namePosition: 'left',
       textSpeed: 50,

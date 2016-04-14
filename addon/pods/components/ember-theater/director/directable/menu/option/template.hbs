@@ -1,15 +1,15 @@
 {{#if isInput}}
   {{ember-theater/director/directable/menu/option/input
-    menu=menu
-    value=menu.input
+    choice=choice
+    value=choice.input
     cancelKeys=cancelKeys
-    choose=(action 'choose' menu)
+    choose=(action 'choose' choice)
     toggleInput=(action 'toggleInput')
   }}
 {{else}}
   {{ember-theater/director/directable/menu/option/button
-    menu=menu
-    choose=(action 'choose' menu)
+    choice=choice
+    choose=(action 'choose' choice)
     toggleInput=(action 'toggleInput')
   }}
 {{/if}}

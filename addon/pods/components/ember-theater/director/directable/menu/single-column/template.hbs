@@ -1,0 +1,13 @@
+{{#ember-theater/director/directable/menu/logic directable=directable theaterId=theaterId windowId=windowId as |logic|}}
+  {{#if logic.header}}
+    <div class='et-menu-header'>{{logic.header}}</div>
+  {{/if}}
+  {{#each logic.choices as |choice|}}
+    {{ember-theater/director/directable/menu/option
+      keyboardActivated=logic.keyboardActivated
+      keyboardPriority=logic.keyboardPriority
+      choice=choice
+      choose=choose
+    }}
+  {{/each}}
+{{/ember-theater/director/directable/menu/logic}}

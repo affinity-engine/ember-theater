@@ -10,12 +10,12 @@ const {
 export default Component.extend({
   layout,
 
-  classNameBindings: ['menu.class'],
+  classNameBindings: ['choice.class'],
   classNames: ['et-menu-option'],
   tagName: 'button',
 
   handleAction: on('click', 'submit', function() {
-    if (get(this, 'menu.inputable')) {
+    if (get(this, 'choice.inputable')) {
       this.attrs.toggleInput();
     } else {
       this.attrs.choose();

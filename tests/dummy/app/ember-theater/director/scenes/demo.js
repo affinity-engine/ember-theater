@@ -4,21 +4,23 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
-    script.Character('bebe').position('center').transition('transition.fadeIn');
-    await script.Text('Before!');
-    script.Data('foo').set('bar');
-    script.Data('foo').delete();
-    script.Data('poo').toggle();
-    script.Data('counter').increment(3);
-    script.Data('counter2').decrement(2);
-
-    console.log(await script.Data('foo'));
-    console.log(await script.Data('poo'));
-    console.log(await script.Data('counter'));
-    console.log(await script.Data('counter2'));
-    await script.Text('After!');
-
-    script.Scene('demo');
+    const result = await script.Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']);
+    console.log(result);
+    // script.Character('bebe').position('center').transition('transition.fadeIn');
+    // await script.Text('Before!');
+    // script.Data('foo').set('bar');
+    // script.Data('foo').delete();
+    // script.Data('poo').toggle();
+    // script.Data('counter').increment(3);
+    // script.Data('counter2').decrement(2);
+    //
+    // console.log(await script.Data('foo'));
+    // console.log(await script.Data('poo'));
+    // console.log(await script.Data('counter'));
+    // console.log(await script.Data('counter2'));
+    // await script.Text('After!');
+    //
+    // script.Scene('demo');
     // script.Backdrop('classroom');
     // const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
     // await bitsy.Text('theaters.welcome.bitsyGreeting');
