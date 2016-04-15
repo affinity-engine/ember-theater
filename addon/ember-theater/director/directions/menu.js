@@ -4,6 +4,7 @@ import multitonService from 'ember-theater/macros/ember-theater/multiton-service
 
 const {
   get,
+  getProperties,
   merge,
   set
 } = Ember;
@@ -14,16 +15,19 @@ export default Direction.extend({
 
   fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
 
-  _setup(choices) {
+  _setup(choices, text) {
     this._entryPoint();
 
     set(this, 'attrs.choices', choices);
+    set(this, 'attrs.text', text);
 
     return this;
   },
 
   _reset() {
-    return this._super({ choices: get(this, 'attrs.choices') });
+    const attrs = get(this, 'attrs');
+
+    return this._super({ ...getProperties(attrs, 'choices', 'text') });
   },
 
   classNames(classNames) {

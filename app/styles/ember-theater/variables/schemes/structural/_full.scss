@@ -16,6 +16,10 @@ $et-menu-option-full-border-width: $et-menu-border-width !default;
 // text
 $et-text-full-padding: $et-text-padding-base !default;
 $et-text-full-font-size: $et-text-font-size !default;
+$et-text-full-line-height: $et-default-line-height !default;
 $et-text-caption-full-font-size: $et-text-caption-font-size !default;
 $et-text-full-border-width: $et-text-border-width !default;
 $et-text-full-border-radius: $et-default-border-radius !default;
+
+// text-menu
+$et-text-menu-full-margin-top: $et-text-full-line-height !default;

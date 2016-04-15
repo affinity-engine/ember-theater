@@ -1,7 +1,7 @@
 {{#if nameTranslation}}
   <div class='et-text-caption {{namePosition}}' style={{nameStyle}}>{{nameTranslation}}</div>
 {{/if}}
-{{ember-theater/director/directable/text/body
+{{#ember-theater/director/directable/text/body
   instantWriteText=instantWriteText
   keyboardActivated=keyboardActivated
   keyboardPriority=keyboardPriority
@@ -13,3 +13,5 @@
   textTransition=textTransition
   textTransitionRate=textTransitionRate
 }}
+  {{yield}}
+{{/ember-theater/director/directable/text/body}}

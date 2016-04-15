@@ -15,11 +15,11 @@ export default Component.extend({
   layout,
 
   classNames: ['et-text'],
-  classNameBindings: ['customClassNames'],
+  classNameBindings: ['customClassNames', 'scrollable:et-scrollable'],
 
   translator: service('ember-theater/translator'),
 
-  initializePerfectScrollbar: on('didRender', function() {
+  initializePerfectScrollbar: on('didInsertElement', function() {
     if (get(this, 'scrollable')) {
       PerfectScrollbar.initialize(this.$().find('.et-text-body-container')[0], {
         suppressScrollX: true

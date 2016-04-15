@@ -4,7 +4,8 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
-    const result = await script.Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']);
+    const result = await script.Text('Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities!').instant().scrollable().classNames(['et-full', 'et-paper']).Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']).classNames(['et-paper', 'et-block']);
+    // await script.Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']);
     console.log(result);
     // script.Character('bebe').position('center').transition('transition.fadeIn');
     // await script.Text('Before!');

@@ -1,7 +1,21 @@
-{{component menuUI
-  directable=directable
-  keyboardActivated=keyboardActivated
-  theaterId=theaterId
-  windowId=windowId
-  choose=(action 'choose')
-}}
+{{#if directable.attrs.text}}
+  {{#ember-theater/director/directable/text directable=directable.attrs.text keyboardActivated=keyboardActivated theaterId=theaterId windowId=windowId willResolveExternally=true}}
+    <div class="et-text-menu">
+      {{component menuUI
+        directable=directable
+        keyboardActivated=keyboardActivated
+        theaterId=theaterId
+        windowId=windowId
+        choose=(action 'choose')
+      }}
+    </div>
+  {{/ember-theater/director/directable/text}}
+{{else}}
+  {{component menuUI
+    directable=directable
+    keyboardActivated=keyboardActivated
+    theaterId=theaterId
+    windowId=windowId
+    choose=(action 'choose')
+  }}
+{{/if}}

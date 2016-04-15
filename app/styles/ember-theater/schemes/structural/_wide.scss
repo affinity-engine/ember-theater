@@ -33,6 +33,12 @@ $et-text-included: false !default;
         margin: $et-menu-option-full-margin-bottom auto;
       }
     }
+
+    .et-text-menu {
+      .et-menu.et-wide {
+        margin-top: $et-text-menu-wide-margin-top * map-get($breakpoint_factors, small);
+      }
+    }
   }
 
   @media (min-width: map-get($breakpoints, medium)) {
@@ -52,6 +58,12 @@ $et-text-included: false !default;
         width: $et-menu-option-full-width;
         margin-bottom: $et-menu-option-full-margin-bottom;
       }
+    }
+  }
+
+  .et-text-menu {
+    .et-menu.et-wide {
+      margin-top: $et-text-menu-wide-margin-top;
     }
   }
 }

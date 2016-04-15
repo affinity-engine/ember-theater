@@ -26,19 +26,21 @@ export default Mixin.create(BusPublisherMixin, {
     set(directable, 'component', this);
   }),
 
-  resolve() {
-    get(this, 'directable').resolve(get(this, 'directable.direction'));
+  resolveAndDestroy() {
+    this.removeDirectable();
+    this.resolve();
   },
 
-  resolveAndDestroy() {
+  resolve() {
     const directable = get(this, 'directable');
+
+    if (isBlank(directable)) { return; }
+
     const { direction, resolve } = getProperties(directable, 'direction', 'resolve');
 
-    this.removeDirectable();
-
-    next(() => {
+    if (isPresent(resolve)) {
       resolve(direction);
-    });
+    }
   },
 
   removeDirectable() {

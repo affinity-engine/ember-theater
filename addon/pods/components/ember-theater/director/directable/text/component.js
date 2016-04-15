@@ -41,7 +41,7 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
   config: multitonService('ember-theater/config', 'theaterId'),
 
   character: alias('directable.attrs.character'),
-  instantWriteText: or('instant', 'scrollable'),
+  instantWriteText: or('instant'),
 
   keyboardPriority: configurable(configurablePriority, 'keyboardPriority'),
   keys: configurable(configurablePriority, 'keys.accept'),
@@ -86,6 +86,8 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
 
   actions: {
     completeText() {
+      if (get(this, 'willResolveExternally')) { return; }
+
       this.executeTransitionOut().then(() => {
         this.resolveAndDestroy();
       });

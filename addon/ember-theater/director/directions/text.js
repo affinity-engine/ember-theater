@@ -108,5 +108,17 @@ export default Direction.extend({
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
 
     return this;
+  },
+
+  Menu(choices) {
+    this._removeFromQueue();
+
+    const direction = this._createDirection('menu');
+
+    return direction._setup(choices, this);
+  },
+
+  _removeFromQueue() {
+    get(this, 'queue').removeObject(this);
   }
 });

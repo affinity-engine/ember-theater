@@ -15,9 +15,9 @@ $et-text-included: false !default;
 
   @media (min-width: map-get($breakpoints, small)) {
     .et-menu.et-block {
-      top: $et-menu-block-top * map-get($breakpoint_factors, small) * 0.2;
-      right: $et-menu-block-right * map-get($breakpoint_factors, small);
-      left: $et-menu-block-left * map-get($breakpoint_factors, small);
+      top: 0;
+      right: 0;
+      left: 0;
       padding: $et-menu-block-padding * map-get($breakpoint_factors, small);
 
       .et-menu-header {
@@ -35,6 +35,12 @@ $et-text-included: false !default;
         margin-bottom: $et-menu-option-block-margin-bottom * map-get($breakpoint_factors, small);
         border-width: $et-menu-option-block-border-width;
         line-height: $et-menu-option-block-line-height * map-get($breakpoint_factors, small);
+      }
+    }
+
+    .et-text-menu {
+      .et-menu.et-block {
+        margin-top: $et-text-menu-block-margin-top * map-get($breakpoint_factors, small);
       }
     }
   }
@@ -62,6 +68,19 @@ $et-text-included: false !default;
         margin-bottom: $et-menu-option-block-margin-bottom;
         line-height: $et-menu-option-block-line-height;
       }
+    }
+
+    .et-text-menu {
+      .et-menu.et-block {
+        margin-top: $et-text-menu-block-margin-top;
+        width: $et-text-menu-block-width;
+      }
+    }
+  }
+
+  .et-text-menu {
+    .et-menu.et-block {
+      transform: translateY(0);
     }
   }
 }

@@ -52,3 +52,11 @@ $et-menu-included: true;
     }
   }
 }
+
+.et-text-menu {
+  position: relative;
+
+  .et-menu {
+    position: relative;
+  }
+}

@@ -44,3 +44,8 @@ $et-text-caption-block-side: $et-text-block-padding-base !default;
 $et-text-caption-block-padding-ends: 0 !default
 $et-text-caption-block-padding-sides: $et-text-block-padding-base !default;
 $et-text-caption-block-border-radius: $et-text-block-border-radius * 0.7 !default;
+
+// text-menu
+
+$et-text-menu-block-margin-top: $et-text-block-line-height !default;
+$et-text-menu-block-width: $et-menu-block-width !default;
