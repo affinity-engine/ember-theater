@@ -4,9 +4,10 @@ export default Scene.extend({
   name: 'Ember Theater Demo',
 
   start: async function(script) {
-    const result = await script.Text('Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities!').instant().scrollable().classNames(['et-full', 'et-paper']).Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']).classNames(['et-paper', 'et-block']);
+    await script.Text((await script.Random(10)).toString());
+    // const result = await script.Text('Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities!').instant().scrollable().classNames(['et-full', 'et-paper']).Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']).classNames(['et-paper', 'et-block']);
     // await script.Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']);
-    console.log(result);
+    // console.log(result);
     // script.Character('bebe').position('center').transition('transition.fadeIn');
     // await script.Text('Before!');
     // script.Data('foo').set('bar');
@@ -23,8 +24,8 @@ export default Scene.extend({
     //
     // script.Scene('demo');
     // script.Backdrop('classroom');
-    // const bitsy = script.Character('bebe').position('offLeft', 0).position('center', 1000).namePosition('right');
-    // await bitsy.Text('theaters.welcome.bitsyGreeting');
+    // const bitsy = script.Character('bebe').position('center').namePosition('right');
+    // await bitsy.delay(500).expression('angry').delay(500).expression('happy').delay(500).expression('angry').Text('theaters.welcome.bitsyGreeting');
     //
     // const emma = script.Character('blixie').position('offLeft', 0).position('centerLeft', 1000);
     // bitsy.delay(100).position('centerRight', 400);

@@ -10,46 +10,40 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  _setup(min = 0, max = 1) {
+  _setup(firstNumber, secondNumber = 0) {
     this._entryPoint();
 
     const attrs = get(this, 'attrs');
 
     setProperties(attrs, {
-      min,
-      max
+      firstNumber,
+      secondNumber
     });
 
     return this;
   },
 
-  int(int = true) {
-    set(this, 'attrs.int', true);
+  float(float = true) {
+    set(this, 'attrs.float', true);
 
     return this;
   },
 
   _perform(priorSceneRecord, resolve) {
-    if (isPresent(priorSceneRecord)) {
-      set(this, 'result', priorSceneRecord);
-    } else {
-      this._generateRandomNumber();
-    }
-
-    resolve(this);
+    resolve(isPresent(priorSceneRecord) ? priorSceneRecord : this._generateRandomNumber());
   },
 
   _generateRandomNumber() {
     const attrs = get(this, 'attrs');
     const {
-      int,
-      max,
-      min
-    } = getProperties(attrs, 'int', 'max', 'min');
+      float,
+      firstNumber,
+      secondNumber
+    } = getProperties(attrs, 'float', 'firstNumber', 'secondNumber');
 
-    const number = int ? this._generateInt(min, max) : this._generateFloat(min, max);
+    const [min, max] = firstNumber < secondNumber ? [firstNumber, secondNumber] : [secondNumber, firstNumber];
 
-    set(this, 'result', number);
+    return float ? this._generateFloat(min, max) : this._generateInt(min, max);
   },
 
   _generateInt(min, max) {
