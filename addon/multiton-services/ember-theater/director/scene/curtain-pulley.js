@@ -17,10 +17,10 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Multit
   sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   setupEvents: on('init', function() {
-    const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
+    const theaterId = get(this, 'theaterId');
 
-    this.on(`et:${theaterId}:${windowId}:gameIsResetting`, this, this.toInitialScene);
-    this.on(`et:${theaterId}:${windowId}:saveIsLoading`, this, this.loadScene);
+    this.on(`et:${theaterId}:gameIsResetting`, this, this.toInitialScene);
+    this.on(`et:${theaterId}:saveIsLoading`, this, this.loadScene);
   }),
 
   loadLatestScene: async function() {
