@@ -155,6 +155,6 @@ export default Scene.extend({
     // await script.Delay(500);
     // await script.Text('Bye!');
     //
-    // await script.Scene('demo').transitionOut('transition.whirlOut', 1000);
+    await script.Scene('demo').transitionOut('transition.whirlOut', 500);
   }
 });

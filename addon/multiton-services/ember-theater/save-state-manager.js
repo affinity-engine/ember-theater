@@ -1,6 +1,8 @@
 import Ember from 'ember';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
+import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
@@ -16,10 +18,19 @@ const {
 
 const { inject: { service } } = Ember;
 
+const configurablePriority = [
+  'config.attrs.saveStateManager',
+  'config.attrs.globals'
+];
+
 export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   version: '1.1.0',
 
   store: service(),
+
+  config: multitonService('ember-theater/config', 'theaterId'),
+
+  maxStatePoints: configurable(configurablePriority, 'maxStatePoints'),
 
   activeState: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
@@ -126,11 +137,17 @@ export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
   },
 
   appendActiveState(optionalValues) {
+    const maxStatePoints = get(this, 'maxStatePoints');
+    const statePoints = get(this, 'statePoints');
     const activeState = nativeCopy(get(this, 'activeState'));
     const mergedState = merge(activeState, optionalValues);
 
-    get(this, 'statePoints').pushObject(mergedState);
+    statePoints.pushObject(mergedState);
     set(this, 'activeState', activeState);
+
+    while (statePoints.length > maxStatePoints) {
+      statePoints.shiftObject();
+    }
   },
 
   loadStatePoint(statePoints) {
