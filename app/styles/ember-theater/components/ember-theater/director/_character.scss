@@ -1,4 +1,5 @@
 .et-character {
+  @extend .et-unselectable;
   z-index: 10;
 
   position: absolute;

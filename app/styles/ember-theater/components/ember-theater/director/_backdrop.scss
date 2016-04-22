@@ -1,4 +1,5 @@
 .et-backdrop-container, .et-backdrop {
+  @extend .et-unselectable;
   height: 100%;
   width: 100%;
 }
