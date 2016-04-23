@@ -10,6 +10,7 @@
 
   .et-button {
     @include et-ember-base;
+    @include et-highlight($et-ember-highlight-color);
 
     border-style: $et-button-ember-border-style;
 
@@ -20,6 +21,7 @@
   }
 
   .et-input {
+    @include et-highlight($et-ember-highlight-color);
     border-color: $et-input-ember-border-color;
     border-style: $et-input-ember-border-style;
     background: $et-input-ember-background-color;
@@ -43,6 +45,7 @@ $et-text-included: false !default;
     opacity: $et-menu-ember-opacity;
 
     .et-menu-header {
+      @include et-highlight($et-ember-highlight-color);
       font-family: $et-menu-header-ember-font-family;
     }
 
@@ -66,8 +69,13 @@ $et-text-included: false !default;
 
     .et-text-caption {
       @extend .et-ember;
+      @include et-highlight($et-ember-highlight-color);
 
       font-family: $et-text-caption-ember-font-family;
+    }
+
+    .et-text-letter {
+      @include et-highlight($et-ember-highlight-color);
     }
   }
 }

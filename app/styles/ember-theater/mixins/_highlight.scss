@@ -1,0 +1,10 @@
+@mixin et-highlight($et-highlight-color) {
+  &::selection {
+    color: $et-highlight-color;
+    background: transparent;
+  }
+  &::-moz-selection {
+    color: $et-highlight-color;
+    background: transparent;
+  }
+}

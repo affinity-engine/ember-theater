@@ -9,6 +9,7 @@
   @include et-paper-base;
 
   .et-button {
+    @include et-highlight($et-paper-highlight-color);
     border-style: $et-button-paper-border-style;
     border-color: $et-button-paper-border-color;
     background: $et-button-paper-background-color;
@@ -22,6 +23,7 @@
   }
 
   .et-input {
+    @include et-highlight($et-paper-highlight-color);
     border-color: $et-input-paper-border-color;
     border-style: $et-input-ember-border-style;
     background: $et-input-paper-background-color;
@@ -45,6 +47,7 @@ $et-text-included: false !default;
     opacity: $et-menu-paper-opacity;
 
     .et-menu-header {
+      @include et-highlight($et-paper-highlight-color);
       font-family: $et-menu-header-paper-font-family;
       color: $et-menu-header-paper-color;
     }
@@ -69,8 +72,13 @@ $et-text-included: false !default;
 
     .et-text-caption {
       @extend .et-paper;
+      @include et-highlight($et-paper-highlight-color);
 
       font-family: $et-text-caption-paper-font-family;
+    }
+
+    .et-text-letter {
+      @include et-highlight($et-paper-highlight-color);
     }
   }
 }

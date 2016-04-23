@@ -10,6 +10,7 @@
 
   .et-button {
     @include et-coastal-base;
+    @include et-highlight($et-coastal-highlight-color);
 
     border-style: $et-button-coastal-border-style;
 
@@ -19,6 +20,7 @@
   }
 
   .et-input {
+    @include et-highlight($et-coastal-highlight-color);
     border-color: $et-input-coastal-border-color;
     border-style: $et-input-ember-border-style;
     background: $et-input-coastal-background-color;
@@ -42,6 +44,7 @@ $et-text-included: false !default;
     opacity: $et-menu-coastal-opacity;
 
     .et-menu-header {
+      @include et-highlight($et-coastal-highlight-color);
       font-family: $et-menu-header-coastal-font-family;
     }
 
@@ -65,8 +68,13 @@ $et-text-included: false !default;
 
     .et-text-caption {
       @extend .et-coastal;
+      @include et-highlight($et-coastal-highlight-color);
 
       font-family: $et-text-caption-coastal-font-family;
+    }
+
+    .et-text-letter {
+      @include et-highlight($et-coastal-highlight-color);
     }
   }
 }
