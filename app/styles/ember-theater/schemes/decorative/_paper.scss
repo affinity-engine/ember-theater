@@ -77,7 +77,7 @@ $et-text-included: false !default;
       font-family: $et-text-caption-paper-font-family;
     }
 
-    .et-text-letter {
+    .et-text-body, .et-text-letter {
       @include et-highlight($et-paper-highlight-color);
     }
   }

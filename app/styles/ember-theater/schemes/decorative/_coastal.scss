@@ -73,7 +73,7 @@ $et-text-included: false !default;
       font-family: $et-text-caption-coastal-font-family;
     }
 
-    .et-text-letter {
+    .et-text-body, .et-text-letter {
       @include et-highlight($et-coastal-highlight-color);
     }
   }

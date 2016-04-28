@@ -75,7 +75,7 @@ $et-text-included: false !default;
       font-family: $et-text-caption-transparent-font-family;
     }
 
-    .et-text-letter {
+    .et-text-body, .et-text-letter {
       @include et-highlight($et-transparent-hightlight-text-color);
     }
   }
