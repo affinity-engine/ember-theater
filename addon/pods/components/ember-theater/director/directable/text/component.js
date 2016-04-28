@@ -77,9 +77,12 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
     }
   }),
 
-  pressEvent: on('mouseDown', 'touchStart', function(event) {
+  pressEvent: on('mouseUp', 'touchEnd', function(event) {
     // do nothing on right-click or mouse wheel or combo
     if (event.buttons > 1) { return; }
+
+    // do nothing if the text contains highlighted text
+    if (!window.getSelection().isCollapsed) { return; }
 
     set(this, 'pressEventTriggered', true);
   }),
