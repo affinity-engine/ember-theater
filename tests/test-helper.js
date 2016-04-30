@@ -4,10 +4,4 @@ import {
   setResolver
 } from 'ember-qunit';
 
-import delay from './helpers/delay';
-
-const { Test: { registerAsyncHelper } } = Ember;
-
-registerAsyncHelper('delay', delay);
-
 setResolver(resolver);
