@@ -1,5 +1,5 @@
 import { Scene } from 'ember-theater/ember-theater/director';
-import step from 'ember-theater/ember-theater/test-support/step';
+import step from 'ember-theater/ember-theater/director/test-support/step';
 
 export default Scene.extend({
   name: 'Backdrop Direction Test',
@@ -7,7 +7,6 @@ export default Scene.extend({
   start: async function(script) {
     const classroom = script.Backdrop('classroom');
 
-    await script.Delay(0); // why is this necessary?
     await step(script);
     classroom.transition({ opacity: 0.2 });
 
