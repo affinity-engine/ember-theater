@@ -25,15 +25,11 @@ test('Ember Theater | Director | Directions | Backdrop', function(assert) {
     assert.equal(Ember.$(`${hook('backdrop-direction')} img`).attr('alt'), 'Classroom', '`alt` is set by the fixture `caption`');
     assert.ok(Ember.$(`${hook('backdrop-direction')} img`).attr('src').match('theater/backdrops/classroom.png'), 'it sets the `src` based on the associated fixture');
 
-    step();
-
-    return delay(100);
+    return step(100);
   }).then(() => {
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), 0.2, '`transition` sets backdrop css');
 
-    step();
-
-    return delay(100);
+    return step(100);
   }).then(() => {
     assert.equal(parseFloat($hook('backdrop-direction').css('opacity')).toFixed(1), 0.5, '`transition`s can be chained');
 
@@ -45,9 +41,7 @@ test('Ember Theater | Director | Directions | Backdrop', function(assert) {
   }).then(() => {
     assert.equal($hook('backdrop-direction').length, 2, 'multiple instances of the same backdrop can be rendered by setting `instance`');
 
-    step();
-
-    return delay(300);
+    return step(300);
   }).then(() => {
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:first`).css('opacity')).toFixed(1), 0.5, 'instances respond independently to `transition`s: 1');
     assert.equal(parseFloat(Ember.$(`${hook('backdrop-direction')}:nth(1)`).css('opacity')).toFixed(1), 0.6, 'instances respond independently to `transition`s: 2');
@@ -61,10 +55,6 @@ test('Ember Theater | Director | Directions | Backdrop', function(assert) {
     assert.equal($hook('backdrop-direction').length, 4, '`Backdrop` can be passed a fixture directly');
     assert.ok(Ember.$(`${hook('backdrop-direction')}:nth(3) img`).attr('src').match('theater/backdrops/beach-night.jpg'), 'the manually defined backdrop src is set properly');
 
-    Ember.$.Velocity.mock = false;
-
-    step();
-
-    return delay(100);
+    return step(100);
   });
 });
