@@ -15,7 +15,7 @@ moduleForAcceptance('Acceptance | ember-theater/director/directions/character', 
 });
 
 test('Ember Theater | Director | Directions | character', function(assert) {
-  assert.expect(16);
+  assert.expect(18);
 
   visit('/ember-theater/test-scenarios/director/directions/character').then(() => {
     return delay(150);
@@ -66,8 +66,11 @@ test('Ember Theater | Director | Directions | character', function(assert) {
 
     return step()
   }).then(() => {
-    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bitsy/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bitsy/happy.png'), '`expression` can adjust the expression before rendering');
 
     return step(100);
+  }).then(() => {
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bitsy/sad.png'), '`expression` can adjust the expression after rendering');
+    assert.equal(Ember.$(`${hook('character-direction')}:nth(5)`).css('left'), '1024px', '`position` can be chained after expression');
   });
 });
