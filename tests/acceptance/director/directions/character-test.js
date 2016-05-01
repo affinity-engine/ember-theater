@@ -21,8 +21,8 @@ test('Ember Theater | Director | Directions | character', function(assert) {
     return delay(150);
   }).then(() => {
     assert.equal(parseFloat($hook('character-direction').css('opacity')).toFixed(1), '0.1', 'by default uses the config setting to `transition`');
-    assert.equal(Ember.$(`${hook('expression-direction')} img`).attr('alt'), 'Bebe', '`alt` is set by the fixture `caption`');
-    assert.ok(Ember.$(`${hook('expression-direction')} img`).attr('src').match('theater/characters/bebe/neutral.png'), 'it sets the `src` based on the associated fixture expression');
+    assert.equal(Ember.$(`${hook('expression-direction')} img`).attr('alt'), 'Bitsy', '`alt` is set by the fixture `caption`');
+    assert.ok(Ember.$(`${hook('expression-direction')} img`).attr('src').match('theater/characters/bitsy/neutral.png'), 'it sets the `src` based on the associated fixture expression');
 
     return step(100);
   }).then(() => {
@@ -48,7 +48,7 @@ test('Ember Theater | Director | Directions | character', function(assert) {
     return step()
   }).then(() => {
     assert.equal($hook('character-direction').length, 4, '`character` can be passed a fixture directly');
-    assert.ok(Ember.$(`${hook('expression-direction')}:nth(3) img`).attr('src').match('theater/characters/blixie/neutral.png'), 'the manually defined character defaultExpressionId is set properly');
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(3) img`).attr('src').match('theater/characters/emma/neutral.png'), 'the manually defined character defaultExpressionId is set properly');
 
     return step(100);
   }).then(() => {
@@ -57,16 +57,16 @@ test('Ember Theater | Director | Directions | character', function(assert) {
 
     return step(200);
   }).then(() => {
-    const $bebe4 = Ember.$(`${hook('character-direction')}:nth(4)`);
+    const $bitsy4 = Ember.$(`${hook('character-direction')}:nth(4)`);
 
-    assert.equal($bebe4.css('left'), '256px', '`position` can accept multiple positions, Y');
+    assert.equal($bitsy4.css('left'), '256px', '`position` can accept multiple positions, Y');
 
     // phantom return -5%, while Chrome return -38.375px
-    assert.ok(['-38.375px', '-5%'].indexOf($bebe4.css('bottom')) > -1, '`position` can accept multiple positions, X');
+    assert.ok(['-38.375px', '-5%'].indexOf($bitsy4.css('bottom')) > -1, '`position` can accept multiple positions, X');
 
     return step()
   }).then(() => {
-    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bebe/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
+    assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bitsy/happy.png'), '`initialExpression` can adjust the initialExpression before rendering');
 
     return step(100);
   });

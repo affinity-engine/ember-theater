@@ -1,65 +1,91 @@
+/*
+  @property id {String} The id by which you'll reference this expression.
+  @property caption {String} The alt text that will appear for this image. Primarily used for accessability.
+  @property src {String} The path to the image, relative to the `public` directory.
+
+  Example:
+
+  {
+    id: 'steven--jumping',
+    caption: 'Steven Universe jumping',
+    src: 'images/expressions/steven--jumping.png'
+  }
+*/
+
 export default [{
-  id: 'bebe-neutral',
-  caption: 'Bebe',
-  src: 'theater/characters/bebe/neutral.png'
+  id: 'bitsy-neutral',
+  caption: 'Bitsy',
+  src: 'theater/characters/bitsy/neutral.png'
 }, {
-  id: 'bebe-happy',
-  caption: 'Bebe happy',
-  src: 'theater/characters/bebe/happy.png'
+  id: 'bitsy-happy',
+  caption: 'Bitsy happy',
+  src: 'theater/characters/bitsy/happy.png'
 }, {
-  id: 'bebe-laughing',
-  caption: 'Bebe laughing',
-  src: 'theater/characters/bebe/laughing.png'
+  id: 'bitsy-laughing',
+  caption: 'Bitsy laughing',
+  src: 'theater/characters/bitsy/laughing.png'
 }, {
-  id: 'bebe-bored',
-  caption: 'Bebe bored',
-  src: 'theater/characters/bebe/bored.png'
+  id: 'bitsy-bored',
+  caption: 'Bitsy bored',
+  src: 'theater/characters/bitsy/bored.png'
 }, {
-  id: 'bebe-angry',
-  caption: 'Bebe angry',
-  src: 'theater/characters/bebe/angry.png'
+  id: 'bitsy-angry',
+  caption: 'Bitsy angry',
+  src: 'theater/characters/bitsy/angry.png'
 }, {
-  id: 'bebe-sad',
-  caption: 'Bebe sad',
-  src: 'theater/characters/bebe/sad.png'
+  id: 'bitsy-sad',
+  caption: 'Bitsy sad',
+  src: 'theater/characters/bitsy/sad.png'
 }, {
-  id: 'bebe-blush',
-  caption: 'Bebe blush',
-  src: 'theater/characters/bebe/blush.png'
+  id: 'bitsy-blush',
+  caption: 'Bitsy blush',
+  src: 'theater/characters/bitsy/blush.png'
 }, {
-  id: 'bebe-embarrassed',
-  caption: 'Bebe embarrassed',
-  src: 'theater/characters/bebe/embarrassed.png'
+  id: 'bitsy-embarrassed',
+  caption: 'Bitsy embarrassed',
+  src: 'theater/characters/bitsy/embarrassed.png'
 }, {
-  id: 'bebe-panic',
-  caption: 'Bebe panic',
-  src: 'theater/characters/bebe/panic.png'
+  id: 'bitsy-panic',
+  caption: 'Bitsy panic',
+  src: 'theater/characters/bitsy/panic.png'
 }, {
-  id: 'bebe-surprised',
-  caption: 'Bebe surprised',
-  src: 'theater/characters/bebe/surprised.png'
+  id: 'bitsy-surprised',
+  caption: 'Bitsy surprised',
+  src: 'theater/characters/bitsy/surprised.png'
 }, {
-  id: 'blixie-neutral',
-  caption: 'Blixie',
-  src: 'theater/characters/blixie/neutral.png'
+  id: 'emma-neutral',
+  caption: 'Emma',
+  src: 'theater/characters/emma/neutral.png'
 }, {
-  id: 'blixie-happy',
-  caption: 'Blixie happy',
-  src: 'theater/characters/blixie/happy.png'
+  id: 'emma-happy',
+  caption: 'Emma happy',
+  src: 'theater/characters/emma/happy.png'
 }, {
-  id: 'blixie-laughing',
-  caption: 'Blixie laughing',
-  src: 'theater/characters/blixie/laughing.png'
+  id: 'emma-laughing',
+  caption: 'Emma laughing',
+  src: 'theater/characters/emma/laughing.png'
 }, {
-  id: 'blixie-bored',
-  caption: 'Blixie bored',
-  src: 'theater/characters/blixie/bored.png'
+  id: 'emma-bored',
+  caption: 'Emma bored',
+  src: 'theater/characters/emma/bored.png'
 }, {
-  id: 'blixie-angry',
-  caption: 'Blixie angry',
-  src: 'theater/characters/blixie/angry.png'
+  id: 'emma-angry',
+  caption: 'Emma angry',
+  src: 'theater/characters/emma/angry.png'
 }, {
-  id: 'blixie-sad',
-  caption: 'Blixie sad',
-  src: 'theater/characters/blixie/sad.png'
+  id: 'emma-sad',
+  caption: 'Emma sad',
+  src: 'theater/characters/emma/sad.png'
+}, {
+  id: 'emma-embarrassed',
+  caption: 'Emma embarrassed',
+  src: 'theater/characters/emma/embarrassed.png'
+}, {
+  id: 'emma-panic',
+  caption: 'Emma panic',
+  src: 'theater/characters/emma/panic.png'
+}, {
+  id: 'emma-surprised',
+  caption: 'Emma surprised',
+  src: 'theater/characters/emma/surprised.png'
 }];

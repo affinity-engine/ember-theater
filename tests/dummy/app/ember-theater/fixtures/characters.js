@@ -1,27 +1,35 @@
 export default [{
-  id: 'bebe',
-  name: 'Bebe',
+  id: 'bitsy',
+  name: 'Bitsy',
   height: 70,
-  defaultExpression: 'bebe-neutral',
+  defaultExpression: 'neutral',
   expressions: {
-    neutral: 'bebe-neutral',
-    happy: 'bebe-happy',
-    laughing: 'bebe-laughing',
-    bored: 'bebe-bored',
-    angry: 'bebe-angry',
-    sad: 'bebe-sad',
-    blush: 'bebe-blush',
-    embarrassed: 'bebe-embarrassed',
-    panic: 'bebe-panic',
-    surprised: 'bebe-surprised'
+    neutral: 'bitsy-neutral',
+    happy: 'bitsy-happy',
+    laughing: 'bitsy-laughing',
+    bored: 'bitsy-bored',
+    angry: 'bitsy-angry',
+    sad: 'bitsy-sad',
+    blush: 'bitsy-blush',
+    embarrassed: 'bitsy-embarrassed',
+    panic: 'bitsy-panic',
+    surprised: 'bitsy-surprised'
   }
 }, {
-  id: 'blixie',
-  name: 'Blixie',
+  id: 'emma',
+  name: 'Emma',
   height: 90,
-  defaultExpression: {
-    id: 'blixie-neutral',
-    caption: 'Blixie',
-    src: 'theater/characters/blixie/neutral.png'
+  defaultExpression: 'neutral',
+  expressions: {
+    neutral: 'emma-neutral',
+    happy: 'emma-happy',
+    laughing: 'emma-laughing',
+    bored: 'emma-bored',
+    angry: 'emma-angry',
+    sad: 'emma-sad',
+    blush: 'emma-blush',
+    embarrassed: 'emma-embarrassed',
+    panic: 'emma-panic',
+    surprised: 'emma-surprised'
   }
 }];

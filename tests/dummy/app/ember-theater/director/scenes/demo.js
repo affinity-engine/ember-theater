@@ -8,7 +8,7 @@ export default Scene.extend({
     // const result = await script.Text('Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities! Hey! How are you? I am fine and speaking in full sentences. I know that might not seem exciting to you just now, but imagine the possibilities!').instant().scrollable().classNames(['et-full', 'et-paper']).Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']).classNames(['et-paper', 'et-block']);
     // await script.Menu([{ text: 'Inputable A', inputable: true }, 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'A', 'B']);
     // console.log(result);
-    // script.Character('bebe').position('center').transition('transition.fadeIn');
+    // script.Character('bitsy').position('center').transition('transition.fadeIn');
     // await script.Text('Before!');
     // script.Data('foo').set('bar');
     // script.Data('foo').delete();
@@ -24,10 +24,10 @@ export default Scene.extend({
     //
     // script.Scene('demo');
     script.Backdrop('classroom');
-    const bitsy = script.Character('bebe').position('center').namePosition('right');
+    const bitsy = script.Character('bitsy').position('center').namePosition('right');
     await bitsy.delay(500).expression('angry').delay(500).expression('happy').delay(500).expression('angry').Text('Hello! How are you?');
 
-    const emma = script.Character('blixie').position('offLeft', 0).position('centerLeft', 1000);
+    const emma = script.Character('emma').position('offLeft', 0).position('centerLeft', 1000);
     bitsy.delay(100).position('centerRight', 400);
     await emma.Text('Oh! I am just dandy!');
     //
@@ -61,7 +61,7 @@ export default Scene.extend({
 
     // await script.Text('alkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkdsalkajsldkfj alksdjf lkasjd lfka sldkf laksjdfl kjs dlfj lasdjf laksj dlfkja sldkfj lasdjf lkasjd lfkja sldfj laksdj flkasj dlfkj alsdjf lasjd lfkja sldkf jlasdjf lajs dlfja sldfj lkasjd lfja sldfj laksj dflja sldfj alsdjf lasjd flajsldfkj alsjd flasj dlfj aslkdj flkasjldfja lsdfj ljkds').textSpeed(100)
     //
-    // await script.Character('bebe')
+    // await script.Character('bitsy')
     // script.Layer('theater').filter(['blur(0px)', 'blur(10px)'], 10000)
     // script.Text('Start').textSpeed(100);
     // const menu1 = await script.Menu(['A', 'B']);
@@ -71,51 +71,51 @@ export default Scene.extend({
     // await script.Text('After').textSpeed(100)
     // await script.Text('alkajsldkfj').textSpeed(100)
     //
-    // const bebe = await script.Character('bebe').expression('bebe-blush').position('center', 1000).expression('bebe-laughing', { transitionIn: { duration: 1000, effect: 'transition.whirlIn' }, transitionOut: { duration: 1000, effect: 'transition.whirlOut' } }).position('right', 1000).expression('bebe-angry').name('Bebe Prime');
-    // bebe.position('left', 1000).position('center', 2000).expression('bebe-blush').transition('callout.bounce', 1000);
+    // const bitsy = await script.Character('bitsy').expression('bitsy-blush').position('center', 1000).expression('bitsy-laughing', { transitionIn: { duration: 1000, effect: 'transition.whirlIn' }, transitionOut: { duration: 1000, effect: 'transition.whirlOut' } }).position('right', 1000).expression('bitsy-angry').name('Bitsy Prime');
+    // bitsy.position('left', 1000).position('center', 2000).expression('bitsy-blush').transition('callout.bounce', 1000);
     //
-    // const bebe2 = await script.Character('bebe').position('centerLeft', 0);
+    // const bitsy2 = await script.Character('bitsy').position('centerLeft', 0);
     //
-    // await bebe.Text('Default!');
-    // await bebe.namePosition('right').Text('Right!');
-    // await bebe.namePosition('center').Text('Center!');
-    // await bebe.namePosition('left').Text('Left!');
+    // await bitsy.Text('Default!');
+    // await bitsy.namePosition('right').Text('Right!');
+    // await bitsy.namePosition('center').Text('Center!');
+    // await bitsy.namePosition('left').Text('Left!');
     //
-    // bebe.expression('bebe-blush');
-    // bebe2.expression('bebe-laughing');
-    // await bebe.position('nudgeRight', 1000).Text('nudgeRight');
-    // await bebe.position('nudgeRight', 1000).Text('nudgeRight');
-    // await bebe.position('nudgeRight', 1000).Text('nudgeRight');
-    // await bebe.position('nudgeLeft', 1000).Text('nudgeLeft');
-    // await bebe.position('nudgeUp', 1000).Text('nudgeUp');
-    // await bebe.position('nudgeDown', 1000).Text('nudgeDown');
-    // await bebe.position('nudgeForward', 1000).Text('nudgeForward');
-    // await bebe.position('nudgeBack', 1000).Text('nudgeBack');
+    // bitsy.expression('bitsy-blush');
+    // bitsy2.expression('bitsy-laughing');
+    // await bitsy.position('nudgeRight', 1000).Text('nudgeRight');
+    // await bitsy.position('nudgeRight', 1000).Text('nudgeRight');
+    // await bitsy.position('nudgeRight', 1000).Text('nudgeRight');
+    // await bitsy.position('nudgeLeft', 1000).Text('nudgeLeft');
+    // await bitsy.position('nudgeUp', 1000).Text('nudgeUp');
+    // await bitsy.position('nudgeDown', 1000).Text('nudgeDown');
+    // await bitsy.position('nudgeForward', 1000).Text('nudgeForward');
+    // await bitsy.position('nudgeBack', 1000).Text('nudgeBack');
     //
-    // await bebe.Text('farLeft');
-    // await bebe.position('left', 1000).Text('left');
-    // await bebe.position('centerLeft', 1000).Text('centerLeft');
-    // await bebe.position('center', 1000).Text('center');
-    // await bebe.position('centerRight', 1000).Text('centerRight');
-    // await bebe.position('right', 1000).Text('right');
-    // await bebe.position('farRight', 1000).Text('farRight');
-    // await bebe.position('offRight', 1000).Text('offRight');
-    // await bebe.position('center', 1000).position('row2').Text('center row2');
+    // await bitsy.Text('farLeft');
+    // await bitsy.position('left', 1000).Text('left');
+    // await bitsy.position('centerLeft', 1000).Text('centerLeft');
+    // await bitsy.position('center', 1000).Text('center');
+    // await bitsy.position('centerRight', 1000).Text('centerRight');
+    // await bitsy.position('right', 1000).Text('right');
+    // await bitsy.position('farRight', 1000).Text('farRight');
+    // await bitsy.position('offRight', 1000).Text('offRight');
+    // await bitsy.position('center', 1000).position('row2').Text('center row2');
     //
     //
-    // bebe.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
+    // bitsy.position('left').transition({ translateY: '-50%' }, 500).transition({ translateX: '30%' }, 1000, { loop: true });
     //
     // await script.Delay(600);
     //
-    // bebe.stop();
+    // bitsy.stop();
     //
     // await script.Delay(1000);
     //
-    // bebe.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
+    // bitsy.position('right').transition({ translateX: '30%' }, 1000, { loop: true });
     //
     // await script.Delay(600);
     //
-    // bebe.stop();
+    // bitsy.stop();
     //
     // await script.Delay(1000);
     //
@@ -136,10 +136,10 @@ export default Scene.extend({
     // await script.Delay(1000);
     //
     //
-    // await bebe.position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bebe?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
+    // await bitsy.position('center').transition({ translateY: '-50%' }, 500, { loop: 3 }).name('Bitsy?').Text('Hello! I have a lot to say, so please listen up! Hahahahahahahaha!').transitionIn({ opacity: [1, 0], left: [0, '-100vw'] }).keys(['a', ' ']).classNames({ name: 'et-right' });
     // await script.Text('Bye!');
-    // await bebe.expression('bebe-blush');
-    // await bebe.Text('How was that?');
+    // await bitsy.expression('bitsy-blush');
+    // await bitsy.Text('How was that?');
     //
     // await classroom.transition('transition.whirlIn');
     // script.Filter('theater.stage', ['blur(0px)', 'blur(10px)'], 1000);

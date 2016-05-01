@@ -5,38 +5,38 @@ export default Scene.extend({
   name: 'Character Direction Test',
 
   start: async function(script) {
-    const bebe = script.Character('bebe');
+    const bitsy = script.Character('bitsy');
 
     await step(script);
-    bebe.transition({ opacity: 0.2 });
+    bitsy.transition({ opacity: 0.2 });
 
     await step(script);
-    await bebe.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
+    await bitsy.transition({ opacity: 0.3 }).transition({ opacity: 0.4 }).transition({ opacity: 0.5 });
 
     await step(script);
-    const bebe2 = await script.Character('bebe');
+    const bitsy2 = await script.Character('bitsy');
 
     await step(script);
-    await bebe2.transition({ opacity: 0.6 });
+    await bitsy2.transition({ opacity: 0.6 });
 
     await step(script);
-    await script.Character('blixie');
+    await script.Character('emma');
 
     await step(script);
     await script.Character({
       id: 'bobo',
       name: 'Bobo',
       height: 90,
-      defaultExpression: 'blixie-neutral'
+      defaultExpression: 'emma-neutral'
     });
 
     await step(script);
-    const bebe3 = await script.Character('bebe').position('center');
+    const bitsy3 = await script.Character('bitsy').position('center');
 
     await step(script);
-    await bebe3.position('left nudgeDown');
+    await bitsy3.position('left nudgeDown');
 
     await step(script);
-    await script.Character('bebe').initialExpression('bebe-happy').position('center');
+    await script.Character('bitsy').initialExpression('bitsy-happy').position('center');
   }
 });
