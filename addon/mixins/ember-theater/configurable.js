@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Mixin
 } = Ember;
 
 export default Mixin.create({
-  config: multitonService('ember-theater/config', 'theaterId')
+  config: multiton('ember-theater/config', 'theaterId')
 });

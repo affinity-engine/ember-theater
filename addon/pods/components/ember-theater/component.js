@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -23,10 +23,10 @@ export default Component.extend({
   classNames: ['ember-theater'],
   tabIndex: 0,
 
-  multitonServiceManager: service('multiton-service-manager'),
-  configService: multitonService('ember-theater/config', 'theaterId'),
-  producer: multitonService('ember-theater/producer', 'theaterId'),
-  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  multitonManager: service('multiton-service-manager'),
+  configService: multiton('ember-theater/config', 'theaterId'),
+  producer: multiton('ember-theater/producer', 'theaterId'),
+  fixtureStore: multiton('ember-theater/fixture-store', 'theaterId'),
 
   isFocused: alias('producer.isFocused'),
 
@@ -42,7 +42,7 @@ export default Component.extend({
   destroyMultitons: on('willDestroyElement', function() {
     const theaterId = get(this, 'theaterId');
 
-    get(this, 'multitonServiceManager').removeServices(theaterId);
+    get(this, 'multitonManager').removeServices(theaterId);
   }),
 
   claimFocus: on('focusIn', function() {

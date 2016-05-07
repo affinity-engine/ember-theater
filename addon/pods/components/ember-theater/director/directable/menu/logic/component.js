@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -29,7 +29,7 @@ export default Component.extend({
 
   tagName: null,
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
   translator: service('ember-theater/translator'),
 
   choices: configurable(configurablePriority, 'choices'),

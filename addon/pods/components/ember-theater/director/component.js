@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -18,9 +18,9 @@ export default Component.extend({
   classNames: ['et-director'],
   windowId: 'main',
 
-  producer: multitonService('ember-theater/producer', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
+  producer: multiton('ember-theater/producer', 'theaterId'),
+  sceneManager: multiton('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  stageManager: multiton('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   directables: alias('stageManager.directables'),
   keyboardActivated: alias('producer.isFocused'),

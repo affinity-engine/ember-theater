@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import { BusPublisherMixin } from 'ember-message-bus';
+import multiton from 'ember-multiton-service';
 
 const {
   get,
@@ -15,7 +15,7 @@ export default Direction.extend(BusPublisherMixin, {
   componentPath: 'ember-theater/director/directable/scene-window',
   layer: 'windows',
 
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  sceneManager: multiton('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   _setup(sceneId) {
     this._entryPoint();

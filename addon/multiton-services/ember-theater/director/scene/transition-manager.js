@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import animate from 'ember-theater/utils/ember-theater/animate';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import multiton from 'ember-multiton-service';
+import { BusPublisherMixin } from 'ember-message-bus';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -14,10 +15,10 @@ const {
 
 const { run: { later } } = Ember;
 
-export default Ember.Object.extend(BusPublisherMixin, MultitonIdsMixin, {
-  config: multitonService('ember-theater/config', 'theaterId'),
-  autosaveManager: multitonService('ember-theater/autosave-manager', 'theaterId'),
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+export default MultitonService.extend(BusPublisherMixin, MultitonIdsMixin, {
+  config: multiton('ember-theater/config', 'theaterId'),
+  autosaveManager: multiton('ember-theater/autosave-manager', 'theaterId'),
+  sceneManager: multiton('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   toScene(scene, options) {
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');

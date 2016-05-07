@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from './template';
 import animate from 'ember-theater/utils/ember-theater/animate';
 import ConfigurableMixin from 'ember-theater/mixins/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
 
 const {
@@ -25,8 +25,8 @@ export default Component.extend(ConfigurableMixin, {
   classNames: ['et-curtain'],
 
   translator: service('ember-theater/translator'),
-  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  preloader: multitonService('ember-theater/preloader', 'theaterId'),
+  fixtureStore: multiton('ember-theater/fixture-store', 'theaterId'),
+  preloader: multiton('ember-theater/preloader', 'theaterId'),
 
   baseTitle: configurable(configurablePriority, 'title'),
   transitionOut: configurable(configurablePriority, 'transitionOut.effect'),

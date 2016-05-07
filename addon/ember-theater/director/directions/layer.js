@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   get,
@@ -11,7 +11,7 @@ const {
 } = Ember;
 
 export default Direction.extend({
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
+  layerManager: multiton('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
 
   _setup(layer) {
     this._entryPoint();

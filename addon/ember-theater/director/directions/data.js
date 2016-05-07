@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import multiton from 'ember-multiton-service';
+import { BusPublisherMixin } from 'ember-message-bus';
 
 const {
   get,
@@ -12,7 +12,7 @@ const {
 } = Ember;
 
 export default Direction.extend(BusPublisherMixin, {
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
+  saveStateManager: multiton('ember-theater/save-state-manager', 'theaterId'),
 
   _setup(dataId) {
     this._entryPoint();

@@ -5,7 +5,7 @@ import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transit
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
 
 const {
@@ -41,7 +41,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
   classNames: ['et-character'],
   hook: 'character-direction',
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   expressionContainers: computed(() => Ember.A([])),
 

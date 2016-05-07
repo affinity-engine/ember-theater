@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import DirectableManagerMixin from 'ember-theater/mixins/ember-theater/director/directable-manager';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
@@ -22,7 +23,7 @@ const {
 const { run: { later } } = Ember;
 const { inject: { service } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {
+export default MultitonService.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {
   dynamicStylesheet: service(),
 
   filters: computed(() => Ember.A()),

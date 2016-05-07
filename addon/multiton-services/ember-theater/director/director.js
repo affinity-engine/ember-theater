@@ -1,5 +1,6 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import { MultitonService } from 'ember-multiton-service';
+import multiton from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -10,7 +11,7 @@ const {
 
 const { RSVP: { resolve } } = Ember;
 
-export default Ember.Object.extend(MultitonIdsMixin, {
+export default MultitonService.extend(MultitonIdsMixin, {
   direct(script, factory, args) {
     if (get(script, 'isAborted')) { return resolve(); }
 

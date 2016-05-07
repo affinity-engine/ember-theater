@@ -1,5 +1,5 @@
-import LokiAdapter from 'ember-theater/adapters/lokijs';
+import { LokiJSAdapter } from 'ember-lokijs';
 
-export default LokiAdapter.extend({
+export default LokiJSAdapter.extend({
   indices: ['isAutosave']
 });

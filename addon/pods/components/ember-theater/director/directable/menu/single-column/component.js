@@ -3,7 +3,7 @@ import layout from './template';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import {
   keyDown,
   keyUp,
@@ -43,7 +43,7 @@ export default Component.extend(...mixins, {
   classNames: ['et-menu', 'et-menu-single-column'],
   classNameBindings: ['joinedCustomClassNames'],
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   keyboardPriority: configurable(configurablePriority, 'keyboardPriority'),
   moveUpKeys: configurable(configurablePriority, 'keys.moveUp'),

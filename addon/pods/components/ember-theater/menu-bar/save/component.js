@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import MenuBarControl from 'ember-theater/pods/components/ember-theater/menu-bar/control/component';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const { get } = Ember;
 
@@ -14,7 +14,7 @@ export default MenuBarControl.extend({
 
   menuClassNames: reads('config.attrs.menuBar.save.classNames'),
 
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  sceneManager: multiton('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
 
   populateChoices: async function() {
     const saves = await get(this, 'saveStateManager.saves');

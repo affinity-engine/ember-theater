@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import DirectionQueue from './direction-queue';
 
 const {
@@ -18,8 +18,8 @@ export default Ember.Object.extend({
 
   attrs: computed(() => Ember.Object.create({ instance: 0 })),
 
-  sceneManager: multitonService('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
-  stageManager: multitonService('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
+  sceneManager: multiton('ember-theater/director/scene-manager', 'theaterId', 'windowId'),
+  stageManager: multiton('ember-theater/director/stage-manager', 'theaterId', 'windowId'),
 
   delay(delay) {
     set(this, 'attrs.delay', delay);

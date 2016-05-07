@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import DirectionQueue from '../direction-queue';
 
 const {
@@ -16,9 +16,9 @@ export default Direction.extend({
   componentPath: 'ember-theater/director/directable/character',
   layer: 'theater.stage.foreground.character',
 
-  config: multitonService('ember-theater/config', 'theaterId'),
-  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
-  preloader: multitonService('ember-theater/preloader', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
+  fixtureStore: multiton('ember-theater/fixture-store', 'theaterId'),
+  preloader: multiton('ember-theater/preloader', 'theaterId'),
 
   _setup(fixtureOrId) {
     this._entryPoint();

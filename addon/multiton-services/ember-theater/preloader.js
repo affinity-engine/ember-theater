@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -7,7 +8,7 @@ const {
   set
 } = Ember;
 
-export default Ember.Object.extend(MultitonIdsMixin, {
+export default MultitonService.extend(MultitonIdsMixin, {
   initializeQueue: on('init', function() {
     const queue = new createjs.LoadQueue(true);
 

@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import deepMerge from 'ember-theater/utils/ember-theater/deep-merge';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import multiton from 'ember-multiton-service';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -14,10 +15,10 @@ const {
   on,
 } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
+export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
   attrs: computed(() => Ember.Object.create()),
 
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
+  saveStateManager: multiton('ember-theater/save-state-manager', 'theaterId'),
 
   setupEvents: on('init', function() {
     const theaterId = get(this, 'theaterId');

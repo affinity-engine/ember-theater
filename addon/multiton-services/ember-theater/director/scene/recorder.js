@@ -1,6 +1,7 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { MultitonService } from 'ember-multiton-service';
+import multiton from 'ember-multiton-service';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -15,7 +16,7 @@ const {
 
 const { computed: { alias } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
+export default MultitonService.extend(BusSubscriberMixin, Evented, MultitonIdsMixin, {
   setupEvents: on('init', function() {
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
 

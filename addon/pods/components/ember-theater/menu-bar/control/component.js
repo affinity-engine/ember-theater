@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import multiton from 'ember-multiton-service';
+import { BusPublisherMixin } from 'ember-message-bus';
 
 import {
   keyDown,
@@ -31,9 +31,9 @@ export default Component.extend(BusPublisherMixin, EKMixin, {
   tagName: 'button',
   windowId: 'main',
 
-  config: multitonService('ember-theater/config', 'theaterId'),
-  saveStateManager: multitonService('ember-theater/save-state-manager', 'theaterId'),
-  director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
+  config: multiton('ember-theater/config', 'theaterId'),
+  saveStateManager: multiton('ember-theater/save-state-manager', 'theaterId'),
+  director: multiton('ember-theater/director/director', 'theaterId', 'windowId'),
 
   menuBarClassNames: configurable(configurablePriority, 'classNames'),
 

@@ -4,7 +4,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import configurable, { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 
 const {
@@ -37,7 +37,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
   classNames: ['et-layer'],
   classNameBindings: ['layerName'],
 
-  layerManager: multitonService('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
+  layerManager: multiton('ember-theater/director/layer-manager', 'theaterId', 'windowId'),
 
   animation: alias('layerFilter.animation'),
   animationName: alias('layerFilter.animationName'),

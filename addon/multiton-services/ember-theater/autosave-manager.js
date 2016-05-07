@@ -1,9 +1,9 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
+import { BusPublisherMixin, BusSubscriberMixin } from 'ember-message-bus';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   computed,
@@ -20,10 +20,10 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, MultitonIdsMixin, {
+export default MultitonService.extend(BusPublisherMixin, BusSubscriberMixin, MultitonIdsMixin, {
   store: service(),
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   maxAutosaves: configurable(configurablePriority, 'maxAutosaves'),
 

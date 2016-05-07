@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-publisher';
+import multiton from 'ember-multiton-service';
+import { BusPublisherMixin, BusSubscriberMixin } from 'ember-message-bus';
 
 const {
   Evented,
@@ -15,7 +14,7 @@ const {
 export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evented, {
   _sceneRecordIndex: -1,
 
-  director: multitonService('ember-theater/director/director', 'theaterId', 'windowId'),
+  director: multiton('ember-theater/director/director', 'theaterId', 'windowId'),
 
   _setupEvents: on('init', function() {
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');

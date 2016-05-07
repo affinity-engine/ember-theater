@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import layout from './template';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -25,8 +25,8 @@ const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 export default Component.extend({
   layout,
 
-  config: multitonService('ember-theater/config', 'theaterId'),
-  producer: multitonService('ember-theater/producer', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
+  producer: multiton('ember-theater/producer', 'theaterId'),
 
   plugins: reads('config.attrs.menuBar.plugins'),
   customClassNames: configurable(configurablePriority, 'classNames'),

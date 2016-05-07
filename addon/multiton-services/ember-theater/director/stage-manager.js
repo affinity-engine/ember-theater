@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import DirectableManagerMixin from 'ember-theater/mixins/ember-theater/director/directable-manager';
 
 const {
@@ -16,7 +17,7 @@ const {
   setProperties
 } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {
+export default MultitonService.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {
   directables: computed(() => Ember.A()),
 
   setupEvents: on('init', function() {

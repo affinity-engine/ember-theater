@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   merge,
@@ -13,7 +13,7 @@ export default Direction.extend({
   componentPath: 'ember-theater/director/directable/text',
   layer: 'theater.prompt.text',
 
-  fixtureStore: multitonService('ember-theater/fixture-store', 'theaterId'),
+  fixtureStore: multiton('ember-theater/fixture-store', 'theaterId'),
 
   _setup(text, character) {
     this._entryPoint();

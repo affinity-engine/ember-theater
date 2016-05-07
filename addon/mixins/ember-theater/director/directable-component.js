@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import BusPublisherMixin from 'ember-theater/mixins/bus-publisher';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import { BusPublisherMixin } from 'ember-message-bus';
+import multiton from 'ember-multiton-service';
 
 const {
   Mixin,

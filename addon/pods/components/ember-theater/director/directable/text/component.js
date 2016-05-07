@@ -4,7 +4,7 @@ import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theat
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -38,7 +38,7 @@ export default Component.extend(DirectableComponentMixin, StyleableMixin, Transi
 
   classNames: ['et-text-container'],
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   character: alias('directable.attrs.character'),
   instantWriteText: or('instant'),

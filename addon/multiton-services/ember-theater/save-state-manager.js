@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import { MultitonService } from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import configurable from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
@@ -23,12 +24,12 @@ const configurablePriority = [
   'config.attrs.globals'
 ];
 
-export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
+export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
   version: '1.1.0',
 
   store: service(),
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   maxStatePoints: configurable(configurablePriority, 'maxStatePoints'),
 

@@ -1,3 +1,3 @@
-import LokiJSSerializer from 'ember-theater/serializers/lokijs';
+import { LokiJSSerializer } from 'ember-lokijs';
 
-export default LokiJSSerializer.extend();
+export default LokiJSSerializer;

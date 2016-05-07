@@ -3,7 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 
 const {
   Component,
@@ -34,7 +34,7 @@ const configurablePriority = [
 export default Component.extend(...mixins, {
   layout,
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   menuUI: configurable(configurablePriority, 'menuUI'),
 

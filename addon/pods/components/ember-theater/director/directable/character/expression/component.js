@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
@@ -29,8 +29,8 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
 
   translator: service('ember-theater/translator'),
 
-  config: multitonService('ember-theater/config', 'theaterId'),
-  preloader: multitonService('ember-theater/preloader', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
+  preloader: multiton('ember-theater/preloader', 'theaterId'),
 
   caption: configurable(configurablePriority, 'caption'),
   resolve: configurable(configurablePriority, 'resolve'),

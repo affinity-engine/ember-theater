@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 import moment from 'moment';
-import LokiJSModelMixin from 'ember-theater/mixins/lokijs-model';
+import { LokiJSModelMixin } from 'ember-lokijs';
 
 const {
   Model,

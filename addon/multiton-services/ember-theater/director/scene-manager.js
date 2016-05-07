@@ -1,6 +1,7 @@
 import Ember from 'ember';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { MultitonService } from 'ember-multiton-service';
+import multiton from 'ember-multiton-service';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
@@ -11,10 +12,10 @@ const {
 
 const { computed: { alias } } = Ember;
 
-export default Ember.Object.extend(BusSubscriberMixin, MultitonIdsMixin, {
-  curtainPulley: multitonService('ember-theater/director/scene/curtain-pulley', 'theaterId', 'windowId'),
-  recorder: multitonService('ember-theater/director/scene/recorder', 'theaterId', 'windowId'),
-  transitionManager: multitonService('ember-theater/director/scene/transition-manager', 'theaterId', 'windowId'),
+export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
+  curtainPulley: multiton('ember-theater/director/scene/curtain-pulley', 'theaterId', 'windowId'),
+  recorder: multiton('ember-theater/director/scene/recorder', 'theaterId', 'windowId'),
+  transitionManager: multiton('ember-theater/director/scene/transition-manager', 'theaterId', 'windowId'),
 
   sceneRecord: alias('recorder.sceneRecord'),
 

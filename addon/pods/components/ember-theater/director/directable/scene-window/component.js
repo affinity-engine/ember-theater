@@ -1,9 +1,9 @@
 import Ember from 'ember';
 import layout from './template';
-import BusSubscriberMixin from 'ember-theater/mixins/bus-subscriber';
+import { BusSubscriberMixin } from 'ember-message-bus';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
-import multitonService from 'ember-theater/macros/ember-theater/multiton-service';
+import multiton from 'ember-multiton-service';
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
@@ -30,7 +30,7 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
   attributeBindings: ['sceneWindowId:data-scene-window-id'],
   classNames: ['et-scene-window'],
 
-  config: multitonService('ember-theater/config', 'theaterId'),
+  config: multiton('ember-theater/config', 'theaterId'),
 
   configurableClassNames: configurable(configurablePriority, 'classNames'),
   priority: configurable(configurablePriority, 'priority'),
