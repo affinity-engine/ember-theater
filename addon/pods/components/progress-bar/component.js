@@ -12,10 +12,11 @@ export default Component.extend({
 
   initializeProgressBar: on('didInsertElement', function() {
     const shape = get(this, 'shape');
+    const stepSize = 100;
 
     const options = this.$().extend(get(this, 'options'), {
       step(state, bar) {
-        bar.setText((bar.value() * 100).toFixed(0));
+        bar.setText((bar.value() * stepSize).toFixed(0));
       }
     });
 

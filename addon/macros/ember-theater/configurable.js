@@ -18,11 +18,13 @@ const createKeyPriorityPairs = function createKeyPriorityPairs(priorities, ...ke
 
 const deepMerge = function deepMerge(properties, context, initial = {}) {
   const mergedProperty = properties.reduce((accumulator, property) => {
-    return extend({}, get(context, property) || {}, accumulator);
+    const nextValue = get(context, property) || {};
+
+    return extend({}, nextValue, accumulator);
   }, initial);
 
   return Ember.Object.create(mergedProperty);
-}
+};
 
 export default function configurable(priorities, keys) {
   const properties = createKeyPriorityPairs(priorities, keys);

@@ -7,17 +7,9 @@ import multiton from 'ember-multiton-service';
 
 const {
   Component,
-  computed,
-  get,
-  getProperties,
-  isPresent,
   on,
-  set,
-  typeOf
+  set
 } = Ember;
-
-const { inject: { service } } = Ember;
-const { run: { next } } = Ember;
 
 const mixins = [
   DirectableComponentMixin,

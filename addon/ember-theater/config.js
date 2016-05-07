@@ -67,7 +67,7 @@ export default {
       }
     },
     menu: {
-      menuUI: 'ember-theater/director/directable/menu/single-column',
+      menuUI: 'ember-theater/director/directable/menu/single-column'
     },
     text: {
       namePosition: 'left',

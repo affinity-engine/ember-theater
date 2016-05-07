@@ -3,7 +3,6 @@ import multiton from 'ember-multiton-service';
 import DirectionQueue from './direction-queue';
 
 const {
-  K,
   computed,
   get,
   getOwner,
@@ -54,12 +53,12 @@ export default Ember.Object.extend({
   },
 
   _convertToPromise() {
-    const _this = this;
+    const that = this;
 
-    _this.then = async function(...args) {
-      await get(_this, 'queue.allDirectionsAreLoaded');
+    that.then = async function(...args) {
+      await get(that, 'queue.allDirectionsAreLoaded');
 
-      return get(_this, 'queue.executionComplete').then(...args);
+      return get(that, 'queue.executionComplete').then(...args);
     };
 
     set(this, 'promise', { then: this.then });
@@ -67,7 +66,7 @@ export default Ember.Object.extend({
 
   // allows us to resolve the promise by returning the direction
   _devertFromPromise() {
-    delete this.then;
+    Reflect.deleteProperty(this, 'then');
   },
 
   _createDirection(name) {

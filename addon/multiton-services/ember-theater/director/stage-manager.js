@@ -8,13 +8,8 @@ const {
   Evented,
   computed,
   get,
-  getOwner,
   getProperties,
-  isBlank,
-  merge,
-  on,
-  set,
-  setProperties
+  on
 } = Ember;
 
 export default MultitonService.extend(BusSubscriberMixin, DirectableManagerMixin, Evented, MultitonIdsMixin, {

@@ -11,7 +11,6 @@ import {
 const {
   Component,
   K,
-  computed,
   get,
   getOwner,
   getProperties,
@@ -19,8 +18,6 @@ const {
   on,
   set
 } = Ember;
-
-const { RSVP: { Promise } } = Ember;
 
 const configurablePriority = ['config.attrs.menuBar', 'config.attrs.globals'];
 
@@ -86,8 +83,8 @@ export default Component.extend(BusPublisherMixin, EKMixin, {
     } = getProperties(this, 'choices', 'header', 'menuClassNames', 'menuBarClassNames');
 
     const classNames = menuClassNames || menuBarClassNames;
-
-    const choice = await script.Menu(choices).header(header).classNames(classNames).keyboardPriority(999999999);
+    const highestKeyboardPriority = 999999999;
+    const choice = await script.Menu(choices).header(header).classNames(classNames).keyboardPriority(highestKeyboardPriority);
 
     this.resolve(choice);
 
@@ -101,10 +98,15 @@ export default Component.extend(BusPublisherMixin, EKMixin, {
     const container = getOwner(this);
     const script = container.lookup('script:main').create({ sceneRecord: {}, theaterId, windowId, _record: K });
     const direction = container.lookup('direction:scene');
-    const args = (script, window) => {
-      this.scene(script, window);
-    }
+    const windowPriority = 1000;
+    const args = (scriptInstance, windowInstance) => {
+      this.scene(scriptInstance, windowInstance);
+    };
 
-    director.direct(script, direction, [args]).window('_menubar').classNames('et-center-large').priority(1000).transitionIn({ opacity: 1 }, 0);
+    director.direct(script, direction, [args])
+      .window('_menubar')
+      .classNames('et-center-large')
+      .priority(windowPriority)
+      .transitionIn({ opacity: 1 }, 0);
   }
 });

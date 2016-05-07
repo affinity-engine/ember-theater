@@ -4,18 +4,15 @@ import { BusSubscriberMixin } from 'ember-message-bus';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import multiton from 'ember-multiton-service';
-import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
   computed,
   get,
-  isPresent,
   on,
   set
 } = Ember;
-
-const { computed: { reads } } = Ember;
 
 const configurablePriority = [
   'directable.attrs',
@@ -43,7 +40,8 @@ export default Component.extend(BusSubscriberMixin, DirectableComponentMixin, Tr
 
   childStyle: computed('priority', {
     get() {
-      const priority = get(this, 'priority') * 1000;
+      const priorityMultiplier = 1000;
+      const priority = get(this, 'priority') * priorityMultiplier;
 
       return `z-index: ${priority};`;
     }

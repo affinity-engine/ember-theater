@@ -47,11 +47,15 @@ export default Component.extend(ConfigurableMixin, {
   _styleProgressBar: on('init', function() {
     const config = get(this, 'config.attrs');
 
+    const colorLength = 3;
+    const defaultStrokeWidth = 4;
+    const defaultTrailWidthMultiplier = 0.62;
+
     const color = get(config, 'curtain.progressBarStyle.color') || 'rgb(250, 250, 250)';
     const trailColor = get(config, 'curtain.progressBarStyle.trailColor') ||
-      `rgba(${color.match(/(\d+)/g).slice(0, 3).join(', ')}, 0.62)`;
-    const strokeWidth = get(config, 'curtain.progressBarStyle.strokeWidth') || 4;
-    const trailWidth = get(config, 'curtain.progressBarStyle.trailWidth') || strokeWidth * 0.62;
+      `rgba(${color.match(/(\d+)/g).slice(0, colorLength).join(', ')}, 0.62)`;
+    const strokeWidth = get(config, 'curtain.progressBarStyle.strokeWidth') || defaultStrokeWidth;
+    const trailWidth = get(config, 'curtain.progressBarStyle.trailWidth') || strokeWidth * defaultTrailWidthMultiplier;
 
     const options = {
       color,
@@ -94,6 +98,8 @@ export default Component.extend(ConfigurableMixin, {
   }),
 
   _complete() {
+    const pauseDuration = 750;
+
     later(() => {
       const effect = get(this, 'transitionOut');
       const duration = get(this, 'transitionOutDuration');
@@ -101,6 +107,6 @@ export default Component.extend(ConfigurableMixin, {
       animate(this.element, effect, { duration }).then(() => {
         this.attrs.completePreload();
       });
-    }, 750);
+    }, pauseDuration);
   }
 });

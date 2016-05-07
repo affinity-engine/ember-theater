@@ -3,7 +3,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import multiton from 'ember-multiton-service';
-import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   Component,
@@ -14,7 +14,6 @@ const {
 } = Ember;
 
 const { inject: { service } } = Ember;
-const { Handlebars: { SafeString } } = Ember;
 const { run: { next } } = Ember;
 
 const configurablePriority = [
@@ -57,7 +56,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
       $image.addClass('et-backdrop');
       $image.attr('alt', captionTranslation);
 
-      this.$().append($image);  
+      this.$().append($image);
     });
   }),
 

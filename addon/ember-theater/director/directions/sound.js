@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multiton from 'ember-multiton-service';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 
 const {
   get,
@@ -9,12 +10,20 @@ const {
   typeOf
 } = Ember;
 
+const configurablePriority = [
+  'config.attrs.director.sound',
+  'config.attrs.globals'
+];
+
 export default Direction.extend({
   componentPath: 'ember-theater/director/directable/sound',
 
+  config: multiton('ember-theater/fixture-store', 'theaterId'),
   fixtureStore: multiton('ember-theater/fixture-store', 'theaterId'),
   preloader: multiton('ember-theater/preloader', 'theaterId'),
   soundManager: multiton('ember-theater/sound-manager', 'theaterId'),
+
+  duration: configurable(configurablePriority, 'duration'),
 
   _setup(fixtureOrId) {
     this._entryPoint();
@@ -110,8 +119,9 @@ export default Direction.extend({
     this._entryPoint();
 
     const soundInstance = get(this, 'attrs.soundInstance');
+    const noLoop = -1;
 
-    soundInstance.loop = loop === true ? -1 : loop;
+    soundInstance.loop = loop === true ? noLoop : loop;
 
     return this;
   },
@@ -159,8 +169,9 @@ export default Direction.extend({
     const toVolume = volume;
     const volumeDistance = toVolume - fromVolume;
 
-    const fadeDuration = duration || get(this, 'config.attrs.sound.duration') || 1000;
-    const stepSize = volumeDistance / (fadeDuration / 10);
+    const interval = 10;
+    const fadeDuration = duration || get(this, 'duration');
+    const stepSize = volumeDistance / (fadeDuration / interval);
 
     soundInstance.currentFade = setInterval(() => {
       soundInstance.volume += stepSize;
@@ -170,7 +181,7 @@ export default Direction.extend({
 
         return callback();
       }
-    }, 10);
+    }, interval);
 
     return this;
   },

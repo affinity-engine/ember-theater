@@ -54,7 +54,7 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, {
 
   image: computed('expression.$image', {
     get() {
-      return get(this, 'expression.$image')[0]
+      return get(this, 'expression.$image')[0];
     }
   }),
 

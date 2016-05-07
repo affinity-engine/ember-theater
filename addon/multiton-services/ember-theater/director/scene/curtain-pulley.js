@@ -7,7 +7,6 @@ import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 const {
   get,
   getProperties,
-  isEmpty,
   isPresent,
   on
 } = Ember;

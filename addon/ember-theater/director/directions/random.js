@@ -24,7 +24,7 @@ export default Direction.extend({
   },
 
   float(float = true) {
-    set(this, 'attrs.float', true);
+    set(this, 'attrs.float', float);
 
     return this;
   },

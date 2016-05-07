@@ -2,11 +2,10 @@ import Ember from 'ember';
 import layout from './template';
 import PerfectScrollbarMixin from 'ember-theater/mixins/perfect-scrollbar';
 import StyleableMixin from 'ember-theater/mixins/ember-theater/director/styleable';
-import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multiton from 'ember-multiton-service';
 import {
   keyDown,
-  keyUp,
   EKMixin
 } from 'ember-keyboard';
 
@@ -17,11 +16,9 @@ const {
   getProperties,
   isPresent,
   on,
-  set,
   typeOf
 } = Ember;
 
-const { inject: { service } } = Ember;
 const { run: { next } } = Ember;
 
 const mixins = [
@@ -74,11 +71,15 @@ export default Component.extend(...mixins, {
   }),
 
   focusDown(event) {
-    this.keyboardEvent(event, (index, length) => index + 1 === length ? 0 : index + 1);
+    this.keyboardEvent(event, (index, length) => {
+      return index + 1 === length ? 0 : index + 1;
+    });
   },
 
   focusUp(event) {
-    this.keyboardEvent(event, (index, length) => index - 1 < 0 ? length - 1 : index - 1);
+    this.keyboardEvent(event, (index, length) => {
+      return index - 1 < 0 ? length - 1 : index - 1;
+    });
   },
 
   keyboardEvent(event, indexCallback) {

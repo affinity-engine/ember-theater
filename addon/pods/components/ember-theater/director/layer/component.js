@@ -3,7 +3,7 @@ import layout from './template';
 import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/director/directable-component';
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
-import configurable, { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multiton from 'ember-multiton-service';
 import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 

@@ -23,7 +23,7 @@ export default Controller.extend({
     },
 
     nextScene(script) {
-      script.Text('Next Scene!')
+      script.Text('Next Scene!');
     }
   }
 });

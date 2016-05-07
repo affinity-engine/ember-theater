@@ -19,8 +19,9 @@ export default TextTag.extend({
   */
 
   start(context, index, speedString) {
+    const radix = 10;
     const speed = speedString.charAt(0) === '*' ?
-      parseInt(get(context, 'textSpeed'), 10) * parseFloat(speedString.substring(1), 10) :
+      parseInt(get(context, 'textSpeed'), radix) * parseFloat(speedString.substring(1), radix) :
       speedString;
 
     set(context, 'textSpeed', speed);

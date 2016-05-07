@@ -15,8 +15,10 @@ export default Mixin.create(Evented, {
   }),
 
   _initResizeHandler: on('didInsertElement', function() {
+    const debounceDuration = 10;
+
     Ember.$(window).on(`resize.${this.elementId}`, () => {
-      Ember.run.debounce(this, this._triggerResizeListeners, 10);
+      Ember.run.debounce(this, this._triggerResizeListeners, debounceDuration);
     });
   }),
 

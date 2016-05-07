@@ -4,7 +4,7 @@ import DirectableComponentMixin from 'ember-theater/mixins/ember-theater/directo
 import TransitionMixin from 'ember-theater/mixins/ember-theater/director/transition';
 import TransitionObserverMixin from 'ember-theater/mixins/ember-theater/director/transition-observer';
 import WindowResizeMixin from 'ember-theater/mixins/ember-theater/window-resize';
-import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable, { deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 import multiton from 'ember-multiton-service';
 import { Directable } from 'ember-theater/ember-theater/director';
 
@@ -25,7 +25,6 @@ const {
   }
 } = Ember;
 
-const { Handlebars: { SafeString } } = Ember;
 const { RSVP: { Promise } } = Ember;
 
 const configurablePriority = [
@@ -69,11 +68,13 @@ export default Component.extend(DirectableComponentMixin, TransitionMixin, Trans
   // during a window resize, the img dimensions get out of proportion. by forcing the browser
   // to redraw the element, we force it to also recalculate the ratios.
   handleWindowResize: on('windowResize', function() {
+    const waitDuration = 50;
+
     this.$().css('display', 'none');
 
     later(() => {
       this.$().css('display', 'block');
-    }, 50);
+    }, waitDuration);
   }),
 
   addInitialExpression: on('init', function() {

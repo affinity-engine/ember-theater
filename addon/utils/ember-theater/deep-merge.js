@@ -6,7 +6,10 @@ const {
   typeOf
 } = Ember;
 
-export default function merge(target = {}, source) {
+export default function merge(...args) {
+  const target = args[0] || {};
+  const source = args[1];
+
   Object.keys(source).forEach((key) => {
     const sourceProperty = get(source, key);
 
@@ -17,8 +20,8 @@ export default function merge(target = {}, source) {
     }
   });
 
-  for (let a = 2, l = arguments.length; a < l; a++) {
-    merge(target, arguments[a]);
+  for (let a = 2, l = args.length; a < l; a++) {
+    merge(target, args[a]);
   }
 
   return target;

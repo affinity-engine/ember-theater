@@ -19,34 +19,10 @@ module.exports = function(defaults) {
       useLintTree: false
     },
 
-    // eslint: {
-    //   testGenerator: eslintTestGenerator
-    // },
-
     codemirror: {
       modes: ['javascript']
     }
   });
-
-  /* eslintTestGenerator */
-  function render(errors) {
-    if (!errors) { return ''; }
-    return errors.map(function(error) {
-      return error.line + ':' + error.column + ' ' +
-        ' - ' + error.message + ' (' + error.ruleId +')';
-    }).join('\n');
-  }
-
-  // Qunit test generator
-  function eslintTestGenerator(relativePath, errors) {
-    var pass = !errors || errors.length === 0;
-    return "import { module, test } from 'qunit';\n" +
-      "module('ESLint - " + path.dirname(relativePath) + "');\n" +
-      "test('" + relativePath + " should pass ESLint', function(assert) {\n" +
-      "  assert.ok(" + pass + ", '" + relativePath + " should pass ESLint." +
-      jsStringEscape("\n" + render(errors)) + "');\n" +
-      "});\n";
-  }
 
   return addon.toTree();
 }

@@ -79,7 +79,7 @@ export default Direction.extend({
   _removeDefaultTransition() {
     if (get(this, 'hasDefaultTransition')) {
       set(this, 'hasDefaultTransition', false);
-      set(this, 'attrs.transitions', Ember.A())
+      set(this, 'attrs.transitions', Ember.A());
     }
   }
 });

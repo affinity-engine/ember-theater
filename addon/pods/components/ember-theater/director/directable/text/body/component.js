@@ -19,7 +19,6 @@ const {
   computed,
   get,
   isBlank,
-  isPresent,
   on,
   set,
   setProperties
@@ -80,7 +79,7 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
 
   advanceText(event) {
     if (event) {
-      event.preventDefault()
+      event.preventDefault();
     }
 
     if (get(this, 'pageLoaded')) {
@@ -199,7 +198,8 @@ export default Component.extend(EKMixin, WindowResizeMixin, {
       $word.html(text);
     }
 
-    const duration = 1000 / get(this, 'textSpeed');
+    const second = 1000;
+    const duration = second / get(this, 'textSpeed');
     const rate = get(this, 'textTransitionRate');
     const style = get(this, 'textTransition');
     const $letter = $word.find(`span.${letterClass}:eq(${characterIndex})`);

@@ -4,7 +4,6 @@ const {
   K,
   computed,
   get,
-  getProperties,
   set
 } = Ember;
 
@@ -29,7 +28,7 @@ export default Ember.Object.extend({
   startCountdown(object) {
     const allDirectionsAreLoaded = new Promise((resolve) => {
       next(() => {
-        if (get(this, '_directions').indexOf(object) === 0) {
+        if (get(this, '_directions.firstObject') === object) {
           const promise = this._execute();
           const script = get(this, 'script');
 
@@ -53,17 +52,18 @@ export default Ember.Object.extend({
     const priorSceneRecord = script._getPriorSceneRecord();
 
     return new Promise((resolve) => {
-      get(this, '_directions').forEach((direction, index) => {
-        this._resolveDirection(direction, index, priorSceneRecord, resolve);
+      let resolveOrK = resolve;
+
+      get(this, '_directions').forEach((direction) => {
+        this._resolveDirection(direction, priorSceneRecord, resolveOrK);
+
+        resolveOrK = K;
       });
     });
   },
 
-  _resolveDirection(direction, index, priorSceneRecord, resolve) {
-    const resolveOrK = index === 0 ? resolve : K;
-
+  _resolveDirection(direction, priorSceneRecord, resolve) {
     direction._devertFromPromise();
-
-    direction._perform(priorSceneRecord, resolveOrK);
-  },
-})
+    direction._perform(priorSceneRecord, resolve);
+  }
+});

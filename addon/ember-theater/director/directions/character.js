@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
 import multiton from 'ember-multiton-service';
-import DirectionQueue from '../direction-queue';
 
 const {
   get,
@@ -62,7 +61,7 @@ export default Direction.extend({
 
   expression(fixtureOrId, options = {}) {
     if (get(this, 'hasDefaultTransition')) {
-      return this.initialExpression(fixtureOrId)
+      return this.initialExpression(fixtureOrId);
     } else {
       return this._changeExpression(fixtureOrId, options);
     }
@@ -72,7 +71,7 @@ export default Direction.extend({
     this._removeDefaultTransition();
     this._entryPoint();
 
-    const transitions = get(this, 'attrs.transitions')
+    const transitions = get(this, 'attrs.transitions');
     const expression = this._findExpression(fixtureOrId);
 
     transitions.pushObject(merge({ expression, type: 'crossFade', queue: 'expression' }, options));
@@ -105,13 +104,13 @@ export default Direction.extend({
   },
 
   position(positions, duration = 0, options = {}) {
-    const effect = positions.split(' ').reduce((effect, position) => {
-      return merge(effect,
-        get(this, `fixture.positions.character.${position}`) ||
+    const effect = positions.split(' ').reduce((aggregator, position) => {
+      const nextEffect = get(this, `fixture.positions.character.${position}`) ||
         get(this, `fixture.positions.${position}`) ||
         get(this, `config.attrs.director.positions.character.${position}`) ||
-        get(this, `config.attrs.director.positions.${position}`)
-      )
+        get(this, `config.attrs.director.positions.${position}`);
+
+      return merge(aggregator, nextEffect);
     }, {});
 
     this.transition(effect, duration, options);

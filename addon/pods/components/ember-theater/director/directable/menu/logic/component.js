@@ -1,21 +1,18 @@
 import Ember from 'ember';
 import layout from './template';
-import configurable, { deepConfigurable } from 'ember-theater/macros/ember-theater/configurable';
+import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multiton from 'ember-multiton-service';
 
 const {
   Component,
   computed,
   get,
-  getProperties,
   isPresent,
   on,
-  set,
   typeOf
 } = Ember;
 
 const { inject: { service } } = Ember;
-const { run: { next } } = Ember;
 
 const configurablePriority = [
   'directable.attrs',

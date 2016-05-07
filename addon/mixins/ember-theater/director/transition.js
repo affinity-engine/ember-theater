@@ -7,10 +7,8 @@ const {
   computed,
   get,
   getProperties,
-  guidFor,
   isBlank,
   isPresent,
-  merge,
   set
 } = Ember;
 
@@ -67,20 +65,20 @@ export default Mixin.create({
 
       const next = () => {
         this._executeTransitions(transitions, parentQueue, resolve);
-      }
+      };
 
-      if (queue !== parentQueue) {
+      if (queue === parentQueue) {
+        promise.then(next);
+      } else {
         this._startParallelQueue(queue, transitions);
 
-        next();
-      } else {
-        promise.then(next);
+        return next();
       }
     }
   },
 
   _transitionSwitch(transition) {
-    switch(get(transition, 'type')) {
+    switch (get(transition, 'type')) {
       case 'delay': return this.delay(transition);
       case 'crossFade': return this.crossFade(transition);
       case 'filter': return this.addFilter(transition);
@@ -105,7 +103,7 @@ export default Mixin.create({
     const effect = get(transition, 'effect');
     const options = getProperties(transition, ...Object.keys(transition));
 
-    delete options.queue;
+    Reflect.deleteProperty(options, 'queue');
 
     if (isPresent(get(this, 'priorSceneRecord'))) {
       set(options, 'duration', 0);

@@ -25,9 +25,11 @@ export default Scene.extend({
     // script.Scene('demo');
     script.Backdrop('classroom');
     const bitsy = script.Character('bitsy').position('center').namePosition('right');
+
     await bitsy.delay(500).expression('angry').delay(500).expression('happy').delay(500).expression('angry').Text('Hello! How are you?');
 
     const emma = script.Character('emma').position('offLeft', 0).position('centerLeft', 1000);
+
     bitsy.delay(100).position('centerRight', 400);
     await emma.Text('Oh! I am just dandy!');
     //

@@ -5,12 +5,7 @@ import multiton from 'ember-multiton-service';
 
 const {
   Component,
-  K,
-  get,
-  getOwner,
-  on,
-  set,
-  setProperties
+  set
 } = Ember;
 
 const {

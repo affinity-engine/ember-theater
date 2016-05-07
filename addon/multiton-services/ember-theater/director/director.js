@@ -1,12 +1,10 @@
 import Ember from 'ember';
 import { MultitonService } from 'ember-multiton-service';
-import multiton from 'ember-multiton-service';
 import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
 
 const {
   get,
-  getProperties,
-  isPresent
+  getProperties
 } = Ember;
 
 const { RSVP: { resolve } } = Ember;

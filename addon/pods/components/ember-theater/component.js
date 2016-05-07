@@ -14,6 +14,8 @@ const { computed: { alias } } = Ember;
 const { inject: { service } } = Ember;
 const { run: { debounce } } = Ember;
 
+const focusDebounceDuration = 100;
+
 export default Component.extend({
   layout,
 
@@ -32,8 +34,8 @@ export default Component.extend({
 
   initializeConfig: on('init', function() {
     const config = get(this, 'config');
-    const theaterId = get(this, 'theaterId') || set(this, 'theaterId', 'ember-theater-default');
 
+    set(this, 'theaterId', get(this, 'theaterId') || 'ember-theater-default');
     get(this, 'configService').initializeConfig(config);
 
     this._loadfixtures();
@@ -46,11 +48,11 @@ export default Component.extend({
   }),
 
   claimFocus: on('focusIn', function() {
-    debounce(this, () => set(this, 'isFocused', true), 100);
+    debounce(this, () => set(this, 'isFocused', true), focusDebounceDuration);
   }),
 
   relinquishFocus: on('focusOut', function() {
-    debounce(this, () => set(this, 'isFocused', false), 100);
+    debounce(this, () => set(this, 'isFocused', false), focusDebounceDuration);
   }),
 
   _loadfixtures() {

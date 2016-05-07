@@ -86,10 +86,10 @@ export default Direction.extend({
     return this;
   },
 
-  transition() {
+  transition(...args) {
     this._entryPoint();
 
-    this.transitionIn(...arguments);
+    this.transitionIn(...args);
 
     return this;
   },

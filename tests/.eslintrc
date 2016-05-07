@@ -11,7 +11,8 @@
     "currentPath": true,
     "currentRouteName": true,
     "keyEvent": true,
-    "delay": true
+    "delay": true,
+    "step": true
   },
   "rules": {
     "arrow-parens": [2, "always"],
@@ -19,7 +20,9 @@
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "indent": [2, 2, { "SwitchCase": 1 }],
     "max-len": 0,
+    "newline-per-chained-call": 0,
     "no-console": 0,
+    "no-magic-numbers": 0,
     "no-nested-ternary": 0,
     "no-restricted-syntax": [2, "WithStatement"],
     "no-ternary": 0,

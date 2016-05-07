@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 const { typeOf } = Ember;
 
-export function emberTheaterJoinedArray(params/*, hash*/) {
+export function emberTheaterJoinedArray(params) {
   const array = params[0];
   const joinString = params[1] || ' ';
 

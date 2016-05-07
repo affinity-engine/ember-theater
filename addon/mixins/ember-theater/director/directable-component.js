@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { BusPublisherMixin } from 'ember-message-bus';
-import multiton from 'ember-multiton-service';
 
 const {
   Mixin,
@@ -13,7 +12,6 @@ const {
 } = Ember;
 
 const { computed: { alias } } = Ember;
-const { run: { next } } = Ember;
 
 export default Mixin.create(BusPublisherMixin, {
   priorSceneRecord: alias('directable.priorSceneRecord'),

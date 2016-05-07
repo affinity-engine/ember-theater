@@ -9,7 +9,6 @@ const {
   get,
   getOwner,
   getProperties,
-  isPresent,
   typeOf
 } = Ember;
 
@@ -38,9 +37,10 @@ export default MultitonService.extend(BusPublisherMixin, MultitonIdsMixin, {
 
   _transitionScene(scene, options) {
     this._clearStage();
-    this._setSceneManager(script, options);
+    this._setSceneManager(options);
 
     const script = this._buildScript();
+
     const { start, sceneId, sceneName } = typeOf(scene) === 'function' ?
       { start: scene } :
       this._buildScene(scene);
@@ -59,10 +59,10 @@ export default MultitonService.extend(BusPublisherMixin, MultitonIdsMixin, {
       start: instance.start,
       sceneId: id,
       sceneName: get(instance, 'name')
-    }
+    };
   },
 
-  _buildScript(options) {
+  _buildScript() {
     const sceneManager = get(this, 'sceneManager');
     const factory = getOwner(this).lookup('script:main');
     const { theaterId, windowId } = getProperties(this, 'theaterId', 'windowId');
@@ -77,15 +77,14 @@ export default MultitonService.extend(BusPublisherMixin, MultitonIdsMixin, {
     this.publish(`et:${theaterId}:${windowId}:stageIsClearing`);
   },
 
-  _setSceneManager(script, options) {
+  _setSceneManager(options) {
     const sceneManager = get(this, 'sceneManager');
     const sceneRecord = get(options, 'sceneRecord');
 
-    sceneManager.setScript(script);
     sceneManager.setSceneRecord(sceneRecord);
   },
 
-  _updateAutosave: async function(sceneId, sceneName, options) {
+  _updateAutosave(sceneId, sceneName, options) {
     if (get(options, 'autosave') === false || get(this, 'config.attrs.director.scene.autosave') === false) { return; }
 
     const theaterId = get(this, 'theaterId');

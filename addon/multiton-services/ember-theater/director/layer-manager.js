@@ -10,10 +10,7 @@ const {
   computed,
   generateGuid,
   get,
-  getOwner,
   getProperties,
-  isBlank,
-  merge,
   on,
   set,
   setProperties,
@@ -71,7 +68,8 @@ export default MultitonService.extend(BusSubscriberMixin, DirectableManagerMixin
     const effects = typeOf(effect) === 'array' ? effect : [effect];
     const totalEffects = effects.length - 1;
     const keyframeStates = effects.reduce((states, state, index) => {
-      const percent = index / totalEffects * 100;
+      const percentage = 100;
+      const percent = index / totalEffects * percentage;
 
       return `${states}${percent}%{-webkit-filter:${state};filter:${state};}`;
     }, '');

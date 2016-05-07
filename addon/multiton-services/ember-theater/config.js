@@ -12,7 +12,7 @@ const {
   isPresent,
   set,
   setProperties,
-  on,
+  on
 } = Ember;
 
 export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
@@ -46,9 +46,9 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
   _configs: computed({
     get() {
       const paths = Object.keys(requirejs.entries);
-      const isConfig = new RegExp(`\/ember-theater\/config`);
-      const isTest = new RegExp(`\/tests\/`);
-      const isThisService = new RegExp(`\/services\/ember-theater\/config`);
+      const isConfig = new RegExp('\/ember-theater\/config');
+      const isTest = new RegExp('\/tests\/');
+      const isThisService = new RegExp('\/services\/ember-theater\/config');
 
       return paths.filter((path) => {
         return isConfig.test(path) && !isTest.test(path) && !isThisService.test(path);

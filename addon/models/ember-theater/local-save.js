@@ -47,7 +47,7 @@ export default Model.extend(LokiJSModelMixin, {
         name = `${autoTranslation}: ${name}`;
       }
 
-      return `${name}, ${moment(get(this, 'updated')).format('MM/DD/YY h:mm:ss A')}`
+      return `${name}, ${moment(get(this, 'updated')).format('MM/DD/YY h:mm:ss A')}`;
     }
   })
 });

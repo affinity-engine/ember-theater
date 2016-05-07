@@ -7,7 +7,6 @@ const {
   get,
   getProperties,
   isPresent,
-  merge,
   set
 } = Ember;
 
@@ -30,24 +29,24 @@ export default Direction.extend(BusPublisherMixin, {
     return this._super({ ...getProperties(attrs, 'dataId') });
   },
 
-  delete() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:deletingStateValue`, arguments });
+  delete(...args) {
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:deletingStateValue`, ...args });
   },
 
-  decrement() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:decrementingStateValue`, arguments });
+  decrement(...args) {
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:decrementingStateValue`, ...args });
   },
 
-  increment() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:incrementingStateValue`, arguments });
+  increment(...args) {
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:incrementingStateValue`, ...args });
   },
 
-  set() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:settingStateValue`, arguments });
+  set(...args) {
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:settingStateValue`, ...args });
   },
 
-  toggle() {
-    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:togglingStateValue`, arguments });
+  toggle(...args) {
+    get(this, 'actions').pushObject({ event: `et:${get(this, 'theaterId')}:togglingStateValue`, ...args });
   },
 
   _perform(priorSceneRecord, resolve) {

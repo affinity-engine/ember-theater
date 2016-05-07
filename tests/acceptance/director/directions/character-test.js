@@ -45,7 +45,7 @@ test('Ember Theater | Director | Directions | character', function(assert) {
   }).then(() => {
     assert.equal($hook('character-direction').length, 3, 'characters with different fixtures can co-exist on screen');
 
-    return step()
+    return step();
   }).then(() => {
     assert.equal($hook('character-direction').length, 4, '`character` can be passed a fixture directly');
     assert.ok(Ember.$(`${hook('expression-direction')}:nth(3) img`).attr('src').match('theater/characters/emma/neutral.png'), 'the manually defined character defaultExpressionId is set properly');
@@ -64,7 +64,7 @@ test('Ember Theater | Director | Directions | character', function(assert) {
     // phantom return -5%, while Chrome return -38.375px
     assert.ok(['-38.375px', '-5%'].indexOf($bitsy4.css('bottom')) > -1, '`position` can accept multiple positions, X');
 
-    return step()
+    return step();
   }).then(() => {
     assert.ok(Ember.$(`${hook('expression-direction')}:nth(5) img`).attr('src').match('theater/characters/bitsy/happy.png'), '`expression` can adjust the expression before rendering');
 

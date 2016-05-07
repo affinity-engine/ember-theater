@@ -8,8 +8,7 @@ import multiton from 'ember-multiton-service';
 const {
   computed,
   get,
-  on,
-  set
+  on
 } = Ember;
 
 const { inject: { service } } = Ember;

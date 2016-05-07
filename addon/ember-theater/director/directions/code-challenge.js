@@ -18,10 +18,10 @@ export default Direction.extend({
     return this;
   },
 
-  transition() {
+  transition(...args) {
     this._entryPoint();
 
-    this.transitionIn(...arguments);
+    this.transitionIn(...args);
 
     return this;
   },
@@ -36,7 +36,7 @@ export default Direction.extend({
 
   transitionOut(effect, duration, options = {}) {
     this._entryPoint();
-    
+
     set(this, 'attrs.transitionOut', merge({ duration, effect }, options));
 
     return this;

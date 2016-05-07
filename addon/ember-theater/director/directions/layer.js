@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import { Direction } from 'ember-theater/ember-theater/director';
-import layerName from 'ember-theater/utils/ember-theater/director/layer-name';
 import multiton from 'ember-multiton-service';
 
 const {
@@ -27,12 +26,12 @@ export default Direction.extend({
     return this._super({ transitions: Ember.A(), ...getProperties(attrs, 'layer') });
   },
 
-  filter(filter, duration = 500, options = {}) {
+  filter(filter, duration, options = {}) {
     this._entryPoint();
 
     this.transition(filter, duration, options, 'filter');
 
-    return this
+    return this;
   },
 
   transition(effect, duration, options = {}, type = 'transition') {

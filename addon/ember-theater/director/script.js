@@ -47,6 +47,6 @@ export default Ember.Object.extend(BusPublisherMixin, BusSubscriberMixin, Evente
       const value = isDirection ? get(direction, 'result') || '_RESOLVED' : direction;
 
       this.publish(`et:${theaterId}:${get(this, 'windowId')}:directionCompleted`, sceneRecordIndex, value);
-    })
+    });
   }
 });

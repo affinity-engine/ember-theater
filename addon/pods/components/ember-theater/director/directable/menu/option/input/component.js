@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import { keyDown, keyUp } from 'ember-keyboard';
+import { keyDown } from 'ember-keyboard';
 
 const {
   TextField,
-  get,
   on
 } = Ember;
 
