@@ -11,8 +11,7 @@ const {
   isEmpty,
   isPresent,
   set,
-  setProperties,
-  on
+  setProperties
 } = Ember;
 
 export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
@@ -20,11 +19,13 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
 
   saveStateManager: multiton('ember-theater/save-state-manager', 'theaterId'),
 
-  setupEvents: on('init', function() {
+  init() {
     const theaterId = get(this, 'theaterId');
 
     this.on(`et:${theaterId}:reseting`, this, this.resetConfig);
-  }),
+
+    this._super();
+  },
 
   initializeConfig(theaterConfig = {}) {
     set(this, 'theaterConfig', theaterConfig);

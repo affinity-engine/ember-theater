@@ -1,10 +1,11 @@
 import Ember from 'ember';
-import layout from './template';
+import layout from '../templates/components/ember-theater';
 import multiton from 'ember-multiton-service';
 
 const {
   Component,
   get,
+  isNone,
   isPresent,
   on,
   set
@@ -19,6 +20,8 @@ const focusDebounceDuration = 100;
 export default Component.extend({
   layout,
 
+  hook: 'ember_theater',
+
   'aria-live': 'polite',
   ariaRole: 'region',
   attributeBindings: ['aria-live', 'tabIndex'],
@@ -32,14 +35,32 @@ export default Component.extend({
 
   isFocused: alias('producer.isFocused'),
 
-  initializeConfig: on('init', function() {
-    const config = get(this, 'config');
-
-    set(this, 'theaterId', get(this, 'theaterId') || 'ember-theater-default');
-    get(this, 'configService').initializeConfig(config);
-
+  init() {
+    this._ensureTheaterId();
+    get(this, 'configService').initializeConfig(get(this, 'config'));
     this._loadfixtures();
-  }),
+
+    this._super();
+  },
+
+  _ensureTheaterId() {
+    if (isNone(get(this, 'theaterId'))) {
+      set(this, 'theaterId', 'ember-theater-default');
+    }
+  },
+
+  _loadfixtures() {
+    const fixtureStore = get(this, 'fixtureStore');
+    const fixtureMap = get(this, 'fixtures');
+
+    if (isPresent(fixtureMap)) {
+      const fixtureKeys = Object.keys(fixtureMap);
+
+      fixtureKeys.forEach((key) => {
+        fixtureStore.add(key, fixtureMap[key]);
+      });
+    }
+  },
 
   destroyMultitons: on('willDestroyElement', function() {
     const theaterId = get(this, 'theaterId');
@@ -54,19 +75,6 @@ export default Component.extend({
   relinquishFocus: on('focusOut', function() {
     debounce(this, () => set(this, 'isFocused', false), focusDebounceDuration);
   }),
-
-  _loadfixtures() {
-    const fixtureStore = get(this, 'fixtureStore');
-    const fixtureMap = get(this, 'fixtures');
-
-    if (isPresent(fixtureMap)) {
-      const fixtureKeys = Object.keys(fixtureMap);
-
-      fixtureKeys.forEach((key) => {
-        fixtureStore.add(key, fixtureMap[key]);
-      });
-    }
-  },
 
   actions: {
     completePreload() {

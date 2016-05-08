@@ -8,17 +8,17 @@ const {
 } = Ember;
 
 export default Mixin.create({
-  theaterId: computed('_multitonKeys.[]', {
+  theaterId: computed('_multitonServiceKeys.[]', {
     get() {
-      const keys = get(this, '_multitonKeys');
+      const keys = get(this, '_multitonServiceKeys');
 
       return isPresent(keys) ? keys[0] : undefined;
     }
   }),
 
-  windowId: computed('_multitonKeys.[]', {
+  windowId: computed('_multitonServiceKeys.[]', {
     get() {
-      const keys = get(this, '_multitonKeys');
+      const keys = get(this, '_multitonServiceKeys');
 
       return isPresent(keys) ? keys[1] : undefined;
     }
