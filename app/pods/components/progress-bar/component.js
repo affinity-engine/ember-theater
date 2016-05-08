@@ -1,1 +1,0 @@
-export { default } from 'ember-theater/pods/components/progress-bar/component';

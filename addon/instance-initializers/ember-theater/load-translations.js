@@ -1,4 +1,4 @@
-import en from 'ember-theater/locales/en/ember-theater';
+import en from 'ember-theater/locales/ember-theater/en/translations';
 
 export function initialize(container) {
   const i18n = container.lookup('service:i18n');
