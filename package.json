@@ -37,7 +37,7 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
-    "ember-hook": "https://github.com/Ticketfly/ember-hook#60a6391bfe71ee4f42772bfb9d4916939ed3a59f",
+    "ember-hook": "https://github.com/Ticketfly/ember-hook#57e73620e92dfadf8c4234b075b1418c89875e3b",
     "ember-i18n": "4.2.0",
     "ember-load-initializers": "^0.5.0",
     "ember-moment": "6.1.0",

@@ -15,14 +15,6 @@
   {{/ember-theater}}
 </div> --}}
 <div class="theater-container">
-  {{#ember-theater theaterId="theater2" fixtures=fixtures isFocused=true as |theater|}}
-    {{ember-theater/director theaterId=theater.theaterId initialScene="demo"}}
-    {{#ember-theater/menu-bar theaterId=theater.theaterId as |menuBar|}}
-      {{ember-theater/menu-bar/rewind theaterId=menuBar.theaterId}}
-      {{ember-theater/menu-bar/save theaterId=menuBar.theaterId}}
-      {{ember-theater/menu-bar/load theaterId=menuBar.theaterId}}
-      {{ember-theater/menu-bar/reset theaterId=menuBar.theaterId}}
-      {{ember-theater/menu-bar/resize theaterId=menuBar.theaterId}}
-    {{/ember-theater/menu-bar}}
+  {{#ember-theater theaterId="theater2" isFocused=true as |theater|}}
   {{/ember-theater}}
 </div>
