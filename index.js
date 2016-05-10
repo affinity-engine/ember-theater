@@ -5,6 +5,14 @@ var path = require('path');
 var mergeTrees = require('broccoli-merge-trees');
 var pickFiles = require('broccoli-static-compiler');
 
+function getParentApp(app) {
+  if (typeof app.import !== 'function' && app.app) {
+    return getParentApp(app.app);
+  } else {
+    return app;
+  }
+}
+
 module.exports = {
   name: 'ember-theater',
 
@@ -28,6 +36,9 @@ module.exports = {
 
   included: function(app) {
     this._super.included(app);
+
+    app = getParentApp(app);
+
     app.import(path.join(app.bowerDirectory, 'lokijs/src/lokijs.js'));
     app.import(path.join(app.bowerDirectory, 'PreloadJS/lib/preloadjs-NEXT.combined.js'));
     app.import(path.join(app.bowerDirectory, 'SoundJS/lib/soundjs-NEXT.combined.js'));
