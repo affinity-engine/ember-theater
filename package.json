@@ -63,7 +63,7 @@
     "ember-dynamic-stylesheet": "0.0.2",
     "ember-keyboard": "1.1.0",
     "ember-lokijs": "0.0.3",
-    "ember-message-bus": "0.0.3",
+    "ember-message-bus": "0.1.0",
     "ember-multiton-service": "0.0.6",
     "glob": "^5.0.15",
     "ivy-codemirror": "1.3.0",

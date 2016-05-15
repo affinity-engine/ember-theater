@@ -55,10 +55,10 @@ export default Ember.Object.extend({
   _convertToPromise() {
     const that = this;
 
-    that.then = async function(...args) {
-      await get(that, 'queue.allDirectionsAreLoaded');
-
-      return get(that, 'queue.executionComplete').then(...args);
+    that.then = function(...args) {
+      return get(that, 'queue.allDirectionsAreLoaded').then(() => {
+        return get(that, 'queue.executionComplete').then(...args);
+      });
     };
 
     set(this, 'promise', { then: this.then });
