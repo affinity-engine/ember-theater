@@ -28,9 +28,7 @@ module.exports = {
     }
 
     return mergeTrees([
-      treeify('perfect-scrollbar'),
-      treeify('velocity-animate'),
-      treeify('babel-standalone')
+      treeify('velocity-animate')
     ]);
   },
 
@@ -39,14 +37,7 @@ module.exports = {
 
     app = getParentApp(app);
 
-    app.import(path.join(app.bowerDirectory, 'lokijs/src/lokijs.js'));
-    app.import(path.join(app.bowerDirectory, 'PreloadJS/lib/preloadjs-NEXT.combined.js'));
-    app.import(path.join(app.bowerDirectory, 'SoundJS/lib/soundjs-NEXT.combined.js'));
-    app.import(path.join(app.bowerDirectory, 'progressbar.js/dist/progressbar.min.js'));
-    app.import('vendor/perfect-scrollbar/dist/js/perfect-scrollbar.min.js');
-    app.import('vendor/perfect-scrollbar/dist/css/perfect-scrollbar.min.css');
     app.import('vendor/velocity-animate/velocity.js');
     app.import('vendor/velocity-animate/velocity.ui.js');
-    app.import('vendor/babel-standalone/babel.js');
   }
 };
