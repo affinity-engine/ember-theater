@@ -4,6 +4,10 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   var addon = new EmberAddon(defaults, {
+    babel: {
+      includePolyfill: true
+    },
+
     sassOptions: {
       extensions: 'scss'
     },
