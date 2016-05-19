@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { MultitonService } from 'ember-multiton-service';
 import multiton from 'ember-multiton-service';
 import { BusSubscriberMixin } from 'ember-message-bus';
-import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
+import { MultitonIdsMixin } from 'ember-theater';
 
 const {
   computed,

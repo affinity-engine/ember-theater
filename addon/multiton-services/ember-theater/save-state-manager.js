@@ -1,10 +1,8 @@
 import Ember from 'ember';
 import { MultitonService } from 'ember-multiton-service';
-import MultitonIdsMixin from 'ember-theater/mixins/ember-theater/multiton-ids';
+import { MultitonIdsMixin, configurable, nativeCopy } from 'ember-theater';
 import { BusSubscriberMixin } from 'ember-message-bus';
-import configurable from 'ember-theater/macros/ember-theater/configurable';
 import multiton from 'ember-multiton-service';
-import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
 const {
   computed,
