@@ -36,7 +36,9 @@
     "ember-disable-prototype-extensions": "^1.1.0",
     "ember-export-application-global": "^1.0.5",
     "ember-hook": "0.2.0",
+    "ember-i18n": "4.2.1",
     "ember-load-initializers": "^0.5.1",
+    "ember-moment": "6.1.0",
     "ember-resolver": "^2.0.3",
     "ember-try": "^0.2.2",
     "loader.js": "^4.0.1"
@@ -49,7 +51,7 @@
     "ember-cli-htmlbars": "^1.0.3",
     "ember-cli-sass": "^5.1.0",
     "ember-get-config": "0.0.2",
-    "ember-lokijs": "0.1.0",
+    "ember-lokijs": "0.1.1",
     "ember-message-bus": "0.2.0",
     "ember-multiton-service": "0.0.6",
     "velocity-animate": "^1.2.2"
