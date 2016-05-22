@@ -2,11 +2,12 @@ import Ember from 'ember';
 import { MultitonService } from 'ember-multiton-service';
 import multiton from 'ember-multiton-service';
 import { BusSubscriberMixin } from 'ember-message-bus';
-import { MultitonIdsMixin, deepMerge } from 'ember-theater';
+import { MultitonIdsMixin, deepMerge, gatherTypes } from 'ember-theater';
 
 const {
   computed,
   get,
+  getOwner,
   isEmpty,
   isPresent,
   set,
@@ -45,18 +46,12 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
 
   _configs: computed({
     get() {
-      const paths = Object.keys(requirejs.entries);
-      const isConfig = new RegExp('\/ember-theater\/config');
-      const isTest = new RegExp('\/tests\/');
-      const isThisService = new RegExp('\/services\/ember-theater\/config');
+      const appInstance = getOwner(this);
+      const configNames = gatherTypes(appInstance, 'ember-theater/config');
 
-      return paths.filter((path) => {
-        return isConfig.test(path) && !isTest.test(path) && !isThisService.test(path);
-      }).map((path) => {
-        return requirejs(path).default;
-      }).filter((config) => {
-        return isPresent(config.priority);
-      });
+      return configNames.map((configName) => {
+        return appInstance.lookup(`ember-theater/config:${configName}`);
+      }).filter((config) => isPresent(config));
     }
   }),
 

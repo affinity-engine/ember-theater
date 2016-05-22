@@ -1,8 +1,7 @@
 module.exports = {
   "root": true,
   "globals": {
-    "Reflect": true,
-    "requirejs": true
+    "Reflect": true
   },
   parser: 'babel-eslint',
   parserOptions: {

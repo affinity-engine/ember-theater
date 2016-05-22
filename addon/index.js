@@ -5,7 +5,16 @@ import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-the
 
 import animate from 'ember-theater/utils/ember-theater/animate';
 import deepMerge from 'ember-theater/utils/ember-theater/deep-merge';
+import gatherTypes from 'ember-theater/utils/ember-theater/gather-types';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
+
+import { initialize as loadTranslations } from 'ember-theater/instance-initializers/ember-theater/load-translations';
+import { initialize as initializeConfig } from 'ember-theater/instance-initializers/ember-theater/register-configs';
+
+const initialize = function initialize(appInstance) {
+  loadTranslations(appInstance);
+  initializeConfig(appInstance);
+};
 
 export {
   ConfigurableMixin,
@@ -15,5 +24,7 @@ export {
   deepArrayConfigurable,
   animate,
   deepMerge,
-  nativeCopy
+  gatherTypes,
+  nativeCopy,
+  initialize
 };

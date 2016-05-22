@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { $hook, initialize as initializeHook } from 'ember-hook';
 import { initialize as initializeMultiton } from 'ember-multiton-service';
+import { initialize as initializeTheater } from 'ember-theater';
 
 const { getOwner } = Ember;
 const { run: { later } } = Ember;
@@ -11,8 +12,11 @@ moduleForComponent('ember-theater', 'Integration | Component | ember theater', {
   integration: true,
 
   beforeEach() {
+    const appInstance = getOwner(this);
+
     initializeHook();
-    initializeMultiton(getOwner(this));
+    initializeMultiton(appInstance);
+    initializeTheater(appInstance);
   }
 });
 
