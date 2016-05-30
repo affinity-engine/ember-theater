@@ -1,6 +1,8 @@
 module.exports = {
   description: 'Generates files for ember theater',
 
+  normalizeEntityName: function() {},
+
   afterInstall: function() {
     var _this = this;
 
