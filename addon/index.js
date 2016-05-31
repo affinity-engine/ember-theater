@@ -5,6 +5,7 @@ import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-the
 
 import animate from 'ember-theater/utils/ember-theater/animate';
 import deepMerge from 'ember-theater/utils/ember-theater/deep-merge';
+import deepStub from 'ember-theater/utils/ember-theater/deep-stub';
 import gatherTypes from 'ember-theater/utils/ember-theater/gather-types';
 import nativeCopy from 'ember-theater/utils/ember-theater/native-copy';
 
@@ -24,6 +25,7 @@ export {
   deepArrayConfigurable,
   animate,
   deepMerge,
+  deepStub,
   gatherTypes,
   nativeCopy,
   initialize
