@@ -1,5 +1,6 @@
 import ConfigurableMixin from 'ember-theater/mixins/configurable';
 import MultitonIdsMixin from 'ember-theater/mixins/multiton-ids';
+import WindowResizeMixin from 'ember-theater/mixins/multiton-ids';
 
 import configurable, { deepConfigurable, deepArrayConfigurable } from 'ember-theater/macros/ember-theater/configurable';
 
@@ -20,6 +21,7 @@ const initialize = function initialize(appInstance) {
 export {
   ConfigurableMixin,
   MultitonIdsMixin,
+  WindowResizeMixin,
   configurable,
   deepConfigurable,
   deepArrayConfigurable,
