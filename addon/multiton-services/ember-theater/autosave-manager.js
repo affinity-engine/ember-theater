@@ -12,7 +12,7 @@ const {
 
 const { inject: { service } } = Ember;
 
-const configurablePriority = [
+const configurationTiers = [
   'config.attrs.autosaveManager',
   'config.attrs.saveStateManager',
   'config.attrs.globals'
@@ -23,7 +23,7 @@ export default MultitonService.extend(BusPublisherMixin, BusSubscriberMixin, Mul
 
   config: multiton('ember-theater/config', 'theaterId'),
 
-  maxAutosaves: configurable(configurablePriority, 'maxAutosaves'),
+  maxAutosaves: configurable(configurationTiers, 'maxAutosaves'),
 
   setupEvents: on('init', function() {
     const theaterId = get(this, 'theaterId');

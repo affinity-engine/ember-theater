@@ -16,7 +16,7 @@ const {
 
 const { inject: { service } } = Ember;
 
-const configurablePriority = [
+const configurationTiers = [
   'config.attrs.saveStateManager',
   'config.attrs.globals'
 ];
@@ -28,7 +28,7 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
 
   config: multiton('ember-theater/config', 'theaterId'),
 
-  maxStatePoints: configurable(configurablePriority, 'maxStatePoints'),
+  maxStatePoints: configurable(configurationTiers, 'maxStatePoints'),
 
   activeState: computed(() => Ember.Object.create()),
   statePoints: computed(() => Ember.A()),
