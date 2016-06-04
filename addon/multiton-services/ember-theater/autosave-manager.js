@@ -7,7 +7,8 @@ import multiton from 'ember-multiton-service';
 const {
   computed,
   get,
-  on
+  on,
+  run
 } = Ember;
 
 const { inject: { service } } = Ember;
@@ -42,16 +43,19 @@ export default MultitonService.extend(BusPublisherMixin, BusSubscriberMixin, Mul
     }
   }).readOnly().volatile(),
 
-  writeAutosave: async function() {
-    const autosaves = await get(this, 'autosaves');
-    const theaterId = get(this, 'theaterId');
+  writeAutosave() {
+    get(this, 'autosaves').then((autosaves) => {
+      run(() => {
+        const theaterId = get(this, 'theaterId');
 
-    if (get(this, 'maxAutosaves') > get(autosaves, 'length')) {
-      this.publish(`et:${theaterId}:saveIsCreating`, '', { isAutosave: true });
-    } else {
-      const autosave = autosaves.sortBy('updated').get('firstObject');
+        if (get(this, 'maxAutosaves') > get(autosaves, 'length')) {
+          this.publish(`et:${theaterId}:saveIsCreating`, '', { isAutosave: true });
+        } else {
+          const autosave = autosaves.sortBy('updated').get('firstObject');
 
-      this.publish(`et:${theaterId}:saveIsUpdating`, autosave);
-    }
+          this.publish(`et:${theaterId}:saveIsUpdating`, autosave);
+        }
+      });
+    });
   }
 });

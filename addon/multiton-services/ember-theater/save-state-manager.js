@@ -10,10 +10,12 @@ const {
   getProperties,
   merge,
   on,
+  run,
   set,
   setProperties
 } = Ember;
 
+const { RSVP: { Promise } } = Ember;
 const { inject: { service } } = Ember;
 
 const configurationTiers = [
@@ -50,10 +52,14 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
   }),
 
   mostRecentSave: computed({
-    get: async function() {
-      const saves = await get(this, 'saves');
-
-      return saves.sortBy('updated').reverseObjects().get('firstObject');
+    get() {
+      return new Promise((resolve) => {
+        get(this, 'saves').then((saves) => {
+          run(() => {
+            resolve(saves.sortBy('updated').reverseObjects().get('firstObject'));
+          });
+        });
+      });
     }
   }).volatile(),
 
@@ -68,7 +74,7 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
   }).readOnly().volatile(),
 
   // RECORD MANAGEMENT //
-  createRecord: async function(name, options) {
+  createRecord(name, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -81,10 +87,16 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
       ...options
     });
 
-    return await record.save();
+    return new Promise((resolve) => {
+      record.save().then((save) => {
+        run(() => {
+          resolve(save);
+        });
+      });
+    });
   },
 
-  updateRecord: async function(record, options) {
+  updateRecord(record, options) {
     const theaterId = get(this, 'theaterId');
     const version = get(this, 'version');
     const statePoints = this._getCurrentStatePoints();
@@ -96,7 +108,13 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
       ...options
     });
 
-    return await record.save();
+    return new Promise((resolve) => {
+      record.save().then((save) => {
+        run(() => {
+          resolve(save);
+        });
+      });
+    });
   },
 
   _getCurrentStatePoints() {
@@ -108,8 +126,14 @@ export default MultitonService.extend(BusSubscriberMixin, MultitonIdsMixin, {
     return statePoints;
   },
 
-  deleteRecord: async function(record) {
-    return await record.destroyRecord();
+  deleteRecord(record) {
+    return new Promise((resolve) => {
+      record.destroyRecord().then((save) => {
+        run(() => {
+          resolve(save);
+        });
+      });
+    });
   },
 
   loadRecord(record) {
